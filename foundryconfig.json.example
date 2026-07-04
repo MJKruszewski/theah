@@ -1,0 +1,6 @@
+{
+  "//": "Copy this file to foundryconfig.json and set dataPath to your Foundry user-data folder.",
+  "//dataPath_windows": "Typically C:/Users/<you>/AppData/Local/FoundryVTT",
+  "//dataPath_note": "The folder that CONTAINS the 'Data' directory (Data/systems/ lives under it).",
+  "dataPath": "C:/Users/macie/AppData/Local/FoundryVTT"
+}

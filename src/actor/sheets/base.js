@@ -165,7 +165,7 @@ export default class ActorSheetSS2e extends ActorSheet {
     }
 
     html
-      .find('.fillable.fa-circle')
+      .find('.fillable.fa-circle, .fillable.rating')
       .on('click', (event) => this._processCircle(event));
     if (this.actor.type === ActorType.BRUTE) {
       html

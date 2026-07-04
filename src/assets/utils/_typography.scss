@@ -1,9 +1,17 @@
-/* -------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Typography — engraved serif display + readable serif body.
+   System-font stacks (no CDN dependency; works offline in Foundry).
+   TODO: bundle an OFL display face (e.g. Cinzel) under public/fonts/ for full
+   cross-platform fidelity, then swap $f-display's first family.
+   -------------------------------------------------------------------------- */
 
-// Font families
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Trade+Winds&display=swap');
-$f-header: 'Trade Winds', cursive;
-$f-body: 'Roboto', sans-serif;
+$f-display: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino,
+  "Book Antiqua", Georgia, serif;
+$f-body: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+$f-label: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+
+// Legacy aliases
+$f-header: $f-display;
 
 /* -------------------------------------------- */
 
@@ -20,4 +28,4 @@ $f-s-4xl: 6em;
 /* -------------------------------------------- */
 
 // Font Shadows
-$txt-shadow-prim: 0 0 0.5rem $c-sec;
+$txt-shadow-prim: 0 0 0.4rem rgba(217, 178, 98, 0.55);

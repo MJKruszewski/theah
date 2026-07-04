@@ -1,11 +1,12 @@
 {
   "id": "theah",
+  "type": "system",
   "title": "Théah — 7th Sea 2e (Unofficial)",
   "description": "Théah: an unofficial 7th Sea Second Edition system for Foundry VTT — swashbuckling heroes, the Raises dice pool, and data-rich compendiums.",
   "version": "0.1.0",
   "compatibility": {
     "minimum": "13",
-    "verified": "13.341"
+    "verified": "14"
   },
   "authors": [
     { "name": "Théah system (unofficial fan project)" }
@@ -48,12 +49,13 @@
   },
   "packs": [],
   "packFolders": [],
-  "gridDistance": 5,
-  "gridUnits": "ft",
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
   "primaryTokenAttribute": "wounds",
   "secondaryTokenAttribute": "dwounds",
+  "media": [],
   "url": "https://example.invalid/theah",
-  "manifest": "https://example.invalid/theah/system.json",
-  "download": "https://example.invalid/theah/theah.zip",
   "license": "MIT"
 }

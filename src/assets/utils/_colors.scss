@@ -1,27 +1,45 @@
-$c-prim: #771213; //;
-$c-sec: white;
-$c-prim-lt: #3498db;
-$c-prim-dk: #530202;
-$c-sec-dk: #dbd5b0;
-$c-sec-lt: #fff;
+/* ==========================================================================
+   Théah palette — aged sea-chart (parchment · ink · antique gold · oxblood)
+   ========================================================================== */
 
-//Backgrounds
-$bg-c-lt: $c-sec;
-$bg-c-dk: $c-prim;
-$bg-c-rgba-dk: rgba(20, 58, 84, 0.7);
-$bg-c-rgba-lt: white;
-//$bg-c-rgba-dk: rgba(52, 152, 219, 0.6);
+// Core palette
+$paper:        #e7d8b6;
+$paper-deep:   #d8c49a;
+$panel:        #f1e7cc;
+$panel-edge:   #cbb488;
+$ink:          #3a2c1c;
+$ink-soft:     #6b5a41;
+$navy:         #16323f;
+$navy-deep:    #0e232c;
+$teal:         #2b6b6b;
+$gold:         #b0873f;
+$gold-leaf:    #d9b262;
+$gold-deep:    #8a642a;
+$oxblood:      #7c2b22;
+$oxblood-deep: #591c16;
+$parchment-lt: #f0e5c8;
+$line:         rgba(58, 44, 28, 0.28);
+$line-strong:  rgba(58, 44, 28, 0.5);
 
-//Borders
-$brd-c-lt: $c-sec-dk;
-$brd-c-dk: $c-prim-dk;
-$brd-c-glow: $c-sec;
+// Legacy variable names (used by older component partials) repointed to the new palette
+$c-prim:    $navy;
+$c-sec:     $panel;
+$c-prim-lt: $teal;
+$c-prim-dk: $navy-deep;
+$c-sec-dk:  $panel-edge;
+$c-sec-lt:  #fff8ea;
 
-// Font Colors
-$f-c-dk: #000;
-$f-c-lt: $c-sec;
+$bg-c-lt:      $panel;
+$bg-c-dk:      $navy;
+$bg-c-rgba-dk: rgba(22, 50, 63, 0.85);
+$bg-c-rgba-lt: $panel;
 
-// Gradients
+$brd-c-lt:   $panel-edge;
+$brd-c-dk:   $gold-deep;
+$brd-c-glow: $gold-leaf;
 
-$g-c-lt: rgba(255, 0, 0, 0);
-$g-c-dk: rgba(52, 152, 219, 0.5);
+$f-c-dk: $ink;
+$f-c-lt: $parchment-lt;
+
+$g-c-lt: rgba(176, 135, 63, 0);
+$g-c-dk: rgba(22, 50, 63, 0.5);

@@ -1,44 +1,33 @@
-<div>
-  <div class="chat-card skill-roll dice-roll" data-actor-id="{{ actor.id }}">
-    <div class="dice-result">
-      <h4 class="dice-total">{{ raises }} {{ raisetxt }} - {{ unusedDice }} {{ unusedDiceTxt }} </h4>
-      <div class="dice-tooltip">
-        <section class="tooltip-part">
-          <div class="dice">
-            <ol class="dice-rolls">
-              {{#each rolls as |roll|}}
-                <li class="roll die d10"> {{ roll }}</li>
-              {{/each}}
-            </ol>
-            <h6>{{ rCombos }}</h6>
-            <div class="flexrow flex-group flex-left">
-              <ul  class="raise-combos-list">
-                {{#each combos as |combo|}}
-                  <li class="combo"> {{ combo }}</li>
-                {{/each}}
-              </ul>
-            </div>
-
-            {{#if rerolled}}
-              <div class="rerolled">
-                {{ reroll }}
-              </div>
-            {{/if}}
-            {{#if exploded}}
-              <div class="explosions">
-                {{ explosions }}
-              </div>
-            {{/if}}
-            {{#if hasAddOneToDice}}
-              {{ addOneToDiced }}
-            {{/if}}
-            <div class="threshold">{{ threshold }}</div>
-          </div>
-        </section>
-      </div>
-    </div>
+<div class="theah-roll" data-actor-id="{{ actor.id }}">
+  <div class="roll-head">
+    {{#if actor.img}}<img src="{{ actor.img }}" alt="" />{{/if}}
+    <span>{{ actor.name }}</span>
   </div>
-  <button class="initiative-tracker-add" data-raise="{{ raises }}" data-actor="{{ actor.id }}">
-    {{ localize "SVNSEA2E.AddToInitiativeTracker" }}
-  </button>
+  <div class="roll-body">
+    <div class="flexrow flex-group flex-left" style="align-items:baseline; gap:10px;">
+      <span class="raise-count">{{ raises }}</span>
+      <span class="raise-label">{{ raisetxt }}</span>
+      <span style="margin-left:auto; color:var(--ink-soft); font-size:12px;">{{ unusedDice }} {{ unusedDiceTxt }}</span>
+    </div>
+
+    <div class="dice">
+      {{#each rolls as |roll|}}
+        <span class="die{{#iff roll '>=' 10}} ten{{/iff}}">{{ roll }}</span>
+      {{/each}}
+    </div>
+
+    {{#if combos.length}}
+      <div class="combos"><b>{{ rCombos }}:</b> {{#each combos as |combo|}}{{combo}}{{#unless @last}} · {{/unless}}{{/each}}</div>
+    {{/if}}
+
+    {{#if rerolled}}<div class="combos">{{ reroll }}</div>{{/if}}
+    {{#if exploded}}<div class="combos">{{ explosions }}</div>{{/if}}
+    {{#if hasAddOneToDice}}<div class="combos">{{ addOneToDiced }}</div>{{/if}}
+
+    <div class="combos" style="margin-top:8px; font-style:italic;">{{ threshold }}</div>
+
+    <button class="initiative-tracker-add" data-raise="{{ raises }}" data-actor="{{ actor.id }}" style="margin-top:10px;">
+      {{ localize "SVNSEA2E.AddToInitiativeTracker" }}
+    </button>
+  </div>
 </div>

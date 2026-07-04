@@ -5,7 +5,8 @@
   "description": "Théah — 7th Sea 2nd Edition (Unofficial) system for Foundry VTT.",
   "scripts": {
     "build": "bun build.mjs",
-    "watch": "bun build.mjs --watch"
+    "watch": "bun build.mjs --watch",
+    "deploy": "bun build.mjs && bun deploy.mjs"
   },
   "devDependencies": {
     "esbuild": "0.28.1",
