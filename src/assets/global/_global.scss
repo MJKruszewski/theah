@@ -1,0 +1,230 @@
+// body,
+// body#tinymce.mce-content-body {
+//   font-size: $f-s-norm;
+//   font-family: $f-body;
+// }
+
+// body {
+//   scrollbar-color: $c-prim-lt $c-prim-dk;
+// }
+
+// a:hover {
+//   text-shadow: $txt-shadow-prim;
+// }
+
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//   margin: 0.75rem 0;
+//   padding: 0;
+//   font-weight: normal;
+//   font-family: $f-header;
+//   color: $f-c-dk;
+//   border: none;
+// }
+
+// h1 {
+//   font-size: $f-s-3xl;
+// }
+
+// h2 {
+//   font-size: $f-s-2xl;
+//   @include paint-bottom-border;
+// }
+
+// h3 {
+//   font-size: $f-s-xl;
+//   text-indent: 0.625rem;
+// }
+
+// h4 {
+//   font-size: $f-s-lg;
+//   text-indent: 0.5rem;
+// }
+
+// h5 {
+//   font-size: $f-s-md;
+//   text-indent: 0.375rem;
+// }
+
+// h6 {
+//   font-size: $f-s-norm;
+//   text-indent: 0.25rem;
+// }
+
+// // Turned off by MTR for v13.
+// // #calendar-time-container h1,
+// // #calendar-time-container h2 {
+// //   color: rgba(255, 255, 255, 0.87);
+// //   background: none;
+// // }
+
+// // This does not show up anywhere anymore as of v13.
+// // Turned off by MTR for v13.
+// // label.checkbox {
+// //   font-size: $f-s-norm;
+// // }
+
+
+// // Not sure if we need this still or not.
+// // Turned off by MTR for v13.
+// // This styles the player listing on the lower left of the screen.
+// // #players {
+// //   @include main-bg;
+// //   h3 {
+// //     color: $f-c-lt;
+// //   }
+
+// //   ol .player-name.self {
+// //     color: $f-c-lt;
+// //   }
+// // }
+
+// #menu #menu-items {
+//   li h4 {
+//     color: $f-c-lt;
+//     font-size: $f-s-lg;
+//   }
+
+//   li > i {
+//     color: $f-c-lt;
+//     font-size: $f-s-lg;
+//   }
+// }
+
+// textarea {
+//   border: $no-border;
+//   margin-top: $margin-sm;
+// }
+
+
+// // Not sure if we need this still or not.
+// // This changes the hotbar and sidebars buttons.
+// // Turned off by MTR for v13.
+// // button {
+// //   font-family: $f-body;
+// //   font-size: $f-s-norm;
+// //   color: $f-c-dk;
+// //   background: $bg-c-lt;
+// // }
+
+// .app.sheet .editor-content,
+// .tox .tox-edit-area,
+// .tox-tinymce,
+// input[type='text'],
+// input[type='password'],
+// input[type='datetime-local'],
+// select,
+// textarea {
+//   font-family: $f-body;
+//   font-size: $f-s-norm;
+//   color: $f-c-dk;
+//   background: $bg-c-rgba-lt;
+// }
+
+// .tox-tinymce:focus,
+// .tox-tinymce:hover,
+// button:focus,
+// button:hover,
+// input[type='text']:hover,
+// input[type='text']:focus,
+// textarea:focus,
+// textarea:hover {
+//   box-shadow: 0 0 0.5rem $c-prim;
+// }
+
+// input[type='range']::-moz-range-thumb,
+// input[type='range']::-webkit-slider-thumb {
+//   background: $c-prim-lt;
+// }
+
+// .editor-edit {
+//   display: inline-block;
+// }
+
+// .app.sheet .editor-content {
+//   padding: $padding-md;
+// }
+
+// // Not sure if we need this, it doesn't seem to match anything.
+// // Turned off by MTR for v13.
+// // #navigation {
+// //   .nav-item {
+// //     border: $brd-s-sm-lt;
+// //   }
+
+// //   #nav-toggle {
+// //     @include main-bg;
+// //     hover {
+// //       text-shadow: 0 0 0.625rem $c-sec;
+// //     }
+// //   }
+
+// //   #scene-list {
+// //     .scene.gm {
+// //       @include main-bg;
+// //     }
+
+// //     .scene.context,
+// //     .scene.view {
+// //       @include hover-highlight;
+// //     }
+// //   }
+// // }
+
+// ::-webkit-scrollbar-thumb {
+//   background: $c-prim;
+//   border: $no-border;
+// }
+
+// ::-webkit-scrollbar {
+//   width: 10px;
+// }
+
+
+// // Not sure if we need this still or not.
+// // Turned off by MTR for v13.
+// // #controls {
+// //   .control-tool,
+// //   .scene-control {
+// //     @include main-bg;
+// //   }
+
+// //   .control-tool.active,
+// //   .control-tool:hover,
+// //   .scene-control.active,
+// //   .scene-control:hover {
+// //     @include hover-highlight;
+// //   }
+// // }
+
+// // Not sure if we need this still or not.
+// // Turned off by MTR for v13.
+// // #hotbar {
+// //   .bar-controls,
+// //   .macro {
+// //     @include main-bg;
+// //   }
+
+// //   .bar-controls:hover,
+// //   .macro:hover {
+// //     @include hover-highlight;
+// //   }
+// // }
+
+// // Sets the background color to that blue color.
+// // Turned off by MTR for v13.
+// // .app {
+// //   @include main-bg;
+// // }
+
+// #players h3 i {
+//   margin: 0;
+// }
+
+// .sheet header.sheet-header {
+//   align-items: stretch;
+// }

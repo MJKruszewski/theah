@@ -1,0 +1,219 @@
+img {
+  border: $no-border;
+}
+
+h1.charname,
+h3 {
+  @include paint-bottom-border;
+}
+
+input[type='text'] {
+  min-width: $min-input-width-xs;
+  text-align: left;
+  border: $no-border;
+}
+
+nav.sheet-tabs {
+  height: auto;
+  display: flex;
+  border-top: 0px;
+}
+
+.sheet-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: $margin-md;
+
+  .villanyrank {
+    margin-left: $margin-md;
+  }
+
+  .profile-img {
+    margin-right: $padding-sm;
+  }
+
+  .header-fields {
+    flex: 1;
+  }
+
+  .flex-group-center,
+  .flex-group-left {
+    padding: 0;
+  }
+
+  .grid .relrep,
+  .grid .resources {
+    border-top: $brd-s-sm-dk;
+  }
+
+  h1.charname {
+    height: 3.125rem;
+    margin: $margin-sm;
+    text-indent: 0;
+
+    input {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: none;
+      text-indent: 1rem;
+      font-family: $f-header;
+    }
+  }
+
+  .herospts,
+  .wealth {
+    max-width: 1.875rem;
+    margin-right: 0.625rem;
+  }
+}
+
+.corruption {
+  min-width: 22em;
+}
+
+.tag {
+  display: inline-block;
+  margin: 0 $margin-xs $margin-xs 0;
+  padding: $padding-sm;
+  font-size: $f-s-norm;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.secretsociety .tag {
+  flex-grow: 0.25;
+  flex-shrink: 0.25;
+  flex-basis: 0.625rem;
+}
+
+.flexrow {
+  .tag-list {
+    flex: 0 0 95%;
+  }
+
+  .skill-selector,
+  .advantage-selector .language-selector {
+    flex: 0 0 2%;
+  }
+}
+
+.details-list,
+.tag-list {
+  line-height: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.arcana {
+  width: 85%;
+}
+
+.items-list {
+  list-style: none;
+  margin: $margin-md 0;
+  padding: 0;
+  overflow-y: auto;
+  line-height: 1.875rem;
+
+  .item-header {
+    font-weight: bold;
+  }
+
+  .item {
+    line-height: 1.5rem;
+    padding: $padding-sm 0;
+    border-bottom: $brd-s-sm-lt;
+
+    .item-image {
+      flex: 0 0 1.5rem;
+      margin-right: $margin-sm;
+    }
+
+    img {
+      display: block;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .item-weight {
+      flex: 0 0 3.75rem;
+      border-left: $brd-s-sm-lt;
+      border-right: $brd-s-sm-lt;
+    }
+
+    .item-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    // Item Control Buttons
+    .item-controls {
+      flex: 0 0 2.75rem;
+      justify-content: flex-end;
+
+      a {
+        flex: 0 0 1.375rem;
+        text-align: center;
+        color: $f-c-dk;
+      }
+    }
+    // Item Dropdown Summary
+    .item-summary {
+      flex: 0 0 100%;
+      font-size: $f-s-norm;
+      line-height: $f-s-lg;
+      padding: $padding-md;
+      border-top: $brd-s-lg-lt;
+    }
+  }
+
+  .item-name {
+    margin: 0;
+  }
+
+  .item-controls {
+    flex: 0 0 5.375rem;
+    text-align: right;
+  }
+}
+
+.favor-label,
+.skill-name,
+.trait-name {
+  font-weight: 600;
+  padding-left: 1.5rem;
+  //  margin-left: $margin-md;
+  //  margin-top: 5px;
+}
+
+.wound-title {
+  font-weight: 600;
+  margin-bottom: 0.625rem;
+}
+
+// Brute specific stuff
+.brute h2.ability-title {
+  text-shadow: none;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 8em;
+  gap: 0.2em;
+}
+
+.skill {
+  height: 1em;
+}
+
+.twodigit input[type='text'] {
+  max-width: $max-input-width-xs;
+  text-align: right;
+}

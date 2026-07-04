@@ -1,0 +1,27 @@
+$c-prim: #771213; //;
+$c-sec: white;
+$c-prim-lt: #3498db;
+$c-prim-dk: #530202;
+$c-sec-dk: #dbd5b0;
+$c-sec-lt: #fff;
+
+//Backgrounds
+$bg-c-lt: $c-sec;
+$bg-c-dk: $c-prim;
+$bg-c-rgba-dk: rgba(20, 58, 84, 0.7);
+$bg-c-rgba-lt: white;
+//$bg-c-rgba-dk: rgba(52, 152, 219, 0.6);
+
+//Borders
+$brd-c-lt: $c-sec-dk;
+$brd-c-dk: $c-prim-dk;
+$brd-c-glow: $c-sec;
+
+// Font Colors
+$f-c-dk: #000;
+$f-c-lt: $c-sec;
+
+// Gradients
+
+$g-c-lt: rgba(255, 0, 0, 0);
+$g-c-dk: rgba(52, 152, 219, 0.5);

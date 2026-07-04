@@ -1,0 +1,14 @@
+.dialog-button .d10 {
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 0;
+}
+
+.dialog-button.roll {
+  display: flex;
+}
+
+.roll-dialog input[type='number'] {
+  max-width: 3rem;
+  text-align: center;
+}

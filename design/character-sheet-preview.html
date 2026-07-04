@@ -1,0 +1,521 @@
+<title>Théah — Character Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  /* ============================ Tokens ============================ */
+  :root {
+    --paper:        #e7d8b6;
+    --paper-deep:   #d8c49a;
+    --panel:        #f1e7cc;
+    --panel-edge:   #cbb488;
+    --ink:          #3a2c1c;
+    --ink-soft:     #6b5a41;
+    --navy:         #16323f;
+    --navy-deep:    #0e232c;
+    --teal:         #2b6b6b;
+    --gold:         #b0873f;
+    --gold-leaf:    #d9b262;
+    --gold-deep:    #8a642a;
+    --oxblood:      #7c2b22;
+    --oxblood-deep: #591c16;
+    --line:         rgba(58,44,28,.28);
+    --line-strong:  rgba(58,44,28,.5);
+    --seal-shadow:  rgba(40,20,10,.35);
+    --shadow:       0 18px 44px -22px rgba(30,18,8,.65);
+    --grain:        .06;
+    --display: "Hoefler Text","Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --body:    "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --label:   ui-sans-serif,"Gill Sans","Segoe UI",system-ui,sans-serif;
+  }
+  :root { --panel-edge: #cbb488; }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:        #12262f;
+      --paper-deep:   #0e1f27;
+      --panel:        #173039;
+      --panel-edge:   #2b4a55;
+      --ink:          #e8dcc0;
+      --ink-soft:     #a9b9bb;
+      --navy:         #0b1b22;
+      --navy-deep:    #060f14;
+      --teal:         #5fb0a6;
+      --gold:         #c9a24b;
+      --gold-leaf:    #e6c887;
+      --gold-deep:    #9c7a34;
+      --oxblood:      #b5453a;
+      --oxblood-deep: #7c2b22;
+      --line:         rgba(201,162,75,.22);
+      --line-strong:  rgba(201,162,75,.42);
+      --seal-shadow:  rgba(0,0,0,.5);
+      --shadow:       0 20px 50px -22px rgba(0,0,0,.8);
+      --grain:        .05;
+    }
+  }
+  /* Explicit toggle wins in both directions */
+  :root[data-theme="light"] {
+    --paper:#e7d8b6;--paper-deep:#d8c49a;--panel:#f1e7cc;--panel-edge:#cbb488;--ink:#3a2c1c;--ink-soft:#6b5a41;
+    --navy:#16323f;--navy-deep:#0e232c;--teal:#2b6b6b;--gold:#b0873f;--gold-leaf:#d9b262;--gold-deep:#8a642a;
+    --oxblood:#7c2b22;--oxblood-deep:#591c16;--line:rgba(58,44,28,.28);--line-strong:rgba(58,44,28,.5);
+    --seal-shadow:rgba(40,20,10,.35);--shadow:0 18px 44px -22px rgba(30,18,8,.65);--grain:.06;
+  }
+  :root[data-theme="dark"] {
+    --paper:#12262f;--paper-deep:#0e1f27;--panel:#173039;--panel-edge:#2b4a55;--ink:#e8dcc0;--ink-soft:#a9b9bb;
+    --navy:#0b1b22;--navy-deep:#060f14;--teal:#5fb0a6;--gold:#c9a24b;--gold-leaf:#e6c887;--gold-deep:#9c7a34;
+    --oxblood:#b5453a;--oxblood-deep:#7c2b22;--line:rgba(201,162,75,.22);--line-strong:rgba(201,162,75,.42);
+    --seal-shadow:rgba(0,0,0,.5);--shadow:0 20px 50px -22px rgba(0,0,0,.8);--grain:.05;
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: light dark; }
+  body {
+    margin: 0;
+    font-family: var(--body);
+    color: var(--ink);
+    line-height: 1.5;
+    background:
+      radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--paper) 88%, #fff 12%), transparent 60%),
+      var(--paper-deep);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Aged-paper grain overlay (self-contained SVG noise) */
+  body::before {
+    content:""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: var(--grain);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+  @media (prefers-color-scheme: dark) { body::before { mix-blend-mode: screen; } }
+  :root[data-theme="dark"] body::before { mix-blend-mode: screen; }
+
+  .wrap { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: clamp(16px,3vw,40px); }
+
+  /* ============================ Masthead ============================ */
+  .masthead { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom: 22px; }
+  .brand { display:flex; align-items:center; gap:14px; }
+  .brand svg { width:40px; height:40px; flex:none; filter: drop-shadow(0 1px 0 rgba(0,0,0,.15)); }
+  .brand h1 {
+    margin:0; font-family: var(--display); font-weight:600; letter-spacing:.42em; text-indent:.42em;
+    font-size: clamp(18px, 2.4vw, 26px); font-variant: small-caps;
+    background: linear-gradient(180deg, var(--gold-leaf), var(--gold) 55%, var(--gold-deep));
+    -webkit-background-clip:text; background-clip:text; color: transparent;
+  }
+  .brand .sub { font-family: var(--label); font-size:11px; letter-spacing:.28em; text-transform:uppercase; color: var(--ink-soft); }
+  .theme-btn {
+    font-family: var(--label); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color: var(--ink); background: transparent; border:1px solid var(--line-strong); border-radius:2px;
+    padding:8px 12px; cursor:pointer; display:flex; align-items:center; gap:8px;
+  }
+  .theme-btn:hover { border-color: var(--gold); color: var(--gold-deep); }
+  .theme-btn:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+
+  /* ============================ Sheet spread ============================ */
+  .sheet {
+    display:grid; grid-template-columns: 320px 1fr; gap:0;
+    background: var(--panel);
+    border:1px solid var(--panel-edge);
+    box-shadow: var(--shadow);
+    border-radius: 3px;
+    overflow:hidden;
+  }
+  .sheet::after { /* subtle inner rule frame */
+    content:""; position:absolute; inset:0; pointer-events:none;
+  }
+
+  /* -------- Identity rail -------- */
+  .rail {
+    background:
+      linear-gradient(180deg, color-mix(in srgb,var(--navy) 92%, #000 8%), var(--navy-deep));
+    color: #ecdfc2; padding: 22px 20px 26px; position:relative;
+  }
+  :root[data-theme="light"] .rail, :root:not([data-theme]) .rail { color:#f0e5c8; }
+  .rail .edge { position:absolute; top:0; right:0; bottom:0; width:3px; background:linear-gradient(180deg,var(--gold-leaf),var(--gold-deep)); opacity:.85; }
+
+  .portrait { position:relative; width:170px; aspect-ratio:3/4; margin:2px auto 14px; }
+  .portrait .frame { position:absolute; inset:-8px; }
+  .portrait img, .portrait .ph {
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:2px;
+    background:
+      radial-gradient(80% 60% at 50% 30%, #6f7d86, #3c4a52 70%, #22303a);
+    display:grid; place-items:center;
+  }
+  .portrait .ph svg { width:64px; height:64px; opacity:.5; }
+  .corner { position:absolute; width:26px; height:26px; stroke:var(--gold-leaf); fill:none; stroke-width:1.4; }
+  .corner.tl{top:-8px;left:-8px} .corner.tr{top:-8px;right:-8px;transform:scaleX(-1)}
+  .corner.bl{bottom:-8px;left:-8px;transform:scaleY(-1)} .corner.br{bottom:-8px;right:-8px;transform:scale(-1)}
+
+  .nameplate { text-align:center; margin-bottom:6px; }
+  .nameplate .name {
+    font-family:var(--display); font-size: clamp(22px,2.6vw,27px); font-weight:600; line-height:1.05;
+    color:#f4ead0; text-wrap:balance; margin:0;
+  }
+  .nameplate .epithet { font-family:var(--display); font-style:italic; color:var(--gold-leaf); font-size:15px; margin-top:2px; }
+  .filet { display:flex; align-items:center; gap:8px; justify-content:center; margin:12px 4px; color:var(--gold-leaf); }
+  .filet::before, .filet::after { content:""; height:1px; flex:1; background:linear-gradient(90deg,transparent,currentColor); opacity:.55; }
+  .filet svg { width:16px; height:16px; }
+  .meta { display:grid; grid-template-columns:auto 1fr; gap:4px 12px; font-size:14px; margin: 4px 6px 6px; }
+  .meta dt { font-family:var(--label); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#b9a877; align-self:center; }
+  .meta dd { margin:0; color:#efe4c7; }
+
+  /* Resources */
+  .res { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:16px 2px 4px; }
+  .res .cell { text-align:center; border:1px solid rgba(217,178,98,.28); border-radius:2px; padding:9px 4px 7px; background:rgba(0,0,0,.14); }
+  .res .k { font-family:var(--label); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:#b9a877; }
+  .res .v { font-family:var(--display); font-size:23px; color:#f4ead0; font-variant-numeric:tabular-nums; margin-top:1px; }
+  .res .v small { font-size:13px; color:#b9a877; }
+  .pips-inline { display:flex; gap:3px; justify-content:center; margin-top:4px; }
+  .pips-inline i { width:9px; height:9px; border-radius:50%; border:1px solid var(--gold-leaf); }
+  .pips-inline i.on { background: radial-gradient(var(--gold-leaf), var(--gold-deep)); box-shadow:0 0 4px rgba(217,178,98,.5); }
+
+  /* Wounds + death spiral */
+  .wounds { margin:18px 2px 0; }
+  .wounds .lbl { display:flex; justify-content:space-between; align-items:baseline; font-family:var(--label); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#b9a877; }
+  .track { display:grid; grid-template-columns:repeat(10,1fr); gap:4px; margin:8px 0 4px; }
+  .track b { height:12px; border-radius:2px; border:1px solid rgba(217,178,98,.4); background:rgba(0,0,0,.2); }
+  .track b.on { background:linear-gradient(180deg,var(--oxblood),var(--oxblood-deep)); border-color:var(--oxblood); box-shadow:0 0 6px rgba(124,43,34,.5); }
+  .spiral { display:flex; gap:10px; justify-content:space-between; margin-top:14px; }
+  .seal { position:relative; width:52px; height:52px; display:grid; place-items:center; flex:1; }
+  .seal svg { width:100%; height:100%; }
+  .seal.spent .wax { fill:var(--oxblood); filter:drop-shadow(0 3px 5px var(--seal-shadow)); }
+  .seal .wax { fill:rgba(60,30,20,.35); stroke:rgba(217,178,98,.35); stroke-width:1; transition:fill .25s; }
+  .seal .sig { fill:none; stroke:rgba(247,234,208,.85); stroke-width:1.4; opacity:0; transition:opacity .25s; }
+  .seal.spent .sig { opacity:.9; }
+
+  /* -------- Ledger main -------- */
+  .ledger { padding: 20px 24px 26px; position:relative; }
+  .tabs { display:flex; gap:2px; border-bottom:2px solid var(--line-strong); margin-bottom:20px; flex-wrap:wrap; }
+  .tabs button {
+    font-family:var(--label); font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:600;
+    color:var(--ink-soft); background:transparent; border:0; padding:9px 14px 11px; cursor:pointer; position:relative; border-radius:2px 2px 0 0;
+  }
+  .tabs button[aria-selected="true"] { color:var(--ink); }
+  .tabs button[aria-selected="true"]::after { content:""; position:absolute; left:8px; right:8px; bottom:-2px; height:2px; background:linear-gradient(90deg,var(--gold-leaf),var(--gold-deep)); }
+  .tabs button:hover { color:var(--gold-deep); }
+  .tabs button:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+
+  .sec-title { display:flex; align-items:center; gap:12px; margin:6px 0 14px; }
+  .sec-title h2 { font-family:var(--display); font-variant:small-caps; letter-spacing:.08em; font-weight:600; font-size:19px; margin:0; color:var(--ink); }
+  .sec-title span { flex:1; height:1px; background:linear-gradient(90deg,var(--line-strong),transparent); }
+
+  /* Traits: compass rose behind 5 medallions */
+  .traits { position:relative; display:flex; justify-content:space-between; gap:12px; padding:14px 6px 4px; margin-bottom:26px; }
+  .compass-bg { position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; opacity:.14; }
+  .compass-bg svg { width:230px; height:230px; color:var(--gold-deep); }
+  .trait { position:relative; z-index:1; flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; cursor:pointer; background:none; border:0; font:inherit; color:inherit; }
+  .medallion {
+    width:74px; height:74px; border-radius:50%; display:grid; place-items:center; position:relative;
+    background: radial-gradient(70% 70% at 50% 35%, var(--panel), color-mix(in srgb,var(--paper-deep) 80%, #000 6%));
+    border:1px solid var(--line-strong);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 0 0 4px color-mix(in srgb,var(--panel) 70%, transparent), 0 4px 10px -6px rgba(30,18,8,.6);
+  }
+  .medallion::before { content:""; position:absolute; inset:6px; border-radius:50%; border:1px dashed var(--line); }
+  .medallion .num { font-family:var(--display); font-size:30px; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .trait:hover .medallion { border-color:var(--gold); box-shadow: inset 0 0 0 4px color-mix(in srgb,var(--gold-leaf) 22%, transparent), 0 6px 16px -8px rgba(30,18,8,.7); }
+  .trait .tname { font-family:var(--label); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
+  .trait:hover .tname { color:var(--gold-deep); }
+
+  /* Skills ledger */
+  .skills { display:grid; grid-template-columns:1fr 1fr; gap:2px 30px; }
+  @media (max-width:720px){ .skills { grid-template-columns:1fr; } }
+  .skill { display:flex; align-items:center; gap:10px; padding:7px 8px; border-radius:3px; cursor:pointer; background:none; border:0; font:inherit; color:inherit; text-align:left; width:100%; border-bottom:1px dotted var(--line); }
+  .skill:hover { background: color-mix(in srgb, var(--gold-leaf) 14%, transparent); }
+  .skill:focus-visible { outline:2px solid var(--gold); outline-offset:1px; }
+  .skill .sname { flex:1; font-size:15px; }
+  .skill .val { font-family:var(--display); font-variant-numeric:tabular-nums; font-size:15px; color:var(--ink-soft); width:14px; text-align:center; }
+  .pips { display:flex; gap:4px; }
+  .pips i { width:12px; height:12px; border-radius:50%; border:1.2px solid var(--gold-deep); background:transparent; }
+  .pips i.on { background: radial-gradient(var(--gold-leaf), var(--gold)); box-shadow:0 0 4px rgba(176,135,63,.45); }
+  .skill .go { opacity:0; color:var(--gold-deep); transition:opacity .15s; }
+  .skill:hover .go { opacity:1; }
+
+  /* Two-up lower panels */
+  .lower { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:26px; }
+  @media (max-width:860px){ .lower { grid-template-columns:1fr; } }
+
+  /* Arcana cards */
+  .arcana { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .card { border:1px solid var(--line-strong); border-radius:4px; padding:13px 13px 15px; position:relative; background:
+      linear-gradient(180deg, color-mix(in srgb,var(--panel) 92%, #fff 8%), var(--panel)); }
+  .card .kind { font-family:var(--label); font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; }
+  .card.virtue .kind { color:var(--teal); } .card.hubris .kind { color:var(--oxblood); }
+  .card .cname { font-family:var(--display); font-size:17px; font-weight:600; margin:2px 0 6px; }
+  .card p { margin:0; font-size:13.5px; color:var(--ink); }
+  .card .corner-mark { position:absolute; top:9px; right:11px; font-family:var(--display); font-size:18px; opacity:.5; }
+  .card.virtue { box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--teal) 20%, transparent); }
+  .card.hubris { box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--oxblood) 20%, transparent); }
+
+  /* Advantages list */
+  .adv { list-style:none; margin:0; padding:0; }
+  .adv li { display:flex; align-items:baseline; gap:10px; padding:8px 2px; border-bottom:1px dotted var(--line); }
+  .adv .cost { font-family:var(--display); font-variant-numeric:tabular-nums; font-size:13px; color:#fff; background:linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width:20px; height:20px; border-radius:50%; display:grid; place-items:center; flex:none; box-shadow:0 2px 4px -2px rgba(0,0,0,.5); }
+  .adv .an { font-weight:600; font-size:14.5px; }
+  .adv .ad { color:var(--ink-soft); font-size:13px; }
+  .tagrow { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+  .tag { font-family:var(--label); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); border:1px solid var(--line); border-radius:999px; padding:3px 9px; }
+
+  /* Raises roller */
+  .roller { margin-top:26px; border:1px solid var(--line-strong); border-radius:5px; overflow:hidden; }
+  .roller .top { display:flex; align-items:center; gap:14px; padding:14px 16px; background:linear-gradient(180deg, color-mix(in srgb,var(--navy) 90%,#000 10%), var(--navy-deep)); color:#efe4c7; flex-wrap:wrap; }
+  .roller .formula { font-family:var(--display); font-size:16px; }
+  .roller .formula b { color:var(--gold-leaf); }
+  .roll-btn { margin-left:auto; display:flex; align-items:center; gap:9px; font-family:var(--label); font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:600;
+    color:#2a1c10; background:linear-gradient(180deg,var(--gold-leaf),var(--gold)); border:0; border-radius:3px; padding:10px 16px; cursor:pointer; box-shadow:0 4px 12px -6px rgba(0,0,0,.6); }
+  .roll-btn:hover { filter:brightness(1.06); }
+  .roll-btn:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+  .result { padding:16px; display:none; }
+  .result.show { display:block; animation:fade .35s ease; }
+  @keyframes fade { from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+  @media (prefers-reduced-motion: reduce){ .result.show{ animation:none } }
+  .dice { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .die { width:38px; height:38px; border-radius:6px; display:grid; place-items:center; font-family:var(--display); font-variant-numeric:tabular-nums; font-size:17px; border:1px solid var(--line-strong); background:var(--panel); color:var(--ink); position:relative; }
+  .die.used { background:linear-gradient(180deg,var(--teal),color-mix(in srgb,var(--teal) 70%,#000)); color:#fff; border-color:var(--teal); }
+  .die.ten { background:linear-gradient(180deg,var(--gold-leaf),var(--gold-deep)); color:#2a1c10; border-color:var(--gold-deep); }
+  .raises { display:flex; align-items:center; gap:12px; font-family:var(--display); }
+  .raises .big { font-size:34px; color:var(--oxblood); font-variant-numeric:tabular-nums; }
+  :root[data-theme="dark"] .raises .big { color:var(--gold-leaf); }
+  @media (prefers-color-scheme: dark){ .raises .big { color:var(--gold-leaf); } }
+  .raises .lab { font-family:var(--label); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
+  .combos { margin-top:6px; font-size:13px; color:var(--ink-soft); }
+
+  footer.note { text-align:center; margin-top:26px; font-family:var(--label); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
+
+  @media (max-width:760px){
+    .sheet { grid-template-columns:1fr; }
+    .rail .edge { display:none; }
+  }
+</style>
+
+<div class="wrap">
+  <div class="masthead">
+    <div class="brand">
+      <!-- compass rose emblem -->
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="#b0873f" stroke-width="2">
+          <circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="21" stroke-width="1"/>
+        </g>
+        <path d="M50 8 L57 50 L50 60 L43 50 Z" fill="#d9b262"/>
+        <path d="M50 92 L43 50 L50 40 L57 50 Z" fill="#8a642a"/>
+        <path d="M8 50 L50 43 L60 50 L50 57 Z" fill="#b0873f"/>
+        <path d="M92 50 L50 57 L40 50 L50 43 Z" fill="#8a642a"/>
+      </svg>
+      <div>
+        <h1>Théah</h1>
+        <div class="sub">7th Sea · Second Edition</div>
+      </div>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle light or dark theme">
+      <span id="themeLabel">Night at sea</span>
+    </button>
+  </div>
+
+  <div class="sheet" style="position:relative">
+    <!-- ===================== Identity rail ===================== -->
+    <aside class="rail">
+      <span class="edge"></span>
+      <div class="portrait">
+        <div class="ph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#d9b262" stroke-width="1.2"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 21a8 8 0 0116 0"/></svg>
+        </div>
+        <svg class="corner tl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+        <svg class="corner tr" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+        <svg class="corner bl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+        <svg class="corner br" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+      </div>
+
+      <div class="nameplate">
+        <p class="name">Amélie Valmont</p>
+        <div class="epithet">“The Masked Blade”</div>
+      </div>
+      <div class="filet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg>
+      </div>
+      <dl class="meta">
+        <dt>Nation</dt><dd>Montaigne</dd>
+        <dt>Religion</dt><dd>Vaticine (lapsed)</dd>
+        <dt>Concept</dt><dd>Disgraced noble turned masked avenger</dd>
+        <dt>Languages</dt><dd>Montaigne, Théan, Castillian</dd>
+      </dl>
+
+      <div class="res">
+        <div class="cell">
+          <div class="k">Hero Pts</div>
+          <div class="v">3</div>
+          <div class="pips-inline"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+        </div>
+        <div class="cell"><div class="k">Wealth</div><div class="v">4</div></div>
+        <div class="cell"><div class="k">Reputation</div><div class="v">Daring</div></div>
+      </div>
+
+      <div class="wounds">
+        <div class="lbl"><span>Wounds</span><span>6 / 20</span></div>
+        <div class="track" id="wtrack"></div>
+        <div class="lbl" style="margin-top:12px"><span>Dramatic Wounds</span><span>2 · death spiral</span></div>
+        <div class="spiral">
+          <div class="seal spent">
+            <svg viewBox="0 0 52 52"><circle class="wax" cx="26" cy="26" r="22"/><path class="sig" d="M18 30 L26 16 L34 30 M21 26 h10"/></svg>
+          </div>
+          <div class="seal spent">
+            <svg viewBox="0 0 52 52"><circle class="wax" cx="26" cy="26" r="22"/><path class="sig" d="M18 30 L26 16 L34 30 M21 26 h10"/></svg>
+          </div>
+          <div class="seal">
+            <svg viewBox="0 0 52 52"><circle class="wax" cx="26" cy="26" r="22"/><path class="sig" d="M18 30 L26 16 L34 30 M21 26 h10"/></svg>
+          </div>
+          <div class="seal">
+            <svg viewBox="0 0 52 52"><circle class="wax" cx="26" cy="26" r="22"/><path class="sig" d="M18 30 L26 16 L34 30 M21 26 h10"/></svg>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===================== Ledger ===================== -->
+    <main class="ledger">
+      <div class="tabs" role="tablist" aria-label="Sheet sections">
+        <button role="tab" aria-selected="true">Traits &amp; Skills</button>
+        <button role="tab" aria-selected="false">Advantages</button>
+        <button role="tab" aria-selected="false">Arcana</button>
+        <button role="tab" aria-selected="false">Stories</button>
+        <button role="tab" aria-selected="false">Sorcery</button>
+      </div>
+
+      <div class="sec-title"><h2>Traits</h2><span></span></div>
+      <div class="traits">
+        <div class="compass-bg" aria-hidden="true">
+          <svg viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="34"/>
+            <path d="M50 4 L54 50 L50 96 L46 50 Z M4 50 L50 46 L96 50 L50 54 Z"/>
+            <path d="M22 22 L50 47 L78 78 M78 22 L50 47 L22 78" stroke-width=".6"/>
+          </g></svg>
+        </div>
+        <button class="trait"><div class="medallion"><span class="num">2</span></div><div class="tname">Brawn</div></button>
+        <button class="trait"><div class="medallion"><span class="num">4</span></div><div class="tname">Finesse</div></button>
+        <button class="trait"><div class="medallion"><span class="num">3</span></div><div class="tname">Resolve</div></button>
+        <button class="trait"><div class="medallion"><span class="num">3</span></div><div class="tname">Wits</div></button>
+        <button class="trait"><div class="medallion"><span class="num">4</span></div><div class="tname">Panache</div></button>
+      </div>
+
+      <div class="sec-title"><h2>Skills</h2><span></span></div>
+      <div class="skills" id="skills"></div>
+
+      <div class="lower">
+        <div>
+          <div class="sec-title"><h2>Arcana</h2><span></span></div>
+          <div class="arcana">
+            <div class="card virtue">
+              <div class="kind">Virtue</div>
+              <div class="cname">The Tempest</div>
+              <p>Activate to redirect an incoming danger to yourself and gain a Hero Point.</p>
+              <div class="corner-mark">✦</div>
+            </div>
+            <div class="card hubris">
+              <div class="kind">Hubris</div>
+              <div class="cname">Star-Crossed</div>
+              <p>Refuse aid out of pride to grant the GM a Danger Point — and a Hero Point to you.</p>
+              <div class="corner-mark">✶</div>
+            </div>
+          </div>
+          <div class="sec-title" style="margin-top:22px"><h2>Backgrounds</h2><span></span></div>
+          <div class="tagrow">
+            <span class="tag">Duelist</span><span class="tag">Aristocrat</span><span class="tag">Spy</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="sec-title"><h2>Advantages</h2><span></span></div>
+          <ul class="adv">
+            <li><span class="cost">5</span><span><span class="an">Duelist Academy</span> <span class="ad">— trained in the Valroux school; unlock a Dueling Style.</span></span></li>
+            <li><span class="cost">2</span><span><span class="an">Fascinate</span> <span class="ad">— hold a crowd’s attention with a performance.</span></span></li>
+            <li><span class="cost">3</span><span><span class="an">Fencer</span> <span class="ad">— add a bonus die when wielding a blade in a Duel.</span></span></li>
+            <li><span class="cost">1</span><span><span class="an">Direction Sense</span> <span class="ad">— you always know which way is north.</span></span></li>
+            <li><span class="cost">1</span><span><span class="an">Linguist</span> <span class="ad">— you speak every Théan language.</span></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Raises roller (signature mechanic) -->
+      <div class="roller">
+        <div class="top">
+          <div class="formula">Weaponry <b>4</b> + Finesse <b>4</b> &nbsp;=&nbsp; <b>8</b> d10 &nbsp;·&nbsp; threshold <b>15</b></div>
+          <button class="roll-btn" id="rollBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.3" fill="currentColor"/><circle cx="15" cy="15" r="1.3" fill="currentColor"/><circle cx="15" cy="9" r="1.3" fill="currentColor"/><circle cx="9" cy="15" r="1.3" fill="currentColor"/></svg>
+            Roll the pool
+          </button>
+        </div>
+        <div class="result" id="result">
+          <div class="dice" id="dice"></div>
+          <div class="raises">
+            <span class="big" id="raiseCount">3</span>
+            <div><div class="lab">Raises</div><div class="combos" id="combos"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="note">Preview · reskin direction for the Théah Foundry VTT system</footer>
+    </main>
+  </div>
+</div>
+
+<script>
+  // ---- Wounds track render ----
+  const wt = document.getElementById('wtrack');
+  for (let i=0;i<20;i++){ const b=document.createElement('b'); if(i<6) b.className='on'; wt.appendChild(b); }
+
+  // ---- Skills ----
+  const skills = [
+    ['Aim',2],['Athletics',3],['Brawl',1],['Convince',3],['Empathy',2],['Hide',1],
+    ['Intimidate',2],['Notice',3],['Perform',3],['Ride',2],['Sailing',1],['Scholarship',2],
+    ['Tempt',3],['Theft',2],['Warfare',2],['Weaponry',4]
+  ];
+  const sc = document.getElementById('skills');
+  for (const [name,val] of skills){
+    const b=document.createElement('button'); b.className='skill'; b.type='button';
+    let pips=''; for(let i=0;i<5;i++) pips+=`<i class="${i<val?'on':''}"></i>`;
+    b.innerHTML=`<span class="sname">${name}</span><span class="pips">${pips}</span><span class="val">${val}</span>
+      <svg class="go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+    b.addEventListener('click', ()=>rollFor(name,val));
+    sc.appendChild(b);
+  }
+
+  // ---- Raises engine (7th Sea: group dice into sets summing to >= threshold) ----
+  function computeRaises(dice, threshold){
+    const pool=[...dice].sort((a,b)=>b-a); const used=[]; let raises=0; const combos=[];
+    // greedily pair the largest with smallest to reach threshold
+    let arr=[...pool];
+    while(arr.length){
+      let set=[arr.shift()];
+      while(set.reduce((a,b)=>a+b,0)<threshold && arr.length){ set.push(arr.pop()); }
+      const sum=set.reduce((a,b)=>a+b,0);
+      if(sum>=threshold){ raises++; combos.push(set.join('+')); used.push(...set); }
+      else break; // leftover
+    }
+    return {raises, combos, used};
+  }
+  function rollFor(name,val){
+    document.querySelector('.roller .formula').innerHTML =
+      `${name} <b>${val}</b> + Finesse <b>4</b> &nbsp;=&nbsp; <b>${val+4}</b> d10 &nbsp;·&nbsp; threshold <b>15</b>`;
+    doRoll(val+4);
+  }
+  function doRoll(n){
+    const dice=Array.from({length:n},()=>1+Math.floor(Math.random()*10));
+    const {raises,combos,used}=computeRaises(dice,15);
+    const usedCopy=[...used];
+    const dc=document.getElementById('dice'); dc.innerHTML='';
+    dice.slice().sort((a,b)=>b-a).forEach(d=>{
+      const el=document.createElement('div'); el.className='die'+(d===10?' ten':'');
+      const idx=usedCopy.indexOf(d); if(idx>-1){ el.classList.add('used'); usedCopy.splice(idx,1); }
+      el.textContent=d; dc.appendChild(el);
+    });
+    document.getElementById('raiseCount').textContent=raises;
+    document.getElementById('combos').textContent = combos.length? combos.join('   ·   ') : 'no sets reached 15';
+    document.getElementById('result').classList.add('show');
+  }
+  document.getElementById('rollBtn').addEventListener('click',()=>doRoll(8));
+
+  // ---- Theme toggle ----
+  const root=document.documentElement, tb=document.getElementById('themeBtn'), tl=document.getElementById('themeLabel');
+  function current(){ return root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'); }
+  function setLabel(){ tl.textContent = current()==='dark' ? 'Chart room, by day' : 'Night at sea'; }
+  setLabel();
+  tb.addEventListener('click',()=>{ root.setAttribute('data-theme', current()==='dark'?'light':'dark'); setLabel(); });
+
+  // initial roll so the card isn't empty
+  doRoll(8);
+</script>

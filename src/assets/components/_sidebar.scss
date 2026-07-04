@@ -1,0 +1,126 @@
+#sidebar {
+  width: 20rem;
+
+  h2,
+  h3,
+  h4 {
+    color: $f-c-lt;
+  }
+
+  #sidebar-tabs > {
+    .item {
+      flex: 1;
+    }
+
+    .item.active {
+      color: #fff;
+      border: $brd-s-sm-lt;
+      box-shadow: 0 0 0.375rem inset $c-sec;
+    }
+  }
+
+  #sidebar-tabs {
+    border-bottom: $brd-s-sm-glow;
+    box-shadow: 0 0 0.625rem $c-sec;
+  }
+
+  .tabs .item.active {
+    text-shadow: 0 0 0.625rem $c-sec;
+  }
+
+  .sidebar-tab {
+    .directory-header input[type='text'] {
+      text-align: left;
+    }
+    .directory-list {
+      .directory-item img {
+        border: $brd-s-md-dk;
+        border-radius: $profile-img-sm-size;
+        height: $profile-img-sm-size;
+        width: $profile-img-sm-size;
+        fill: $c-prim;
+        background: $bg-c-lt;
+      }
+
+      .entity {
+        border-bottom: $brd-g-md-dk;
+        border-top: 0;
+        background-image: linear-gradient(
+          to left,
+          rgba(52, 152, 219, 0.5) 90%,
+          rgba(255, 0, 0, 0) 10%
+        );
+      }
+
+      .entity.journal {
+        background: rgba(52, 152, 219, 0.5);
+      }
+
+      .playlist-header h4,
+      h3 {
+        @include paint-bottom-border;
+      }
+
+      .directory-item.scene h3 {
+        background: none;
+      }
+    }
+
+    #scene {
+    }
+
+    .dice-result h4 {
+      color: $f-c-dk;
+    }
+  }
+
+  #combat {
+    #combat-controls {
+      background: $bg-c-lt;
+      color: $f-c-dk;
+
+      .combat-control {
+        font-size: $f-s-lg;
+      }
+    }
+
+    #combat-round .encounters {
+      a,
+      a.combat-cycle {
+        color: $f-c-lt;
+        font-size: $f-s-norm;
+      }
+
+      h3,
+      h4 {
+        font-size: $f-s-md;
+      }
+
+      h4 {
+        color: $f-c-lt;
+      }
+    }
+
+    li.combatant {
+      border-bottom: $brd-g-md-dk;
+      border-top: 0;
+      background-image: linear-gradient(
+        to left,
+        rgba(52, 152, 219, 0.5) 90%,
+        rgba(255, 0, 0, 0) 10%
+      );
+
+      .token-name {
+        .combatant-control {
+          color: $f-c-lt;
+        }
+      }
+    }
+  }
+
+  #scenes {
+    .scene h3 {
+      color: $f-c-lt;
+    }
+  }
+}

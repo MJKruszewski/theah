@@ -1,0 +1,93 @@
+header.sheet-header {
+  flex: 0 0 9.375rem;
+
+  flex-direction: row;
+
+  .header-data {
+    & > .flex-group {
+      gap: 0.2rem;
+
+      & > * {
+        flex: auto;
+      }
+    }
+
+    input {
+      text-align: center;
+      font-size: 0.9rem;
+    }
+  }
+
+  .profile-img {
+    flex: 0 0 $profile-img-lg-size;
+    height: $profile-img-lg-size;
+    width: $profile-img-lg-size;
+    border: $brd-s-lg-dk;
+    border-radius: $profile-img-lg-size;
+  }
+
+  .wounds .pts {
+    padding-left: 0.625rem;
+  }
+
+  .wounds .pts.bigger {
+    padding-left: 2.375rem;
+  }
+
+  .raise-tracking {
+    min-width: 10em;
+
+    label {
+      margin-right: 0.4em;
+    }
+    button {
+      width: 1.8rem;
+      font-size: 0.8rem;
+      height: 1.8rem;
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      border-radius: 1rem;
+      border: 0px;
+      box-shadow: 1px 1px 4px #771213;
+    }
+
+    input {
+      text-align: center;
+    }
+  }
+}
+
+.danger-points {
+  input[type='text'] {
+    font-size: $f-s-4xl;
+    height: 8rem;
+    width: 8rem;
+    border: $brd-s-lg-dk;
+    border-radius: 2em;
+    text-align: center;
+  }
+
+  button {
+    margin-top: 3em;
+    width: auto;
+  }
+}
+
+.sheet-header.dangerpts {
+  flex-direction: row;
+  margin: 0px;
+  gap: $margin-md;
+
+  .profile-img {
+    flex: 0 0 $profile-img-sm-size;
+    height: $profile-img-sm-size;
+    width: $profile-img-sm-size;
+    border: $brd-s-sm-dk;
+    border-radius: $profile-img-sm-size;
+  }
+}
+
+.red {
+  color: red;
+}

@@ -1,0 +1,42 @@
+// Import utilities.
+@import 'utils/colors';
+@import 'utils/typography';
+@import 'utils/mixins';
+@import 'utils/variables';
+
+/* Global styles */
+@import 'global/global';
+@import 'global/window';
+@import 'global/grid';
+@import 'global/flex';
+
+// @import 'components/sidebar';
+
+.dialog {
+  @import 'components/dialogs';
+}
+
+#chat {
+  @import 'components/chat';
+}
+/* Styles limited to theah sheets */
+.theah {
+  @import 'components/forms';
+  @import 'components/tabs';
+}
+
+.sheet {
+  @import 'components/sheet';
+}
+
+.actor {
+  @import 'components/actors';
+}
+
+.item {
+  @import 'components/items';
+}
+
+.toolbox {
+  @import 'components/toolbox';
+}

@@ -1,0 +1,14 @@
+{
+  "name": "theah",
+  "private": true,
+  "type": "module",
+  "description": "Théah — 7th Sea 2nd Edition (Unofficial) system for Foundry VTT.",
+  "scripts": {
+    "build": "bun build.mjs",
+    "watch": "bun build.mjs --watch"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.1",
+    "sass": "1.101.0"
+  }
+}
