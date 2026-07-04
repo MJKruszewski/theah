@@ -1,59 +1,60 @@
 {{#if isPlayerCharacter}}
-  <div class="form-group flex-group">
-    <span class="flex-group corruption">
-    <label>{{ localize "SVNSEA2E.CorruptionPoints" }}</label>
-    {{#for 1 10 1}}
-      {{#iff corruptionpts '>=' @index}}
-        <i data-name="system.corruptionpts" data-value="{{@index}}" data-type="corrupt" data-key="corruptionpts" class="fillable fas fa-circle"></i>
-      {{else}}
-        <i data-name="system.corruptionpts" data-value="{{@index}}" data-type="corrupt" data-key="corruptionpts" class="fillable far fa-circle"></i>
-      {{/iff}}
-    {{/for}}
-    </span>
-    <div class="flex-group">
-      <label for="system.heropts" class="icon-label"><i class="fas fa-sun" title="{{localize "SVNSEA2E.HeroPoints"}}"></i></label>
-      <span class="twodigit herospts">
-        <input type="text" name="system.heropts" value="{{heropts}}" id="system.heropts"/>
-      </span>
+  <div class="rail-resources">
+    <div class="res-cell">
+      <div class="res-k"><i class="fas fa-sun"></i> {{localize "SVNSEA2E.HeroPoints"}}</div>
+      <span class="res-v herospts"><input type="text" name="system.heropts" value="{{heropts}}" id="system.heropts" /></span>
     </div>
-    <div class="flex-group">
-      <label for="system.wealth" class="icon-label"><i class="fas fa-coins" title="{{localize "SVNSEA2E.WealthPts"}}"></i></label>
-      <span class="twodigit wealth">
-        <input type="text" name="system.wealth" value="{{wealth}}" data-dtype="String" id="system.wealth" />
-      </span>
+    <div class="res-cell">
+      <div class="res-k"><i class="fas fa-coins"></i> {{localize "SVNSEA2E.WealthPts"}}</div>
+      <span class="res-v wealth"><input type="text" name="system.wealth" value="{{wealth}}" data-dtype="String" id="system.wealth" /></span>
     </div>
-    <div class="flex-group raise-tracking">
-      <label for="system.initiative">{{ localize "SVNSEA2E.Initiative" }}</label>
-      <span class="twodigit">
-        <button class="minus-1-initiative">-1</button>
-        <input
-          type="text"
-          name="system.initiative"
-          value="{{initiative}}"
-          id="system.initiative"
-          disabled
-        />
-        <button class="add-1-initiative">+1</button>
+    <div class="res-cell">
+      <div class="res-k">{{localize "SVNSEA2E.Reputation"}}</div>
+      <span class="res-v reputation"><input type="text" name="system.reputation" value="{{reputation}}" placeholder="—" /></span>
+    </div>
+    <div class="res-cell res-wide raise-tracking">
+      <div class="res-k">{{localize "SVNSEA2E.Initiative"}}</div>
+      <div class="init-ctl">
+        <button type="button" class="minus-1-initiative" aria-label="-1">&minus;</button>
+        <input type="text" name="system.initiative" value="{{initiative}}" id="system.initiative" disabled />
+        <button type="button" class="add-1-initiative" aria-label="+1">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail-block rail-corruption">
+    <div class="res-k">{{localize "SVNSEA2E.CorruptionPoints"}}</div>
+    <div class="pips corruption-pips">
+      {{#for 1 10 1}}
+        {{#iff corruptionpts '>=' @index}}
+          <i data-name="system.corruptionpts" data-value="{{@index}}" data-type="corrupt" data-key="corruptionpts" class="fillable rating corrupt on"></i>
+        {{else}}
+          <i data-name="system.corruptionpts" data-value="{{@index}}" data-type="corrupt" data-key="corruptionpts" class="fillable rating corrupt"></i>
+        {{/iff}}
+      {{/for}}
     </div>
   </div>
 {{/if}}
-<div class="flex-group-left wounds">
-  {{localize "SVNSEA2E.Wounds" }}
-  {{#for 1 wounds.max 1}}
-    {{#iff @remain '!=' 0}}
-      {{#iff wounds.value '>=' @index}}
-        <i data-name="system.wounds.value" data-value="{{@index}}" data-type="wounds" class="fillable fas fa-heart fa-lg"></i>
-      {{else}}
-        <i data-name="system.wounds.value" data-value="{{@index}}" data-type="wounds" class="fillable far fa-heart fa-lg"></i>
-      {{/iff}}
-    {{else}}
-      {{#if isNotBrute}}
-        {{#iff dwounds.value '>=' @mod}}
-          <i data-name="system.dwounds.value" data-value="{{@mod}}" data-type="dwounds" class="fillable fas fa-heart red fa-lg"></i>
+
+<div class="rail-block rail-wounds">
+  <div class="res-k">{{localize "SVNSEA2E.Wounds"}} <span class="res-count">{{wounds.value}}/{{wounds.max}}</span></div>
+  <div class="wound-track">
+    {{#for 1 wounds.max 1}}
+      {{#iff @remain '!=' 0}}
+        {{#iff wounds.value '>=' @index}}
+          <i data-name="system.wounds.value" data-value="{{@index}}" data-type="wounds" class="fillable wound on" title="{{@index}}"></i>
         {{else}}
-          <i data-name="system.dwounds.value" data-value="{{@mod}}" data-type="dwounds" class="fillable far fa-heart red fa-lg"></i>
+          <i data-name="system.wounds.value" data-value="{{@index}}" data-type="wounds" class="fillable wound" title="{{@index}}"></i>
         {{/iff}}
-      {{/if}}
-    {{/iff}}
-  {{/for}}
+      {{else}}
+        {{#if isNotBrute}}
+          {{#iff dwounds.value '>=' @mod}}
+            <i data-name="system.dwounds.value" data-value="{{@mod}}" data-type="dwounds" class="fillable wound dramatic on" title="{{localize 'SVNSEA2E.DramaticWounds'}}"></i>
+          {{else}}
+            <i data-name="system.dwounds.value" data-value="{{@mod}}" data-type="dwounds" class="fillable wound dramatic" title="{{localize 'SVNSEA2E.DramaticWounds'}}"></i>
+          {{/iff}}
+        {{/if}}
+      {{/iff}}
+    {{/for}}
+  </div>
 </div>

@@ -219,7 +219,7 @@ export const migrateVirtue = function (actor) {
   if (virtue.name) {
     const itemData = {
       name: virtue.name,
-      img: `systems/theah/icons/virtue.jpg`,
+      img: `systems/theah/icons/item.svg`,
       type: 'virtue',
       data: {
         description: virtue.description,
@@ -234,7 +234,7 @@ export const migrateHubris = function (actor) {
   if (hubris.name) {
     const itemData = {
       name: hubris.name,
-      img: `systems/theah/icons/hubris.jpg`,
+      img: `systems/theah/icons/item.svg`,
       type: 'hubris',
       data: {
         description: hubris.description,

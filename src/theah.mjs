@@ -345,7 +345,7 @@ Hooks.once('setup', function () {
  **/
 Hooks.on('preCreateItem', function (document, options, userId) {
   document.updateSource({
-    img: 'systems/theah/icons/' + document.type + '.jpg',
+    img: 'systems/theah/icons/item.svg',
   });
 });
 
@@ -356,7 +356,7 @@ Hooks.on('preCreateItem', function (document, options, userId) {
  **/
 Hooks.on('preCreateActor', function (document, entity, options, userId) {
   document.updateSource({
-    img: 'systems/theah/icons/' + document.type + '.jpg',
+    img: 'systems/theah/icons/portrait.svg',
   });
 });
 

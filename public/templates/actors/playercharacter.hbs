@@ -1,53 +1,59 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
+  <div class="theah-layout">
 
-  {{!-- Sheet Header --}}
-  <header class="sheet-header">
-    <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" height="100" width="100" />
-    <div class="header-fields">
-      {{> "systems/theah/templates/actors/parts/actor-name.hbs"}}
+    {{!-- ===================== Left identity rail ===================== --}}
+    <aside class="identity-rail">
+      <div class="portrait-frame">
+        <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" />
+        <span class="frame-corner tl"></span><span class="frame-corner tr"></span>
+        <span class="frame-corner bl"></span><span class="frame-corner br"></span>
+      </div>
+
+      <h1 class="charname"><input name="name" type="text" value="{{name}}" placeholder="{{localize 'SVNSEA2E.ActorName'}}" /></h1>
+
+      <div class="rail-filet" aria-hidden="true">
+        <svg viewBox="0 0 120 12"><path d="M2 6h44M74 6h44M56 2l8 4-8 4M64 2l-8 4 8 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      </div>
+
+      <dl class="rail-meta">
+        <dt>{{localize "SVNSEA2E.Nation"}}</dt>
+        <dd><select name="system.nation">{{selectOptions config.nations selected=nation localize=true}}</select></dd>
+        <dt>{{localize "SVNSEA2E.Religion"}}</dt>
+        <dd><input type="text" name="system.religion" value="{{religion}}" placeholder="—" /></dd>
+        <dt>{{localize "SVNSEA2E.Age"}}</dt>
+        <dd><input type="text" name="system.age" value="{{age}}" placeholder="—" /></dd>
+        <dt>{{localize "SVNSEA2E.Languages"}}</dt>
+        <dd class="rail-langs">
+          <ul class="tag-list">
+            {{#each selectedlangs as |v k|}}<li class="tag">{{v}}</li>{{/each}}
+          </ul>
+          <a class="language-selector" data-options="languages" title="{{localize 'SVNSEA2E.Languages'}}"><i class="fas fa-edit"></i></a>
+        </dd>
+      </dl>
+
+      {{> "systems/theah/templates/actors/parts/actor-wounds.hbs"}}
+    </aside>
+
+    {{!-- ===================== Right ledger ===================== --}}
+    <div class="sheet-main">
+      <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="traits"><h2>{{localize "SVNSEA2E.TraitsAndSkills"}}</h2></a>
+        <a class="item" data-tab="advantages"><h2>{{localize "SVNSEA2E.Features"}}</h2></a>
+        <a class="item" data-tab="arcana"><h2>{{localize "SVNSEA2E.Arcana"}}</h2></a>
+        <a class="item" data-tab="stories"><h2>{{localize "SVNSEA2E.Stories"}}</h2></a>
+        <a class="item" data-tab="inventory"><h2>{{localize "SVNSEA2E.Inventory"}}</h2></a>
+        <a class="item" data-tab="sorcery"><h2>{{localize "SVNSEA2E.Sorcery"}}</h2></a>
+      </nav>
+
+      <section class="sheet-body">
+        {{> "systems/theah/templates/actors/parts/actor-traits.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-advantages.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-arcana.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-stories.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-inventory.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-sorcery.hbs"}}
+      </section>
     </div>
-  </header>
 
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="concept">
-      <h2>{{localize "SVNSEA2E.Concept"}}</h2>
-    </a>
-    <a class="item" data-tab="traits">
-      <h2>{{localize "SVNSEA2E.Traits"}}</h2>
-    </a>
-    <a class="item" data-tab="advantages">
-      <h2>{{localize "SVNSEA2E.Features"}}</h2>
-    </a>
-    <a class="item" data-tab="fate">
-      <h2>{{localize "SVNSEA2E.Fate"}}</h2>
-    </a>
-    <a class="item" data-tab="inventory">
-      <h2>{{localize "SVNSEA2E.Inventory"}}</h2>
-    </a>
-    <a class="item" data-tab="sorcery">
-      <h2>{{localize "SVNSEA2E.Sorcery"}}</h2>
-    </a>
-  </nav>
-
-  {{!-- Sheet Body --}}
-  <section class="sheet-body">
-    {{!-- Traits Tab --}}
-    {{> "systems/theah/templates/actors/parts/actor-traits.hbs"}}
-
-    {{!-- Advantages Tab --}}
-    {{> "systems/theah/templates/actors/parts/actor-advantages.hbs"}}
-
-    {{!-- Sorcery Tab --}}
-    {{> "systems/theah/templates/actors/parts/actor-sorcery.hbs"}}
-
-    {{!-- Inventory Tab --}}
-    {{> "systems/theah/templates/actors/parts/actor-inventory.hbs"}}
-
-    {{!-- Fate Tab --}}
-    {{> "systems/theah/templates/actors/parts/actor-fate.hbs"}}
-
-    {{!-- Concept Tab --}}
-    {{> "systems/theah/templates/actors/parts/actor-concept.hbs"}}
-  </section>
+  </div>
 </form>

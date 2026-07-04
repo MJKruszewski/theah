@@ -169,11 +169,11 @@ export default class ActorSheetSS2e extends ActorSheet {
       .on('click', (event) => this._processCircle(event));
     if (this.actor.type === ActorType.BRUTE) {
       html
-        .find('.fillable.fa-heart')
+        .find('.fillable.fa-heart, .fillable.wound')
         .on('click', (event) => this._processBruteWounds(event));
     } else {
       html
-        .find('.fillable.fa-heart')
+        .find('.fillable.fa-heart, .fillable.wound')
         .on('click', (event) => this._processWounds(event));
     }
 

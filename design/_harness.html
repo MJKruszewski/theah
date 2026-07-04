@@ -1,0 +1,114 @@
+<title>Théah — sheet render (compiled CSS)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>/*__CSS__*/</style>
+<style>
+  body { margin: 0; background: #2b2b2b; padding: 20px; }
+  .harness-note { max-width: 1050px; margin: 0 auto 14px; color: #cbb488; font: 13px system-ui; }
+  .app { width: 1050px; max-width: 100%; margin: 0 auto; border-radius: 5px; overflow: hidden; box-shadow: 0 24px 60px -20px #000; }
+  /* harness: show the three content-rich tabs stacked so the whole design is visible at once */
+  .sheet-body .tab { display: block !important; border-top: 1px dashed rgba(58,44,28,.2); }
+  .sheet-body .tab:first-child { border-top: 0; }
+</style>
+
+<div class="harness-note">Render of the real compiled <code>dist/theah.css</code> over the actual Foundry sheet DOM (sample data). FontAwesome glyphs are supplied by Foundry at runtime, so a few small icons are blank here.</div>
+
+<div class="app window-app theah sheet actor pc">
+  <header class="window-header"><h4 class="window-title">Amélie Valmont</h4></header>
+  <div class="window-content">
+    <form class="editable flexcol">
+      <div class="theah-layout">
+
+        <aside class="identity-rail">
+          <div class="portrait-frame">
+            <img class="profile-img" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400'%3E%3Cdefs%3E%3CradialGradient id='pbg' cx='50%25' cy='34%25' r='72%25'%3E%3Cstop offset='0%25' stop-color='%233c4a52'/%3E%3Cstop offset='62%25' stop-color='%23243139'/%3E%3Cstop offset='100%25' stop-color='%2316242c'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='300' height='400' fill='url(%23pbg)'/%3E%3Cg fill='none' stroke='%23d9b262' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' opacity='0.55'%3E%3Ccircle cx='150' cy='158' r='52'/%3E%3Cpath d='M70 320a80 80 0 0 1 160 0'/%3E%3C/g%3E%3C/svg%3E" />
+            <span class="frame-corner tl"></span><span class="frame-corner tr"></span>
+            <span class="frame-corner bl"></span><span class="frame-corner br"></span>
+          </div>
+          <h1 class="charname"><input value="Amélie Valmont" /></h1>
+          <div class="rail-filet"><svg viewBox="0 0 120 12"><path d="M2 6h44M74 6h44M56 2l8 4-8 4M64 2l-8 4 8 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          <dl class="rail-meta">
+            <dt>Nation</dt><dd><select><option>Montaigne</option></select></dd>
+            <dt>Religion</dt><dd><input value="Vaticine (lapsed)" /></dd>
+            <dt>Age</dt><dd><input value="27" /></dd>
+            <dt>Languages</dt>
+            <dd class="rail-langs"><ul class="tag-list"><li class="tag">Montaigne</li><li class="tag">Théan</li><li class="tag">Castillian</li></ul><a class="language-selector"><i class="fas fa-edit"></i></a></dd>
+          </dl>
+          <div class="rail-resources">
+            <div class="res-cell"><div class="res-k">Hero Pts</div><span class="res-v herospts"><input value="3" /></span></div>
+            <div class="res-cell"><div class="res-k">Wealth</div><span class="res-v wealth"><input value="4" /></span></div>
+            <div class="res-cell"><div class="res-k">Reputation</div><span class="res-v reputation"><input value="Daring" /></span></div>
+            <div class="res-cell res-wide raise-tracking"><div class="res-k">Raises</div><div class="init-ctl"><button type="button">−</button><input value="0" disabled /><button type="button">+</button></div></div>
+          </div>
+          <div class="rail-block rail-wounds">
+            <div class="res-k">Wounds <span class="res-count">6/20</span></div>
+            <div class="wound-track">
+              <i class="fillable wound on"></i><i class="fillable wound on"></i><i class="fillable wound on"></i><i class="fillable wound on"></i>
+              <i class="fillable wound dramatic on"></i>
+              <i class="fillable wound on"></i><i class="fillable wound on"></i><i class="fillable wound"></i><i class="fillable wound"></i>
+              <i class="fillable wound dramatic on"></i>
+              <i class="fillable wound"></i><i class="fillable wound"></i><i class="fillable wound"></i><i class="fillable wound"></i>
+              <i class="fillable wound dramatic"></i>
+              <i class="fillable wound"></i><i class="fillable wound"></i><i class="fillable wound"></i><i class="fillable wound"></i>
+              <i class="fillable wound dramatic"></i>
+            </div>
+          </div>
+        </aside>
+
+        <div class="sheet-main">
+          <nav class="sheet-tabs tabs">
+            <a class="item active"><h2>Traits &amp; Skills</h2></a>
+            <a class="item"><h2>Advantages</h2></a>
+            <a class="item"><h2>Arcana</h2></a>
+            <a class="item"><h2>Stories</h2></a>
+            <a class="item"><h2>Inventory</h2></a>
+            <a class="item"><h2>Sorcery</h2></a>
+          </nav>
+          <section class="sheet-body">
+
+            <div class="tab traits active">
+              <section class="theah-traits">
+                <div class="section-rule"><h3>Traits</h3><span></span></div>
+                <div class="traits-row">
+                  <!--TRAITS-->
+                </div>
+              </section>
+              <div class="section-rule"><h3>Skills</h3><span></span></div>
+              <div class="theah-skills"><!--SKILLS--></div>
+            </div>
+
+            <div class="tab features active">
+              <div class="section-rule adv-head"><h3>Advantages</h3><span></span><a class="add-btn"><i class="fas fa-plus"></i></a></div>
+              <ul class="adv-list">
+                <li class="adv-row item"><span class="cost">5</span><h4 class="an item-name">Duelist Academy</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                <li class="adv-row item"><span class="cost">2</span><h4 class="an item-name">Fascinate</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                <li class="adv-row item"><span class="cost">3</span><h4 class="an item-name">Fencer</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                <li class="adv-row item"><span class="cost">1</span><h4 class="an item-name">Direction Sense</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                <li class="adv-row item"><span class="cost">1</span><h4 class="an item-name">Linguist</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+              </ul>
+              <div class="section-rule adv-head"><h3>Backgrounds</h3><span></span><a class="add-btn"><i class="fas fa-plus"></i></a></div>
+              <ul class="tag-list bg-tags">
+                <li class="tag item"><span class="item-name">Duelist</span><a class="item-control"><i class="fas fa-times"></i></a></li>
+                <li class="tag item"><span class="item-name">Aristocrat</span><a class="item-control"><i class="fas fa-times"></i></a></li>
+                <li class="tag item"><span class="item-name">Spy</span><a class="item-control"><i class="fas fa-times"></i></a></li>
+              </ul>
+            </div>
+
+            <div class="tab arcana active">
+              <div class="arcana-cards">
+                <div class="arcana-col">
+                  <div class="section-rule adv-head"><h3>Virtue</h3><span></span><a class="add-btn"><i class="fas fa-plus"></i></a></div>
+                  <div class="card virtue item"><div class="card-controls"><a class="item-control"><i class="fas fa-edit"></i></a></div><div class="kind">Virtue</div><div class="cname item-name">The Tempest</div><div class="ctext"><p>Activate to redirect an incoming danger to yourself and gain a Hero Point.</p></div></div>
+                </div>
+                <div class="arcana-col">
+                  <div class="section-rule adv-head"><h3>Hubris</h3><span></span><a class="add-btn"><i class="fas fa-plus"></i></a></div>
+                  <div class="card hubris item"><div class="card-controls"><a class="item-control"><i class="fas fa-edit"></i></a></div><div class="kind">Hubris</div><div class="cname item-name">Star-Crossed</div><div class="ctext"><p>Refuse aid out of pride to grant the GM a Danger Point — and a Hero Point to you.</p></div></div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

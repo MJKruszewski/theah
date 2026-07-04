@@ -48,10 +48,12 @@ $grain: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='
     background-image: url("#{$grain}");
     opacity: 0.06; mix-blend-mode: multiply;
   }
-  form { position: relative; z-index: 1; padding: 16px 18px 18px; background: transparent; }
+  form { position: relative; z-index: 1; padding: 0; background: transparent; }
 
   /* ---- Typography ---- */
-  h1, h2, h3, h4 { font-family: $f-display; color: $ink; border: none; }
+  h1, h2, h3, h4 { font-family: $f-display; color: $ink; border: none; background: none; padding-bottom: 0; }
+  /* kill the base system's red paint-border bleed under titles */
+  h1.charname, .sheet-main h3, .section-rule h3 { background: none; }
   input[type="text"], input[type="number"], select, textarea {
     font-family: $f-body; color: $ink; background: rgba(255, 255, 255, 0.35);
     border: 1px solid $line; border-radius: 2px;
@@ -251,3 +253,229 @@ $grain: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='
   .combos { font-size: 13px; color: $ink-soft; margin-top: 6px; }
   .combos b { color: $ink; }
 }
+
+/* ==========================================================================
+   Character-sheet composition: left identity rail + right ledger.
+   ========================================================================== */
+.theah {
+  .theah-layout {
+    display: grid;
+    grid-template-columns: 296px 1fr;
+    align-items: stretch;
+    min-height: 100%;
+  }
+
+  /* ---- Identity rail (dark, gilt edge) ---- */
+  .identity-rail {
+    position: relative;
+    background: linear-gradient(180deg, color-mix(in srgb, $navy 94%, #000 6%), $navy-deep);
+    color: $parchment-lt;
+    padding: 22px 18px 24px;
+    box-shadow: inset -3px 0 0 0 $gold-deep, inset -4px 0 10px -6px rgba(0, 0, 0, 0.6);
+  }
+
+  .portrait-frame {
+    position: relative; width: 158px; aspect-ratio: 3 / 4; margin: 2px auto 16px;
+    .profile-img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 2px; display: block;
+      border: 1px solid $gold-deep; margin: 0;
+      box-shadow: 0 0 0 4px $navy, 0 0 0 5px $gold-deep, 0 8px 18px -10px rgba(0, 0, 0, 0.8);
+    }
+    .frame-corner {
+      position: absolute; width: 18px; height: 18px; border: 1.5px solid $gold-leaf; opacity: 0.9;
+      &.tl { top: -6px; left: -6px; border-right: 0; border-bottom: 0; }
+      &.tr { top: -6px; right: -6px; border-left: 0; border-bottom: 0; }
+      &.bl { bottom: -6px; left: -6px; border-right: 0; border-top: 0; }
+      &.br { bottom: -6px; right: -6px; border-left: 0; border-top: 0; }
+    }
+  }
+
+  .identity-rail h1.charname {
+    height: auto; margin: 0 0 4px; text-align: center; background: none; padding: 0;
+    input {
+      width: 100%; text-align: center; background: none; border: none; text-indent: 0;
+      font-family: $f-display; font-size: 1.5rem; font-weight: 600; color: #f4ead0;
+      border-bottom: 1px solid transparent;
+    }
+    input:focus { border-bottom-color: $gold; box-shadow: none; }
+  }
+
+  /* Resource cells */
+  .rail-resources {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 14px 0 4px;
+  }
+  .res-cell {
+    text-align: center; padding: 8px 6px 7px; border-radius: 2px;
+    border: 1px solid rgba(217, 178, 98, 0.28); background: rgba(0, 0, 0, 0.16);
+    &.res-wide { grid-column: 1 / -1; }
+    .res-k {
+      font-family: $f-label; font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase;
+      color: #bda874; margin-bottom: 3px;
+      i { color: $gold-leaf; }
+    }
+    .res-v input {
+      width: 100%; max-width: none; text-align: center; background: none; border: none; color: #f4ead0;
+      font-family: $f-display; font-size: 1.35rem; font-variant-numeric: tabular-nums;
+    }
+  }
+  .init-ctl {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    button {
+      width: 26px; height: 26px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+      font-size: 1rem; line-height: 1; color: #2a1c10; font-weight: 700;
+      background: linear-gradient(180deg, $gold-leaf, $gold-deep); box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.6);
+    }
+    input {
+      width: 44px; max-width: 44px; text-align: center; background: rgba(0, 0, 0, 0.25); color: #f4ead0;
+      border: 1px solid rgba(217, 178, 98, 0.3); font-family: $f-display; font-size: 1.1rem;
+    }
+  }
+
+  .rail-block { margin-top: 16px; }
+  .rail-block .res-k {
+    font-family: $f-label; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #bda874;
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px;
+    .res-count { color: rgba(240, 229, 200, 0.7); font-family: $f-display; letter-spacing: 0; }
+  }
+
+  /* Corruption pips (subtle, on the dark rail) */
+  .corruption-pips { flex-wrap: wrap; }
+  i.fillable.rating.corrupt {
+    width: 11px; height: 11px; border-color: rgba(180, 140, 200, 0.5);
+    &.on { background: radial-gradient(#b28ad0, #4a2c63); box-shadow: 0 0 5px rgba(150, 90, 200, 0.5); }
+  }
+
+  /* Wound track: oxblood pips + dramatic-wound wax seals (no icon font needed) */
+  .wound-track { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  i.fillable.wound {
+    width: 13px; height: 13px; border-radius: 50%; cursor: pointer; box-sizing: border-box;
+    border: 1.4px solid rgba(217, 178, 98, 0.45); background: rgba(0, 0, 0, 0.22);
+    transition: transform 0.1s;
+    &.on { background: radial-gradient($oxblood, $oxblood-deep); border-color: $oxblood; box-shadow: 0 0 5px rgba(124, 43, 34, 0.55); }
+    &:hover { transform: scale(1.18); }
+    &.dramatic {
+      width: 24px; height: 24px; border-width: 2px; border-color: rgba(181, 69, 58, 0.6);
+      background: rgba(0, 0, 0, 0.28); position: relative;
+      &::before {
+        content: ""; position: absolute; inset: 4px; border-radius: 50%;
+        border: 1px dashed rgba(217, 178, 98, 0.4);
+      }
+      &.on {
+        background: radial-gradient(circle at 50% 38%, #a5372c, $oxblood-deep);
+        border-color: $oxblood; box-shadow: inset 0 1px 2px rgba(255, 220, 200, 0.25), 0 2px 5px rgba(40, 12, 8, 0.6);
+      }
+      &.on::before { border-style: solid; border-color: rgba(247, 234, 208, 0.5); }
+    }
+  }
+
+  /* ---- Ledger (right) ---- */
+  .sheet-main { padding: 16px 22px 20px; min-width: 0; }
+  .sheet-main .section-rule:first-child { margin-top: 4px; }
+}
+
+/* Stack the rail above the ledger on narrow windows */
+@media (max-width: 720px) {
+  .theah .theah-layout { grid-template-columns: 1fr; }
+  .theah .identity-rail { box-shadow: inset 0 -3px 0 0 $gold-deep; }
+}
+
+/* ==========================================================================
+   Rail meta, resources, arcana cards, advantage rows — the 1:1 preview port.
+   ========================================================================== */
+.theah {
+  /* Filet flourish under the name */
+  .rail-filet { color: $gold-leaf; opacity: 0.8; margin: 10px 14px 2px; svg { width: 100%; height: 12px; display: block; } }
+
+  /* Meta grid (Nation / Religion / Age / Languages) — plain light text, editable */
+  .rail-meta {
+    display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; margin: 8px 4px 2px; align-items: baseline;
+    dt { font-family: $f-label; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #b9a877; }
+    dd { margin: 0; min-width: 0; }
+    dd input, dd select {
+      width: 100%; max-width: none; background: none; border: none; color: #efe4c7; text-align: left;
+      font-family: $f-body; font-size: 13.5px; padding: 1px 0; border-bottom: 1px solid transparent;
+    }
+    dd select option { color: $ink; }
+    dd input:focus, dd select:focus { border-bottom-color: rgba(217, 178, 98, 0.5); box-shadow: none; }
+  }
+  .rail-langs {
+    display: flex; align-items: flex-start; gap: 6px;
+    .tag-list { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; flex: 1; line-height: 1.2; }
+    .tag { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(217, 178, 98, 0.3); color: #efe4c7; padding: 2px 8px; font-size: 10px; text-transform: none; letter-spacing: 0; }
+    .language-selector { color: $gold-leaf; flex: none; }
+  }
+
+  /* Three resource cells (Hero Pts / Wealth / Reputation) */
+  .rail-resources { grid-template-columns: repeat(3, 1fr); }
+  .res-v.reputation input { font-size: 0.95rem; }
+
+  /* Dramatic-wound seal: subtle compass sigil when spent */
+  i.fillable.wound.dramatic.on::after {
+    content: ""; position: absolute; inset: 6px; border-radius: 50%; opacity: 0.85;
+    background: no-repeat center / 78%
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 3 L13.5 12 L12 21 L10.5 12 Z M3 12 L12 10.5 L21 12 L12 13.5 Z' fill='%23f7ead0' opacity='0.7'/></svg>");
+  }
+
+  /* ---- Ledger section headers with an inline "add" button ---- */
+  .section-rule.adv-head { }
+  .add-btn {
+    flex: none; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%;
+    color: #2a1c10; background: linear-gradient(180deg, $gold-leaf, $gold-deep); font-size: 11px;
+    box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+    &:hover { filter: brightness(1.06); }
+  }
+
+  /* ---- Advantage rows: cost medallion + name (+ expand-on-click summary) ---- */
+  .adv-list { list-style: none; margin: 4px 0 8px; padding: 0; }
+  .adv-row {
+    display: flex; align-items: center; gap: 11px; padding: 7px 4px; border-bottom: 1px dotted $line;
+    flex-wrap: wrap;
+    .cost {
+      flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+      font-family: $f-display; font-variant-numeric: tabular-nums; font-size: 12.5px; color: #fff;
+      background: linear-gradient(180deg, $gold, $gold-deep); box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+      &.cost-plain { background: none; color: $gold-deep; box-shadow: none; border: 1px solid $line; }
+    }
+    .an { flex: 1; margin: 0; font-family: $f-body; font-weight: 600; font-size: 14.5px; color: $ink; cursor: pointer; padding: 0; background: none; }
+    .an:hover { color: $gold-deep; }
+    .badge { color: $gold-deep; font-size: 12px; }
+    .favor-tag { font-family: $f-label; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: $ink-soft; border: 1px solid $line; border-radius: 999px; padding: 2px 8px; }
+    .item-controls { flex: none; display: flex; gap: 8px; }
+    .item-control { color: $ink-soft; &:hover { color: $gold-deep; } }
+    .item-summary { flex: 0 0 100%; margin-top: 6px; padding: 8px 10px; border-top: 1px solid $line; font-size: 13px; color: $ink; }
+    &:hover { background: color-mix(in srgb, $gold-leaf 10%, transparent); }
+  }
+
+  /* Backgrounds as removable tags */
+  .bg-tags {
+    display: flex; flex-wrap: wrap; gap: 7px; list-style: none; margin: 6px 0 8px; padding: 0;
+    .tag {
+      display: inline-flex; align-items: center; gap: 7px; background: none; border: 1px solid $line;
+      border-radius: 999px; padding: 4px 11px; color: $ink; font-family: $f-body; font-size: 13px;
+      text-transform: none; letter-spacing: 0;
+      .item-control { color: $ink-soft; font-size: 11px; opacity: 0; width: 0; overflow: hidden; transition: opacity 0.12s; }
+      &:hover { border-color: $gold; .item-control { opacity: 1; width: auto; } }
+    }
+  }
+
+  /* ---- Arcana cards ---- */
+  .arcana-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 620px) { .arcana-cards { grid-template-columns: 1fr; } }
+  .card {
+    position: relative; border: 1px solid $line-strong; border-radius: 4px; padding: 12px 13px 14px; margin-bottom: 12px;
+    background: linear-gradient(180deg, color-mix(in srgb, $panel 92%, #fff 8%), $panel);
+    .kind { font-family: $f-label; font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; }
+    .cname { font-family: $f-display; font-size: 16px; font-weight: 600; margin: 2px 0 6px; }
+    .ctext { font-size: 13px; color: $ink; p { margin: 0 0 6px; } }
+    .card-controls { position: absolute; top: 9px; right: 10px; display: flex; gap: 8px; a { color: $ink-soft; &:hover { color: $gold-deep; } } }
+    &.virtue { box-shadow: inset 0 0 0 1px color-mix(in srgb, $teal 22%, transparent); .kind { color: $teal; } }
+    &.hubris { box-shadow: inset 0 0 0 1px color-mix(in srgb, $oxblood 22%, transparent); .kind { color: $oxblood; } }
+  }
+
+  .redemption-text { width: 100%; min-height: 90px; }
+
+  /* ---- Tab visibility (belt-and-suspenders over Foundry core) ---- */
+  .sheet-body .tab { display: none; }
+  .sheet-body .tab.active { display: block; }
+}
+

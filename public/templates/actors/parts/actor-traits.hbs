@@ -44,15 +44,4 @@
     </div>
   {{/if}}
 
-  {{#if hasLanguages}}
-    <div class="section-rule"><h3>{{localize "SVNSEA2E.Languages"}}</h3><span></span></div>
-    <div class="language flexrow flex-group flex-left">
-      <ul class="tag-list">
-        {{#each selectedlangs as |k v|}}
-          <li class="tag {{v}}">{{k}}</li>
-        {{/each}}
-      </ul>
-      <a class="language-selector" data-options="languages"><i class="fas fa-edit"></i></a>
-    </div>
-  {{/if}}
 </div>

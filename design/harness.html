@@ -1,0 +1,1883 @@
+<title>Théah — sheet render (compiled CSS)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>@charset "UTF-8";
+/* ==========================================================================
+   Théah palette — aged sea-chart (parchment · ink · antique gold · oxblood)
+   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Typography — engraved serif display + readable serif body.
+   System-font stacks (no CDN dependency; works offline in Foundry).
+   TODO: bundle an OFL display face (e.g. Cinzel) under public/fonts/ for full
+   cross-platform fidelity, then swap $f-display's first family.
+   -------------------------------------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* Global styles */
+.window-app .window-content {
+  color: #3a2c1c;
+}
+.window-app .window-header .window-title,
+.window-app .window-header a {
+  color: #f0e5c8;
+}
+.window-app .window-header .window-title {
+  padding-left: 0.25rem;
+}
+.window-app .window-header {
+  border-bottom: 0.0625rem solid #cbb488;
+}
+
+.rollable:focus, .rollable:hover {
+  text-shadow: 0 0 0.625rem #f1e7cc;
+  cursor: pointer;
+  background-image: url("/systems/theah/icons/d10.svg");
+  background-size: 20px;
+  background-repeat: no-repeat;
+}
+
+.grid,
+.grid-2col {
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem;
+  margin: 0.25rem 0;
+  padding: 0;
+}
+
+.grid-3col {
+  grid-column: span 3/span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4col {
+  grid-column: span 4/span 4;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-5col {
+  grid-column: span 5/span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-6col {
+  grid-column: span 5/span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-7col {
+  grid-column: span 7/span 7;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-8col {
+  grid-column: span 8/span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-9col {
+  grid-column: span 9/span 9;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.grid-10col {
+  grid-column: span 10/span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.grid-11col {
+  grid-column: span 11/span 11;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.grid-12col {
+  grid-column: span 12/span 12;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.flex-group-center,
+.flex-group-left,
+.flex-group-right {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.125rem;
+  border: 0 solid transparent;
+}
+
+.flex-group-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.flex-group-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.dialog .dialog-button .d10 {
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 0;
+}
+.dialog .dialog-button.roll {
+  display: flex;
+}
+.dialog .roll-dialog input[type=number] {
+  max-width: 3rem;
+  text-align: center;
+}
+
+#chat #chat-controls div.roll-type-select select,
+#chat #chat-form textarea,
+#chat #chat-log .message {
+  background: #f1e7cc;
+}
+#chat #chat-log .chat-card.skill-roll .card-header {
+  padding-bottom: 0.125rem;
+  background: url(/systems/theah/imgs/paint_border.png);
+  background-repeat: no-repeat;
+  background-size: 100% 0.375rem;
+  background-position: left bottom;
+}
+#chat #chat-log .chat-card.skill-roll .card-content .raises {
+  font-weight: bold;
+}
+#chat #chat-log .message {
+  font-size: 1em;
+  color: #3a2c1c;
+  padding: 0;
+}
+#chat #chat-log .message .message-header {
+  color: #f0e5c8;
+  background: #16323f;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+#chat #chat-log .message .message-header .message-sender {
+  padding-bottom: 0.125rem;
+  font-weight: bold;
+  text-indent: 0.4em;
+  line-height: 1.3em;
+  flex: 4;
+}
+#chat #chat-log .message .message-header h4 {
+  color: #f0e5c8;
+}
+#chat #chat-log .message .message-content {
+  padding: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+#chat #chat-log .message .message-content h3,
+#chat #chat-log .message .message-content h4,
+#chat #chat-log .message .message-content h5,
+#chat #chat-log .message .message-content h6 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+#chat #chat-log .message .message-content .raise-combos-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+#chat #chat-log .message .message-content .raise-combos-list .combo {
+  padding: 0.25rem;
+  margin: 0.125rem;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Styles limited to theah sheets */
+.theah form .form-group,
+.theah form .form-group-stacked,
+.theah form .wounds {
+  margin: 0.25rem;
+}
+.theah form .form-group > label {
+  flex: 3;
+}
+.theah form .form-group > label.icon-label {
+  flex: 1;
+}
+.theah .item-form {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+.theah .sheet-tabs {
+  flex: 0;
+}
+.theah .sheet-body,
+.theah .sheet-body .tab,
+.theah .sheet-body .tab .editor {
+  height: 95%;
+}
+.theah .tox .tox-editor-container {
+  background: #f1e7cc;
+}
+.theah .tox .tox-edit-area {
+  padding: 0 0.5rem;
+}
+.theah .tabs {
+  border-bottom: 0.125rem solid #8a642a;
+}
+.theah .tabs h2 {
+  border: 0 solid transparent;
+  font-size: 1.1em;
+  margin: 0;
+}
+.theah .tabs .item {
+  flex: 1;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-top: 0.125rem solid #8a642a;
+  border-left: 0.125rem solid #8a642a;
+  border-right: 0.125rem solid #8a642a;
+  border-bottom: 0;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  padding: 0.25rem;
+  margin: 0.25rem 0.125rem 0 0.125rem;
+  background: #16323f;
+  flex: 1;
+}
+.theah .tabs .item h2 {
+  color: #f0e5c8;
+  background: none;
+}
+.theah .tabs .item.active {
+  background: #f1e7cc;
+  text-shadow: none;
+}
+.theah .tabs .item.active h2 {
+  color: #3a2c1c;
+}
+
+.sheet img {
+  border: 0 solid transparent;
+}
+.sheet h1.charname,
+.sheet h3 {
+  padding-bottom: 0.125rem;
+  background: url(/systems/theah/imgs/paint_border.png);
+  background-repeat: no-repeat;
+  background-size: 100% 0.375rem;
+  background-position: left bottom;
+}
+.sheet input[type=text] {
+  min-width: 1.875rem;
+  text-align: left;
+  border: 0 solid transparent;
+}
+.sheet nav.sheet-tabs {
+  height: auto;
+  display: flex;
+  border-top: 0px;
+}
+.sheet .sheet-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+}
+.sheet .sheet-header .villanyrank {
+  margin-left: 0.5rem;
+}
+.sheet .sheet-header .profile-img {
+  margin-right: 0.25rem;
+}
+.sheet .sheet-header .header-fields {
+  flex: 1;
+}
+.sheet .sheet-header .flex-group-center,
+.sheet .sheet-header .flex-group-left {
+  padding: 0;
+}
+.sheet .sheet-header .grid .relrep,
+.sheet .sheet-header .grid .resources {
+  border-top: 0.0625rem solid #8a642a;
+}
+.sheet .sheet-header h1.charname {
+  height: 3.125rem;
+  margin: 0.25rem;
+  text-indent: 0;
+}
+.sheet .sheet-header h1.charname input {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: none;
+  text-indent: 1rem;
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+}
+.sheet .sheet-header .herospts,
+.sheet .sheet-header .wealth {
+  max-width: 1.875rem;
+  margin-right: 0.625rem;
+}
+.sheet .corruption {
+  min-width: 22em;
+}
+.sheet .tag {
+  display: inline-block;
+  margin: 0 0.125rem 0.125rem 0;
+  padding: 0.25rem;
+  font-size: 1em;
+  background: rgba(0, 0, 0, 0.1);
+}
+.sheet .secretsociety .tag {
+  flex-grow: 0.25;
+  flex-shrink: 0.25;
+  flex-basis: 0.625rem;
+}
+.sheet .flexrow .tag-list {
+  flex: 0 0 95%;
+}
+.sheet .flexrow .skill-selector,
+.sheet .flexrow .advantage-selector .language-selector {
+  flex: 0 0 2%;
+}
+.sheet .details-list,
+.sheet .tag-list {
+  line-height: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sheet .arcana {
+  width: 85%;
+}
+.sheet .items-list {
+  list-style: none;
+  margin: 0.5rem 0;
+  padding: 0;
+  overflow-y: auto;
+  line-height: 1.875rem;
+}
+.sheet .items-list .item-header {
+  font-weight: bold;
+}
+.sheet .items-list .item {
+  line-height: 1.5rem;
+  padding: 0.25rem 0;
+  border-bottom: 0.0625rem solid #cbb488;
+}
+.sheet .items-list .item .item-image {
+  flex: 0 0 1.5rem;
+  margin-right: 0.25rem;
+}
+.sheet .items-list .item img {
+  display: block;
+}
+.sheet .items-list .item:last-child {
+  border-bottom: none;
+}
+.sheet .items-list .item .item-weight {
+  flex: 0 0 3.75rem;
+  border-left: 0.0625rem solid #cbb488;
+  border-right: 0.0625rem solid #cbb488;
+}
+.sheet .items-list .item .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sheet .items-list .item .item-controls {
+  flex: 0 0 2.75rem;
+  justify-content: flex-end;
+}
+.sheet .items-list .item .item-controls a {
+  flex: 0 0 1.375rem;
+  text-align: center;
+  color: #3a2c1c;
+}
+.sheet .items-list .item .item-summary {
+  flex: 0 0 100%;
+  font-size: 1em;
+  line-height: 1.2em;
+  padding: 0.5rem;
+  border-top: 0.25rem solid #cbb488;
+}
+.sheet .items-list .item-name {
+  margin: 0;
+}
+.sheet .items-list .item-controls {
+  flex: 0 0 5.375rem;
+  text-align: right;
+}
+.sheet .favor-label,
+.sheet .skill-name,
+.sheet .trait-name {
+  font-weight: 600;
+  padding-left: 1.5rem;
+}
+.sheet .wound-title {
+  font-weight: 600;
+  margin-bottom: 0.625rem;
+}
+.sheet .brute h2.ability-title {
+  text-shadow: none;
+}
+.sheet .skills {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 8em;
+  gap: 0.2em;
+}
+.sheet .skill {
+  height: 1em;
+}
+.sheet .twodigit input[type=text] {
+  max-width: 1.875rem;
+  text-align: right;
+}
+
+.actor header.sheet-header {
+  flex: 0 0 9.375rem;
+  flex-direction: row;
+}
+.actor header.sheet-header .header-data > .flex-group {
+  gap: 0.2rem;
+}
+.actor header.sheet-header .header-data > .flex-group > * {
+  flex: auto;
+}
+.actor header.sheet-header .header-data input {
+  text-align: center;
+  font-size: 0.9rem;
+}
+.actor header.sheet-header .profile-img {
+  flex: 0 0 9.375rem;
+  height: 9.375rem;
+  width: 9.375rem;
+  border: 0.25rem solid #8a642a;
+  border-radius: 9.375rem;
+}
+.actor header.sheet-header .wounds .pts {
+  padding-left: 0.625rem;
+}
+.actor header.sheet-header .wounds .pts.bigger {
+  padding-left: 2.375rem;
+}
+.actor header.sheet-header .raise-tracking {
+  min-width: 10em;
+}
+.actor header.sheet-header .raise-tracking label {
+  margin-right: 0.4em;
+}
+.actor header.sheet-header .raise-tracking button {
+  width: 1.8rem;
+  font-size: 0.8rem;
+  height: 1.8rem;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  border-radius: 1rem;
+  border: 0px;
+  box-shadow: 1px 1px 4px #771213;
+}
+.actor header.sheet-header .raise-tracking input {
+  text-align: center;
+}
+.actor .danger-points input[type=text] {
+  font-size: 6em;
+  height: 8rem;
+  width: 8rem;
+  border: 0.25rem solid #8a642a;
+  border-radius: 2em;
+  text-align: center;
+}
+.actor .danger-points button {
+  margin-top: 3em;
+  width: auto;
+}
+.actor .sheet-header.dangerpts {
+  flex-direction: row;
+  margin: 0px;
+  gap: 0.5rem;
+}
+.actor .sheet-header.dangerpts .profile-img {
+  flex: 0 0 3.125rem;
+  height: 3.125rem;
+  width: 3.125rem;
+  border: 0.0625rem solid #8a642a;
+  border-radius: 3.125rem;
+}
+.actor .red {
+  color: red;
+}
+
+.item .sheet-header {
+  flex: 0 0 9.375rem;
+}
+.item .sheet-header .profile-img {
+  flex: 0 0 7.8125rem;
+  height: 7.8125rem;
+  width: 7.8125rem;
+  border: 0.25rem solid #8a642a;
+  border-radius: 7.8125rem;
+}
+.item .sheet-header .item-subtitle {
+  font-size: 0.8em;
+  opacity: 0.5;
+}
+
+.toolbox {
+  font-size: 0.8em;
+}
+.toolbox .window-content {
+  background: none;
+  color: white;
+}
+.toolbox .items {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  padding-bottom: 1rem;
+  padding-right: 0.5rem;
+}
+.toolbox .actor-resume {
+  display: flex;
+  flex: 1 1 100%;
+  justify-content: space-between;
+}
+.toolbox .actor-resume h3 {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  color: white;
+}
+.toolbox .score-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+.toolbox .score-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Théah — sheet reskin (aged sea-chart). Scoped to `.theah` (the sheet app
+   root class) so it never leaks into other applications. Ported from the
+   design preview at design/character-sheet-preview.html.
+   ========================================================================== */
+.theah {
+  --paper: #e7d8b6;
+  --paper-deep: #d8c49a;
+  --panel: #f1e7cc;
+  --panel-edge: #cbb488;
+  --ink: #3a2c1c;
+  --ink-soft: #6b5a41;
+  --navy: #16323f;
+  --navy-deep: #0e232c;
+  --teal: #2b6b6b;
+  --gold: #b0873f;
+  --gold-leaf: #d9b262;
+  --gold-deep: #8a642a;
+  --oxblood: #7c2b22;
+  --oxblood-deep: #591c16;
+  --line: rgba(58, 44, 28, 0.28);
+  --line-strong: rgba(58, 44, 28, 0.5);
+  /* ---- Window chrome ---- */
+}
+.theah.window-app {
+  box-shadow: 0 18px 44px -18px rgba(10, 14, 18, 0.7);
+}
+.theah .window-header {
+  background: linear-gradient(180deg, #16323f, #0e232c);
+  border-bottom: 2px solid #8a642a;
+}
+.theah .window-header .window-title {
+  color: #f0e5c8;
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+}
+.theah .window-header a, .theah .window-header a i {
+  color: rgba(217, 178, 98, 0.85);
+}
+.theah .window-content {
+  padding: 0;
+  color: #3a2c1c;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  background: radial-gradient(130% 90% at 50% -10%, color-mix(in srgb, #f1e7cc 92%, #fff 8%), transparent 55%), #e7d8b6;
+  position: relative;
+  overflow: hidden;
+}
+.theah .window-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+}
+.theah form {
+  position: relative;
+  z-index: 1;
+  padding: 0;
+  background: transparent;
+}
+.theah {
+  /* ---- Typography ---- */
+}
+.theah h1, .theah h2, .theah h3, .theah h4 {
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  color: #3a2c1c;
+  border: none;
+  background: none;
+  padding-bottom: 0;
+}
+.theah {
+  /* kill the base system's red paint-border bleed under titles */
+}
+.theah h1.charname, .theah .sheet-main h3, .theah .section-rule h3 {
+  background: none;
+}
+.theah input[type=text], .theah input[type=number], .theah select, .theah textarea {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  color: #3a2c1c;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(58, 44, 28, 0.28);
+  border-radius: 2px;
+}
+.theah input[type=text]:focus, .theah input[type=number]:focus, .theah select:focus, .theah textarea:focus {
+  box-shadow: 0 0 0 2px rgba(176, 135, 63, 0.45);
+  border-color: #b0873f;
+  outline: none;
+}
+.theah a {
+  color: #8a642a;
+}
+.theah {
+  /* Section rule: small-caps title + hairline flourish */
+}
+.theah .section-rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 12px;
+}
+.theah .section-rule h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.theah .section-rule span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(58, 44, 28, 0.5), transparent);
+}
+.theah {
+  /* ---- Header ---- */
+}
+.theah .sheet-header {
+  gap: 14px;
+  align-items: stretch;
+  margin-bottom: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(58, 44, 28, 0.5);
+}
+.theah .sheet-header .profile-img {
+  flex: 0 0 108px;
+  height: 132px;
+  width: 108px;
+  border-radius: 2px;
+  object-fit: cover;
+  border: 1px solid #8a642a;
+  box-shadow: 0 0 0 4px #f1e7cc, 0 0 0 5px #8a642a, 0 6px 16px -8px rgba(20, 12, 6, 0.7);
+}
+.theah h1.charname {
+  background: none;
+  padding: 0;
+  height: auto;
+  margin: 2px 0;
+}
+.theah h1.charname input {
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #3a2c1c;
+  background: none;
+  border: none;
+  text-indent: 0;
+  border-bottom: 1px solid transparent;
+}
+.theah h1.charname input:focus {
+  border-bottom-color: #b0873f;
+  box-shadow: none;
+}
+.theah {
+  /* Resource chips (hero points / wealth / corruption / initiative) */
+}
+.theah .herospts input, .theah .wealth input {
+  text-align: center;
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 1.1rem;
+}
+.theah label.icon-label i {
+  color: #8a642a;
+}
+.theah .raise-tracking button {
+  background: linear-gradient(180deg, #d9b262, #8a642a);
+  color: #2a1c10;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
+}
+.theah {
+  /* ---- Wounds: hearts restyled to oxblood pips + dramatic-wound seals ---- */
+}
+.theah .wounds {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b5a41;
+}
+.theah .wounds i.fa-heart {
+  font-size: 13px;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  text-align: center;
+  color: #7c2b22;
+  opacity: 0.9;
+}
+.theah .wounds i.fa-heart.far {
+  color: rgba(124, 43, 34, 0.28);
+}
+.theah .wounds i.fa-heart.red { /* dramatic wound = wax seal */
+  font-size: 18px;
+  color: #7c2b22;
+  filter: drop-shadow(0 2px 3px rgba(40, 20, 10, 0.4));
+}
+.theah .wounds i.fa-heart.red.far {
+  color: rgba(124, 43, 34, 0.22);
+}
+.theah .wounds i.fa-heart:hover {
+  transform: scale(1.15);
+  cursor: pointer;
+}
+.theah {
+  /* ---- Tabs (ledger dividers) ---- */
+}
+.theah nav.sheet-tabs {
+  gap: 2px;
+  border-top: 0;
+  border-bottom: 2px solid rgba(58, 44, 28, 0.5);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.theah nav.sheet-tabs .item {
+  flex: 0 1 auto;
+  margin: 0;
+  padding: 8px 14px 10px;
+  border: 0;
+  border-radius: 2px 2px 0 0;
+  background: transparent;
+  position: relative;
+}
+.theah nav.sheet-tabs .item h2 {
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b5a41;
+  background: none;
+  margin: 0;
+}
+.theah nav.sheet-tabs .item:hover h2 {
+  color: #8a642a;
+}
+.theah nav.sheet-tabs .item.active {
+  background: transparent;
+}
+.theah nav.sheet-tabs .item.active h2 {
+  color: #3a2c1c;
+}
+.theah nav.sheet-tabs .item.active::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -2px;
+  height: 2px;
+  background: linear-gradient(90deg, #d9b262, #8a642a);
+}
+.theah {
+  /* ---- Traits: compass rose + medallions + gold pips ---- */
+}
+.theah .theah-traits {
+  margin-bottom: 20px;
+}
+.theah .traits-row {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 4px;
+}
+.theah .traits-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 230px;
+  height: 230px;
+  opacity: 0.13;
+  background: no-repeat center/contain url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='none' stroke='%238a642a' stroke-width='1'><circle cx='50' cy='50' r='46'/><circle cx='50' cy='50' r='34'/><path d='M50 4 L54 50 L50 96 L46 50 Z M4 50 L50 46 L96 50 L50 54 Z'/><path d='M22 22 L50 47 L78 78 M78 22 L50 47 L22 78' stroke-width='.6'/></g></svg>");
+  pointer-events: none;
+}
+.theah .trait-block {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+.theah .medallion {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: radial-gradient(70% 70% at 50% 35%, #f1e7cc, color-mix(in srgb, #d8c49a 82%, #000 6%));
+  border: 1px solid rgba(58, 44, 28, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 0 0 4px color-mix(in srgb, #f1e7cc 70%, transparent), 0 4px 10px -6px rgba(30, 18, 8, 0.6);
+}
+.theah .medallion::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(58, 44, 28, 0.28);
+}
+.theah .medallion .num {
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 27px;
+  font-weight: 600;
+  color: #3a2c1c;
+  font-variant-numeric: tabular-nums;
+}
+.theah .trait-block .tname {
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b5a41;
+}
+.theah {
+  /* Rating pips (traits + skills) */
+}
+.theah .pips {
+  display: flex;
+  gap: 4px;
+}
+.theah i.fillable.rating {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.2px solid #8a642a;
+  background: transparent;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.theah i.fillable.rating.on {
+  background: radial-gradient(#d9b262, #b0873f);
+  box-shadow: 0 0 4px rgba(176, 135, 63, 0.45);
+}
+.theah i.fillable.rating:hover {
+  transform: scale(1.2);
+}
+.theah {
+  /* ---- Skills ledger ---- */
+}
+.theah .theah-skills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px 28px;
+}
+.theah .skill-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 6px;
+  border-bottom: 1px dotted rgba(58, 44, 28, 0.28);
+}
+.theah .skill-row .skill-name {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 500;
+  padding-left: 0;
+  cursor: pointer;
+}
+.theah .skill-row .skill-name.rollable:hover {
+  color: #8a642a;
+  background: none;
+  text-shadow: none;
+}
+.theah .skill-row .val {
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  color: #6b5a41;
+  width: 14px;
+  text-align: center;
+}
+@media (max-width: 640px) {
+  .theah .theah-skills {
+    grid-template-columns: 1fr;
+  }
+}
+.theah {
+  /* ---- Items lists (advantages, backgrounds, fate, etc.) ---- */
+}
+.theah .items-list {
+  margin: 6px 0 14px;
+}
+.theah .items-list .item-header {
+  border-bottom: 2px solid rgba(58, 44, 28, 0.5);
+  margin-top: 8px;
+}
+.theah .items-list .item-header h3 {
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-variant: small-caps;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  padding-left: 0;
+}
+.theah .items-list .item-header .item-control {
+  color: #8a642a;
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.theah .items-list .item {
+  border-bottom: 1px dotted rgba(58, 44, 28, 0.28);
+  align-items: center;
+}
+.theah .items-list .item .item-image img {
+  border-radius: 2px;
+  border: 1px solid rgba(58, 44, 28, 0.28);
+}
+.theah .items-list .item .item-name {
+  font-weight: 600;
+  font-size: 14.5px;
+  color: #3a2c1c;
+}
+.theah .items-list .item .item-controls a {
+  color: #6b5a41;
+}
+.theah .items-list .item .item-controls a:hover {
+  color: #8a642a;
+}
+.theah .items-list .item:hover {
+  background: color-mix(in srgb, #d9b262 12%, transparent);
+}
+.theah {
+  /* ---- Tags ---- */
+}
+.theah .tag {
+  background: none;
+  border: 1px solid rgba(58, 44, 28, 0.28);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b5a41;
+}
+.theah {
+  /* ---- Forms ---- */
+}
+.theah .form-group label, .theah .form-group > label {
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b5a41;
+}
+.theah .editor {
+  border: 1px solid rgba(58, 44, 28, 0.28);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.3);
+}
+.theah {
+  /* ---- Scrollbars ---- */
+}
+.theah ::-webkit-scrollbar {
+  width: 10px;
+}
+.theah ::-webkit-scrollbar-thumb {
+  background: #8a642a;
+  border-radius: 4px;
+}
+.theah ::-webkit-scrollbar-track {
+  background: rgba(58, 44, 28, 0.1);
+}
+
+/* ==========================================================================
+   Roll dialog (Approach prompt) — scoped to the wrapper we add in the template.
+   ========================================================================== */
+.theah-roll-dialog {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  color: #3a2c1c;
+}
+.theah-roll-dialog h2, .theah-roll-dialog h3 {
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+}
+.theah-roll-dialog .roll-formula {
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 1.05rem;
+}
+.theah-roll-dialog select, .theah-roll-dialog input[type=text], .theah-roll-dialog input[type=number] {
+  border: 1px solid rgba(58, 44, 28, 0.28);
+  border-radius: 2px;
+}
+
+.dialog .dialog-button.roll, .dialog .dialog-button.default {
+  background: linear-gradient(180deg, #d9b262, #8a642a);
+  color: #2a1c10;
+  border: 0;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Chat roll card — Raises result. Scoped to the wrapper in roll-card.hbs.
+   ========================================================================== */
+#chat .theah-roll {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  color: #3a2c1c;
+  border: 1px solid #cbb488;
+  border-radius: 5px;
+  overflow: hidden;
+  background: radial-gradient(130% 90% at 50% -10%, color-mix(in srgb, #f1e7cc 92%, #fff 8%), transparent 55%), #e7d8b6;
+}
+#chat .theah-roll .roll-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, #16323f, #0e232c);
+  color: #f0e5c8;
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+}
+#chat .theah-roll .roll-head img {
+  width: 34px;
+  height: 34px;
+  border-radius: 2px;
+  border: 1px solid #8a642a;
+}
+#chat .theah-roll .roll-body {
+  padding: 12px;
+}
+#chat .theah-roll .raise-count {
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 30px;
+  color: #7c2b22;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-right: 8px;
+}
+#chat .theah-roll .raise-label {
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b5a41;
+}
+#chat .theah-roll .dice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0;
+}
+#chat .theah-roll .die {
+  width: 34px;
+  height: 34px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 16px;
+  border: 1px solid rgba(58, 44, 28, 0.5);
+  background: #f1e7cc;
+  color: #3a2c1c;
+}
+#chat .theah-roll .die.ten {
+  background: linear-gradient(180deg, #d9b262, #8a642a);
+  color: #2a1c10;
+  border-color: #8a642a;
+}
+#chat .theah-roll .combos {
+  font-size: 13px;
+  color: #6b5a41;
+  margin-top: 6px;
+}
+#chat .theah-roll .combos b {
+  color: #3a2c1c;
+}
+
+/* ==========================================================================
+   Character-sheet composition: left identity rail + right ledger.
+   ========================================================================== */
+.theah .theah-layout {
+  display: grid;
+  grid-template-columns: 296px 1fr;
+  align-items: stretch;
+  min-height: 100%;
+}
+.theah {
+  /* ---- Identity rail (dark, gilt edge) ---- */
+}
+.theah .identity-rail {
+  position: relative;
+  background: linear-gradient(180deg, color-mix(in srgb, #16323f 94%, #000 6%), #0e232c);
+  color: #f0e5c8;
+  padding: 22px 18px 24px;
+  box-shadow: inset -3px 0 0 0 #8a642a, inset -4px 0 10px -6px rgba(0, 0, 0, 0.6);
+}
+.theah .portrait-frame {
+  position: relative;
+  width: 158px;
+  aspect-ratio: 3/4;
+  margin: 2px auto 16px;
+}
+.theah .portrait-frame .profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+  border: 1px solid #8a642a;
+  margin: 0;
+  box-shadow: 0 0 0 4px #16323f, 0 0 0 5px #8a642a, 0 8px 18px -10px rgba(0, 0, 0, 0.8);
+}
+.theah .portrait-frame .frame-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #d9b262;
+  opacity: 0.9;
+}
+.theah .portrait-frame .frame-corner.tl {
+  top: -6px;
+  left: -6px;
+  border-right: 0;
+  border-bottom: 0;
+}
+.theah .portrait-frame .frame-corner.tr {
+  top: -6px;
+  right: -6px;
+  border-left: 0;
+  border-bottom: 0;
+}
+.theah .portrait-frame .frame-corner.bl {
+  bottom: -6px;
+  left: -6px;
+  border-right: 0;
+  border-top: 0;
+}
+.theah .portrait-frame .frame-corner.br {
+  bottom: -6px;
+  right: -6px;
+  border-left: 0;
+  border-top: 0;
+}
+.theah .identity-rail h1.charname {
+  height: auto;
+  margin: 0 0 4px;
+  text-align: center;
+  background: none;
+  padding: 0;
+}
+.theah .identity-rail h1.charname input {
+  width: 100%;
+  text-align: center;
+  background: none;
+  border: none;
+  text-indent: 0;
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f4ead0;
+  border-bottom: 1px solid transparent;
+}
+.theah .identity-rail h1.charname input:focus {
+  border-bottom-color: #b0873f;
+  box-shadow: none;
+}
+.theah {
+  /* Resource cells */
+}
+.theah .rail-resources {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin: 14px 0 4px;
+}
+.theah .res-cell {
+  text-align: center;
+  padding: 8px 6px 7px;
+  border-radius: 2px;
+  border: 1px solid rgba(217, 178, 98, 0.28);
+  background: rgba(0, 0, 0, 0.16);
+}
+.theah .res-cell.res-wide {
+  grid-column: 1/-1;
+}
+.theah .res-cell .res-k {
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 9.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #bda874;
+  margin-bottom: 3px;
+}
+.theah .res-cell .res-k i {
+  color: #d9b262;
+}
+.theah .res-cell .res-v input {
+  width: 100%;
+  max-width: none;
+  text-align: center;
+  background: none;
+  border: none;
+  color: #f4ead0;
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+}
+.theah .init-ctl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.theah .init-ctl button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  color: #2a1c10;
+  font-weight: 700;
+  background: linear-gradient(180deg, #d9b262, #8a642a);
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.6);
+}
+.theah .init-ctl input {
+  width: 44px;
+  max-width: 44px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.25);
+  color: #f4ead0;
+  border: 1px solid rgba(217, 178, 98, 0.3);
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 1.1rem;
+}
+.theah .rail-block {
+  margin-top: 16px;
+}
+.theah .rail-block .res-k {
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #bda874;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 7px;
+}
+.theah .rail-block .res-k .res-count {
+  color: rgba(240, 229, 200, 0.7);
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  letter-spacing: 0;
+}
+.theah {
+  /* Corruption pips (subtle, on the dark rail) */
+}
+.theah .corruption-pips {
+  flex-wrap: wrap;
+}
+.theah i.fillable.rating.corrupt {
+  width: 11px;
+  height: 11px;
+  border-color: rgba(180, 140, 200, 0.5);
+}
+.theah i.fillable.rating.corrupt.on {
+  background: radial-gradient(#b28ad0, #4a2c63);
+  box-shadow: 0 0 5px rgba(150, 90, 200, 0.5);
+}
+.theah {
+  /* Wound track: oxblood pips + dramatic-wound wax seals (no icon font needed) */
+}
+.theah .wound-track {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+.theah i.fillable.wound {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 1.4px solid rgba(217, 178, 98, 0.45);
+  background: rgba(0, 0, 0, 0.22);
+  transition: transform 0.1s;
+}
+.theah i.fillable.wound.on {
+  background: radial-gradient(#7c2b22, #591c16);
+  border-color: #7c2b22;
+  box-shadow: 0 0 5px rgba(124, 43, 34, 0.55);
+}
+.theah i.fillable.wound:hover {
+  transform: scale(1.18);
+}
+.theah i.fillable.wound.dramatic {
+  width: 24px;
+  height: 24px;
+  border-width: 2px;
+  border-color: rgba(181, 69, 58, 0.6);
+  background: rgba(0, 0, 0, 0.28);
+  position: relative;
+}
+.theah i.fillable.wound.dramatic::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1px dashed rgba(217, 178, 98, 0.4);
+}
+.theah i.fillable.wound.dramatic.on {
+  background: radial-gradient(circle at 50% 38%, #a5372c, #591c16);
+  border-color: #7c2b22;
+  box-shadow: inset 0 1px 2px rgba(255, 220, 200, 0.25), 0 2px 5px rgba(40, 12, 8, 0.6);
+}
+.theah i.fillable.wound.dramatic.on::before {
+  border-style: solid;
+  border-color: rgba(247, 234, 208, 0.5);
+}
+.theah {
+  /* ---- Ledger (right) ---- */
+}
+.theah .sheet-main {
+  padding: 16px 22px 20px;
+  min-width: 0;
+}
+.theah .sheet-main .section-rule:first-child {
+  margin-top: 4px;
+}
+
+/* Stack the rail above the ledger on narrow windows */
+@media (max-width: 720px) {
+  .theah .theah-layout {
+    grid-template-columns: 1fr;
+  }
+  .theah .identity-rail {
+    box-shadow: inset 0 -3px 0 0 #8a642a;
+  }
+}
+/* ==========================================================================
+   Rail meta, resources, arcana cards, advantage rows — the 1:1 preview port.
+   ========================================================================== */
+.theah {
+  /* Filet flourish under the name */
+}
+.theah .rail-filet {
+  color: #d9b262;
+  opacity: 0.8;
+  margin: 10px 14px 2px;
+}
+.theah .rail-filet svg {
+  width: 100%;
+  height: 12px;
+  display: block;
+}
+.theah {
+  /* Meta grid (Nation / Religion / Age / Languages) — plain light text, editable */
+}
+.theah .rail-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 12px;
+  margin: 8px 4px 2px;
+  align-items: baseline;
+}
+.theah .rail-meta dt {
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+.theah .rail-meta dd {
+  margin: 0;
+  min-width: 0;
+}
+.theah .rail-meta dd input, .theah .rail-meta dd select {
+  width: 100%;
+  max-width: none;
+  background: none;
+  border: none;
+  color: #efe4c7;
+  text-align: left;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 13.5px;
+  padding: 1px 0;
+  border-bottom: 1px solid transparent;
+}
+.theah .rail-meta dd select option {
+  color: #3a2c1c;
+}
+.theah .rail-meta dd input:focus, .theah .rail-meta dd select:focus {
+  border-bottom-color: rgba(217, 178, 98, 0.5);
+  box-shadow: none;
+}
+.theah .rail-langs {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.theah .rail-langs .tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  line-height: 1.2;
+}
+.theah .rail-langs .tag {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(217, 178, 98, 0.3);
+  color: #efe4c7;
+  padding: 2px 8px;
+  font-size: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.theah .rail-langs .language-selector {
+  color: #d9b262;
+  flex: none;
+}
+.theah {
+  /* Three resource cells (Hero Pts / Wealth / Reputation) */
+}
+.theah .rail-resources {
+  grid-template-columns: repeat(3, 1fr);
+}
+.theah .res-v.reputation input {
+  font-size: 0.95rem;
+}
+.theah {
+  /* Dramatic-wound seal: subtle compass sigil when spent */
+}
+.theah i.fillable.wound.dramatic.on::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  opacity: 0.85;
+  background: no-repeat center/78% url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 3 L13.5 12 L12 21 L10.5 12 Z M3 12 L12 10.5 L21 12 L12 13.5 Z' fill='%23f7ead0' opacity='0.7'/></svg>");
+}
+.theah {
+  /* ---- Ledger section headers with an inline "add" button ---- */
+}
+.theah .add-btn {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #2a1c10;
+  background: linear-gradient(180deg, #d9b262, #8a642a);
+  font-size: 11px;
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+}
+.theah .add-btn:hover {
+  filter: brightness(1.06);
+}
+.theah {
+  /* ---- Advantage rows: cost medallion + name (+ expand-on-click summary) ---- */
+}
+.theah .adv-list {
+  list-style: none;
+  margin: 4px 0 8px;
+  padding: 0;
+}
+.theah .adv-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 7px 4px;
+  border-bottom: 1px dotted rgba(58, 44, 28, 0.28);
+  flex-wrap: wrap;
+}
+.theah .adv-row .cost {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  color: #fff;
+  background: linear-gradient(180deg, #b0873f, #8a642a);
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+}
+.theah .adv-row .cost.cost-plain {
+  background: none;
+  color: #8a642a;
+  box-shadow: none;
+  border: 1px solid rgba(58, 44, 28, 0.28);
+}
+.theah .adv-row .an {
+  flex: 1;
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-weight: 600;
+  font-size: 14.5px;
+  color: #3a2c1c;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+}
+.theah .adv-row .an:hover {
+  color: #8a642a;
+}
+.theah .adv-row .badge {
+  color: #8a642a;
+  font-size: 12px;
+}
+.theah .adv-row .favor-tag {
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b5a41;
+  border: 1px solid rgba(58, 44, 28, 0.28);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.theah .adv-row .item-controls {
+  flex: none;
+  display: flex;
+  gap: 8px;
+}
+.theah .adv-row .item-control {
+  color: #6b5a41;
+}
+.theah .adv-row .item-control:hover {
+  color: #8a642a;
+}
+.theah .adv-row .item-summary {
+  flex: 0 0 100%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-top: 1px solid rgba(58, 44, 28, 0.28);
+  font-size: 13px;
+  color: #3a2c1c;
+}
+.theah .adv-row:hover {
+  background: color-mix(in srgb, #d9b262 10%, transparent);
+}
+.theah {
+  /* Backgrounds as removable tags */
+}
+.theah .bg-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  list-style: none;
+  margin: 6px 0 8px;
+  padding: 0;
+}
+.theah .bg-tags .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: 1px solid rgba(58, 44, 28, 0.28);
+  border-radius: 999px;
+  padding: 4px 11px;
+  color: #3a2c1c;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 13px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.theah .bg-tags .tag .item-control {
+  color: #6b5a41;
+  font-size: 11px;
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  transition: opacity 0.12s;
+}
+.theah .bg-tags .tag:hover {
+  border-color: #b0873f;
+}
+.theah .bg-tags .tag:hover .item-control {
+  opacity: 1;
+  width: auto;
+}
+.theah {
+  /* ---- Arcana cards ---- */
+}
+.theah .arcana-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 620px) {
+  .theah .arcana-cards {
+    grid-template-columns: 1fr;
+  }
+}
+.theah .card {
+  position: relative;
+  border: 1px solid rgba(58, 44, 28, 0.5);
+  border-radius: 4px;
+  padding: 12px 13px 14px;
+  margin-bottom: 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, #f1e7cc 92%, #fff 8%), #f1e7cc);
+}
+.theah .card .kind {
+  font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", system-ui, sans-serif;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.theah .card .cname {
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 2px 0 6px;
+}
+.theah .card .ctext {
+  font-size: 13px;
+  color: #3a2c1c;
+}
+.theah .card .ctext p {
+  margin: 0 0 6px;
+}
+.theah .card .card-controls {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+}
+.theah .card .card-controls a {
+  color: #6b5a41;
+}
+.theah .card .card-controls a:hover {
+  color: #8a642a;
+}
+.theah .card.virtue {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #2b6b6b 22%, transparent);
+}
+.theah .card.virtue .kind {
+  color: #2b6b6b;
+}
+.theah .card.hubris {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #7c2b22 22%, transparent);
+}
+.theah .card.hubris .kind {
+  color: #7c2b22;
+}
+.theah .redemption-text {
+  width: 100%;
+  min-height: 90px;
+}
+.theah {
+  /* ---- Tab visibility (belt-and-suspenders over Foundry core) ---- */
+}
+.theah .sheet-body .tab {
+  display: none;
+}
+.theah .sheet-body .tab.active {
+  display: block;
+}
+/*# sourceMappingURL=theah.css.map */
+</style>
+<style>
+  body { margin: 0; background: #2b2b2b; padding: 20px; }
+  .harness-note { max-width: 1050px; margin: 0 auto 14px; color: #cbb488; font: 13px system-ui; }
+  .app { width: 1050px; max-width: 100%; margin: 0 auto; border-radius: 5px; overflow: hidden; box-shadow: 0 24px 60px -20px #000; }
+  /* harness: show the three content-rich tabs stacked so the whole design is visible at once */
+  .sheet-body .tab { display: block !important; border-top: 1px dashed rgba(58,44,28,.2); }
+  .sheet-body .tab:first-child { border-top: 0; }
+</style>
+
+<div class="harness-note">Render of the real compiled <code>dist/theah.css</code> over the actual Foundry sheet DOM (sample data). FontAwesome glyphs are supplied by Foundry at runtime, so a few small icons are blank here.</div>
+
+<div class="app window-app theah sheet actor pc">
+  <header class="window-header"><h4 class="window-title">Amélie Valmont</h4></header>
+  <div class="window-content">
+    <form class="editable flexcol">
+      <div class="theah-layout">
+
+        <aside class="identity-rail">
+          <div class="portrait-frame">
+            <img class="profile-img" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400'%3E%3Cdefs%3E%3CradialGradient id='pbg' cx='50%25' cy='34%25' r='72%25'%3E%3Cstop offset='0%25' stop-color='%233c4a52'/%3E%3Cstop offset='62%25' stop-color='%23243139'/%3E%3Cstop offset='100%25' stop-color='%2316242c'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='300' height='400' fill='url(%23pbg)'/%3E%3Cg fill='none' stroke='%23d9b262' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' opacity='0.55'%3E%3Ccircle cx='150' cy='158' r='52'/%3E%3Cpath d='M70 320a80 80 0 0 1 160 0'/%3E%3C/g%3E%3C/svg%3E" />
+            <span class="frame-corner tl"></span><span class="frame-corner tr"></span>
+            <span class="frame-corner bl"></span><span class="frame-corner br"></span>
+          </div>
+          <h1 class="charname"><input value="Amélie Valmont" /></h1>
+          <div class="rail-filet"><svg viewBox="0 0 120 12"><path d="M2 6h44M74 6h44M56 2l8 4-8 4M64 2l-8 4 8 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          <dl class="rail-meta">
+            <dt>Nation</dt><dd><select><option>Montaigne</option></select></dd>
+            <dt>Religion</dt><dd><input value="Vaticine (lapsed)" /></dd>
+            <dt>Age</dt><dd><input value="27" /></dd>
+            <dt>Languages</dt>
+            <dd class="rail-langs"><ul class="tag-list"><li class="tag">Montaigne</li><li class="tag">Théan</li><li class="tag">Castillian</li></ul><a class="language-selector"><i class="fas fa-edit"></i></a></dd>
+          </dl>
+          <div class="rail-resources">
+            <div class="res-cell"><div class="res-k">Hero Pts</div><span class="res-v herospts"><input value="3" /></span></div>
+            <div class="res-cell"><div class="res-k">Wealth</div><span class="res-v wealth"><input value="4" /></span></div>
+            <div class="res-cell"><div class="res-k">Reputation</div><span class="res-v reputation"><input value="Daring" /></span></div>
+            <div class="res-cell res-wide raise-tracking"><div class="res-k">Raises</div><div class="init-ctl"><button type="button">−</button><input value="0" disabled /><button type="button">+</button></div></div>
+          </div>
+          <div class="rail-block rail-wounds">
+            <div class="res-k">Wounds <span class="res-count">6/20</span></div>
+            <div class="wound-track">
+              <i class="fillable wound on"></i><i class="fillable wound on"></i><i class="fillable wound on"></i><i class="fillable wound on"></i>
+              <i class="fillable wound dramatic on"></i>
+              <i class="fillable wound on"></i><i class="fillable wound on"></i><i class="fillable wound"></i><i class="fillable wound"></i>
+              <i class="fillable wound dramatic on"></i>
+              <i class="fillable wound"></i><i class="fillable wound"></i><i class="fillable wound"></i><i class="fillable wound"></i>
+              <i class="fillable wound dramatic"></i>
+              <i class="fillable wound"></i><i class="fillable wound"></i><i class="fillable wound"></i><i class="fillable wound"></i>
+              <i class="fillable wound dramatic"></i>
+            </div>
+          </div>
+        </aside>
+
+        <div class="sheet-main">
+          <nav class="sheet-tabs tabs">
+            <a class="item active"><h2>Traits &amp; Skills</h2></a>
+            <a class="item"><h2>Advantages</h2></a>
+            <a class="item"><h2>Arcana</h2></a>
+            <a class="item"><h2>Stories</h2></a>
+            <a class="item"><h2>Inventory</h2></a>
+            <a class="item"><h2>Sorcery</h2></a>
+          </nav>
+          <section class="sheet-body">
+
+            <div class="tab traits active">
+              <section class="theah-traits">
+                <div class="section-rule"><h3>Traits</h3><span></span></div>
+                <div class="traits-row">
+                  <div class="trait-block"><div class="medallion"><span class="num">2</span></div><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><div class="tname">Brawn</div></div>
+<div class="trait-block"><div class="medallion"><span class="num">4</span></div><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i></div><div class="tname">Finesse</div></div>
+<div class="trait-block"><div class="medallion"><span class="num">3</span></div><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><div class="tname">Resolve</div></div>
+<div class="trait-block"><div class="medallion"><span class="num">3</span></div><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><div class="tname">Wits</div></div>
+<div class="trait-block"><div class="medallion"><span class="num">4</span></div><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i></div><div class="tname">Panache</div></div>
+                </div>
+              </section>
+              <div class="section-rule"><h3>Skills</h3><span></span></div>
+              <div class="theah-skills"><div class="skill-row"><span class="skill-name rollable">Aim</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">2</span></div>
+<div class="skill-row"><span class="skill-name rollable">Athletics</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">3</span></div>
+<div class="skill-row"><span class="skill-name rollable">Brawl</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">1</span></div>
+<div class="skill-row"><span class="skill-name rollable">Convince</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">3</span></div>
+<div class="skill-row"><span class="skill-name rollable">Empathy</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">2</span></div>
+<div class="skill-row"><span class="skill-name rollable">Hide</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">1</span></div>
+<div class="skill-row"><span class="skill-name rollable">Intimidate</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">2</span></div>
+<div class="skill-row"><span class="skill-name rollable">Notice</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">3</span></div>
+<div class="skill-row"><span class="skill-name rollable">Perform</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">3</span></div>
+<div class="skill-row"><span class="skill-name rollable">Ride</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">2</span></div>
+<div class="skill-row"><span class="skill-name rollable">Sailing</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">1</span></div>
+<div class="skill-row"><span class="skill-name rollable">Scholarship</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">2</span></div>
+<div class="skill-row"><span class="skill-name rollable">Tempt</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">3</span></div>
+<div class="skill-row"><span class="skill-name rollable">Theft</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">2</span></div>
+<div class="skill-row"><span class="skill-name rollable">Warfare</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i><i class="fillable rating"></i><i class="fillable rating"></i></div><span class="val">2</span></div>
+<div class="skill-row"><span class="skill-name rollable">Weaponry</span><div class="pips"><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating on"></i><i class="fillable rating"></i></div><span class="val">4</span></div></div>
+            </div>
+
+            <div class="tab features active">
+              <div class="section-rule adv-head"><h3>Advantages</h3><span></span><a class="add-btn"><i class="fas fa-plus"></i></a></div>
+              <ul class="adv-list">
+                <li class="adv-row item"><span class="cost">5</span><h4 class="an item-name">Duelist Academy</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                <li class="adv-row item"><span class="cost">2</span><h4 class="an item-name">Fascinate</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                <li class="adv-row item"><span class="cost">3</span><h4 class="an item-name">Fencer</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                <li class="adv-row item"><span class="cost">1</span><h4 class="an item-name">Direction Sense</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                <li class="adv-row item"><span class="cost">1</span><h4 class="an item-name">Linguist</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+              </ul>
+              <div class="section-rule adv-head"><h3>Backgrounds</h3><span></span><a class="add-btn"><i class="fas fa-plus"></i></a></div>
+              <ul class="tag-list bg-tags">
+                <li class="tag item"><span class="item-name">Duelist</span><a class="item-control"><i class="fas fa-times"></i></a></li>
+                <li class="tag item"><span class="item-name">Aristocrat</span><a class="item-control"><i class="fas fa-times"></i></a></li>
+                <li class="tag item"><span class="item-name">Spy</span><a class="item-control"><i class="fas fa-times"></i></a></li>
+              </ul>
+            </div>
+
+            <div class="tab arcana active">
+              <div class="arcana-cards">
+                <div class="arcana-col">
+                  <div class="section-rule adv-head"><h3>Virtue</h3><span></span><a class="add-btn"><i class="fas fa-plus"></i></a></div>
+                  <div class="card virtue item"><div class="card-controls"><a class="item-control"><i class="fas fa-edit"></i></a></div><div class="kind">Virtue</div><div class="cname item-name">The Tempest</div><div class="ctext"><p>Activate to redirect an incoming danger to yourself and gain a Hero Point.</p></div></div>
+                </div>
+                <div class="arcana-col">
+                  <div class="section-rule adv-head"><h3>Hubris</h3><span></span><a class="add-btn"><i class="fas fa-plus"></i></a></div>
+                  <div class="card hubris item"><div class="card-controls"><a class="item-control"><i class="fas fa-edit"></i></a></div><div class="kind">Hubris</div><div class="cname item-name">Star-Crossed</div><div class="ctext"><p>Refuse aid out of pride to grant the GM a Danger Point — and a Hero Point to you.</p></div></div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
