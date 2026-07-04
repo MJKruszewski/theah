@@ -1,21 +1,28 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
   <div class="theah-layout">
 
-    {{!-- ===================== Left identity rail ===================== --}}
+    {{!-- ===================== Identity rail ===================== --}}
     <aside class="identity-rail">
-      <div class="portrait-frame">
-        <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" />
-        <span class="frame-corner tl"></span><span class="frame-corner tr"></span>
-        <span class="frame-corner bl"></span><span class="frame-corner br"></span>
+      <span class="edge"></span>
+
+      <div class="portrait">
+        <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" alt="{{name}}" />
+        <svg class="corner tl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+        <svg class="corner tr" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+        <svg class="corner bl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+        <svg class="corner br" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
       </div>
 
-      <h1 class="charname"><input name="name" type="text" value="{{name}}" placeholder="{{localize 'SVNSEA2E.ActorName'}}" /></h1>
-
-      <div class="rail-filet" aria-hidden="true">
-        <svg viewBox="0 0 120 12"><path d="M2 6h44M74 6h44M56 2l8 4-8 4M64 2l-8 4 8 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      <div class="nameplate">
+        <input class="name" type="text" name="name" value="{{name}}" placeholder="{{localize 'SVNSEA2E.ActorName'}}" />
+        <input class="epithet" type="text" name="system.epithet" value="{{epithet}}" placeholder="{{localize 'SVNSEA2E.EpithetPlaceholder'}}" />
       </div>
 
-      <dl class="rail-meta">
+      <div class="filet" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg>
+      </div>
+
+      <dl class="meta">
         <dt>{{localize "SVNSEA2E.Nation"}}</dt>
         <dd><select name="system.nation">{{selectOptions config.nations selected=nation localize=true}}</select></dd>
         <dt>{{localize "SVNSEA2E.Religion"}}</dt>
@@ -34,26 +41,24 @@
       {{> "systems/theah/templates/actors/parts/actor-wounds.hbs"}}
     </aside>
 
-    {{!-- ===================== Right ledger ===================== --}}
-    <div class="sheet-main">
+    {{!-- ===================== Ledger ===================== --}}
+    <main class="sheet-main">
       <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="traits"><h2>{{localize "SVNSEA2E.TraitsAndSkills"}}</h2></a>
-        <a class="item" data-tab="advantages"><h2>{{localize "SVNSEA2E.Features"}}</h2></a>
-        <a class="item" data-tab="arcana"><h2>{{localize "SVNSEA2E.Arcana"}}</h2></a>
+        <a class="item" data-tab="prowess"><h2>{{localize "SVNSEA2E.Prowess"}}</h2></a>
         <a class="item" data-tab="stories"><h2>{{localize "SVNSEA2E.Stories"}}</h2></a>
         <a class="item" data-tab="inventory"><h2>{{localize "SVNSEA2E.Inventory"}}</h2></a>
         <a class="item" data-tab="sorcery"><h2>{{localize "SVNSEA2E.Sorcery"}}</h2></a>
       </nav>
 
       <section class="sheet-body">
-        {{> "systems/theah/templates/actors/parts/actor-traits.hbs"}}
-        {{> "systems/theah/templates/actors/parts/actor-advantages.hbs"}}
-        {{> "systems/theah/templates/actors/parts/actor-arcana.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-overview.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-prowess.hbs"}}
         {{> "systems/theah/templates/actors/parts/actor-stories.hbs"}}
         {{> "systems/theah/templates/actors/parts/actor-inventory.hbs"}}
         {{> "systems/theah/templates/actors/parts/actor-sorcery.hbs"}}
       </section>
-    </div>
+    </main>
 
   </div>
 </form>

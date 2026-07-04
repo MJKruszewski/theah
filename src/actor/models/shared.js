@@ -18,6 +18,7 @@ export const template_schema_base = () => ({
 
 export const template_schema_details = () => ({
   nation: new StringField(),
+  epithet: new StringField(),
   religion: new StringField(),
   age: new NumberField({ required: true, integer: true, min: 0, initial: 20 }),
   reputation: new StringField(),

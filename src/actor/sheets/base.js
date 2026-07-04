@@ -50,6 +50,7 @@ export default class ActorSheetSS2e extends ActorSheet {
       initiative: actorData.initiative,
       age: actorData.age,
       nation: actorData.nation,
+      epithet: actorData.epithet,
       wealth: actorData.wealth,
       heropts: actorData.heropts,
       corruptionpts: actorData.corruptionpts,
@@ -162,6 +163,16 @@ export default class ActorSheetSS2e extends ActorSheet {
       html.find('.rollable').on('click', this._onHeroRoll.bind(this));
     } else if (this.actor.type === ActorType.VILLAIN || this.actor.type === ActorType.MONSTER) {
       html.find('.rollable').on('click', this._onVillainRoll.bind(this));
+    }
+
+    // On-sheet Raises roller (the preview's signature dice widget).
+    const roller = html.find('.roller');
+    if (roller.length) {
+      const rollerEl = roller[0];
+      const refresh = () => this._updatePoolFormula(rollerEl);
+      roller.find('.rp-trait, .rp-skill, .rp-threshold').on('change', refresh);
+      roller.find('.roll-pool').on('click', (event) => this._onPoolRoll(event));
+      refresh();
     }
 
     html
@@ -804,6 +815,144 @@ export default class ActorSheetSS2e extends ActorSheet {
         },
         {},
       ).render(true);
+    });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * 7th Sea Raises engine: greedily group the dice into sets that each sum to
+   * at least the threshold. Ported verbatim from the design preview so the
+   * on-sheet roller behaves exactly like the gold-standard mock-up.
+   * @param {number[]} dice        The rolled d10 face values.
+   * @param {number} threshold     Sum needed per Raise (10 / 15 / 20).
+   * @returns {{raises:number, combos:string[], used:number[]}}
+   */
+  static computeRaises(dice, threshold) {
+    const arr = [...dice].sort((a, b) => b - a);
+    const used = [];
+    const combos = [];
+    let raises = 0;
+    while (arr.length) {
+      const set = [arr.shift()];
+      while (set.reduce((a, b) => a + b, 0) < threshold && arr.length) {
+        set.push(arr.pop());
+      }
+      const sum = set.reduce((a, b) => a + b, 0);
+      if (sum >= threshold) {
+        raises++;
+        combos.push(set.join('+'));
+        used.push(...set);
+      } else {
+        break;
+      }
+    }
+    return { raises, combos, used };
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Build the dice-tile row markup, flagging the dice consumed by Raises and
+   * highlighting natural 10s.
+   * @param {number[]} dice   Rolled values.
+   * @param {number[]} used   Dice consumed by Raises.
+   * @returns {string}
+   */
+  static renderDiceRow(dice, used) {
+    const usedCopy = [...used];
+    return dice
+      .slice()
+      .sort((a, b) => b - a)
+      .map((d) => {
+        let cls = 'die' + (d === 10 ? ' ten' : '');
+        const idx = usedCopy.indexOf(d);
+        if (idx > -1) {
+          cls += ' used';
+          usedCopy.splice(idx, 1);
+        }
+        return `<div class="${cls}">${d}</div>`;
+      })
+      .join('');
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Recompute and display the pool size for the on-sheet roller.
+   * @param {HTMLElement} rollerEl   The `.roller` container.
+   * @private
+   */
+  _updatePoolFormula(rollerEl) {
+    const t = parseInt(rollerEl.querySelector('.rp-trait')?.value) || 0;
+    const s = parseInt(rollerEl.querySelector('.rp-skill')?.value) || 0;
+    const el = rollerEl.querySelector('.pool-count');
+    if (el) el.textContent = t + s;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Roll the assembled dice pool, resolve Raises, render the result inline and
+   * post a matching chat card.
+   * @param {Event} event   The originating click event.
+   * @private
+   */
+  async _onPoolRoll(event) {
+    event.preventDefault();
+    const rollerEl = event.currentTarget.closest('.roller');
+    const traitSel = rollerEl.querySelector('.rp-trait');
+    const skillSel = rollerEl.querySelector('.rp-skill');
+    const t = parseInt(traitSel?.value) || 0;
+    const s = parseInt(skillSel?.value) || 0;
+    const threshold = parseInt(rollerEl.querySelector('.rp-threshold')?.value) || 10;
+    const pool = t + s;
+
+    if (pool <= 0) {
+      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.PoolEmpty'));
+    }
+
+    const r = new Roll(`${pool}d10`);
+    await r.evaluate();
+    if (game.dice3d) {
+      try {
+        await game.dice3d.showForRoll(r, game.user, true);
+      } catch (e) {
+        /* Dice So Nice is optional */
+      }
+    }
+
+    const dice = r.dice[0].results.map((d) => d.result);
+    const { raises, combos, used } = this.constructor.computeRaises(dice, threshold);
+    const diceHtml = this.constructor.renderDiceRow(dice, used);
+    const combosText = combos.length
+      ? combos.join('   ·   ')
+      : game.i18n.localize('SVNSEA2E.NoRaises');
+
+    // Inline result on the sheet.
+    rollerEl.querySelector('.dice').innerHTML = diceHtml;
+    rollerEl.querySelector('.big').textContent = raises;
+    rollerEl.querySelector('.combos').textContent = combosText;
+    rollerEl.querySelector('.result').classList.add('show');
+
+    // Matching chat card.
+    const traitLabel = traitSel ? traitSel.options[traitSel.selectedIndex].text.split(' ')[0] : '';
+    const skillLabel = skillSel ? skillSel.options[skillSel.selectedIndex].text.split(' ')[0] : '';
+    const raisesLabel = game.i18n.localize('SVNSEA2E.RaisesLabel');
+    const content = `
+      <div class="theah theah-pool">
+        <div class="pool-head">${skillLabel} <b>${s}</b> + ${traitLabel} <b>${t}</b> = <b>${pool}</b>d10 &middot; ${game.i18n.localize('SVNSEA2E.Threshold')} <b>${threshold}</b></div>
+        <div class="pool-body">
+          <div class="dice">${diceHtml}</div>
+          <div class="raises"><span class="big">${raises}</span><div><div class="lab">${raisesLabel}</div><div class="combos">${combosText}</div></div></div>
+        </div>
+      </div>`;
+
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      content,
+      rolls: [r],
+      sound: CONFIG.sounds.dice,
     });
   }
 

@@ -9,6 +9,10 @@ export const preloadHandlebarsTemplates = async function () {
     // Actor Sheet Partials
     'systems/theah/templates/actors/parts/actor-name.hbs',
     'systems/theah/templates/actors/parts/actor-traits.hbs',
+    'systems/theah/templates/actors/parts/actor-overview.hbs',
+    'systems/theah/templates/actors/parts/actor-prowess.hbs',
+    'systems/theah/templates/actors/parts/actor-stories.hbs',
+    'systems/theah/templates/actors/parts/actor-arcana.hbs',
     'systems/theah/templates/actors/parts/actor-concept.hbs',
     'systems/theah/templates/actors/parts/actor-advantages.hbs',
     'systems/theah/templates/actors/parts/actor-sorcery.hbs',

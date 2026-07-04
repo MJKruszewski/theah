@@ -352,5 +352,20 @@
   "SVNSEA2E.JoieDeVivre": "Joie de Vivre",
   "SVNSEA2E.Toolbox": "Toolbox",
   "SVNSEA2E.EmptyToolbox": "Drop some actor here",
-  "SVNSEA2E.OpenToolbox": "Open toolbox"
+  "SVNSEA2E.OpenToolbox": "Open toolbox",
+  "SVNSEA2E.Prowess": "Prowess",
+  "SVNSEA2E.Skill": "Skill",
+  "SVNSEA2E.Threshold": "threshold",
+  "SVNSEA2E.RollThePool": "Roll the pool",
+  "SVNSEA2E.RaisesLabel": "Raises",
+  "SVNSEA2E.NoRaises": "no sets reached the threshold",
+  "SVNSEA2E.PoolEmpty": "Choose a Trait and Skill to build a dice pool.",
+  "SVNSEA2E.EpithetPlaceholder": "Epithet or title…",
+  "SVNSEA2E.DeathSpiral": "death spiral",
+  "SVNSEA2E.NoArcana": "No Arcana chosen yet.",
+  "SVNSEA2E.NoBackgrounds": "No backgrounds yet.",
+  "SVNSEA2E.NoAdvantages": "No advantages yet.",
+  "SVNSEA2E.NoDuelingStyles": "No dueling styles yet.",
+  "SVNSEA2E.NoSecretSocieties": "No secret societies yet.",
+  "SVNSEA2E.NoStories": "No stories yet."
 }
