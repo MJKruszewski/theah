@@ -1,0 +1,54 @@
+name: Release
+
+# Publishes a Foundry-installable release when you push a version tag, e.g.:
+#   git tag v0.1.0 && git push origin v0.1.0
+# It builds dist/, stamps system.json with the correct manifest/download/version
+# (derived from this repo + the tag), zips the build, and attaches
+# system.json + theah.zip to a GitHub Release.
+#
+# After the first release exists, install in Foundry via "Install System" →
+# Manifest URL:
+#   https://github.com/<owner>/<repo>/releases/latest/download/system.json
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+
+      - name: Stamp manifest/download/version
+        run: bun tools/ci-stamp-manifest.mjs
+
+      - name: Package
+        run: |
+          cd dist
+          zip -r ../theah.zip .
+          cd ..
+          ls -la theah.zip dist/system.json
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Théah ${{ github.ref_name }}
+          files: |
+            dist/system.json
+            theah.zip
+          fail_on_unmatched_files: true
