@@ -5,9 +5,9 @@
     <h3>{{localize "SVNSEA2E.DuelingStyles"}}</h3><span></span>
     <a class="add-btn item-control item-create" title="{{localize 'SVNSEA2E.AddDuelStyle'}}" data-type="duelstyle"><i class="fas fa-plus"></i></a>
   </div>
-  <ul class="adv-list">
+  <ul class="perk-list">
     {{#each duelstyles as |item id|}}
-      <li class="adv-row item" data-item-id="{{item._id}}">
+      <li class="perk-row item" data-item-id="{{item._id}}">
         <span class="cost cost-plain"><i class="fas fa-khanda"></i></span>
         <h4 class="an item-name">{{item.name}}</h4>
         <span class="item-controls">
@@ -16,7 +16,7 @@
         </span>
       </li>
     {{else}}
-      <li class="adv-row"><span class="ad" style="color:var(--ink-soft);font-style:italic">{{localize "SVNSEA2E.NoDuelingStyles"}}</span></li>
+      <li class="perk-row"><span class="empty-note" style="color:var(--ink-soft);font-style:italic">{{localize "SVNSEA2E.NoDuelingStyles"}}</span></li>
     {{/each}}
   </ul>
 
@@ -25,9 +25,9 @@
     <h3>{{localize "SVNSEA2E.SecretSociety"}}</h3><span></span>
     <a class="add-btn item-control item-create" title="{{localize 'SVNSEA2E.AddSecretSociety'}}" data-type="secretsociety"><i class="fas fa-plus"></i></a>
   </div>
-  <ul class="adv-list">
+  <ul class="perk-list">
     {{#each secretsocieties as |item id|}}
-      <li class="adv-row item" data-item-id="{{item._id}}">
+      <li class="perk-row item" data-item-id="{{item._id}}">
         <span class="cost cost-plain"><i class="fas fa-user-secret"></i></span>
         <h4 class="an item-name">{{item.name}}</h4>
         <span class="favor-tag">{{localize 'SVNSEA2E.Favor'}} {{item.system.favor}}</span>
@@ -37,7 +37,7 @@
         </span>
       </li>
     {{else}}
-      <li class="adv-row"><span class="ad" style="color:var(--ink-soft);font-style:italic">{{localize "SVNSEA2E.NoSecretSocieties"}}</span></li>
+      <li class="perk-row"><span class="empty-note" style="color:var(--ink-soft);font-style:italic">{{localize "SVNSEA2E.NoSecretSocieties"}}</span></li>
     {{/each}}
   </ul>
 

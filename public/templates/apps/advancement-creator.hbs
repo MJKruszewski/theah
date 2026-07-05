@@ -13,9 +13,9 @@
     {{#iff step '==' 0}}
       <div class="wiz-step">
         <p class="wiz-intro">{{localize "SVNSEA2E.AdvRewardIntro"}}</p>
-        <div class="adv-reward-grid">
+        <div class="reward-grid">
           {{#each rewards}}
-            <div class="adv-reward-card {{#if selected}}selected{{/if}} {{#unless available}}disabled{{/unless}}"
+            <div class="reward-card {{#if selected}}selected{{/if}} {{#unless available}}disabled{{/unless}}"
                  data-reward="{{key}}" title="{{#unless available}}{{reason}}{{/unless}}">
               <div class="arc-icon"><i class="fas {{icon}}"></i></div>
               <div class="arc-text">
@@ -34,13 +34,13 @@
     {{#iff step '==' 1}}
       <div class="wiz-step">
         <p class="wiz-intro">{{localize "SVNSEA2E.AdvConfigureIntro"}}
-          {{#if rewardChosen}}<span class="adv-stepcost">{{localize "SVNSEA2E.AdvSteps"}}: <b>{{stepCost}}</b></span>{{/if}}
+          {{#if rewardChosen}}<span class="step-cost">{{localize "SVNSEA2E.AdvSteps"}}: <b>{{stepCost}}</b></span>{{/if}}
         </p>
 
         {{#iff configKey '==' 'skillRaise'}}
-          <div class="adv-choice-list">
+          <div class="choice-list">
             {{#each skillChoices}}
-              <div class="adv-choice {{#if selected}}selected{{/if}} {{#if atMax}}disabled{{/if}}"
+              <div class="choice-item {{#if selected}}selected{{/if}} {{#if atMax}}disabled{{/if}}"
                    data-choice="skill" data-value="{{key}}">
                 <span class="ac-name">{{label}}</span>
                 {{#if atMax}}<span class="ac-note">{{localize "SVNSEA2E.AdvMaxed"}}</span>
@@ -54,9 +54,9 @@
         {{#iff configKey '==' 'traitIncrease'}}
           <p class="wiz-budget">{{localize "SVNSEA2E.AdvTraitTotal"}}: <b>{{traitTotal}}</b>/{{traitTotalCap}}
             &middot; {{localize "SVNSEA2E.AdvIncreasesUsed"}}: <b>{{traitIncreasesUsed}}</b>/{{traitIncreaseCap}}</p>
-          <div class="adv-choice-list">
+          <div class="choice-list">
             {{#each traitRaiseChoices}}
-              <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="trait" data-value="{{key}}">
+              <div class="choice-item {{#if selected}}selected{{/if}}" data-choice="trait" data-value="{{key}}">
                 <span class="ac-name">{{label}}</span>
                 <span class="ac-delta">{{cur}} &rarr; <b>{{next}}</b></span>
                 {{#if selected}}<i class="fas fa-check"></i>{{/if}}
@@ -66,23 +66,23 @@
         {{/iff}}
 
         {{#iff configKey '==' 'traitShift'}}
-          <div class="adv-shift">
-            <div class="adv-shift-col">
+          <div class="trait-shift">
+            <div class="trait-shift-col">
               <h4><i class="fas fa-arrow-up"></i> {{localize "SVNSEA2E.AdvRaise"}}</h4>
-              <div class="adv-choice-list">
+              <div class="choice-list">
                 {{#each traitRaiseChoices}}
-                  <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="trait" data-value="{{key}}">
+                  <div class="choice-item {{#if selected}}selected{{/if}}" data-choice="trait" data-value="{{key}}">
                     <span class="ac-name">{{label}}</span><span class="ac-delta">{{cur}} &rarr; <b>{{next}}</b></span>
                     {{#if selected}}<i class="fas fa-check"></i>{{/if}}
                   </div>
                 {{/each}}
               </div>
             </div>
-            <div class="adv-shift-col">
+            <div class="trait-shift-col">
               <h4><i class="fas fa-arrow-down"></i> {{localize "SVNSEA2E.AdvLower"}}</h4>
-              <div class="adv-choice-list">
+              <div class="choice-list">
                 {{#each traitLowerChoices}}
-                  <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="traitDown" data-value="{{key}}">
+                  <div class="choice-item {{#if selected}}selected{{/if}}" data-choice="traitDown" data-value="{{key}}">
                     <span class="ac-name">{{label}}</span><span class="ac-delta">{{cur}} &rarr; <b>{{next}}</b></span>
                     {{#if selected}}<i class="fas fa-check"></i>{{/if}}
                   </div>
@@ -93,9 +93,9 @@
         {{/iff}}
 
         {{#iff configKey '==' 'advantage'}}
-          <div class="adv-choice-list adv-scroll">
+          <div class="choice-list choice-scroll">
             {{#each advantageChoices}}
-              <div class="adv-choice adv-choice-block {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}"
+              <div class="choice-item choice-block {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}"
                    data-choice="advId" data-value="{{id}}">
                 <div class="ac-head">
                   <span class="ac-cost">{{cost}}</span>
@@ -110,13 +110,13 @@
         {{/iff}}
 
         {{#iff configKey '==' 'arcanaChange'}}
-          <div class="adv-slot-toggle">
+          <div class="slot-toggle">
             <button type="button" class="{{#iff arcanaSlot '==' 'virtue'}}on{{/iff}}" data-arcana-slot="virtue">{{localize "SVNSEA2E.Virtue"}}</button>
             <button type="button" class="{{#iff arcanaSlot '==' 'hubris'}}on{{/iff}}" data-arcana-slot="hubris">{{localize "SVNSEA2E.Hubris"}}</button>
           </div>
-          <div class="adv-choice-list adv-scroll">
+          <div class="choice-list choice-scroll">
             {{#each arcanaChoices}}
-              <div class="adv-choice adv-choice-block {{#if selected}}selected{{/if}}" data-choice="arcanaId" data-value="{{id}}">
+              <div class="choice-item choice-block {{#if selected}}selected{{/if}}" data-choice="arcanaId" data-value="{{id}}">
                 <div class="ac-head"><span class="ac-name">{{name}}</span>{{#if selected}}<i class="fas fa-check"></i>{{/if}}</div>
                 {{#if description}}<div class="ac-desc">{{{description}}}</div>{{/if}}
               </div>
@@ -125,9 +125,9 @@
         {{/iff}}
 
         {{#iff configKey '==' 'quirkChange'}}
-          <div class="adv-choice-list">
+          <div class="choice-list">
             {{#each backgroundChoices}}
-              <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="bgId" data-value="{{id}}">
+              <div class="choice-item {{#if selected}}selected{{/if}}" data-choice="bgId" data-value="{{id}}">
                 <span class="ac-name">{{name}}</span>
                 {{#if quirk}}<span class="ac-quirk">{{{quirk}}}</span>{{/if}}
                 {{#if selected}}<i class="fas fa-check"></i>{{/if}}
@@ -139,7 +139,7 @@
         {{/iff}}
 
         {{#iff configKey '==' 'corruptionRemove'}}
-          <p class="adv-corruption">{{localize "SVNSEA2E.AdvCorruptionIntro"}}</p>
+          <p class="corruption-note">{{localize "SVNSEA2E.AdvCorruptionIntro"}}</p>
           <p class="wiz-budget">{{localize "SVNSEA2E.Corruption"}}: <b>{{corruption}}</b> &rarr; <b>{{corruptionAfter}}</b></p>
         {{/iff}}
       </div>

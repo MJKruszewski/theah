@@ -396,8 +396,8 @@ export class HeroCreator extends FormApplication {
     );
 
     // Advantage toggle.
-    root.querySelectorAll('[data-adv-toggle]').forEach((el) =>
-      el.addEventListener('click', (ev) => this._toggleAdvantage(ev.currentTarget.dataset.advToggle)),
+    root.querySelectorAll('[data-pick-perk]').forEach((el) =>
+      el.addEventListener('click', (ev) => this._toggleAdvantage(ev.currentTarget.dataset.pickPerk)),
     );
 
     // Arcana pick cards (single-select each column; click again to clear).

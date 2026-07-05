@@ -810,13 +810,13 @@ export async function applyStoryAdvancement(actor, story) {
   await story.update({ 'system.advancement.applied': true, 'system.status': 'complete' });
 
   const content = `
-    <div class="theah theah-adv">
-      <div class="adv-head"><i class="fas fa-feather"></i> ${L('SVNSEA2E.AdvChatTitle', {
+    <div class="theah theah-reward">
+      <div class="item-head"><i class="fas fa-feather"></i> ${L('SVNSEA2E.AdvChatTitle', {
         name: actor.name,
       })}</div>
-      <div class="adv-body">
-        <div class="adv-story">&ldquo;${esc(story.name)}&rdquo;</div>
-        <div class="adv-reward"><i class="fas fa-trophy"></i> ${summary}</div>
+      <div class="reward-body">
+        <div class="reward-story">&ldquo;${esc(story.name)}&rdquo;</div>
+        <div class="reward-line"><i class="fas fa-trophy"></i> ${summary}</div>
       </div>
     </div>`;
   await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content });

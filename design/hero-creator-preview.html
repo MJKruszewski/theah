@@ -1688,13 +1688,13 @@
 }
 
 /* Advantages list */
-.theah .adv-list {
+.theah .perk-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.theah .adv-row {
+.theah .perk-row {
   display: flex;
   align-items: baseline;
   gap: 10px;
@@ -1703,7 +1703,7 @@
   flex-wrap: wrap;
 }
 
-.theah .adv-row .cost {
+.theah .perk-row .cost {
   font-family: var(--thd-display);
   font-variant-numeric: tabular-nums;
   font-size: 13px;
@@ -1719,14 +1719,14 @@
   align-self: center;
 }
 
-.theah .adv-row .cost.cost-plain {
+.theah .perk-row .cost.cost-plain {
   background: transparent;
   color: var(--gold-deep);
   box-shadow: none;
   border: 1px solid var(--line-strong);
 }
 
-.theah .adv-row .an {
+.theah .perk-row .an {
   font-weight: 600;
   font-size: 14.5px;
   color: var(--ink);
@@ -1736,16 +1736,16 @@
   border: 0;
 }
 
-.theah .adv-row .an:hover {
+.theah .perk-row .an:hover {
   color: var(--gold-deep);
 }
 
-.theah .adv-row .an .badge {
+.theah .perk-row .an .badge {
   font-size: 11px;
   color: var(--gold-deep);
 }
 
-.theah .adv-row .favor-tag {
+.theah .perk-row .favor-tag {
   font-family: var(--thd-label);
   font-size: 10px;
   letter-spacing: 0.06em;
@@ -1753,7 +1753,7 @@
   color: var(--ink-soft);
 }
 
-.theah .adv-row .item-controls {
+.theah .perk-row .item-controls {
   display: flex;
   gap: 8px;
   opacity: 0;
@@ -1761,16 +1761,16 @@
   align-self: center;
 }
 
-.theah .adv-row:hover .item-controls {
+.theah .perk-row:hover .item-controls {
   opacity: 1;
 }
 
-.theah .adv-row .item-controls a {
+.theah .perk-row .item-controls a {
   color: var(--ink-soft);
   font-size: 12px;
 }
 
-.theah .adv-row .item-controls a:hover {
+.theah .perk-row .item-controls a:hover {
   color: var(--gold-deep);
 }
 
@@ -2738,6 +2738,33 @@
   font-style: italic;
 }
 
+/* Advantage cards reuse .wiz-pick — cost in the head, rules text as .pick-desc. */
+.hero-creator-form .pick-cost {
+  font-family: var(--thd-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gold-deep);
+  white-space: nowrap;
+  margin-left: 8px;
+  flex: none;
+}
+
+.hero-creator-form .pick-cost .fa-check {
+  color: var(--teal);
+}
+
+.hero-creator-form .pick-desc {
+  line-height: 1.45;
+}
+
+.hero-creator-form .pick-desc p {
+  margin: 0 0 4px;
+}
+
+.hero-creator-form .pick-desc :last-child {
+  margin-bottom: 0;
+}
+
 /* Skills */
 .hero-creator-form .wiz-skills {
   display: grid;
@@ -2796,90 +2823,7 @@
   letter-spacing: 0.06em;
 }
 
-.hero-creator-form .wiz-adv-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.hero-creator-form .wiz-adv {
-  display: block;
-  padding: 9px 12px;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  cursor: pointer;
-  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
-  transition: border-color 0.12s;
-}
-
-.hero-creator-form .wiz-adv:hover {
-  border-color: var(--gold);
-}
-
-.hero-creator-form .wiz-adv.selected {
-  border-color: var(--gold-deep);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
-}
-
-.hero-creator-form .wiz-adv.is-free {
-  opacity: 0.85;
-}
-
-.hero-creator-form .wiz-adv .adv-head {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.hero-creator-form .wiz-adv .adv-cost {
-  font-family: var(--thd-display);
-  font-size: 12px;
-  color: #fff;
-  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
-  min-width: 20px;
-  height: 20px;
-  padding: 0 5px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  flex: none;
-}
-
-.hero-creator-form .wiz-adv .adv-name {
-  flex: 1;
-  font-family: var(--thd-display);
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.hero-creator-form .wiz-adv .adv-freebadge {
-  font-family: var(--thd-label);
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--teal);
-}
-
-.hero-creator-form .wiz-adv .fa-check {
-  color: var(--teal);
-}
-
-.hero-creator-form .wiz-adv .adv-desc {
-  font-size: 12px;
-  line-height: 1.45;
-  color: var(--ink-soft);
-  margin-top: 5px;
-}
-
-.hero-creator-form .wiz-adv .adv-desc p {
-  margin: 0 0 4px;
-}
-
-.hero-creator-form .wiz-adv .adv-desc :last-child {
-  margin-bottom: 0;
-}
-
+/* (Advantage cards now reuse the .wiz-pick component above — no custom classes.) */
 /* Arcana — two columns of description-bearing pick cards (single-select each) */
 .hero-creator-form .wiz-arcana {
   display: grid;
@@ -3126,13 +3070,13 @@
 }
 
 /* Reward cards (step 0) */
-.advancement-creator-form .adv-reward-grid {
+.advancement-creator-form .reward-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-.advancement-creator-form .adv-reward-card {
+.advancement-creator-form .reward-card {
   position: relative;
   display: flex;
   align-items: center;
@@ -3145,21 +3089,21 @@
   transition: border-color 0.12s;
 }
 
-.advancement-creator-form .adv-reward-card:hover:not(.disabled) {
+.advancement-creator-form .reward-card:hover:not(.disabled) {
   border-color: var(--gold);
 }
 
-.advancement-creator-form .adv-reward-card.selected {
+.advancement-creator-form .reward-card.selected {
   border-color: var(--gold-deep);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
 }
 
-.advancement-creator-form .adv-reward-card.disabled {
+.advancement-creator-form .reward-card.disabled {
   opacity: 0.42;
   cursor: default;
 }
 
-.advancement-creator-form .adv-reward-card .arc-icon {
+.advancement-creator-form .reward-card .arc-icon {
   width: 38px;
   height: 38px;
   border-radius: 50%;
@@ -3171,23 +3115,23 @@
   font-size: 16px;
 }
 
-.advancement-creator-form .adv-reward-card .arc-text {
+.advancement-creator-form .reward-card .arc-text {
   flex: 1;
 }
 
-.advancement-creator-form .adv-reward-card .arc-name {
+.advancement-creator-form .reward-card .arc-name {
   font-family: var(--thd-display);
   font-size: 15px;
   color: var(--ink);
 }
 
-.advancement-creator-form .adv-reward-card .arc-hint {
+.advancement-creator-form .reward-card .arc-hint {
   font-size: 12px;
   color: var(--ink-soft);
   margin-top: 2px;
 }
 
-.advancement-creator-form .adv-reward-card .arc-cost {
+.advancement-creator-form .reward-card .arc-cost {
   font-family: var(--thd-label);
   font-size: 9.5px;
   letter-spacing: 0.06em;
@@ -3200,7 +3144,7 @@
   flex: none;
 }
 
-.advancement-creator-form .adv-reward-card .arc-check {
+.advancement-creator-form .reward-card .arc-check {
   position: absolute;
   top: 8px;
   right: 10px;
@@ -3208,7 +3152,7 @@
 }
 
 /* Configure step */
-.advancement-creator-form .adv-stepcost {
+.advancement-creator-form .step-cost {
   float: right;
   font-family: var(--thd-label);
   font-size: 11px;
@@ -3217,25 +3161,25 @@
   color: var(--ink-soft);
 }
 
-.advancement-creator-form .adv-stepcost b {
+.advancement-creator-form .step-cost b {
   font-family: var(--thd-display);
   font-size: 16px;
   color: var(--oxblood);
 }
 
-.advancement-creator-form .adv-choice-list {
+.advancement-creator-form .choice-list {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.advancement-creator-form .adv-scroll {
+.advancement-creator-form .choice-scroll {
   max-height: 320px;
   overflow-y: auto;
   padding-right: 4px;
 }
 
-.advancement-creator-form .adv-choice {
+.advancement-creator-form .choice-item {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -3247,45 +3191,45 @@
   background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
 }
 
-.advancement-creator-form .adv-choice:hover:not(.disabled) {
+.advancement-creator-form .choice-item:hover:not(.disabled) {
   border-color: var(--gold);
 }
 
-.advancement-creator-form .adv-choice.selected {
+.advancement-creator-form .choice-item.selected {
   border-color: var(--gold-deep);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
 }
 
-.advancement-creator-form .adv-choice.disabled {
+.advancement-creator-form .choice-item.disabled {
   opacity: 0.45;
   cursor: default;
 }
 
-.advancement-creator-form .adv-choice .ac-name {
+.advancement-creator-form .choice-item .ac-name {
   flex: 1;
   font-size: 14px;
   color: var(--ink);
 }
 
-.advancement-creator-form .adv-choice .ac-delta {
+.advancement-creator-form .choice-item .ac-delta {
   font-family: var(--thd-display);
   font-size: 13px;
   color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
 }
 
-.advancement-creator-form .adv-choice .ac-delta b {
+.advancement-creator-form .choice-item .ac-delta b {
   color: var(--ink);
   font-size: 16px;
 }
 
-.advancement-creator-form .adv-choice .ac-delta em {
+.advancement-creator-form .choice-item .ac-delta em {
   font-style: normal;
   font-size: 11px;
   opacity: 0.75;
 }
 
-.advancement-creator-form .adv-choice .ac-note {
+.advancement-creator-form .choice-item .ac-note {
   font-family: var(--thd-label);
   font-size: 9.5px;
   text-transform: uppercase;
@@ -3293,7 +3237,7 @@
   color: var(--oxblood);
 }
 
-.advancement-creator-form .adv-choice .ac-cost {
+.advancement-creator-form .choice-item .ac-cost {
   font-family: var(--thd-display);
   font-size: 12px;
   color: #fff;
@@ -3306,50 +3250,50 @@
   flex: none;
 }
 
-.advancement-creator-form .adv-choice .ac-quirk {
+.advancement-creator-form .choice-item .ac-quirk {
   flex-basis: 100%;
   font-size: 12px;
   font-style: italic;
   color: var(--ink-soft);
 }
 
-.advancement-creator-form .adv-choice .fa-check {
+.advancement-creator-form .choice-item .fa-check {
   color: var(--teal);
 }
 
 /* Block variant (Advantage / Arcana rewards) — name+cost header with the description below */
-.advancement-creator-form .adv-choice-block {
+.advancement-creator-form .choice-block {
   display: block;
 }
 
-.advancement-creator-form .adv-choice-block .ac-head {
+.advancement-creator-form .choice-block .ac-head {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.advancement-creator-form .adv-choice-block .ac-desc {
+.advancement-creator-form .choice-block .ac-desc {
   font-size: 12px;
   line-height: 1.45;
   color: var(--ink-soft);
   margin-top: 5px;
 }
 
-.advancement-creator-form .adv-choice-block .ac-desc p {
+.advancement-creator-form .choice-block .ac-desc p {
   margin: 0 0 4px;
 }
 
-.advancement-creator-form .adv-choice-block .ac-desc :last-child {
+.advancement-creator-form .choice-block .ac-desc :last-child {
   margin-bottom: 0;
 }
 
-.advancement-creator-form .adv-shift {
+.advancement-creator-form .trait-shift {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
 
-.advancement-creator-form .adv-shift-col h4 {
+.advancement-creator-form .trait-shift-col h4 {
   font-family: var(--thd-label);
   font-size: 11px;
   letter-spacing: 0.1em;
@@ -3361,13 +3305,13 @@
   gap: 6px;
 }
 
-.advancement-creator-form .adv-slot-toggle {
+.advancement-creator-form .slot-toggle {
   display: flex;
   gap: 8px;
   margin-bottom: 12px;
 }
 
-.advancement-creator-form .adv-slot-toggle button {
+.advancement-creator-form .slot-toggle button {
   font-family: var(--thd-label);
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -3380,13 +3324,13 @@
   cursor: pointer;
 }
 
-.advancement-creator-form .adv-slot-toggle button.on {
+.advancement-creator-form .slot-toggle button.on {
   background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
   color: #2a1c10;
   border-color: var(--gold-deep);
 }
 
-.advancement-creator-form .adv-corruption {
+.advancement-creator-form .corruption-note {
   font-size: 13.5px;
   color: var(--ink);
 }
@@ -3458,7 +3402,7 @@
   margin: 0;
 }
 
-.theah .story-adv {
+.theah .story-reward {
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px dotted var(--line);
@@ -3560,7 +3504,7 @@
 }
 
 /* Story-complete chat card */
-#chat .theah-adv {
+#chat .theah-reward {
   font-family: var(--thd-body);
   color: var(--ink);
   background: var(--panel);
@@ -3570,7 +3514,7 @@
   overflow: hidden;
 }
 
-#chat .theah-adv .adv-head {
+#chat .theah-reward .item-head {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -3581,22 +3525,22 @@
   color: #efe4c7;
 }
 
-#chat .theah-adv .adv-head i {
+#chat .theah-reward .item-head i {
   color: var(--gold-leaf);
 }
 
-#chat .theah-adv .adv-body {
+#chat .theah-reward .reward-body {
   padding: 11px 12px;
 }
 
-#chat .theah-adv .adv-story {
+#chat .theah-reward .reward-story {
   font-style: italic;
   color: var(--ink-soft);
   font-size: 13px;
   margin-bottom: 6px;
 }
 
-#chat .theah-adv .adv-reward {
+#chat .theah-reward .reward-line {
   font-family: var(--thd-display);
   font-size: 15px;
   color: var(--ink);
@@ -3605,18 +3549,18 @@
   gap: 8px;
 }
 
-#chat .theah-adv .adv-reward i {
+#chat .theah-reward .reward-line i {
   color: var(--gold-deep);
 }
 
 @media (max-width: 640px) {
-  .advancement-creator-form .adv-reward-grid,
-  .advancement-creator-form .adv-shift {
+  .advancement-creator-form .reward-grid,
+  .advancement-creator-form .trait-shift {
     grid-template-columns: 1fr;
   }
   .hero-creator-form .wiz-fields,
   .hero-creator-form .wiz-pick-list,
-  .hero-creator-form .wiz-adv-list,
+  .hero-creator-form .wiz-perk-list,
   .hero-creator-form .wiz-arcana {
     grid-template-columns: 1fr;
   }
@@ -3681,70 +3625,54 @@
       <div class="wiz-step">
         <p class="wiz-intro">Spend 5 points on Advantages. Backgrounds grant some for free.</p>
         <p class="wiz-budget">Points left: <b>3</b> / 5</p>
-        <div class="wiz-adv-list"><div class="wiz-adv is-free">
-     <div class="adv-head">
-       <span class="adv-cost">1</span>
-       <span class="adv-name">Able Drinker</span>
-       <span class="adv-freebadge">free</span>
-       
+        <div class="wiz-pick-list"><div class="wiz-pick">
+     <div class="pick-head">
+       <span class="pick-name">Able Drinker</span>
+       <span class="pick-cost">1 &middot; free</span>
      </div>
-     <div class="adv-desc"><p>Alcohol never adversely affects you, no matter how much you drink.</p></div>
-   </div><div class="wiz-adv selected">
-     <div class="adv-head">
-       <span class="adv-cost">1</span>
-       <span class="adv-name">Cast Iron Stomach</span>
-       
-       <i class="fas fa-check">✓</i>
+     <div class="pick-meta pick-desc"><p>Alcohol never adversely affects you, no matter how much you drink.</p></div>
+   </div><div class="wiz-pick selected">
+     <div class="pick-head">
+       <span class="pick-name">Cast Iron Stomach</span>
+       <span class="pick-cost">1 <i class="fas fa-check">✓</i></span>
      </div>
-     <div class="adv-desc"><p>Spoiled or raw food never negatively affects you, and you still gain required sustenance from it.</p></div>
-   </div><div class="wiz-adv">
-     <div class="adv-head">
-       <span class="adv-cost">1</span>
-       <span class="adv-name">Direction Sense</span>
-       
-       
+     <div class="pick-meta pick-desc"><p>Spoiled or raw food never negatively affects you, and you still gain required sustenance from it.</p></div>
+   </div><div class="wiz-pick">
+     <div class="pick-head">
+       <span class="pick-name">Direction Sense</span>
+       <span class="pick-cost">1</span>
      </div>
-     <div class="adv-desc"><p>As long as you have some point of reference, you are never lost. That isn’t the same as knowing exactly where you are—if you’re knocked unconscious and wake up in a dungeon, you don’t necessarily have any idea what city you are in, but if you manage to escape your cell you will never get turned around in the winding tunnels that make up the dungeon.</p></div>
-   </div><div class="wiz-adv">
-     <div class="adv-head">
-       <span class="adv-cost">1</span>
-       <span class="adv-name">Foreign Born</span>
-       
-       
+     <div class="pick-meta pick-desc"><p>As long as you have some point of reference, you are never lost. That isn’t the same as knowing exactly where you are—if you’re knocked unconscious and wake up in a dungeon, you don’t necessarily have any idea what city you are in, but if you manage to escape your cell you will never get turned around in the winding tunnels that make up the dungeon.</p></div>
+   </div><div class="wiz-pick">
+     <div class="pick-head">
+       <span class="pick-name">Foreign Born</span>
+       <span class="pick-cost">1</span>
      </div>
-     <div class="adv-desc"><p>Choose a Nation of Théah aside from your own. You were raised there, rather than your blood homeland. For example, if your parents are Castillian but you were raised in Vodacce, you would be Foreign Born [Vodacce]. Any Risk you take that would benefit from your dual heritage—using Convince to negotiate between two merchants who hail from your two cultures, or using Tempt to know just what to say to bribe a border patrol into letting you pass without inspection—gains 1 Bonus Die.</p></div>
-   </div><div class="wiz-adv">
-     <div class="adv-head">
-       <span class="adv-cost">1</span>
-       <span class="adv-name">Large</span>
-       
-       
+     <div class="pick-meta pick-desc"><p>Choose a Nation of Théah aside from your own. You were raised there, rather than your blood homeland. For example, if your parents are Castillian but you were raised in Vodacce, you would be Foreign Born [Vodacce]. Any Risk you take that would benefit from your dual heritage—using Convince to negotiate between two merchants who hail from your two cultures, or using Tempt to know just what to say to bribe a border patrol into letting you pass without inspection—gains 1 Bonus Die.</p></div>
+   </div><div class="wiz-pick">
+     <div class="pick-head">
+       <span class="pick-name">Large</span>
+       <span class="pick-cost">1</span>
      </div>
-     <div class="adv-desc"><p>You cannot purchase the “Small” Advantage Gain 1 Bonus Die on any Risk that is easier due to your size—using Athletics to run at full speed even while carrying another Hero, or looming over someone in order to Intimidate them.</p></div>
-   </div><div class="wiz-adv">
-     <div class="adv-head">
-       <span class="adv-cost">1</span>
-       <span class="adv-name">Linguist</span>
-       
-       
+     <div class="pick-meta pick-desc"><p>You cannot purchase the “Small” Advantage Gain 1 Bonus Die on any Risk that is easier due to your size—using Athletics to run at full speed even while carrying another Hero, or looming over someone in order to Intimidate them.</p></div>
+   </div><div class="wiz-pick">
+     <div class="pick-head">
+       <span class="pick-name">Linguist</span>
+       <span class="pick-cost">1</span>
      </div>
-     <div class="adv-desc"><p>You speak, read, and write all Théan languages. Even the dead ones.</p></div>
-   </div><div class="wiz-adv">
-     <div class="adv-head">
-       <span class="adv-cost">1</span>
-       <span class="adv-name">Sea Legs</span>
-       
-       
+     <div class="pick-meta pick-desc"><p>You speak, read, and write all Théan languages. Even the dead ones.</p></div>
+   </div><div class="wiz-pick">
+     <div class="pick-head">
+       <span class="pick-name">Sea Legs</span>
+       <span class="pick-cost">1</span>
      </div>
-     <div class="adv-desc"><p>While aboard a ship, treacherous footing never affects you. You gain 1 Bonus Die on any physical Risk while aboard a ship at sea—engaging in a sword fight on a pitching ship deck, or climbing through the rigging during a storm.</p></div>
-   </div><div class="wiz-adv">
-     <div class="adv-head">
-       <span class="adv-cost">1</span>
-       <span class="adv-name">Small</span>
-       
-       
+     <div class="pick-meta pick-desc"><p>While aboard a ship, treacherous footing never affects you. You gain 1 Bonus Die on any physical Risk while aboard a ship at sea—engaging in a sword fight on a pitching ship deck, or climbing through the rigging during a storm.</p></div>
+   </div><div class="wiz-pick">
+     <div class="pick-head">
+       <span class="pick-name">Small</span>
+       <span class="pick-cost">1</span>
      </div>
-     <div class="adv-desc"><p>You cannot purchase the “Large” Advantage You are smaller than the average Théan. Much smaller. If your small size makes a Risk easier—using Hide to squeeze into a tiny space and escape a guard patrol, or using Athletics to slip between the bars of a jail cell—gain 1 Bonus Die.</p></div>
+     <div class="pick-meta pick-desc"><p>You cannot purchase the “Large” Advantage You are smaller than the average Théan. Much smaller. If your small size makes a Risk easier—using Hide to squeeze into a tiny space and escape a guard patrol, or using Athletics to slip between the bars of a jail cell—gain 1 Bonus Die.</p></div>
    </div></div>
       </div>
     </div>

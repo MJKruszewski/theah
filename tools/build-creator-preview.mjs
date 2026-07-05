@@ -23,14 +23,12 @@ const hubrisSlice = hubris.slice(0, 6);
 const cost = (a) => a.system?.cost?.normal ?? 1;
 
 const advCard = (a, i) =>
-  `<div class="wiz-adv${i === 1 ? ' selected' : ''}${i === 0 ? ' is-free' : ''}">
-     <div class="adv-head">
-       <span class="adv-cost">${cost(a)}</span>
-       <span class="adv-name">${a.name}</span>
-       ${i === 0 ? '<span class="adv-freebadge">free</span>' : ''}
-       ${i === 1 ? '<i class="fas fa-check">✓</i>' : ''}
+  `<div class="wiz-pick${i === 1 ? ' selected' : ''}">
+     <div class="pick-head">
+       <span class="pick-name">${a.name}</span>
+       <span class="pick-cost">${cost(a)}${i === 0 ? ' &middot; free' : ''}${i === 1 ? ' <i class="fas fa-check">✓</i>' : ''}</span>
      </div>
-     <div class="adv-desc">${a.system.description || ''}</div>
+     <div class="pick-meta pick-desc">${a.system.description || ''}</div>
    </div>`;
 
 const arcCard = (a, kind, sel) =>
@@ -104,7 +102,7 @@ ${css}
       <div class="wiz-step">
         <p class="wiz-intro">Spend 5 points on Advantages. Backgrounds grant some for free.</p>
         <p class="wiz-budget">Points left: <b>3</b> / 5</p>
-        <div class="wiz-adv-list">${advSlice.map(advCard).join('')}</div>
+        <div class="wiz-pick-list">${advSlice.map(advCard).join('')}</div>
       </div>
     </div>
     <footer class="wiz-nav"><button>‹ Back</button><span class="wiz-count">Step 5 / 7</span><button>Next ›</button></footer>

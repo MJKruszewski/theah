@@ -19,7 +19,7 @@
         </div>
 
         {{#if item.isAdvancement}}
-          <div class="story-adv">
+          <div class="story-reward">
             <div class="story-reward"><i class="fas fa-trophy"></i> {{item.rewardLabel}}</div>
             {{#if item.goal}}<div class="story-goal">&ldquo;{{item.goal}}&rdquo;</div>{{/if}}
             <div class="story-track" title="{{localize 'SVNSEA2E.AdvStepsHint'}}">
@@ -37,7 +37,7 @@
         {{/if}}
       </li>
     {{else}}
-      <li class="story-card empty"><span class="ad">{{localize "SVNSEA2E.NoStories"}}</span></li>
+      <li class="story-card empty"><span class="empty-note">{{localize "SVNSEA2E.NoStories"}}</span></li>
     {{/each}}
   </ul>
 

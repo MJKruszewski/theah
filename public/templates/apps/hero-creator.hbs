@@ -109,16 +109,15 @@
         {{#if freeAdvantages.length}}
           <div class="wiz-free"><b>{{localize "SVNSEA2E.WizFreeFromBg"}}:</b> {{#each freeAdvantages}}<span class="tag">{{this}}</span>{{/each}}</div>
         {{/if}}
-        <div class="wiz-adv-list">
+        {{!-- Same .wiz-pick card component as Backgrounds — one consistent pattern. --}}
+        <div class="wiz-pick-list">
           {{#each advantageList}}
-            <div class="wiz-adv {{#if selected}}selected{{/if}} {{#if free}}is-free{{/if}}" data-adv-toggle="{{id}}">
-              <div class="adv-head">
-                <span class="adv-cost">{{cost}}</span>
-                <span class="adv-name">{{name}}</span>
-                {{#if free}}<span class="adv-freebadge">{{localize "SVNSEA2E.WizFree"}}</span>{{/if}}
-                {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+            <div class="wiz-pick {{#if selected}}selected{{/if}}" data-pick-perk="{{id}}">
+              <div class="pick-head">
+                <span class="pick-name">{{name}}</span>
+                <span class="pick-cost">{{cost}}{{#if free}} &middot; {{localize "SVNSEA2E.WizFree"}}{{/if}}{{#if selected}} <i class="fas fa-check"></i>{{/if}}</span>
               </div>
-              {{#if description}}<div class="adv-desc">{{{description}}}</div>{{/if}}
+              {{#if description}}<div class="pick-meta pick-desc">{{{description}}}</div>{{/if}}
             </div>
           {{/each}}
         </div>

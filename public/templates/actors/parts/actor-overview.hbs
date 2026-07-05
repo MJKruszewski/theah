@@ -108,9 +108,9 @@
         <h3>{{localize "SVNSEA2E.Advantages"}}</h3><span></span>
         <a class="add-btn open-compendium" data-pack="theah.advantages" title="{{localize 'SVNSEA2E.BrowseCompendium'}}"><i class="fas fa-book-open"></i></a>
       </div>
-      <ul class="adv-list">
+      <ul class="perk-list">
         {{#each advantages as |item id|}}
-          <li class="adv-row item" data-item-id="{{item._id}}">
+          <li class="perk-row item" data-item-id="{{item._id}}">
             <span class="cost">{{#if item.system.cost.normal}}{{item.system.cost.normal}}{{else}}&middot;{{/if}}</span>
             <h4 class="an item-name">{{item.name}}{{#if item.system.knack}} <i class="fas fa-award badge" title="{{localize 'SVNSEA2E.Knack'}}"></i>{{/if}}{{#if item.system.innate}} <i class="fas fa-seedling badge" title="{{localize 'SVNSEA2E.Innate'}}"></i>{{/if}}</h4>
             <span class="item-controls">
@@ -119,7 +119,7 @@
             </span>
           </li>
         {{else}}
-          <li class="adv-row"><span class="ad" style="color:var(--ink-soft);font-style:italic">{{localize "SVNSEA2E.NoAdvantages"}}</span></li>
+          <li class="perk-row"><span class="empty-note" style="color:var(--ink-soft);font-style:italic">{{localize "SVNSEA2E.NoAdvantages"}}</span></li>
         {{/each}}
       </ul>
     </div>

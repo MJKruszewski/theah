@@ -301,18 +301,18 @@
 .theah .arcana-empty { grid-column: 1 / -1; color: var(--ink-soft); font-style: italic; font-size: 13px; padding: 4px 2px; }
 
 /* Advantages list */
-.theah .adv-list { list-style: none; margin: 0; padding: 0; }
-.theah .adv-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 2px; border-bottom: 1px dotted var(--line); flex-wrap: wrap; }
-.theah .adv-row .cost { font-family: var(--thd-display); font-variant-numeric: tabular-nums; font-size: 13px; color: #fff; background: linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; flex: none; box-shadow: 0 2px 4px -2px rgba(0,0,0,.5); align-self: center; }
-.theah .adv-row .cost.cost-plain { background: transparent; color: var(--gold-deep); box-shadow: none; border: 1px solid var(--line-strong); }
-.theah .adv-row .an { font-weight: 600; font-size: 14.5px; color: var(--ink); flex: 1; cursor: pointer; margin: 0; border: 0; }
-.theah .adv-row .an:hover { color: var(--gold-deep); }
-.theah .adv-row .an .badge { font-size: 11px; color: var(--gold-deep); }
-.theah .adv-row .favor-tag { font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
-.theah .adv-row .item-controls { display: flex; gap: 8px; opacity: 0; transition: opacity .15s; align-self: center; }
-.theah .adv-row:hover .item-controls { opacity: 1; }
-.theah .adv-row .item-controls a { color: var(--ink-soft); font-size: 12px; }
-.theah .adv-row .item-controls a:hover { color: var(--gold-deep); }
+.theah .perk-list { list-style: none; margin: 0; padding: 0; }
+.theah .perk-row { display: flex; align-items: baseline; gap: 10px; padding: 8px 2px; border-bottom: 1px dotted var(--line); flex-wrap: wrap; }
+.theah .perk-row .cost { font-family: var(--thd-display); font-variant-numeric: tabular-nums; font-size: 13px; color: #fff; background: linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; flex: none; box-shadow: 0 2px 4px -2px rgba(0,0,0,.5); align-self: center; }
+.theah .perk-row .cost.cost-plain { background: transparent; color: var(--gold-deep); box-shadow: none; border: 1px solid var(--line-strong); }
+.theah .perk-row .an { font-weight: 600; font-size: 14.5px; color: var(--ink); flex: 1; cursor: pointer; margin: 0; border: 0; }
+.theah .perk-row .an:hover { color: var(--gold-deep); }
+.theah .perk-row .an .badge { font-size: 11px; color: var(--gold-deep); }
+.theah .perk-row .favor-tag { font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.theah .perk-row .item-controls { display: flex; gap: 8px; opacity: 0; transition: opacity .15s; align-self: center; }
+.theah .perk-row:hover .item-controls { opacity: 1; }
+.theah .perk-row .item-controls a { color: var(--ink-soft); font-size: 12px; }
+.theah .perk-row .item-controls a:hover { color: var(--gold-deep); }
 .theah .item-summary { flex-basis: 100%; margin: 6px 0 2px; padding: 8px 10px; font-size: 13px; color: var(--ink-soft); border-left: 2px solid var(--gold-deep); background: color-mix(in srgb, var(--gold-leaf) 8%, transparent); }
 
 /* Backgrounds tags */
@@ -489,6 +489,12 @@
 .hero-creator-form .wiz-pick .fa-check { color: var(--teal); }
 .hero-creator-form .pick-meta { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
 .hero-creator-form .pick-quirk { font-size: 12px; color: var(--ink-soft); margin-top: 4px; font-style: italic; }
+/* Advantage cards reuse .wiz-pick — cost in the head, rules text as .pick-desc. */
+.hero-creator-form .pick-cost { font-family: var(--thd-display); font-size: 12.5px; font-weight: 600; color: var(--gold-deep); white-space: nowrap; margin-left: 8px; flex: none; }
+.hero-creator-form .pick-cost .fa-check { color: var(--teal); }
+.hero-creator-form .pick-desc { line-height: 1.45; }
+.hero-creator-form .pick-desc p { margin: 0 0 4px; }
+.hero-creator-form .pick-desc :last-child { margin-bottom: 0; }
 
 /* Skills */
 .hero-creator-form .wiz-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; }
@@ -500,19 +506,7 @@
 /* Advantages */
 .hero-creator-form .wiz-free { font-size: 12px; color: var(--ink-soft); margin-bottom: 12px; }
 .hero-creator-form .wiz-free .tag { display: inline-block; margin: 2px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; font-family: var(--thd-label); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
-.hero-creator-form .wiz-adv-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.hero-creator-form .wiz-adv { display: block; padding: 9px 12px; border: 1px solid var(--line); border-radius: 5px; cursor: pointer; background: color-mix(in srgb,var(--panel) 94%, #fff 6%); transition: border-color .12s; }
-.hero-creator-form .wiz-adv:hover { border-color: var(--gold); }
-.hero-creator-form .wiz-adv.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
-.hero-creator-form .wiz-adv.is-free { opacity: .85; }
-.hero-creator-form .wiz-adv .adv-head { display: flex; align-items: center; gap: 9px; }
-.hero-creator-form .wiz-adv .adv-cost { font-family: var(--thd-display); font-size: 12px; color: #fff; background: linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; display: grid; place-items: center; flex: none; }
-.hero-creator-form .wiz-adv .adv-name { flex: 1; font-family: var(--thd-display); font-size: 14.5px; font-weight: 600; color: var(--ink); }
-.hero-creator-form .wiz-adv .adv-freebadge { font-family: var(--thd-label); font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: var(--teal); }
-.hero-creator-form .wiz-adv .fa-check { color: var(--teal); }
-.hero-creator-form .wiz-adv .adv-desc { font-size: 12px; line-height: 1.45; color: var(--ink-soft); margin-top: 5px; }
-.hero-creator-form .wiz-adv .adv-desc p { margin: 0 0 4px; }
-.hero-creator-form .wiz-adv .adv-desc :last-child { margin-bottom: 0; }
+/* (Advantage cards now reuse the .wiz-pick component above — no custom classes.) */
 
 /* Arcana — two columns of description-bearing pick cards (single-select each) */
 .hero-creator-form .wiz-arcana { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
@@ -560,47 +554,47 @@
 .theah.advancement-creator .window-content { padding: 0; background: var(--panel); color: var(--ink); font-family: var(--thd-body); }
 
 /* Reward cards (step 0) */
-.advancement-creator-form .adv-reward-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.advancement-creator-form .adv-reward-card { position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: color-mix(in srgb,var(--panel) 94%,#fff 6%); cursor: pointer; transition: border-color .12s; }
-.advancement-creator-form .adv-reward-card:hover:not(.disabled) { border-color: var(--gold); }
-.advancement-creator-form .adv-reward-card.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
-.advancement-creator-form .adv-reward-card.disabled { opacity: .42; cursor: default; }
-.advancement-creator-form .adv-reward-card .arc-icon { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; flex: none; background: linear-gradient(180deg, var(--navy), var(--navy-deep)); color: var(--gold-leaf); font-size: 16px; }
-.advancement-creator-form .adv-reward-card .arc-text { flex: 1; }
-.advancement-creator-form .adv-reward-card .arc-name { font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
-.advancement-creator-form .adv-reward-card .arc-hint { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
-.advancement-creator-form .adv-reward-card .arc-cost { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); border-radius: 999px; padding: 3px 8px; flex: none; }
-.advancement-creator-form .adv-reward-card .arc-check { position: absolute; top: 8px; right: 10px; color: var(--teal); }
+.advancement-creator-form .reward-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.advancement-creator-form .reward-card { position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: color-mix(in srgb,var(--panel) 94%,#fff 6%); cursor: pointer; transition: border-color .12s; }
+.advancement-creator-form .reward-card:hover:not(.disabled) { border-color: var(--gold); }
+.advancement-creator-form .reward-card.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
+.advancement-creator-form .reward-card.disabled { opacity: .42; cursor: default; }
+.advancement-creator-form .reward-card .arc-icon { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; flex: none; background: linear-gradient(180deg, var(--navy), var(--navy-deep)); color: var(--gold-leaf); font-size: 16px; }
+.advancement-creator-form .reward-card .arc-text { flex: 1; }
+.advancement-creator-form .reward-card .arc-name { font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
+.advancement-creator-form .reward-card .arc-hint { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.advancement-creator-form .reward-card .arc-cost { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); border-radius: 999px; padding: 3px 8px; flex: none; }
+.advancement-creator-form .reward-card .arc-check { position: absolute; top: 8px; right: 10px; color: var(--teal); }
 
 /* Configure step */
-.advancement-creator-form .adv-stepcost { float: right; font-family: var(--thd-label); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
-.advancement-creator-form .adv-stepcost b { font-family: var(--thd-display); font-size: 16px; color: var(--oxblood); }
-.advancement-creator-form .adv-choice-list { display: flex; flex-direction: column; gap: 6px; }
-.advancement-creator-form .adv-scroll { max-height: 320px; overflow-y: auto; padding-right: 4px; }
-.advancement-creator-form .adv-choice { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; cursor: pointer; background: color-mix(in srgb,var(--panel) 94%,#fff 6%); }
-.advancement-creator-form .adv-choice:hover:not(.disabled) { border-color: var(--gold); }
-.advancement-creator-form .adv-choice.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
-.advancement-creator-form .adv-choice.disabled { opacity: .45; cursor: default; }
-.advancement-creator-form .adv-choice .ac-name { flex: 1; font-size: 14px; color: var(--ink); }
-.advancement-creator-form .adv-choice .ac-delta { font-family: var(--thd-display); font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
-.advancement-creator-form .adv-choice .ac-delta b { color: var(--ink); font-size: 16px; }
-.advancement-creator-form .adv-choice .ac-delta em { font-style: normal; font-size: 11px; opacity: .75; }
-.advancement-creator-form .adv-choice .ac-note { font-family: var(--thd-label); font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--oxblood); }
-.advancement-creator-form .adv-choice .ac-cost { font-family: var(--thd-display); font-size: 12px; color: #fff; background: linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; flex: none; }
-.advancement-creator-form .adv-choice .ac-quirk { flex-basis: 100%; font-size: 12px; font-style: italic; color: var(--ink-soft); }
-.advancement-creator-form .adv-choice .fa-check { color: var(--teal); }
+.advancement-creator-form .step-cost { float: right; font-family: var(--thd-label); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.advancement-creator-form .step-cost b { font-family: var(--thd-display); font-size: 16px; color: var(--oxblood); }
+.advancement-creator-form .choice-list { display: flex; flex-direction: column; gap: 6px; }
+.advancement-creator-form .choice-scroll { max-height: 320px; overflow-y: auto; padding-right: 4px; }
+.advancement-creator-form .choice-item { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; cursor: pointer; background: color-mix(in srgb,var(--panel) 94%,#fff 6%); }
+.advancement-creator-form .choice-item:hover:not(.disabled) { border-color: var(--gold); }
+.advancement-creator-form .choice-item.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
+.advancement-creator-form .choice-item.disabled { opacity: .45; cursor: default; }
+.advancement-creator-form .choice-item .ac-name { flex: 1; font-size: 14px; color: var(--ink); }
+.advancement-creator-form .choice-item .ac-delta { font-family: var(--thd-display); font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.advancement-creator-form .choice-item .ac-delta b { color: var(--ink); font-size: 16px; }
+.advancement-creator-form .choice-item .ac-delta em { font-style: normal; font-size: 11px; opacity: .75; }
+.advancement-creator-form .choice-item .ac-note { font-family: var(--thd-label); font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--oxblood); }
+.advancement-creator-form .choice-item .ac-cost { font-family: var(--thd-display); font-size: 12px; color: #fff; background: linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+.advancement-creator-form .choice-item .ac-quirk { flex-basis: 100%; font-size: 12px; font-style: italic; color: var(--ink-soft); }
+.advancement-creator-form .choice-item .fa-check { color: var(--teal); }
 /* Block variant (Advantage / Arcana rewards) — name+cost header with the description below */
-.advancement-creator-form .adv-choice-block { display: block; }
-.advancement-creator-form .adv-choice-block .ac-head { display: flex; align-items: center; gap: 10px; }
-.advancement-creator-form .adv-choice-block .ac-desc { font-size: 12px; line-height: 1.45; color: var(--ink-soft); margin-top: 5px; }
-.advancement-creator-form .adv-choice-block .ac-desc p { margin: 0 0 4px; }
-.advancement-creator-form .adv-choice-block .ac-desc :last-child { margin-bottom: 0; }
-.advancement-creator-form .adv-shift { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.advancement-creator-form .adv-shift-col h4 { font-family: var(--thd-label); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; display: flex; align-items: center; gap: 6px; }
-.advancement-creator-form .adv-slot-toggle { display: flex; gap: 8px; margin-bottom: 12px; }
-.advancement-creator-form .adv-slot-toggle button { font-family: var(--thd-label); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 16px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-soft); border-radius: 999px; cursor: pointer; }
-.advancement-creator-form .adv-slot-toggle button.on { background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); color: #2a1c10; border-color: var(--gold-deep); }
-.advancement-creator-form .adv-corruption { font-size: 13.5px; color: var(--ink); }
+.advancement-creator-form .choice-block { display: block; }
+.advancement-creator-form .choice-block .ac-head { display: flex; align-items: center; gap: 10px; }
+.advancement-creator-form .choice-block .ac-desc { font-size: 12px; line-height: 1.45; color: var(--ink-soft); margin-top: 5px; }
+.advancement-creator-form .choice-block .ac-desc p { margin: 0 0 4px; }
+.advancement-creator-form .choice-block .ac-desc :last-child { margin-bottom: 0; }
+.advancement-creator-form .trait-shift { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.advancement-creator-form .trait-shift-col h4 { font-family: var(--thd-label); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; display: flex; align-items: center; gap: 6px; }
+.advancement-creator-form .slot-toggle { display: flex; gap: 8px; margin-bottom: 12px; }
+.advancement-creator-form .slot-toggle button { font-family: var(--thd-label); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 16px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-soft); border-radius: 999px; cursor: pointer; }
+.advancement-creator-form .slot-toggle button.on { background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); color: #2a1c10; border-color: var(--gold-deep); }
+.advancement-creator-form .corruption-note { font-size: 13.5px; color: var(--ink); }
 .advancement-creator-form .rev-reward { font-family: var(--thd-display); font-size: 15px; color: var(--ink); margin: 0; }
 .advancement-creator-form .rev-steps { font-family: var(--thd-display); font-size: 24px; color: var(--oxblood); margin: 0; }
 .advancement-creator-form .rev-card-wide { grid-column: 1 / -1; }
@@ -614,7 +608,7 @@
 .theah .story-card.empty { color: var(--ink-soft); font-style: italic; padding: 10px; }
 .theah .story-main { display: flex; align-items: center; gap: 10px; }
 .theah .story-main .item-name { flex: 1; margin: 0; }
-.theah .story-adv { margin-top: 8px; padding-top: 8px; border-top: 1px dotted var(--line); display: flex; flex-direction: column; gap: 7px; }
+.theah .story-reward { margin-top: 8px; padding-top: 8px; border-top: 1px dotted var(--line); display: flex; flex-direction: column; gap: 7px; }
 .theah .story-reward { font-family: var(--thd-display); font-size: 14px; color: var(--ink); display: flex; align-items: center; gap: 7px; }
 .theah .story-reward i { color: var(--gold-deep); }
 .theah .story-goal { font-size: 12.5px; font-style: italic; color: var(--ink-soft); }
@@ -629,20 +623,20 @@
 .theah .new-advancement { color: var(--gold-deep); }
 
 /* Story-complete chat card */
-#chat .theah-adv { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }
-#chat .theah-adv .adv-head { display: flex; align-items: center; gap: 9px; padding: 9px 12px; font-family: var(--thd-display); font-size: 15px; background: linear-gradient(180deg, color-mix(in srgb,var(--navy) 92%,#000 8%), var(--navy-deep)); color: #efe4c7; }
-#chat .theah-adv .adv-head i { color: var(--gold-leaf); }
-#chat .theah-adv .adv-body { padding: 11px 12px; }
-#chat .theah-adv .adv-story { font-style: italic; color: var(--ink-soft); font-size: 13px; margin-bottom: 6px; }
-#chat .theah-adv .adv-reward { font-family: var(--thd-display); font-size: 15px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
-#chat .theah-adv .adv-reward i { color: var(--gold-deep); }
+#chat .theah-reward { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }
+#chat .theah-reward .item-head { display: flex; align-items: center; gap: 9px; padding: 9px 12px; font-family: var(--thd-display); font-size: 15px; background: linear-gradient(180deg, color-mix(in srgb,var(--navy) 92%,#000 8%), var(--navy-deep)); color: #efe4c7; }
+#chat .theah-reward .item-head i { color: var(--gold-leaf); }
+#chat .theah-reward .reward-body { padding: 11px 12px; }
+#chat .theah-reward .reward-story { font-style: italic; color: var(--ink-soft); font-size: 13px; margin-bottom: 6px; }
+#chat .theah-reward .reward-line { font-family: var(--thd-display); font-size: 15px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+#chat .theah-reward .reward-line i { color: var(--gold-deep); }
 
 @media (max-width: 640px) {
-  .advancement-creator-form .adv-reward-grid,
-  .advancement-creator-form .adv-shift { grid-template-columns: 1fr; }
+  .advancement-creator-form .reward-grid,
+  .advancement-creator-form .trait-shift { grid-template-columns: 1fr; }
   .hero-creator-form .wiz-fields,
   .hero-creator-form .wiz-pick-list,
-  .hero-creator-form .wiz-adv-list,
+  .hero-creator-form .wiz-perk-list,
   .hero-creator-form .wiz-arcana { grid-template-columns: 1fr; }
   .hero-creator-form .rev-grid { grid-template-columns: 1fr 1fr; }
   .hero-creator-form .wiz-traits { grid-template-columns: repeat(5,1fr); gap: 4px; }
