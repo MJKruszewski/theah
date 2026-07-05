@@ -1,0 +1,1559 @@
+[
+  {
+    "_id": "143f58bf509e21c7",
+    "name": "Archæologist",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You study Syrneth ruins and explore the lost parts of Terra.</p>",
+      "infosource": "Core Rulebook p.138",
+      "quirk": "<p>Earn a Hero Point when you turn an artifact of value over to a university, museum, or a publicly displayed site.</p>",
+      "skills": [
+        "athletics",
+        "convince",
+        "notice",
+        "scholarship",
+        "theft"
+      ],
+      "advantages": [
+        "Signature Item",
+        "Eagle Eyes"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "2ce6e7d24c9608c5",
+    "name": "Aristocrat",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You were born into the nobility of your home country and regularly attend the courts.</p>",
+      "infosource": "Core Rulebook p.138",
+      "quirk": "<p>Earn a Hero Point when you prove there is more to nobility than expensive clothes and attending court.</p>",
+      "skills": [
+        "aim",
+        "convince",
+        "empathy",
+        "ride",
+        "scholarship"
+      ],
+      "advantages": [
+        "Rich",
+        "Disarming Smile"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "f5d20a2e1a6da8b6",
+    "name": "Army Officer",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You enlisted in the army and soon found yourself in a command position.</p>",
+      "infosource": "Core Rulebook p.138",
+      "quirk": "<p>Earn a Hero Point when you seize command during a moment of intense violence or extreme danger.</p>",
+      "skills": [
+        "aim",
+        "athletics",
+        "intimidate",
+        "ride",
+        "warfare"
+      ],
+      "advantages": [
+        "Academy",
+        "Direction Sense"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "34602f9b71a26f0a",
+    "name": "Artist",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You work tirelessly to create objects of beauty.</p>",
+      "infosource": "Core Rulebook p.138",
+      "quirk": "<p>Earn a Hero Point when you make a sacrifice in the hope of making Théah a more beautiful place.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "perform",
+        "ride",
+        "tempt"
+      ],
+      "advantages": [
+        "Patron",
+        "Fascinate"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "364eac4d28225996",
+    "name": "Assassin",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You stalked the shadows as a specter of silent death in return for bloody coin, but no more.</p>",
+      "infosource": "Core Rulebook p.138",
+      "quirk": "<p>Earn a Hero Point when you go out of your way to avoid the death of an adversary or outright refuse a course of action because it could result in another person’s death.</p>",
+      "skills": [
+        "athletics",
+        "empathy",
+        "hide",
+        "intimidate",
+        "weaponry"
+      ],
+      "advantages": [
+        "Fencer",
+        "Psst, Over Here"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "63d6656bd86fcbc9",
+    "name": "Cavalry",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are a mounted warrior and part of your Nation’s esteemed cavalry.</p>",
+      "infosource": "Core Rulebook p.138",
+      "quirk": "<p>Earn a Hero Point when you apply your skills in horse riding to an uncommon situation.</p>",
+      "skills": [
+        "intimidate",
+        "notice",
+        "ride",
+        "warfare",
+        "weaponry"
+      ],
+      "advantages": [
+        "Bruiser",
+        "Indomitable Will"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "cf7fbc2411b106b1",
+    "name": "Courtier",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You regularly attend the courts of your home Nation and act as a diplomat to foreign courts.</p>",
+      "infosource": "Core Rulebook p.138",
+      "quirk": "<p>Earn a Hero Point when you turn the tide of violence with charm and flair.</p>",
+      "skills": [
+        "empathy",
+        "perform",
+        "ride",
+        "tempt",
+        "weaponry"
+      ],
+      "advantages": [
+        "An Honest Misunderstanding",
+        "Friend at Court"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "18015eb0641aa8d6",
+    "name": "Crafter",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You work tirelessly to create objects of function.</p>",
+      "infosource": "Core Rulebook p.138",
+      "quirk": "<p>Earn a Hero Point when you use everyday crafting skills to solve a problem deemed too complex for such a simple solution.</p>",
+      "skills": [
+        "athletics",
+        "convince",
+        "notice",
+        "perform",
+        "scholarship"
+      ],
+      "advantages": [
+        "Masterpiece Crafter",
+        "Handy"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "7d47b0229efc6133",
+    "name": "Criminal",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You break unjust laws to achieve what you believe is the greater good.</p>",
+      "infosource": "Core Rulebook p.139",
+      "quirk": "<p>Earn a Hero Point when you break the law in the pursuit of a noble endeavor.</p>",
+      "skills": [
+        "athletics",
+        "empathy",
+        "hide",
+        "intimidate",
+        "theft"
+      ],
+      "advantages": [
+        "Camaraderie",
+        "Streetwise"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "dad5102cf28c4b87",
+    "name": "Doctor",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You work to heal the sick and tend to the wounded.</p>",
+      "infosource": "Core Rulebook p.139",
+      "quirk": "<p>Earn a Hero Point when you tend to the injuries of a Villain or the innocents harmed by a Villain.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "notice",
+        "ride",
+        "scholarship"
+      ],
+      "advantages": [
+        "Miracle Worker",
+        "Time Sense"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "bc232765a54400d6",
+    "name": "Duelist",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You have devoted your life to mastering the blade.</p>",
+      "infosource": "Core Rulebook p.139",
+      "quirk": "<p>Earn a Hero Point when you resort to the edge of your blade to defend a noble ideal.</p>",
+      "skills": [
+        "athletics",
+        "empathy",
+        "intimidate",
+        "perform",
+        "weaponry"
+      ],
+      "advantages": [
+        "Duelist Academy"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "437b35fd995279db",
+    "name": "Engineer",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are concerned with applying scientific knowledge, mathematics, and ingenuity to develop solutions for technical, social and commercial problems</p>",
+      "infosource": "Core Rulebook p.139",
+      "quirk": "<p>Earn a Hero Point when you use your technological savvy to solve a problem.</p>",
+      "skills": [
+        "aim",
+        "convince",
+        "ride",
+        "scholarship",
+        "warfare"
+      ],
+      "advantages": [
+        "Masterpiece Crafter",
+        "Direction Sense",
+        "Time Sense"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "1907b6b5c827f9af",
+    "name": "Explorer",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You live to see the farthest reaches that Terra has to offer.</p>",
+      "infosource": "Core Rulebook p.139",
+      "quirk": "<p>Earn a Hero Point when you set your eyes upon a sight few, if any, Théans have ever seen before.</p>",
+      "skills": [
+        "athletics",
+        "convince",
+        "empathy",
+        "ride",
+        "sailing"
+      ],
+      "advantages": [
+        "Quick Reflexes",
+        "Second Story Work"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "8e4cf14dd510c944",
+    "name": "Farmkid",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You were raised on a small farm, working to survive, and have never known the life of adventure.</p>",
+      "infosource": "Core Rulebook p.139",
+      "quirk": "<p>Earn a Hero Point when you solve a complex problem in a simple, tried and true method from back on the farm.</p>",
+      "skills": [
+        "athletics",
+        "convince",
+        "empathy",
+        "perform",
+        "ride"
+      ],
+      "advantages": [
+        "Legendary Trait",
+        "Survivalist"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "92ef3a9980b10b23",
+    "name": "Hunter",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You sleep under the stars and hunt your meals with your own two hands.</p>",
+      "infosource": "Core Rulebook p.139",
+      "quirk": "<p>Earn a Hero Point when you use your hunter’s acumen to save someone from danger.</p>",
+      "skills": [
+        "aim",
+        "hide",
+        "intimidate",
+        "notice",
+        "ride"
+      ],
+      "advantages": [
+        "Sniper",
+        "Got It!"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "52fc4f063d115a0d",
+    "name": "Jenny",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You seduce others for fun and profit.</p>",
+      "infosource": "Core Rulebook p.139",
+      "quirk": "<p>Earn a Hero Point when you resolve a conflict with seduction or sexual wiles.</p>",
+      "skills": [
+        "aim",
+        "athletics",
+        "empathy",
+        "perform",
+        "tempt"
+      ],
+      "advantages": [
+        "Dynamic Approach",
+        "Come Hither"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "5f1267e277b738fb",
+    "name": "Mercenary",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You sell your skills in battle to the highest bidder.</p>",
+      "infosource": "Core Rulebook p.140",
+      "quirk": "<p>Earn a Hero Point when you choose to ply your trade for a reason that’s worth more to you than money.</p>",
+      "skills": [
+        "athletics",
+        "brawl",
+        "intimidate",
+        "notice",
+        "weaponry"
+      ],
+      "advantages": [
+        "Hard to Kill",
+        "Cast Iron Stomach"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "11d9e90996f40053",
+    "name": "Merchant",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You travel the countryside to sell your wares in market or port.</p>",
+      "infosource": "Core Rulebook p.140",
+      "quirk": "<p>Earn a Hero Point when you sell an item for far less than it’s worth to someone who desperately needs it.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "intimidate",
+        "ride",
+        "tempt"
+      ],
+      "advantages": [
+        "Lyceum",
+        "Time Sense"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "f45d510c0db6998b",
+    "name": "Naval Officer",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You enlisted in the navy and worked your way into the command crew of a ship.</p>",
+      "infosource": "Core Rulebook p.140",
+      "quirk": "<p>Earn a Hero Point when you put the needs of the crew ahead of the needs of the mission.</p>",
+      "skills": [
+        "intimidate",
+        "notice",
+        "sailing",
+        "warfare",
+        "weaponry"
+      ],
+      "advantages": [
+        "Perfect Balance",
+        "Barterer",
+        "Sea Legs"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "86f112e9475462ce",
+    "name": "Orphan",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You lost your parents at a young age and have been forced to look out for yourself.</p>",
+      "infosource": "Core Rulebook p.140",
+      "quirk": "<p>Earn a Hero Point when you put yourself in danger to ensure someone else doesn’t have to be alone.</p>",
+      "skills": [
+        "athletics",
+        "brawl",
+        "empathy",
+        "hide",
+        "intimidate"
+      ],
+      "advantages": [
+        "Brush Pass",
+        "Reckless Takedown"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "ea6608076804c266",
+    "name": "Performer",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You work tirelessly to create an experience of beauty.</p>",
+      "infosource": "Core Rulebook p.140",
+      "quirk": "<p>Earn a Hero Point when you use your crowd-pleasing skills for something more than making a few coins.</p>",
+      "skills": [
+        "athletics",
+        "empathy",
+        "perform",
+        "tempt",
+        "theft"
+      ],
+      "advantages": [
+        "Virtuoso",
+        "Inspire Generosity"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "4a6365b4ffc3ac40",
+    "name": "Pirate",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You sail the seas, taking what you need, and providing true freedom to all who accept the call.</p>",
+      "infosource": "Core Rulebook p.140",
+      "quirk": "<p>Earn a Hero Point when you make a personal sacrifice to ensure the freedom of another.</p>",
+      "skills": [
+        "aim",
+        "intimidate",
+        "notice",
+        "sailing",
+        "theft"
+      ],
+      "advantages": [
+        "Deadeye",
+        "Indomitable Will"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "42e24781f028cda4",
+    "name": "Priest",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You serve a higher cause with every living breath you take.</p>",
+      "infosource": "Core Rulebook p.140",
+      "quirk": "<p>Earn a Hero Point when you set aside the rhetoric and take action to practice the virtues you preach.</p>",
+      "skills": [
+        "empathy",
+        "perform",
+        "ride",
+        "scholarship",
+        "tempt"
+      ],
+      "advantages": [
+        "Ordained",
+        "Inspire Generosity"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "25780210658581d1",
+    "name": "Professor",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You teach others at a prestigious learning institution.</p>",
+      "infosource": "Core Rulebook p.140",
+      "quirk": "<p>Earn a Hero Point when you use knowledge from an obscure text to solve a complicated problem.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "perform",
+        "scholarship",
+        "tempt"
+      ],
+      "advantages": [
+        "Tenure",
+        "Team Player"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "8357ba4becaff7d9",
+    "name": "Pugilist",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You rely on your hands and feet to solve all the violent problems in your life.</p>",
+      "infosource": "Core Rulebook p.141",
+      "quirk": "<p>Earn a Hero Point when you drop what you’re holding to fight with fists regardless of your opponent's weapon.</p>",
+      "skills": [
+        "athletics",
+        "brawl",
+        "convince",
+        "empathy",
+        "perform"
+      ],
+      "advantages": [
+        "Boxer",
+        "Staredown"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "04006f747d6abe20",
+    "name": "Quartermaster",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You serve aboard a ship taking care of all the things the other sailors ignore.</p>",
+      "infosource": "Core Rulebook p.141",
+      "quirk": "<p>Earn a Hero Point when you solve a problem for your crew.</p>",
+      "skills": [
+        "aim",
+        "brawl",
+        "hide",
+        "sailing",
+        "warfare"
+      ],
+      "advantages": [
+        "Handy",
+        "Got It!",
+        "Sea Legs"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "7b9d782676e2cc32",
+    "name": "Sailor",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You serve no country or master, but the ship and your crew are all the family you need.</p>",
+      "infosource": "Core Rulebook p.141",
+      "quirk": "<p>Earn a Hero Point when you put aside your personal desires to ensure the safety and comfort of your allies.</p>",
+      "skills": [
+        "brawl",
+        "notice",
+        "sailing",
+        "tempt",
+        "weaponry"
+      ],
+      "advantages": [
+        "Bar Fighter",
+        "Eagle Eyes"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "48a519c177e07b7d",
+    "name": "Scholar",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You dedicate yourself to learning and documenting all the wonders of Terra.</p>",
+      "infosource": "Core Rulebook p.141",
+      "quirk": "<p>Earn a Hero Point when you put yourself in harm’s way in pursuit of knowledge.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "notice",
+        "perform",
+        "scholarship"
+      ],
+      "advantages": [
+        "University",
+        "Linguist"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "dafa1ac8a3ddd423",
+    "name": "Servant",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You work for another doing whatever your master’s bidding may be.</p>",
+      "infosource": "Core Rulebook p.141",
+      "quirk": "<p>Earn a Hero Point when you put yourself in danger to assist another character with a difficult task.</p>",
+      "skills": [
+        "hide",
+        "notice",
+        "ride",
+        "tempt",
+        "theft"
+      ],
+      "advantages": [
+        "Foul Weather Jack",
+        "Team Player"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "dae3a3555a3e7fc2",
+    "name": "Ship Captain",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You command a crew and sail the seas for whatever banner you fly.</p>",
+      "infosource": "Core Rulebook p.141",
+      "quirk": "<p>Earn a Hero Point when you’re the last one in your crew to safety.</p>",
+      "skills": [
+        "aim",
+        "convince",
+        "notice",
+        "sailing",
+        "warfare"
+      ],
+      "advantages": [
+        "Married to the Sea",
+        "Leadership",
+        "Sea Legs"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "46952f06c089cbf7",
+    "name": "Soldier",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You know how to fight—and how to kill—and you have made a life doing so under banners and for lords.</p>",
+      "infosource": "Core Rulebook p.141",
+      "quirk": "<p>Earn a Hero Point when you stick to the plan regardless of the danger to yourself.</p>",
+      "skills": [
+        "aim",
+        "intimidate",
+        "notice",
+        "warfare",
+        "weaponry"
+      ],
+      "advantages": [
+        "Riot Breaker",
+        "Able Drinker"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "647b6a62e4a4a336",
+    "name": "Spy",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You serve your Nation by infiltrating its enemies and securing their secrets.</p>",
+      "infosource": "Core Rulebook p.141",
+      "quirk": "<p>Earn a Hero Point when you take a great risk to uncover a secret.</p>",
+      "skills": [
+        "empathy",
+        "hide",
+        "notice",
+        "tempt",
+        "theft"
+      ],
+      "advantages": [
+        "Opportunist",
+        "Poison Immunity"
+      ],
+      "nation": "none"
+    }
+  },
+  {
+    "_id": "8589020c58013684",
+    "name": "Bard",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You tell the old tales, the stories of Legends, and ensure the soul of Avalon is never forgotten.</p>",
+      "infosource": "Core Rulebook p.142",
+      "quirk": "<p>Earn a Hero Point when you solve a problem by following an example set by a Legend.</p>",
+      "skills": [
+        "aim",
+        "convince",
+        "empathy",
+        "perform",
+        "ride"
+      ],
+      "advantages": [
+        "Barterer",
+        "Virtuoso",
+        "Able Drinker"
+      ],
+      "nation": "glamour isles"
+    }
+  },
+  {
+    "_id": "16ce2244f4646bee",
+    "name": "Knight Errant",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are imbued with the legendary magic of the Knights of King Elilodd.</p>",
+      "infosource": "Core Rulebook p.142",
+      "quirk": "<p>Earn a Hero Point when you uphold an ideal of knightly virtue in a way that gets you into trouble.</p>",
+      "skills": [
+        "brawl",
+        "intimidate",
+        "ride",
+        "warfare",
+        "weaponry"
+      ],
+      "advantages": [
+        "Sorcery",
+        "Sorcery",
+        "Direction Sense"
+      ],
+      "nation": "glamour isles"
+    }
+  },
+  {
+    "_id": "40d7c386a9ff36a2",
+    "name": "Privateer",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You have been given a charter to sink any ships that are enemies to the Crown of Avalon.</p>",
+      "infosource": "Core Rulebook p.142",
+      "quirk": "<p>Earn a Hero Point when you defeat the enemies of the Crown of Avalon.</p>",
+      "skills": [
+        "notice",
+        "sailing",
+        "tempt",
+        "theft",
+        "weaponry"
+      ],
+      "advantages": [
+        "The Devil's Own Luck",
+        "Perfect Balance"
+      ],
+      "nation": "glamour isles"
+    }
+  },
+  {
+    "_id": "cf908e1da71f4a12",
+    "name": "Unification Agent",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You have been tasked by the Crown of Avalon to keep the peace among the Isles.</p>",
+      "infosource": "Core Rulebook p.142",
+      "quirk": "<p>Earn a Hero Point when you ensure the stability of the Glamour Isles Unification.</p>",
+      "skills": [
+        "aim",
+        "empathy",
+        "notice",
+        "scholarship",
+        "tempt"
+      ],
+      "advantages": [
+        "University",
+        "Survivalist"
+      ],
+      "nation": "glamour isles"
+    }
+  },
+  {
+    "_id": "6f44212aa2546eb8",
+    "name": "Puritan",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are a reformed Objectionist who seeks to “purify” the Church of Avalon from all Vaticine practices</p>",
+      "infosource": "Core Rulebook p.142",
+      "quirk": "<p>Earn a Hero Point when you expose corruption, hypocrisy, or ineffectiveness within the Vaticine Church.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "intimidate",
+        "ride",
+        "scholarship"
+      ],
+      "advantages": [
+        "Dynamic Approach",
+        "Reputation"
+      ],
+      "nation": "avalon"
+    }
+  },
+  {
+    "_id": "451f6d715829ebbf",
+    "name": "Saoi (Wise One)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You hold the highest honor bestowed by Aosdána, a state-supported association of Inish creative artists.</p>",
+      "infosource": "Core Rulebook p.142",
+      "quirk": "<p>Earn a Hero Point when you put yourself in harm’s way to protect the artists of Théah.</p>",
+      "skills": [
+        "athletics",
+        "convince",
+        "empathy",
+        "perform",
+        "weaponry"
+      ],
+      "advantages": [
+        "Team Player",
+        "Disarming Smile",
+        "Able Drinker"
+      ],
+      "nation": "inismore"
+    }
+  },
+  {
+    "_id": "4285ffc37798ec22",
+    "name": "Seanchaidh (Warrior-poet)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are a storyteller and historian, versed in the laws of your people and their ancient ways.</p>",
+      "infosource": "Core Rulebook p.142",
+      "quirk": "<p>Earn a Hero Point when you enforce the ancient laws of your people.</p>",
+      "skills": [
+        "convince",
+        "notice",
+        "perform",
+        "ride",
+        "weaponry"
+      ],
+      "advantages": [
+        "Riot Breaker",
+        "Linguist"
+      ],
+      "nation": "highland"
+    }
+  },
+  {
+    "_id": "34458218e38f0a61",
+    "name": "Alquimista",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You sought long and hard until you unlocked the mystery of alchemical creation.</p>",
+      "infosource": "Core Rulebook p.143",
+      "quirk": "<p>Earn a Hero Point when you improve another Théan's life through Alchemy.</p>",
+      "skills": [
+        "empathy",
+        "notice",
+        "scholarship",
+        "tempt",
+        "theft"
+      ],
+      "advantages": [
+        "Alchemist",
+        "Cast Iron Stomach"
+      ],
+      "nation": "castille"
+    }
+  },
+  {
+    "_id": "03746fbba2860ebf",
+    "name": "Antropólogo",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are a cousin to the Archæologist but focused on the people you find and not the ruins they left behind.</p>",
+      "infosource": "Core Rulebook p.143",
+      "quirk": "<p>Earn a Hero Point when you solve a problem for a group of strangers.</p>",
+      "skills": [
+        "athletics",
+        "convince",
+        "empathy",
+        "notice",
+        "scholarship"
+      ],
+      "advantages": [
+        "University",
+        "Linguist"
+      ],
+      "nation": "castille"
+    }
+  },
+  {
+    "_id": "7284b9da361fa741",
+    "name": "Diestro",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You have dedicated your life to the understanding of the Sword, not just its function.</p>",
+      "infosource": "Core Rulebook p.143",
+      "quirk": "<p>Earn a Hero Point when you best a trained duelist at her own game.</p>",
+      "skills": [
+        "athletics",
+        "empathy",
+        "intimidate",
+        "scholarship",
+        "weaponry"
+      ],
+      "advantages": [
+        "Fencer",
+        "Disarming Smile"
+      ],
+      "nation": "castille"
+    }
+  },
+  {
+    "_id": "1977b7aeab1fbbe1",
+    "name": "Mirabilis (Priest)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are a master scholar of the Vaticine Church and member of the Ordo Doctorem Mirabilis.</p>",
+      "infosource": "Core Rulebook p.143",
+      "quirk": "<p>Earn a Hero Point when you give of yourself to demonstrate the warmth and compassion of the Vaticine Church.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "perform",
+        "ride",
+        "scholarship"
+      ],
+      "advantages": [
+        "Ordained",
+        "Spark of Genius"
+      ],
+      "nation": "castille"
+    }
+  },
+  {
+    "_id": "8bbcc0a1dc0fd8c5",
+    "name": "Hexe",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are a master of Hexenwerk, the sorcery of the dead.</p>",
+      "infosource": "Core Rulebook p.143",
+      "quirk": "<p>Earn a Hero Point when you go out of your way to ensure that the dead stay dead.</p>",
+      "skills": [
+        "athletics",
+        "intimidate",
+        "notice",
+        "tempt",
+        "weaponry"
+      ],
+      "advantages": [
+        "Sorcery",
+        "Sorcery",
+        "Cast Iron Stomach"
+      ],
+      "nation": "eisen"
+    }
+  },
+  {
+    "_id": "0432424b5d07ea87",
+    "name": "Krieger (Warrior)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You survived the War of the Cross and carry the scars of many battles on your flesh.</p>",
+      "infosource": "Core Rulebook p.143",
+      "quirk": "<p>Earn a Hero Point when you choose to fight to defend the defenseless or prevent destruction.</p>",
+      "skills": [
+        "aim",
+        "athletics",
+        "ride",
+        "warfare",
+        "weaponry"
+      ],
+      "advantages": [
+        "Staredown",
+        "Academy"
+      ],
+      "nation": "eisen"
+    }
+  },
+  {
+    "_id": "a0ef37ea8e725d6f",
+    "name": "Ungetümjäger (Monster Hunter)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You know that there are unnatural creatures stalking your homeland, and you’ve sworn to destroy them.</p>",
+      "infosource": "Core Rulebook p.143",
+      "quirk": "<p>Earn a Hero Point when you choose to hunt down an inhuman creature so it will never hurt anyone ever again.</p>",
+      "skills": [
+        "aim",
+        "athletics",
+        "brawl",
+        "notice",
+        "weaponry"
+      ],
+      "advantages": [
+        "I Won't Die Here",
+        "Indomitable Will"
+      ],
+      "nation": "eisen"
+    }
+  },
+  {
+    "_id": "baac4cc8efbe1e27",
+    "name": "Vitalienbruder (Pirate)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are one of the many brothers of Eisen dedicated to fair trade and equal shares.</p>",
+      "infosource": "Core Rulebook p.143",
+      "quirk": "<p>Earn a Hero Point when you take from the rich to give to the poor.</p>",
+      "skills": [
+        "brawl",
+        "hide",
+        "sailing",
+        "theft",
+        "warfare"
+      ],
+      "advantages": [
+        "Leadership",
+        "Streetwise",
+        "Sea Legs"
+      ],
+      "nation": "eisen"
+    }
+  },
+  {
+    "_id": "eaac3fc2debb2e27",
+    "name": "L'ami Du Roi (Courtier)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are, literally, a favorite courtier of the King of Montaigne.</p>",
+      "infosource": "Core Rulebook p.144",
+      "quirk": "<p>Earn a Hero Point when you leverage the King's favor to solve a problem.</p>",
+      "skills": [
+        "convince",
+        "perform",
+        "ride",
+        "tempt",
+        "weaponry"
+      ],
+      "advantages": [
+        "Connection",
+        "Friend at Court",
+        "Linguist"
+      ],
+      "nation": "montaigne"
+    }
+  },
+  {
+    "_id": "ae8bd874e9b65e7a",
+    "name": "Mousquetaire",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You are sworn to protect the King of Montaigne and your fellow musketeers until your death.</p>",
+      "infosource": "Core Rulebook p.144",
+      "quirk": "<p>Earn a Hero Point when you take a serious injury to protect your comrades or King.</p>",
+      "skills": [
+        "aim",
+        "intimidate",
+        "notice",
+        "ride",
+        "weaponry"
+      ],
+      "advantages": [
+        "Camaraderie",
+        "Quick Reflexes"
+      ],
+      "nation": "montaigne"
+    }
+  },
+  {
+    "_id": "388e359a52554ea1",
+    "name": "Révolutionnaire",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You have pledged yourself to seeing your country freed from the tyranny of the aristocracy.</p>",
+      "infosource": "Core Rulebook p.144",
+      "quirk": "<p>Earn a Hero Point when you make a personal sacrifice for the sake of liberty.</p>",
+      "skills": [
+        "hide",
+        "notice",
+        "ride",
+        "theft",
+        "weaponry"
+      ],
+      "advantages": [
+        "Joie de Vivre",
+        "Slip Free"
+      ],
+      "nation": "montaigne"
+    }
+  },
+  {
+    "_id": "3644a5fe9a767bc4",
+    "name": "Sorcier Porté",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You have mastered the art of Porté, the magical opening of doorways.</p>",
+      "infosource": "Core Rulebook p.144",
+      "quirk": "<p>Earn a Hero Point when you close a Blessure that a Villain ripped open.</p>",
+      "skills": [
+        "empathy",
+        "hide",
+        "ride",
+        "scholarship",
+        "tempt"
+      ],
+      "advantages": [
+        "Sorcery",
+        "Sorcery",
+        "Time Sense"
+      ],
+      "nation": "montaigne"
+    }
+  },
+  {
+    "_id": "71a4bcf544ff18e5",
+    "name": "Poseł (Envoy)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You act as an advisor to the entire voting body of the Commonwealth.</p>",
+      "infosource": "Core Rulebook p.144",
+      "quirk": "<p>Earn a Hero Point when you insist on democracy when it would be advantageous for you to not take a vote.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "intimidate",
+        "perform",
+        "tempt"
+      ],
+      "advantages": [
+        "Leadership",
+        "Lyceum"
+      ],
+      "nation": "sarmatia"
+    }
+  },
+  {
+    "_id": "377869bb3229b17d",
+    "name": "Tremtis (Expatriate)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You fled to the Commonwealth seeking asylum after Golden Liberty was declared.</p>",
+      "infosource": "Core Rulebook p.144",
+      "quirk": "<p>Earn a Hero Point when something from your past comes back to haunt you.</p>",
+      "skills": [
+        "brawl",
+        "empathy",
+        "hide",
+        "notice",
+        "theft"
+      ],
+      "advantages": [
+        "Foreign Born",
+        "Streetwise",
+        "Connection"
+      ],
+      "nation": "sarmatia"
+    }
+  },
+  {
+    "_id": "25d8e0c1edb31311",
+    "name": "Winged Hussar",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You serve in the proudest of cavalry regiments, an elite unit in the Sarmatian military.</p>",
+      "infosource": "Core Rulebook p.144",
+      "quirk": "<p>Earn a Hero Point when you and your steed plunge headfirst into a battle or conflict, heedless of the danger.</p>",
+      "skills": [
+        "convince",
+        "notice",
+        "ride",
+        "warfare",
+        "weaponry"
+      ],
+      "advantages": [
+        "Together We Are Strong",
+        "Team Player"
+      ],
+      "nation": "sarmatia"
+    }
+  },
+  {
+    "_id": "5fb6e053c05de7b6",
+    "name": "Žynys (Soothsayer)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You met the Devil on the road, tricked him, and gained his powers at your command.</p>",
+      "infosource": "Core Rulebook p.144",
+      "quirk": "<p>Earn a Hero Point when you use something evil for good.</p>",
+      "skills": [
+        "athletics",
+        "convince",
+        "perform",
+        "scholarship",
+        "weaponry"
+      ],
+      "advantages": [
+        "Sorcery",
+        "Sorcery",
+        "Linguist"
+      ],
+      "nation": "sarmatia"
+    }
+  },
+  {
+    "_id": "35cbedad4d385d5f",
+    "name": "Cossack",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You live in the Eastern steppes of Ussura, a place with a proud heritage of horsemanship and warfare.</p>",
+      "infosource": "Core Rulebook p.145",
+      "quirk": "<p>Earn a Hero Point when you leave behind something important so you can travel light.</p>",
+      "skills": [
+        "brawl",
+        "intimidate",
+        "notice",
+        "ride",
+        "weaponry"
+      ],
+      "advantages": [
+        "Strength of Ten",
+        "Reckless Takedown"
+      ],
+      "nation": "ussura"
+    }
+  },
+  {
+    "_id": "62716531ca7af678",
+    "name": "Progressivist",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You travel Théah to bring innovations home to modernize the old country.</p>",
+      "infosource": "Core Rulebook p.145",
+      "quirk": "<p>Earn a Hero Point when you risk life and limb to secure a piece of advanced technology.</p>",
+      "skills": [
+        "athletics",
+        "convince",
+        "empathy",
+        "ride",
+        "tempt"
+      ],
+      "advantages": [
+        "Extended Family",
+        "Handy",
+        "Connection"
+      ],
+      "nation": "ussura"
+    }
+  },
+  {
+    "_id": "fb0e86aced245dae",
+    "name": "Touched by Matushka",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You have been touched by Matushka and granted great power at a terrible price.</p>",
+      "infosource": "Core Rulebook p.145",
+      "quirk": "<p>Earn a Hero Point when you teach someone a lesson in a way that would make Matushka proud.</p>",
+      "skills": [
+        "athletics",
+        "intimidate",
+        "perform",
+        "tempt",
+        "theft"
+      ],
+      "advantages": [
+        "Sorcery",
+        "Sorcery",
+        "Survivalist"
+      ],
+      "nation": "ussura"
+    }
+  },
+  {
+    "_id": "169f044f5b7cbb87",
+    "name": "Whaler",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You sail the frozen seas of Ussura with spears and boats tracking the most dangerous sea life.</p>",
+      "infosource": "Core Rulebook p.145",
+      "quirk": "<p>Earn a Hero Point when you face a creature that could swallow a man whole.</p>",
+      "skills": [
+        "athletics",
+        "brawl",
+        "notice",
+        "sailing",
+        "weaponry"
+      ],
+      "advantages": [
+        "Able Drinker",
+        "Sea Legs",
+        "Patron"
+      ],
+      "nation": "ussura"
+    }
+  },
+  {
+    "_id": "dc4d636e69ea5895",
+    "name": "Bearsark",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You fight with a nearly uncontrollable, trance-like fury.</p>",
+      "infosource": "Core Rulebook p.145",
+      "quirk": "<p>Earn a Hero Point when you let the Game Master choose your character's next action.</p>",
+      "skills": [
+        "brawl",
+        "intimidate",
+        "sailing",
+        "warfare",
+        "weaponry"
+      ],
+      "advantages": [
+        "Hard to Kill",
+        "Able Drinker"
+      ],
+      "nation": "vesten"
+    }
+  },
+  {
+    "_id": "8f806938e78c3c20",
+    "name": "Guildmästaren",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You serve on the Vendel League and manage Guilds in some capacity.</p>",
+      "infosource": "Core Rulebook p.145",
+      "quirk": "<p>Earn a Hero Point when you use the vast resources of the Vendel League for something more noble than profit.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "ride",
+        "scholarship",
+        "tempt"
+      ],
+      "advantages": [
+        "Masterpiece Crafter",
+        "Rich"
+      ],
+      "nation": "vesten"
+    }
+  },
+  {
+    "_id": "3a867e87f40f685d",
+    "name": "Sjørøver (Pirate)",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You give honor to the ancient Vestenmennavenjar heritage of naval combat, raiding, and pillaging.</p>",
+      "infosource": "Core Rulebook p.145",
+      "quirk": "<p>Earn a Hero Point when put yourself in danger in order to ensure your place of honor at the Allfather’s table.</p>",
+      "skills": [
+        "brawl",
+        "intimidate",
+        "notice",
+        "sailing",
+        "weaponry"
+      ],
+      "advantages": [
+        "I'm Taking You with Me",
+        "Staredown"
+      ],
+      "nation": "vesten"
+    }
+  },
+  {
+    "_id": "c7709f5aa55317eb",
+    "name": "Skald",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You interpret the mysteries of the bonfire and the bones, sharing tales of glory and defeat.</p>",
+      "infosource": "Core Rulebook p.145",
+      "quirk": "<p>Earn a Hero Point when you use your knowledge as a Seidr to help another Hero to solve a problem or thwart a Villain.</p>",
+      "skills": [
+        "brawl",
+        "intimidate",
+        "perform",
+        "sailing",
+        "weaponry"
+      ],
+      "advantages": [
+        "Seidr",
+        "Sea Legs"
+      ],
+      "nation": "vesten"
+    }
+  },
+  {
+    "_id": "c9a367ebcbf5a0ed",
+    "name": "Bravo",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You have sworn to protect someone else and will always be at his side.</p>",
+      "infosource": "Core Rulebook p.146",
+      "quirk": "<p>Earn a Hero Point when you put yourself in danger to defend the life of the person you’ve sworn to protect.</p>",
+      "skills": [
+        "athletics",
+        "empathy",
+        "intimidate",
+        "notice",
+        "weaponry"
+      ],
+      "advantages": [
+        "Poison Immunity",
+        "Hard to Kill"
+      ],
+      "nation": "vodacce"
+    }
+  },
+  {
+    "_id": "8489c8b100c69101",
+    "name": "Consigliere",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You work as an “advisor” to a Merchant Prince.</p>",
+      "infosource": "Core Rulebook p.146",
+      "quirk": "<p>Earn a Hero Point when you take a great risk to protect someone else’s secret.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "notice",
+        "ride",
+        "tempt"
+      ],
+      "advantages": [
+        "We're Not So Different...",
+        "Streetwise"
+      ],
+      "nation": "vodacce"
+    }
+  },
+  {
+    "_id": "421f62d9ecb08ba4",
+    "name": "Esploratore",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You travel the world on behalf of a Merchant Prince.</p>",
+      "infosource": "Core Rulebook p.146",
+      "quirk": "<p>Earn a Hero Point when you use non-Théan items or knowledge to solve a problem.</p>",
+      "skills": [
+        "convince",
+        "empathy",
+        "intimidate",
+        "sailing",
+        "tempt"
+      ],
+      "advantages": [
+        "Lyceum",
+        "Linguist"
+      ],
+      "nation": "vodacce"
+    }
+  },
+  {
+    "_id": "a624a59d7aade600",
+    "name": "Sorte Strega",
+    "type": "background",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Note: Only women Heroes can choose this Background. You can sense the strands of Fate, twisting and controlling them to your will… but not without a price.</p>",
+      "infosource": "Core Rulebook p.146",
+      "quirk": "<p>Earn a Hero Point when you commit to a dangerous course of action that you believe is destiny.</p>",
+      "skills": [
+        "convince",
+        "hide",
+        "perform",
+        "ride",
+        "tempt"
+      ],
+      "advantages": [
+        "Sorcery",
+        "Sorcery",
+        "Time Sense"
+      ],
+      "nation": "vodacce"
+    }
+  }
+]

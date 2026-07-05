@@ -129,6 +129,45 @@ SVNSEA2E.skills = {
   weaponry: 'SVNSEA2E.SkillWeaponry',
 };
 
+// --- Hero creation (Core Rulebook, "Making a Hero", pp.137-164) ---
+SVNSEA2E.creation = {
+  traitStart: 2, // every Trait begins at Rank 2
+  traitPoints: 2, // free points to raise Traits (before the Nation Bonus)
+  skillPoints: 10, // extra Skill points beyond Backgrounds
+  skillCreationCap: 3, // no Skill above Rank 3 at creation
+  rankCap: 5, // universal cap
+  advantagePoints: 5, // points to buy Advantages
+  backgroundsCount: 2, // pick two different Backgrounds
+  startingHeroPoints: 1,
+  baseLanguage: 'thean', // Old Théan, known by every Hero
+};
+
+// Nation Bonus: +1 to one of two Traits, applied AFTER the 2 free points
+// (core "great nations"; other nations left open to any Trait at the table's discretion).
+SVNSEA2E.nationBonus = {
+  avalon: ['panache', 'resolve'],
+  inismore: ['panache', 'wits'],
+  highland: ['brawn', 'finesse'],
+  castille: ['finesse', 'wits'],
+  eisen: ['brawn', 'resolve'],
+  montaigne: ['finesse', 'panache'],
+  sarmatia: ['brawn', 'panache'],
+  ussura: ['resolve', 'wits'],
+  vesten: ['brawn', 'wits'],
+  vodacce: ['finesse', 'resolve'],
+};
+
+// National sorceries (which bloodline the "Sorcery" Advantage grants).
+SVNSEA2E.nationSorcery = {
+  avalon: 'knight',
+  highland: 'knight',
+  eisen: 'hex',
+  montaigne: 'porte',
+  sarmatia: 'sanderis',
+  vodacce: 'sorte', // women Heroes only
+  ussura: 'darm',
+};
+
 SVNSEA2E.storyStatuses = {
   none: 'SVNSEA2E.Empty',
   abandoned: 'SVNSEA2E.StatusAbandoned',

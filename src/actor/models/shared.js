@@ -5,9 +5,10 @@ const {
 export const template_schema_base = () => ({
   initiative: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
   wounds: new SchemaField({
+    // Book Death Spiral: 4 Wounds per Dramatic Wound × 4 Dramatic Wounds = 16.
     value: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
     min: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
-    max: new NumberField({ required: true, integer: true, min: 0, initial: 20 })
+    max: new NumberField({ required: true, integer: true, min: 0, initial: 16 })
   }),
   dwounds: new SchemaField({
     value: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),

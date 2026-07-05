@@ -2,7 +2,8 @@
 // NOTE: styles are compiled separately (dist/theah.css via build.mjs) and loaded
 // through system.json "styles" — not imported into the JS bundle.
 import { SVNSEA2E } from './config.js';
-import { registerSystemSettings } from './settings.js';
+import { applyTheahTheme, registerSystemSettings } from './settings.js';
+import { seedCompendia } from './packs.js';
 import { preloadHandlebarsTemplates } from './templates.js';
 import { ActorType, ItemTypes } from './enums';
 
@@ -113,6 +114,10 @@ Hooks.once('init', async function () {
 
   // Register System Settings
   registerSystemSettings();
+
+  // Apply the saved sheet theme (paper by default) to the document root ASAP so
+  // sheets open on the right palette without a flash.
+  applyTheahTheme(game.settings.get('theah', 'theme'));
 
   // Register sheet application classes
   Actors.unregisterSheet('core', ActorSheet);
@@ -293,6 +298,10 @@ Hooks.once('ready', async function () {
 
   chatEventHandler();
 
+  // Populate the core compendia (advantages / backgrounds / arcana) on first
+  // load. GM-only, idempotent, version-gated.
+  await seedCompendia();
+
   game.theah.toolbox.render(true);
 });
 
@@ -355,8 +364,23 @@ Hooks.on('preCreateItem', function (document, options, userId) {
  * Set the default image for an actor type instead of the mystery man
  **/
 Hooks.on('preCreateActor', function (document, entity, options, userId) {
+  const isPlayerSide = [ActorType.PLAYER, ActorType.HERO].includes(document.type);
+  const isFoe = [ActorType.VILLAIN, ActorType.MONSTER, ActorType.BRUTE].includes(document.type);
+  const D = CONST.TOKEN_DISPLAY_MODES;
+  const P = CONST.TOKEN_DISPOSITIONS;
+
   document.updateSource({
     img: 'systems/theah/icons/portrait.svg',
+    // Automatic token wiring: Wounds + Dramatic Wounds bars, sensible display
+    // and linkage so a Hero's sheet and token always stay in sync.
+    prototypeToken: {
+      actorLink: isPlayerSide,
+      displayName: isPlayerSide ? D.OWNER_HOVER : D.HOVER,
+      displayBars: isPlayerSide ? D.OWNER_HOVER : D.HOVER,
+      disposition: isPlayerSide ? P.FRIENDLY : isFoe ? P.HOSTILE : P.NEUTRAL,
+      bar1: { attribute: 'wounds' },
+      bar2: { attribute: 'dwounds' },
+    },
   });
 });
 

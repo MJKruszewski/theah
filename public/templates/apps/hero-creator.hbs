@@ -1,0 +1,168 @@
+<form class="hero-creator-form theah" autocomplete="off">
+
+  <ol class="wiz-steps">
+    {{#each steps}}
+      <li class="{{#if active}}active{{/if}} {{#if done}}done{{/if}}"><span class="wiz-dot">{{num}}</span>{{localize label}}</li>
+    {{/each}}
+  </ol>
+
+  <div class="wiz-body">
+    {{#if emptyCatalog}}
+      <p class="wiz-empty">{{localize "SVNSEA2E.WizNoCompendia"}}</p>
+    {{else}}
+
+    {{!-- Step 0 — Concept & Nation --}}
+    {{#iff step '==' 0}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.WizConceptIntro"}}</p>
+        <div class="wiz-fields">
+          <label class="wiz-field"><span>{{localize "SVNSEA2E.ActorName"}}</span>
+            <input type="text" data-state="name" value="{{state.name}}" placeholder="{{localize 'SVNSEA2E.ActorName'}}" /></label>
+          <label class="wiz-field"><span>{{localize "SVNSEA2E.Epithet"}}</span>
+            <input type="text" data-state="epithet" value="{{state.epithet}}" placeholder="{{localize 'SVNSEA2E.EpithetPlaceholder'}}" /></label>
+          <label class="wiz-field"><span>{{localize "SVNSEA2E.Nation"}}</span>
+            <select data-state="nation">{{selectOptions nationOptions selected=state.nation localize=true}}</select></label>
+          <label class="wiz-field"><span>{{localize "SVNSEA2E.Religion"}}</span>
+            <input type="text" data-state="religion" value="{{state.religion}}" placeholder="—" /></label>
+          <label class="wiz-field wiz-field-wide"><span>{{localize "SVNSEA2E.Concept"}}</span>
+            <textarea data-state="concept" rows="3" placeholder="…">{{state.concept}}</textarea></label>
+        </div>
+      </div>
+    {{/iff}}
+
+    {{!-- Step 1 — Traits --}}
+    {{#iff step '==' 1}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.WizTraitsIntro"}}</p>
+        <p class="wiz-budget">{{localize "SVNSEA2E.WizPointsLeft"}}: <b>{{traitPointsLeft}}</b> / {{traitPointsTotal}}</p>
+        <div class="wiz-traits">
+          {{#each traits}}
+            <div class="wiz-trait {{#if bonus}}has-bonus{{/if}}">
+              <div class="tname">{{label}}</div>
+              <div class="tval">{{final}}</div>
+              <div class="tctl">
+                <button type="button" data-trait-dec="{{key}}" aria-label="-1">&minus;</button>
+                <span class="talloc">+{{alloc}}</span>
+                <button type="button" data-trait-inc="{{key}}" aria-label="+1">+</button>
+              </div>
+              {{#if canBonus}}
+                <button type="button" class="bonus-btn {{#if bonus}}on{{/if}}" data-bonus-trait="{{key}}">{{localize "SVNSEA2E.WizNationBonus"}}</button>
+              {{/if}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/iff}}
+
+    {{!-- Step 2 — Backgrounds --}}
+    {{#iff step '==' 2}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.WizBackgroundsIntro"}}</p>
+        <p class="wiz-budget">{{localize "SVNSEA2E.Backgrounds"}}: <b>{{backgroundsPicked}}</b> / {{backgroundsNeeded}}</p>
+        <div class="wiz-pick-list">
+          {{#each backgroundList}}
+            <div class="wiz-pick {{#if selected}}selected{{/if}}" data-bg-toggle="{{id}}">
+              <div class="pick-head"><span class="pick-name">{{name}}</span>{{#if selected}}<i class="fas fa-check"></i>{{/if}}</div>
+              <div class="pick-meta"><b>{{localize "SVNSEA2E.Skills"}}:</b> {{skills}}</div>
+              {{#if advantages}}<div class="pick-meta"><b>{{localize "SVNSEA2E.Advantages"}}:</b> {{advantages}}</div>{{/if}}
+              {{#if quirk}}<div class="pick-quirk"><b>{{localize "SVNSEA2E.Quirk"}}:</b> {{{quirk}}}</div>{{/if}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/iff}}
+
+    {{!-- Step 3 — Skills --}}
+    {{#iff step '==' 3}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.WizSkillsIntro"}}</p>
+        <p class="wiz-budget">{{localize "SVNSEA2E.WizPointsLeft"}}: <b>{{skillPointsLeft}}</b> / {{skillPointsTotal}} &middot; {{localize "SVNSEA2E.WizCap"}} {{skillCap}}</p>
+        <div class="wiz-skills">
+          {{#each skills}}
+            <div class="wiz-skill">
+              <span class="sname">{{label}}</span>
+              <span class="sbg" title="{{localize 'SVNSEA2E.WizFromBackgrounds'}}">{{bg}}</span>
+              <button type="button" data-skill-dec="{{key}}" aria-label="-1">&minus;</button>
+              <span class="sfinal">{{final}}</span>
+              <button type="button" data-skill-inc="{{key}}" aria-label="+1" {{#if atCap}}disabled{{/if}}>+</button>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/iff}}
+
+    {{!-- Step 4 — Advantages --}}
+    {{#iff step '==' 4}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.WizAdvantagesIntro"}}</p>
+        <p class="wiz-budget">{{localize "SVNSEA2E.WizPointsLeft"}}: <b>{{advPointsLeft}}</b> / {{advPointsTotal}}</p>
+        {{#if freeAdvantages.length}}
+          <div class="wiz-free"><b>{{localize "SVNSEA2E.WizFreeFromBg"}}:</b> {{#each freeAdvantages}}<span class="tag">{{this}}</span>{{/each}}</div>
+        {{/if}}
+        <div class="wiz-adv-list">
+          {{#each advantageList}}
+            <div class="wiz-adv {{#if selected}}selected{{/if}} {{#if free}}is-free{{/if}}" data-adv-toggle="{{id}}" title="{{name}}">
+              <span class="adv-cost">{{cost}}</span>
+              <span class="adv-name">{{name}}</span>
+              {{#if free}}<span class="adv-freebadge">{{localize "SVNSEA2E.WizFree"}}</span>{{/if}}
+              {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/iff}}
+
+    {{!-- Step 5 — Arcana --}}
+    {{#iff step '==' 5}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.WizArcanaIntro"}}</p>
+        <div class="wiz-arcana">
+          <div class="arc-col">
+            <label class="wiz-field"><span>{{localize "SVNSEA2E.Virtue"}}</span>
+              <select data-arcana="virtueId">
+                <option value="">—</option>
+                {{#each virtues}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}
+              </select></label>
+            {{#if virtueDesc}}<div class="arc-desc virtue">{{{virtueDesc}}}</div>{{/if}}
+          </div>
+          <div class="arc-col">
+            <label class="wiz-field"><span>{{localize "SVNSEA2E.Hubris"}}</span>
+              <select data-arcana="hubrisId">
+                <option value="">—</option>
+                {{#each hubris}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}
+              </select></label>
+            {{#if hubrisDesc}}<div class="arc-desc hubris">{{{hubrisDesc}}}</div>{{/if}}
+          </div>
+        </div>
+      </div>
+    {{/iff}}
+
+    {{!-- Step 6 — Review --}}
+    {{#iff step '==' 6}}
+      <div class="wiz-step wiz-review">
+        <h3 class="rev-title">{{review.name}} <span class="rev-nation">{{review.nation}}</span></h3>
+        <div class="rev-grid">
+          <div class="rev-card"><b>{{localize "SVNSEA2E.Traits"}}</b><ul>{{#each review.traits}}<li>{{label}} <span>{{value}}</span></li>{{/each}}</ul></div>
+          <div class="rev-card"><b>{{localize "SVNSEA2E.Skills"}}</b><ul>{{#each review.skills}}<li>{{label}} <span>{{value}}</span></li>{{/each}}</ul></div>
+          <div class="rev-card"><b>{{localize "SVNSEA2E.Backgrounds"}}</b><ul>{{#each review.backgrounds}}<li>{{this}}</li>{{/each}}</ul></div>
+          <div class="rev-card"><b>{{localize "SVNSEA2E.Advantages"}}</b><ul>{{#each review.freeAdvantages}}<li>{{this}} <em>{{localize "SVNSEA2E.WizFree"}}</em></li>{{/each}}{{#each review.purchased}}<li>{{this}}</li>{{/each}}</ul></div>
+          <div class="rev-card"><b>{{localize "SVNSEA2E.Arcana"}}</b><ul><li>{{localize "SVNSEA2E.Virtue"}}: {{review.virtue}}</li><li>{{localize "SVNSEA2E.Hubris"}}: {{review.hubris}}</li></ul></div>
+          <div class="rev-card"><b>{{localize "SVNSEA2E.Languages"}}</b><ul>{{#each review.languages}}<li>{{this}}</li>{{/each}}</ul></div>
+        </div>
+        <p class="rev-foot">{{localize "SVNSEA2E.HeroPoints"}}: {{review.heroPoints}} &middot; {{localize "SVNSEA2E.WealthPts"}} 0 &middot; {{localize "SVNSEA2E.Reputation"}} —</p>
+      </div>
+    {{/iff}}
+
+    {{/if}}
+  </div>
+
+  <footer class="wiz-nav">
+    <button type="button" data-nav="back" {{#if isFirst}}disabled{{/if}}><i class="fas fa-chevron-left"></i> {{localize "SVNSEA2E.WizBack"}}</button>
+    <span class="wiz-count">{{localize "SVNSEA2E.WizStep"}} {{stepNumber}} / {{stepTotal}}</span>
+    {{#if isLast}}
+      <button type="button" data-nav="finish" class="finish"><i class="fas fa-feather"></i> {{localize "SVNSEA2E.CreateHero"}}</button>
+    {{else}}
+      <button type="button" data-nav="next">{{localize "SVNSEA2E.WizNext"}} <i class="fas fa-chevron-right"></i></button>
+    {{/if}}
+  </footer>
+</form>

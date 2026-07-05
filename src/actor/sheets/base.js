@@ -1,4 +1,5 @@
 import LanguageSelector from '../../apps/language-selector.js';
+import { openHeroCreator } from '../../apps/hero-creator.js';
 import { updateInitiative } from '../../combat.js';
 import { ActorType } from '../../enums.js';
 import { getAllPackAdvantages, isValidGlamorIsles } from '../../helpers.js';
@@ -147,6 +148,15 @@ export default class ActorSheetSS2e extends ActorSheet {
     //Create Inventory Item
     html.find('.item-create').on('click', this._onItemCreate.bind(this));
 
+    // Open a compendium to pick/drag from (compendium-locked item types).
+    html.find('.open-compendium').on('click', this._onOpenCompendium.bind(this));
+
+    // Launch the step-by-step Hero Creator.
+    html.find('.create-hero-btn').on('click', (event) => {
+      event.preventDefault();
+      openHeroCreator(this.actor);
+    });
+
     // Update Inventory Item
     html.find('.item-edit').on('click', this._onItemEdit.bind(this));
 
@@ -164,6 +174,14 @@ export default class ActorSheetSS2e extends ActorSheet {
     } else if (this.actor.type === ActorType.VILLAIN || this.actor.type === ActorType.MONSTER) {
       html.find('.rollable').on('click', this._onVillainRoll.bind(this));
     }
+
+    // Sheet theme toggle (paper ⇄ night at sea). Flips the client setting; the
+    // setting's onChange stamps the document root and the CSS reacts live.
+    html.find('.theme-toggle').on('click', (event) => {
+      event.preventDefault();
+      const current = game.settings.get('theah', 'theme');
+      game.settings.set('theah', 'theme', current === 'sea' ? 'paper' : 'sea');
+    });
 
     // On-sheet Raises roller (the preview's signature dice widget).
     const roller = html.find('.roller');
@@ -293,9 +311,9 @@ export default class ActorSheetSS2e extends ActorSheet {
     const actor = this.document;
     const actorData = actor.system;
     let updateObj = {};
-    updateObj['data.wounds.value'] = event.target.dataset.value;
+    updateObj['system.wounds.value'] = Number(event.target.dataset.value);
     if (actorData.wounds.value == 1 && event.target.dataset.value == 1)
-      updateObj['data.wounds.value'] = 0;
+      updateObj['system.wounds.value'] = 0;
 
     actor.update(updateObj);
   }
@@ -368,6 +386,33 @@ export default class ActorSheetSS2e extends ActorSheet {
    * @returns {Promise<Item5e[]>}  The newly created item.
    * @private
    */
+  /**
+   * Item types that must originate from a compendium — players cannot forge
+   * custom copies of these. The "+ create" affordance for them is replaced by a
+   * compendium browser, and drops of non-compendium copies are rejected.
+   * @type {string[]}
+   */
+  static get COMPENDIUM_LOCKED_TYPES() {
+    return ['advantage', 'background', 'virtue', 'hubris'];
+  }
+
+  /**
+   * Open a compendium so the player can browse and drag an entry onto the sheet.
+   * @param {Event} event   The originating click event.
+   * @private
+   */
+  _onOpenCompendium(event) {
+    event.preventDefault();
+    const pack = event.currentTarget.dataset.pack;
+    const collection = game.packs.get(pack);
+    if (!collection) {
+      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.CompendiumMissing'));
+    }
+    collection.render(true);
+  }
+
+  /* -------------------------------------------- */
+
   _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
@@ -506,6 +551,19 @@ export default class ActorSheetSS2e extends ActorSheet {
       data.actorId === actor.id ||
       (actor.isToken && data.tokenId === actor.token.id);
     if (sameActor) return this._onSortItem(event, item);
+
+    // Compendium-locked types must come from a compendium — no home-brew. GMs
+    // may still drop anything (they curate the compendia).
+    if (
+      !game.user.isGM &&
+      this.constructor.COMPENDIUM_LOCKED_TYPES.includes(item.type) &&
+      !String(data.uuid || '').startsWith('Compendium.')
+    ) {
+      ui.notifications.warn(
+        game.i18n.format('SVNSEA2E.CompendiumOnly', { type: item.type }),
+      );
+      return false;
+    }
 
     // Non-sorcery items cannot have duplicate entries on the actor.
     const actorHasDrop = await this._doesActorHaveItem(item.type, item.name);

@@ -135,4 +135,111 @@ export class SvnSea2EActor extends Actor {
       actorData.wounds.max,
     );
   }
+
+  /* -------------------------------------------- */
+  /*  Wound reactions (chat + token)              */
+  /* -------------------------------------------- */
+
+  /**
+   * Stash the pre-update Wound / Dramatic Wound values so _onUpdate can post an
+   * accurate "took / recovered" message for whichever client made the change.
+   * @override
+   */
+  async _preUpdate(changed, options, user) {
+    await super._preUpdate(changed, options, user);
+    const w = foundry.utils.getProperty(changed, 'system.wounds.value');
+    const d = foundry.utils.getProperty(changed, 'system.dwounds.value');
+    if (w !== undefined || d !== undefined) {
+      options.theahPriorWounds = {
+        w: this.system.wounds?.value ?? 0,
+        d: this.system.dwounds?.value ?? 0,
+      };
+    }
+  }
+
+  /** @override */
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+    // Only the client that made the change reacts, so the chat card and token
+    // status update exactly once regardless of how many players are connected.
+    if (options.theahPriorWounds && userId === game.user.id && !options.theahSilent) {
+      this._reactToWoundChange(options.theahPriorWounds);
+    }
+  }
+
+  /**
+   * Post a themed public chat card describing the Wound / Dramatic Wound change
+   * and keep the token's "Helpless" status in sync with the death spiral.
+   * @param {{w:number, d:number}} prior  The pre-update values.
+   * @private
+   */
+  async _reactToWoundChange(prior) {
+    const s = this.system;
+    const wMax = s.wounds?.max ?? 0;
+    const dMax = s.dwounds?.max ?? 0;
+    const newW = s.wounds?.value ?? 0;
+    const newD = s.dwounds?.value ?? 0;
+    const dW = newW - prior.w;
+    const dD = newD - prior.d;
+    if (dW === 0 && dD === 0) return;
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const name = this.name;
+    const dwEffects = [
+      '',
+      'SVNSEA2E.DwEffect1',
+      'SVNSEA2E.DwEffect2',
+      'SVNSEA2E.DwEffect3',
+      'SVNSEA2E.DwEffect4',
+    ];
+
+    let headline;
+    let severe = false;
+    let icon = 'fa-droplet';
+    if (dD > 0) {
+      severe = true;
+      icon = 'fa-heart-crack';
+      headline =
+        newD >= dMax
+          ? L('SVNSEA2E.WoundHelpless', { name })
+          : L('SVNSEA2E.DramaticSuffers', { name });
+    } else if (dD < 0) {
+      icon = 'fa-heart';
+      headline = L('SVNSEA2E.DramaticHeals', { name });
+    } else if (dW > 0) {
+      headline = L('SVNSEA2E.WoundTakes', { name, n: dW, s: dW === 1 ? '' : 's' });
+    } else {
+      icon = 'fa-heart';
+      headline = L('SVNSEA2E.WoundRecovers', { name });
+    }
+
+    const effectKey = dwEffects[Math.min(newD, dMax)];
+    const effect = newD > 0 && effectKey ? game.i18n.localize(effectKey) : '';
+
+    const content = `
+      <div class="theah theah-wound${severe ? ' severe' : ''}">
+        <div class="wound-head"><i class="fas ${icon}"></i> ${headline}</div>
+        <div class="wound-body">
+          <div class="wound-stats">
+            <span class="ws"><b>${newW}</b>/${wMax} ${L('SVNSEA2E.Wounds')}</span>
+            <span class="ws dw"><b>${newD}</b>/${dMax} ${L('SVNSEA2E.DramaticWounds')}</span>
+          </div>
+          ${effect ? `<div class="wound-effect">${effect}</div>` : ''}
+        </div>
+      </div>`;
+
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      content,
+    });
+
+    // Keep the "Helpless" token status in sync only when the DW count changed.
+    if (dD !== 0 && typeof this.toggleStatusEffect === 'function') {
+      try {
+        await this.toggleStatusEffect('unconscious', { active: newD >= dMax });
+      } catch (e) {
+        /* status effects are optional / permission-gated */
+      }
+    }
+  }
 }

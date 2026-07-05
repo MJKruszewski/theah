@@ -47,8 +47,39 @@
       "hubris": { "htmlFields": ["description"] }
     }
   },
-  "packs": [],
-  "packFolders": [],
+  "packs": [
+    {
+      "name": "advantages",
+      "label": "Advantages (Core)",
+      "path": "packs/advantages",
+      "type": "Item",
+      "system": "theah",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
+    },
+    {
+      "name": "backgrounds",
+      "label": "Backgrounds (Core)",
+      "path": "packs/backgrounds",
+      "type": "Item",
+      "system": "theah",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
+    },
+    {
+      "name": "arcana",
+      "label": "Arcana — Virtues & Hubris (Core)",
+      "path": "packs/arcana",
+      "type": "Item",
+      "system": "theah",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "Théah — Core",
+      "sorting": "m",
+      "packs": ["backgrounds", "advantages", "arcana"]
+    }
+  ],
   "grid": {
     "distance": 5,
     "units": "ft"

@@ -19,6 +19,7 @@ export const migrateWorld = async function () {
         console.log(`Migrating Actor entity ${a.name}`);
         await a.update(updateData, {
           enforceTypes: false,
+          theahSilent: true, // don't fire wound chat cards during migration
         });
       }
     } catch (err) {
@@ -118,9 +119,11 @@ export const migrateActorData = function (actor) {
   if (
     actor.type !== ActorType.DANGERPOINTS &&
     actor.type !== ActorType.BRUTE &&
-    actor.system.wounds.max != 20
+    actor.system.wounds.max != 16
   ) {
-    updateData['wounds.max'] = 20;
+    // Book-accurate Death Spiral: 16 Wounds (4 per Dramatic Wound).
+    updateData['wounds.max'] = 16;
+    if (actor.system.wounds.value > 16) updateData['wounds.value'] = 16;
   }
 
   if (
@@ -159,7 +162,7 @@ export const migrateActorData = function (actor) {
     if (actor.system.crewstatus == null) {
       updateData['crewstatus'] = '';
     }
-    if (aactor.system.wealth == null) {
+    if (actor.system.wealth == null) {
       updateData['wealth'] = '0';
     }
   }

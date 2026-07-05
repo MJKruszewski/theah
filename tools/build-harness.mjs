@@ -30,8 +30,8 @@ const skillsHtml = skills
   )
   .join("\n");
 
-// --- Wound track (20 pips, 6 filled) ---
-const trackHtml = Array.from({ length: 20 }, (_, i) => `<i class="fillable wound${i < 6 ? " on" : ""}"></i>`).join("");
+// --- Wound track (16 pips = 4 Dramatic Wounds × 4, 6 filled) ---
+const trackHtml = Array.from({ length: 16 }, (_, i) => `<i class="fillable wound${i < 6 ? " on" : ""}"></i>`).join("");
 
 // --- Death spiral (4 wax seals, 2 spent) ---
 const seal = (spent) =>

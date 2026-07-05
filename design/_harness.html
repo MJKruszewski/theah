@@ -56,7 +56,7 @@
           </div>
 
           <div class="wounds">
-            <div class="lbl"><span>Wounds</span><span>6 / 20</span></div>
+            <div class="lbl"><span>Wounds</span><span>6 / 16</span></div>
             <div class="track"><!--TRACK--></div>
             <div class="lbl" style="margin-top:12px"><span>Dramatic Wounds</span><span>2 · death spiral</span></div>
             <div class="spiral"><!--SPIRAL--></div>
@@ -70,6 +70,7 @@
             <a class="item"><h2>Stories</h2></a>
             <a class="item"><h2>Inventory</h2></a>
             <a class="item"><h2>Sorcery</h2></a>
+            <button type="button" class="theme-toggle" id="themeToggle"><i class="fas fa-circle-half-stroke"></i> <span id="themeLabel">Night at Sea</span></button>
           </nav>
           <section class="sheet-body">
             <div class="tab overview active">
@@ -159,3 +160,19 @@
     </form>
   </div>
 </div>
+
+<script>
+  // Demonstrates the real theme switch: stamps data-theah-theme on <html>,
+  // exactly as the Foundry client setting does. Paper is the default.
+  (function () {
+    var root = document.documentElement;
+    root.setAttribute("data-theah-theme", "paper");
+    var btn = document.getElementById("themeToggle");
+    var label = document.getElementById("themeLabel");
+    btn.addEventListener("click", function () {
+      var sea = root.getAttribute("data-theah-theme") === "sea";
+      root.setAttribute("data-theah-theme", sea ? "paper" : "sea");
+      label.textContent = sea ? "Night at Sea" : "Chart Room";
+    });
+  })();
+</script>

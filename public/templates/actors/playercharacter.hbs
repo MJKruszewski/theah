@@ -22,6 +22,8 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg>
       </div>
 
+      <button type="button" class="create-hero-btn" title="{{localize 'SVNSEA2E.HeroCreator'}}"><i class="fas fa-hat-wizard"></i> {{localize "SVNSEA2E.CreateHero"}}</button>
+
       <dl class="meta">
         <dt>{{localize "SVNSEA2E.Nation"}}</dt>
         <dd><select name="system.nation">{{selectOptions config.nations selected=nation localize=true}}</select></dd>
@@ -49,6 +51,7 @@
         <a class="item" data-tab="stories"><h2>{{localize "SVNSEA2E.Stories"}}</h2></a>
         <a class="item" data-tab="inventory"><h2>{{localize "SVNSEA2E.Inventory"}}</h2></a>
         <a class="item" data-tab="sorcery"><h2>{{localize "SVNSEA2E.Sorcery"}}</h2></a>
+        <button type="button" class="theme-toggle" title="{{localize 'SVNSEA2E.ToggleTheme'}}"><i class="fas fa-circle-half-stroke"></i> {{localize "SVNSEA2E.Theme"}}</button>
       </nav>
 
       <section class="sheet-body">

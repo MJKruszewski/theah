@@ -54,8 +54,7 @@
     <div class="lower-col">
       <div class="sec-title">
         <h3>{{localize "SVNSEA2E.Arcana"}}</h3><span></span>
-        <a class="add-btn item-control item-create" data-type="virtue" title="{{localize 'SVNSEA2E.AddVirtue'}}"><i class="fas fa-plus"></i></a>
-        <a class="add-btn item-control item-create" data-type="hubris" title="{{localize 'SVNSEA2E.AddHubris'}}"><i class="fas fa-star"></i></a>
+        <a class="add-btn open-compendium" data-pack="theah.arcana" title="{{localize 'SVNSEA2E.BrowseCompendium'}}"><i class="fas fa-book-open"></i></a>
       </div>
       <div class="arcana">
         {{#each virtues as |item id|}}
@@ -89,7 +88,7 @@
 
       <div class="sec-title" style="margin-top:22px">
         <h3>{{localize "SVNSEA2E.Backgrounds"}}</h3><span></span>
-        <a class="add-btn item-control item-create" data-type="background" title="{{localize 'SVNSEA2E.AddBackground'}}"><i class="fas fa-plus"></i></a>
+        <a class="add-btn open-compendium" data-pack="theah.backgrounds" title="{{localize 'SVNSEA2E.BrowseCompendium'}}"><i class="fas fa-book-open"></i></a>
       </div>
       <ul class="bg-tags">
         {{#each backgrounds as |item id|}}
@@ -106,7 +105,7 @@
     <div class="lower-col">
       <div class="sec-title">
         <h3>{{localize "SVNSEA2E.Advantages"}}</h3><span></span>
-        <a class="add-btn item-control item-create" data-type="advantage" title="{{localize 'SVNSEA2E.AddAdvantage'}}"><i class="fas fa-plus"></i></a>
+        <a class="add-btn open-compendium" data-pack="theah.advantages" title="{{localize 'SVNSEA2E.BrowseCompendium'}}"><i class="fas fa-book-open"></i></a>
       </div>
       <ul class="adv-list">
         {{#each advantages as |item id|}}

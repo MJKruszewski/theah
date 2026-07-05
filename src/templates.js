@@ -25,6 +25,9 @@ export const preloadHandlebarsTemplates = async function () {
     // Item Sheet Partials
     'systems/theah/templates/items/parts/item-header.hbs',
     'systems/theah/templates/items/parts/item-description.hbs',
+
+    // Applications
+    'systems/theah/templates/apps/hero-creator.hbs',
   ];
 
   // Load the template parts
