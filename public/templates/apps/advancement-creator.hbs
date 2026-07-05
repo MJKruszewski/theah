@@ -95,12 +95,15 @@
         {{#iff configKey '==' 'advantage'}}
           <div class="adv-choice-list adv-scroll">
             {{#each advantageChoices}}
-              <div class="adv-choice {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}"
-                   data-choice="advId" data-value="{{id}}" title="{{name}}">
-                <span class="ac-cost">{{cost}}</span>
-                <span class="ac-name">{{name}}</span>
-                {{#if disabled}}<span class="ac-note">{{localize "SVNSEA2E.AdvOwned"}}</span>{{/if}}
-                {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+              <div class="adv-choice adv-choice-block {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}"
+                   data-choice="advId" data-value="{{id}}">
+                <div class="ac-head">
+                  <span class="ac-cost">{{cost}}</span>
+                  <span class="ac-name">{{name}}</span>
+                  {{#if disabled}}<span class="ac-note">{{localize "SVNSEA2E.AdvOwned"}}</span>{{/if}}
+                  {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+                </div>
+                {{#if description}}<div class="ac-desc">{{{description}}}</div>{{/if}}
               </div>
             {{/each}}
           </div>
@@ -113,12 +116,12 @@
           </div>
           <div class="adv-choice-list adv-scroll">
             {{#each arcanaChoices}}
-              <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="arcanaId" data-value="{{id}}">
-                <span class="ac-name">{{name}}</span>{{#if selected}}<i class="fas fa-check"></i>{{/if}}
+              <div class="adv-choice adv-choice-block {{#if selected}}selected{{/if}}" data-choice="arcanaId" data-value="{{id}}">
+                <div class="ac-head"><span class="ac-name">{{name}}</span>{{#if selected}}<i class="fas fa-check"></i>{{/if}}</div>
+                {{#if description}}<div class="ac-desc">{{{description}}}</div>{{/if}}
               </div>
             {{/each}}
           </div>
-          {{#if arcanaDesc}}<div class="arc-desc">{{{arcanaDesc}}}</div>{{/if}}
         {{/iff}}
 
         {{#iff configKey '==' 'quirkChange'}}

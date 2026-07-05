@@ -27,6 +27,14 @@
           <label class="wiz-field wiz-field-wide"><span>{{localize "SVNSEA2E.Concept"}}</span>
             <textarea data-state="concept" rows="3" placeholder="…">{{state.concept}}</textarea></label>
         </div>
+        {{#if nationInfo}}
+          <div class="nation-info">
+            <p class="ni-name">{{nationInfo.name}}</p>
+            <p class="ni-row"><b>{{localize "SVNSEA2E.WizNationBonus"}}</b><span class="ni-val">{{nationInfo.bonusTraits}}</span></p>
+            {{#if nationInfo.sorcery}}<p class="ni-row"><b>{{localize "SVNSEA2E.Sorcery"}}</b><span class="ni-val">{{nationInfo.sorcery}}</span></p>{{/if}}
+            <p class="ni-hint">{{localize "SVNSEA2E.WizNationInfoHint"}}</p>
+          </div>
+        {{/if}}
       </div>
     {{/iff}}
 
@@ -101,11 +109,14 @@
         {{/if}}
         <div class="wiz-adv-list">
           {{#each advantageList}}
-            <div class="wiz-adv {{#if selected}}selected{{/if}} {{#if free}}is-free{{/if}}" data-adv-toggle="{{id}}" title="{{name}}">
-              <span class="adv-cost">{{cost}}</span>
-              <span class="adv-name">{{name}}</span>
-              {{#if free}}<span class="adv-freebadge">{{localize "SVNSEA2E.WizFree"}}</span>{{/if}}
-              {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+            <div class="wiz-adv {{#if selected}}selected{{/if}} {{#if free}}is-free{{/if}}" data-adv-toggle="{{id}}">
+              <div class="adv-head">
+                <span class="adv-cost">{{cost}}</span>
+                <span class="adv-name">{{name}}</span>
+                {{#if free}}<span class="adv-freebadge">{{localize "SVNSEA2E.WizFree"}}</span>{{/if}}
+                {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+              </div>
+              {{#if description}}<div class="adv-desc">{{{description}}}</div>{{/if}}
             </div>
           {{/each}}
         </div>
@@ -118,20 +129,26 @@
         <p class="wiz-intro">{{localize "SVNSEA2E.WizArcanaIntro"}}</p>
         <div class="wiz-arcana">
           <div class="arc-col">
-            <label class="wiz-field"><span>{{localize "SVNSEA2E.Virtue"}}</span>
-              <select data-arcana="virtueId">
-                <option value="">—</option>
-                {{#each virtues}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}
-              </select></label>
-            {{#if virtueDesc}}<div class="arc-desc virtue">{{{virtueDesc}}}</div>{{/if}}
+            <div class="arc-col-title">{{localize "SVNSEA2E.Virtue"}}</div>
+            <div class="arc-pick-list">
+              {{#each virtues}}
+                <div class="arc-pick virtue {{#if selected}}selected{{/if}}" data-arcana-pick="virtueId" data-arc-id="{{id}}">
+                  <div class="arc-pick-head"><span class="arc-pick-name">{{name}}</span>{{#if selected}}<i class="fas fa-check"></i>{{/if}}</div>
+                  {{#if description}}<div class="arc-pick-desc">{{{description}}}</div>{{/if}}
+                </div>
+              {{/each}}
+            </div>
           </div>
           <div class="arc-col">
-            <label class="wiz-field"><span>{{localize "SVNSEA2E.Hubris"}}</span>
-              <select data-arcana="hubrisId">
-                <option value="">—</option>
-                {{#each hubris}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}
-              </select></label>
-            {{#if hubrisDesc}}<div class="arc-desc hubris">{{{hubrisDesc}}}</div>{{/if}}
+            <div class="arc-col-title">{{localize "SVNSEA2E.Hubris"}}</div>
+            <div class="arc-pick-list">
+              {{#each hubris}}
+                <div class="arc-pick hubris {{#if selected}}selected{{/if}}" data-arcana-pick="hubrisId" data-arc-id="{{id}}">
+                  <div class="arc-pick-head"><span class="arc-pick-name">{{name}}</span>{{#if selected}}<i class="fas fa-check"></i>{{/if}}</div>
+                  {{#if description}}<div class="arc-pick-desc">{{{description}}}</div>{{/if}}
+                </div>
+              {{/each}}
+            </div>
           </div>
         </div>
       </div>

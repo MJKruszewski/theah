@@ -395,6 +395,8 @@
   "SVNSEA2E.WizFreeFromBg": "Free from Backgrounds",
   "SVNSEA2E.WizFree": "free",
   "SVNSEA2E.WizNationBonus": "Nation +1",
+  "SVNSEA2E.WizAnyTrait": "Any Trait (GM's discretion)",
+  "SVNSEA2E.WizNationInfoHint": "The +1 applies to one of these Traits after your 2 free points. National sorcery is bought later as an Advantage.",
   "SVNSEA2E.WizStep": "Step",
   "SVNSEA2E.WizNext": "Next",
   "SVNSEA2E.WizBack": "Back",

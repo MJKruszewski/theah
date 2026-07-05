@@ -191,8 +191,18 @@ export class HeroCreator extends FormApplication {
       religions: null,
     };
 
-    // Concept
+    // Concept — nation reference box (bonus Traits + national sorcery)
     data.nationOptions = C.nations;
+    const nkey = this._wizard.nation;
+    if (nkey && nkey !== 'none') {
+      const sorcKey = C.nationSorcery[nkey];
+      const bonusKeys = C.nationBonus[nkey] || [];
+      data.nationInfo = {
+        name: C.nations[nkey],
+        bonusTraits: bonusKeys.map((k) => C.traits[k]).join(' / ') || game.i18n.localize('SVNSEA2E.WizAnyTrait'),
+        sorcery: sorcKey ? game.i18n.localize(C.sorceryTypes[sorcKey] || sorcKey) : null,
+      };
+    }
 
     // Traits
     const bonusChoices = C.nationBonus[this._wizard.nation] || Object.keys(C.traits).filter((t) => !['influence', 'strength'].includes(t));
@@ -251,14 +261,19 @@ export class HeroCreator extends FormApplication {
     data.advPointsSpent = this._advantageSpent();
     data.advPointsLeft = C.creation.advantagePoints - this._advantageSpent();
 
-    // Arcana
-    const findArc = (list, id) => list.find((a) => a._id === id);
-    data.virtues = this._catalog.virtues.map((v) => ({ id: v._id, name: v.name, selected: this._wizard.virtueId === v._id }));
-    data.hubris = this._catalog.hubris.map((h) => ({ id: h._id, name: h.name, selected: this._wizard.hubrisId === h._id }));
-    const vSel = findArc(this._catalog.virtues, this._wizard.virtueId);
-    const hSel = findArc(this._catalog.hubris, this._wizard.hubrisId);
-    data.virtueDesc = vSel?.system.description || '';
-    data.hubrisDesc = hSel?.system.description || '';
+    // Arcana — full pick lists with descriptions shown upfront (not after select)
+    data.virtues = this._catalog.virtues.map((v) => ({
+      id: v._id,
+      name: v.name,
+      selected: this._wizard.virtueId === v._id,
+      description: v.system.description || '',
+    }));
+    data.hubris = this._catalog.hubris.map((h) => ({
+      id: h._id,
+      name: h.name,
+      selected: this._wizard.hubrisId === h._id,
+      description: h.system.description || '',
+    }));
 
     // Review
     data.review = this._buildReview(skills);
@@ -308,10 +323,14 @@ export class HeroCreator extends FormApplication {
       el.addEventListener('change', (ev) => {
         const key = ev.currentTarget.dataset.state;
         this._wizard[key] = ev.currentTarget.value;
-        // Nation change invalidates the previously chosen bonus Trait; no
-        // re-render here (it would discard unsaved text in the other fields —
-        // the bonus options are recomputed when we reach the Traits step).
-        if (key === 'nation') this._wizard.nationBonusTrait = null;
+        if (key === 'nation') {
+          // Nation change invalidates the previously chosen bonus Trait, and
+          // refreshes the reference box. Capture the other typed fields first
+          // so the re-render doesn't discard them.
+          this._wizard.nationBonusTrait = null;
+          this._readConceptInputs();
+          this.render(false);
+        }
       });
     });
 
@@ -347,10 +366,12 @@ export class HeroCreator extends FormApplication {
       el.addEventListener('click', (ev) => this._toggleAdvantage(ev.currentTarget.dataset.advToggle)),
     );
 
-    // Arcana selects.
-    root.querySelectorAll('[data-arcana]').forEach((el) =>
-      el.addEventListener('change', (ev) => {
-        this._wizard[ev.currentTarget.dataset.arcana] = ev.currentTarget.value || null;
+    // Arcana pick cards (single-select each column; click again to clear).
+    root.querySelectorAll('[data-arcana-pick]').forEach((el) =>
+      el.addEventListener('click', (ev) => {
+        const field = ev.currentTarget.dataset.arcanaPick; // virtueId | hubrisId
+        const id = ev.currentTarget.dataset.arcId;
+        this._wizard[field] = this._wizard[field] === id ? null : id;
         this.render(false);
       }),
     );

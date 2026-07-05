@@ -301,6 +301,7 @@ export class AdvancementCreator extends FormApplication {
         owned: this._ownsAdvantage(a.name),
         sorcery: a.name?.toLowerCase() === 'sorcery',
         selected: s.advId === a._id,
+        description: a.system?.description || '',
       }))
       .map((a) => ({ ...a, disabled: a.owned && !a.sorcery }));
     // Arcana.
@@ -310,6 +311,7 @@ export class AdvancementCreator extends FormApplication {
       id: a._id,
       name: a.name,
       selected: s.arcanaId === a._id,
+      description: a.system?.description || '',
     }));
     const arcSel = this._arcById(s.arcanaId);
     data.arcanaDesc = arcSel?.system?.description || '';

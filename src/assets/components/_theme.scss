@@ -438,10 +438,21 @@
 .hero-creator-form .wiz-field > span { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
 .hero-creator-form .wiz-field input,
 .hero-creator-form .wiz-field select,
-.hero-creator-form .wiz-field textarea { background: color-mix(in srgb,var(--panel) 92%, #fff 8%); border: 1px solid var(--line); border-radius: 3px; color: var(--ink); font-family: var(--thd-body); font-size: 14px; padding: 6px 8px; }
+.hero-creator-form .wiz-field textarea { background: color-mix(in srgb,var(--panel) 92%, #fff 8%); border: 1px solid var(--line); border-radius: 3px; color: var(--ink); font-family: var(--thd-body); font-size: 14px; line-height: 1.4; padding: 6px 8px; }
+/* Foundry's core shrinks bare <select> to ~1.5rem which clips 14px text — force a legible height. */
+.hero-creator-form .wiz-field select { height: auto; min-height: 34px; }
+.hero-creator-form .wiz-field select option { color: #1a1a1a; }
 .hero-creator-form .wiz-field input:focus,
 .hero-creator-form .wiz-field select:focus,
 .hero-creator-form .wiz-field textarea:focus { border-color: var(--gold); outline: none; }
+
+/* Nation reference box (Concept step) */
+.hero-creator-form .nation-info { margin-top: 16px; padding: 12px 14px; border: 1px solid var(--line); border-left: 3px solid var(--gold-deep); border-radius: 5px; background: color-mix(in srgb,var(--panel) 92%, #fff 8%); }
+.hero-creator-form .nation-info .ni-name { font-family: var(--thd-display); font-variant: small-caps; letter-spacing: .05em; font-size: 17px; color: var(--ink); margin: 0 0 6px; }
+.hero-creator-form .nation-info .ni-row { font-size: 13px; color: var(--ink-soft); margin: 3px 0; }
+.hero-creator-form .nation-info .ni-row b { font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); margin-right: 6px; }
+.hero-creator-form .nation-info .ni-row .ni-val { color: var(--ink); font-family: var(--thd-body); }
+.hero-creator-form .nation-info .ni-hint { font-size: 11.5px; color: var(--ink-soft); font-style: italic; margin: 6px 0 0; }
 
 /* Traits */
 .hero-creator-form .wiz-traits { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
@@ -481,21 +492,34 @@
 /* Advantages */
 .hero-creator-form .wiz-free { font-size: 12px; color: var(--ink-soft); margin-bottom: 12px; }
 .hero-creator-form .wiz-free .tag { display: inline-block; margin: 2px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; font-family: var(--thd-label); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
-.hero-creator-form .wiz-adv-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; }
-.hero-creator-form .wiz-adv { display: flex; align-items: center; gap: 9px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 4px; cursor: pointer; background: color-mix(in srgb,var(--panel) 94%, #fff 6%); }
+.hero-creator-form .wiz-adv-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.hero-creator-form .wiz-adv { display: block; padding: 9px 12px; border: 1px solid var(--line); border-radius: 5px; cursor: pointer; background: color-mix(in srgb,var(--panel) 94%, #fff 6%); transition: border-color .12s; }
 .hero-creator-form .wiz-adv:hover { border-color: var(--gold); }
 .hero-creator-form .wiz-adv.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
-.hero-creator-form .wiz-adv.is-free { opacity: .8; }
-.hero-creator-form .wiz-adv .adv-cost { font-family: var(--thd-display); font-size: 12px; color: #fff; background: linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; flex: none; }
-.hero-creator-form .wiz-adv .adv-name { flex: 1; font-size: 13.5px; color: var(--ink); }
+.hero-creator-form .wiz-adv.is-free { opacity: .85; }
+.hero-creator-form .wiz-adv .adv-head { display: flex; align-items: center; gap: 9px; }
+.hero-creator-form .wiz-adv .adv-cost { font-family: var(--thd-display); font-size: 12px; color: #fff; background: linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; display: grid; place-items: center; flex: none; }
+.hero-creator-form .wiz-adv .adv-name { flex: 1; font-family: var(--thd-display); font-size: 14.5px; font-weight: 600; color: var(--ink); }
 .hero-creator-form .wiz-adv .adv-freebadge { font-family: var(--thd-label); font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: var(--teal); }
 .hero-creator-form .wiz-adv .fa-check { color: var(--teal); }
+.hero-creator-form .wiz-adv .adv-desc { font-size: 12px; line-height: 1.45; color: var(--ink-soft); margin-top: 5px; }
+.hero-creator-form .wiz-adv .adv-desc p { margin: 0 0 4px; }
+.hero-creator-form .wiz-adv .adv-desc :last-child { margin-bottom: 0; }
 
-/* Arcana */
-.hero-creator-form .wiz-arcana { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.hero-creator-form .arc-desc { margin-top: 10px; padding: 10px 12px; border-radius: 5px; font-size: 13px; color: var(--ink); border: 1px solid var(--line); background: color-mix(in srgb,var(--panel) 92%, #fff 8%); }
-.hero-creator-form .arc-desc.virtue { box-shadow: inset 3px 0 0 var(--teal); }
-.hero-creator-form .arc-desc.hubris { box-shadow: inset 3px 0 0 var(--oxblood); }
+/* Arcana — two columns of description-bearing pick cards (single-select each) */
+.hero-creator-form .wiz-arcana { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.hero-creator-form .arc-col-title { font-family: var(--thd-label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); margin: 0 0 8px; padding-bottom: 5px; border-bottom: 1px solid var(--line); }
+.hero-creator-form .arc-pick-list { display: flex; flex-direction: column; gap: 8px; }
+.hero-creator-form .arc-pick { padding: 9px 11px; border: 1px solid var(--line); border-radius: 5px; cursor: pointer; background: color-mix(in srgb,var(--panel) 94%, #fff 6%); transition: border-color .12s; }
+.hero-creator-form .arc-pick:hover { border-color: var(--gold); }
+.hero-creator-form .arc-pick-head { display: flex; justify-content: space-between; align-items: center; }
+.hero-creator-form .arc-pick-name { font-family: var(--thd-display); font-size: 14.5px; font-weight: 600; color: var(--ink); }
+.hero-creator-form .arc-pick .fa-check { color: var(--teal); }
+.hero-creator-form .arc-pick-desc { font-size: 12px; line-height: 1.45; color: var(--ink-soft); margin-top: 5px; }
+.hero-creator-form .arc-pick-desc p { margin: 0 0 4px; }
+.hero-creator-form .arc-pick-desc :last-child { margin-bottom: 0; }
+.hero-creator-form .arc-pick.virtue.selected { border-color: var(--teal); box-shadow: inset 3px 0 0 var(--teal); }
+.hero-creator-form .arc-pick.hubris.selected { border-color: var(--oxblood); box-shadow: inset 3px 0 0 var(--oxblood); }
 
 /* Review */
 .hero-creator-form .rev-title { font-family: var(--thd-display); font-variant: small-caps; letter-spacing: .06em; font-size: 22px; margin: 0 0 12px; color: var(--ink); border: 0; }
@@ -557,6 +581,12 @@
 .advancement-creator-form .adv-choice .ac-cost { font-family: var(--thd-display); font-size: 12px; color: #fff; background: linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; flex: none; }
 .advancement-creator-form .adv-choice .ac-quirk { flex-basis: 100%; font-size: 12px; font-style: italic; color: var(--ink-soft); }
 .advancement-creator-form .adv-choice .fa-check { color: var(--teal); }
+/* Block variant (Advantage / Arcana rewards) — name+cost header with the description below */
+.advancement-creator-form .adv-choice-block { display: block; }
+.advancement-creator-form .adv-choice-block .ac-head { display: flex; align-items: center; gap: 10px; }
+.advancement-creator-form .adv-choice-block .ac-desc { font-size: 12px; line-height: 1.45; color: var(--ink-soft); margin-top: 5px; }
+.advancement-creator-form .adv-choice-block .ac-desc p { margin: 0 0 4px; }
+.advancement-creator-form .adv-choice-block .ac-desc :last-child { margin-bottom: 0; }
 .advancement-creator-form .adv-shift { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .advancement-creator-form .adv-shift-col h4 { font-family: var(--thd-label); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; display: flex; align-items: center; gap: 6px; }
 .advancement-creator-form .adv-slot-toggle { display: flex; gap: 8px; margin-bottom: 12px; }
