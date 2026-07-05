@@ -7,13 +7,18 @@
  * that shipping pre-compiled packs would require — respecting the project's
  * dependency-safety rules — while still giving players real, drag-able compendia.
  *
- * Seeding is GM-only, idempotent (documents are created by their stable _id, so
- * re-runs only add what's missing) and version-gated so it doesn't re-fetch on
- * every load once done.
+ * Seeding is GM-only and idempotent. Documents carry a stable, name-derived
+ * `_id`, so:
+ *   - missing entries are created, and
+ *   - on a seed-version bump, existing entries are UPDATED back to the shipped
+ *     canonical data (name / type / img / system).
+ * The upsert matters: without it a pack that once seeded badly (e.g. blank-named
+ * advantage docs) would stay broken forever, because "create missing by _id"
+ * never touches a doc that already exists. Bumping PACK_SEED_VERSION heals it.
  */
 
-// Bump when the shipped catalog changes to force a re-seed of missing entries.
-export const PACK_SEED_VERSION = 1;
+// Bump when the shipped catalog changes OR to force-heal existing worlds.
+export const PACK_SEED_VERSION = 2;
 
 const SEED_TARGETS = [
   { pack: 'theah.backgrounds', file: 'backgrounds' },
@@ -39,16 +44,79 @@ async function loadSeedData(file) {
 }
 
 /**
+ * Bring one pack in line with its shipped JSON: create missing docs, and
+ * (when `heal` is true) rewrite existing docs to the canonical name/type/img/
+ * system. Returns { created, updated }.
+ * @param {string} pack   Compendium collection id (e.g. "theah.advantages").
+ * @param {object[]} docs Shipped documents.
+ * @param {boolean} heal  Update existing docs, not just create missing ones.
+ */
+async function syncPack(pack, docs, heal) {
+  const collection = game.packs.get(pack);
+  if (!collection) return { created: 0, updated: 0 }; // pack not declared / not ready
+
+  const wasLocked = collection.locked;
+  if (wasLocked) await collection.configure({ locked: false });
+
+  let created = 0;
+  let updated = 0;
+  let purged = 0;
+  try {
+    const cls = CONFIG[collection.metadata.type].documentClass;
+
+    if (heal) {
+      // Purge corrupt (blank-named) docs first — these are what make advantages
+      // render as empty cards. Removing them lets the shipped set repopulate
+      // cleanly, whatever _id the corrupt copies carried.
+      const index = await collection.getIndex();
+      const blankIds = index.filter((i) => !i.name || !String(i.name).trim()).map((i) => i._id);
+      if (blankIds.length) {
+        await cls.deleteDocuments(blankIds, { pack });
+        purged = blankIds.length;
+      }
+    }
+
+    const index = await collection.getIndex();
+    const existing = new Set(index.map((i) => i._id));
+
+    const toCreate = docs.filter((d) => !existing.has(d._id));
+    if (toCreate.length) {
+      await cls.createDocuments(toCreate, { pack, keepId: true });
+      created = toCreate.length;
+    }
+
+    if (heal) {
+      // Rewrite every shipped doc that still exists back to canonical data.
+      const toUpdate = docs
+        .filter((d) => existing.has(d._id))
+        .map((d) => ({ _id: d._id, name: d.name, type: d.type, img: d.img, system: d.system }));
+      if (toUpdate.length) {
+        await cls.updateDocuments(toUpdate, { pack, diff: false, recursive: false });
+        updated = toUpdate.length;
+      }
+    }
+  } catch (e) {
+    console.error(`Théah | failed seeding ${pack}`, e);
+  } finally {
+    if (wasLocked) await collection.configure({ locked: true });
+  }
+  return { created, updated: updated + purged };
+}
+
+/**
  * Seed the core compendia from bundled JSON. Only the GM writes to packs.
+ * @param {object} [opts]
+ * @param {boolean} [opts.force]  Ignore the version gate and heal every pack.
  * @returns {Promise<void>}
  */
-export async function seedCompendia() {
+export async function seedCompendia({ force = false } = {}) {
   if (!game.user?.isGM) return;
 
   const seededVersion = game.settings.get('theah', 'packSeedVersion') || 0;
+  const newVersion = force || seededVersion < PACK_SEED_VERSION;
 
-  // Fast path: already seeded at the current version and no pack is empty.
-  if (seededVersion >= PACK_SEED_VERSION) {
+  // Fast path: current version, not forced, and no pack is empty → nothing to do.
+  if (!newVersion) {
     const anyMissing = SEED_TARGETS.some((t) => {
       const c = game.packs.get(t.pack);
       return c && c.index.size === 0;
@@ -57,37 +125,35 @@ export async function seedCompendia() {
   }
 
   let created = 0;
+  let updated = 0;
   for (const { pack, file } of SEED_TARGETS) {
-    const collection = game.packs.get(pack);
-    if (!collection) continue; // pack not declared / not ready
-
     const docs = await loadSeedData(file);
     if (!docs) continue;
-
-    const wasLocked = collection.locked;
-    if (wasLocked) await collection.configure({ locked: false });
-
-    try {
-      const index = await collection.getIndex();
-      const existing = new Set(index.map((i) => i._id));
-      const toCreate = docs.filter((d) => !existing.has(d._id));
-      if (toCreate.length) {
-        const cls = CONFIG[collection.metadata.type].documentClass;
-        await cls.createDocuments(toCreate, { pack, keepId: true });
-        created += toCreate.length;
-      }
-    } catch (e) {
-      console.error(`Théah | failed seeding ${pack}`, e);
-    } finally {
-      if (wasLocked) await collection.configure({ locked: true });
-    }
+    // On a version bump (or forced), heal existing docs too — this repairs packs
+    // that seeded badly in a prior version.
+    const r = await syncPack(pack, docs, newVersion);
+    created += r.created;
+    updated += r.updated;
   }
 
   await game.settings.set('theah', 'packSeedVersion', PACK_SEED_VERSION);
-  if (created) {
+  if (created || updated) {
     ui.notifications?.info(
-      game.i18n.format('SVNSEA2E.PacksSeeded', { count: created }),
+      game.i18n.format('SVNSEA2E.PacksSeeded', { count: created + updated }),
     );
-    console.log(`Théah | seeded ${created} compendium entries.`);
+    console.log(`Théah | seeded ${created} + repaired ${updated} compendium entries.`);
   }
+}
+
+/**
+ * Force a full re-heal of the core compendia from the shipped JSON, ignoring the
+ * version gate. Handy from the console: `game.theah.reseedCompendia()`.
+ * @returns {Promise<void>}
+ */
+export async function reseedCompendia() {
+  if (!game.user?.isGM) {
+    ui.notifications?.warn('Only the GM can reseed the compendia.');
+    return;
+  }
+  await seedCompendia({ force: true });
 }

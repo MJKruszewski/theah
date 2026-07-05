@@ -3,7 +3,7 @@
 // through system.json "styles" — not imported into the JS bundle.
 import { SVNSEA2E } from './config.js';
 import { applyTheahTheme, registerSystemSettings } from './settings.js';
-import { seedCompendia } from './packs.js';
+import { seedCompendia, reseedCompendia } from './packs.js';
 import { preloadHandlebarsTemplates } from './templates.js';
 import { getAllPackAdvantages } from './helpers.js';
 import { ActorType, ItemTypes } from './enums';
@@ -72,6 +72,8 @@ Hooks.once('init', async function () {
     config: SVNSEA2E,
     migrations: migrations,
     toolbox: new Toolbox(),
+    // GM console helper: repair the core compendia from the shipped JSON.
+    reseedCompendia,
   };
 
   /**
