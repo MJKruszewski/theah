@@ -22,7 +22,7 @@
             {{/iff}}
           {{/for}}
         </div>
-        <div class="tname">{{trait.label}}</div>
+        <div class="tname">{{trait.label}}<i class="fas fa-circle-info info-dot" data-tooltip="{{trait.desc}}"></i></div>
       </div>
     {{/each}}
   </div>
@@ -33,6 +33,7 @@
       {{#each skills as |skill key|}}
         <div class="skill">
           <span class="sname rollable" data-roll="{{skill.value}}" data-label="{{skill.name}}" title="{{localize 'SVNSEA2E.Roll'}}">{{skill.label}}</span>
+          <i class="fas fa-circle-info info-dot" data-tooltip="{{skill.desc}}"></i>
           <div class="pips">
             {{#for 1 skill.max 1}}
               {{#iff skill.value '>=' @index}}
@@ -128,6 +129,7 @@
   <div class="roller">
     <div class="top">
       <div class="formula">
+        <i class="fas fa-circle-info roller-info" data-tooltip="{{localize 'SVNSEA2E.RaisesInfo'}}"></i>
         <select class="rp-trait" aria-label="{{localize 'SVNSEA2E.Trait'}}">
           {{#each traits as |t|}}<option value="{{t.value}}">{{t.label}} &middot; {{t.value}}</option>{{/each}}
         </select>

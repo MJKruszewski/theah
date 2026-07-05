@@ -7,11 +7,9 @@
   </ol>
 
   <div class="wiz-body">
-    {{#if emptyCatalog}}
-      <p class="wiz-empty">{{localize "SVNSEA2E.WizNoCompendia"}}</p>
-    {{else}}
 
-    {{!-- Step 0 — Reward --}}
+    {{!-- Step 0 — Reward (always available; Advantage/Arcana rewards self-disable
+          when their compendium is empty, the rest never need it) --}}
     {{#iff step '==' 0}}
       <div class="wiz-step">
         <p class="wiz-intro">{{localize "SVNSEA2E.AdvRewardIntro"}}</p>
@@ -173,7 +171,6 @@
       </div>
     {{/iff}}
 
-    {{/if}}
   </div>
 
   <footer class="wiz-nav">

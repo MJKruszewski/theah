@@ -4,6 +4,7 @@ export const skillsToSheetData = (actorData, CONFIG) =>
       ...skill,
       name: s,
       label: CONFIG.SVNSEA2E.skills[s],
+      desc: game.i18n.localize(`SVNSEA2E.SkillInfo_${s}`),
     }))
     .sort((a, b) => a.label.localeCompare(b.label));
 

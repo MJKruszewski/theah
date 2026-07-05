@@ -635,14 +635,19 @@ export class AdvancementCreator extends FormApplication {
  * Open the Advancement Creator for a player-character actor.
  * @param {Actor} actor
  */
-export function openAdvancementCreator(actor) {
+export async function openAdvancementCreator(actor) {
   if (actor?.type !== ActorType.PLAYER) {
     return ui.notifications.warn(game.i18n.localize('SVNSEA2E.WizPlayerOnly'));
   }
   if (!game.packs.get('theah.advantages')) {
     return ui.notifications.warn(game.i18n.localize('SVNSEA2E.WizNoCompendia'));
   }
-  new AdvancementCreator(actor).render(true);
+  try {
+    await new AdvancementCreator(actor).render(true);
+  } catch (err) {
+    console.error('Théah | Advancement Creator failed to open', err);
+    ui.notifications.error(game.i18n.localize('SVNSEA2E.WizOpenFailed'));
+  }
 }
 
 /* -------------------------------------------- */

@@ -231,6 +231,7 @@ export default class ActorSheetSS2e extends ActorSheet {
           ...trait,
           name: t,
           label: CONFIG.SVNSEA2E.traits[t],
+          desc: game.i18n.localize(`SVNSEA2E.TraitInfo_${t}`),
         }))
       : [];
   }

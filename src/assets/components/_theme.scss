@@ -72,7 +72,8 @@
   flex: 1;
   display: grid;
   grid-template-columns: 320px 1fr;
-  min-height: 100%;
+  grid-template-rows: minmax(0, 1fr);
+  min-height: 0;
   background: var(--panel);
 }
 
@@ -95,6 +96,8 @@
   color: #f0e5c8;
   padding: 22px 20px 26px;
   position: relative;
+  overflow-y: auto;
+  min-height: 0;
 }
 .theah .identity-rail .edge {
   position: absolute; top: 0; right: 0; bottom: 0; width: 3px;
@@ -195,7 +198,7 @@
 .theah .seal.spent .sig { opacity: .9; }
 
 /* --------------------------- Ledger main --------------------------- */
-.theah .sheet-main { padding: 20px 24px 26px; position: relative; overflow: hidden; }
+.theah .sheet-main { padding: 20px 24px 26px; position: relative; overflow-y: auto; overflow-x: hidden; min-height: 0; }
 .theah .sheet-main::before {
   content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: var(--grain); mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
@@ -210,14 +213,21 @@
   color: var(--ink-soft); background: transparent; border: 0; padding: 9px 14px 11px; cursor: pointer;
   position: relative; border-radius: 2px 2px 0 0; flex: none; line-height: 1;
 }
+/* The base `_tabs.scss` forces `.tabs .item h2 { color: <light> }`, which is
+   invisible on the paper theme. Force the label to inherit the themed `.item`
+   color and drop Foundry's default red hover text-shadow. */
 .theah .sheet-tabs .item h2,
-.theah .sheet-tabs .item h3 { margin: 0; font: inherit; border: 0; }
-.theah .sheet-tabs .item:hover { color: var(--gold-deep); }
-.theah .sheet-tabs .item.active { color: var(--ink); }
+.theah .sheet-tabs .item h3 { margin: 0; font: inherit; color: inherit; background: none; border: 0; text-shadow: none; }
+.theah .sheet-tabs .item { text-shadow: none; }
+.theah .sheet-tabs .item:hover,
+.theah .sheet-tabs .item:hover h2 { color: var(--gold-deep); text-shadow: none; }
+.theah .sheet-tabs .item.active,
+.theah .sheet-tabs .item.active h2 { color: var(--ink); text-shadow: none; }
 .theah .sheet-tabs .item.active::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: -2px; height: 2px; background: linear-gradient(90deg,var(--gold-leaf),var(--gold-deep)); }
-.theah .sheet-tabs .theme-toggle { margin-left: auto; align-self: center; display: flex; align-items: center; gap: 7px; background: transparent; border: 1px solid var(--line-strong); border-radius: 3px; color: var(--ink-soft); font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: 5px 10px; cursor: pointer; margin-bottom: 4px; }
+/* Compact icon-only theme switch, pinned to the right of the tab strip. */
+.theah .sheet-tabs .theme-toggle { margin-left: auto; align-self: center; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; padding: 0; background: transparent; border: 1px solid var(--line-strong); border-radius: 3px; color: var(--ink-soft); cursor: pointer; margin-bottom: 5px; line-height: 1; }
 .theah .sheet-tabs .theme-toggle:hover { color: var(--gold-deep); border-color: var(--gold); }
-.theah .sheet-tabs .theme-toggle i { font-size: 12px; }
+.theah .sheet-tabs .theme-toggle i { font-size: 12px; margin: 0; }
 
 /* Section rule */
 .theah .sec-title { display: flex; align-items: center; gap: 12px; margin: 6px 0 14px; }
@@ -243,10 +253,10 @@
 .theah .trait .tname { font-family: var(--thd-label); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
 .theah .trait:hover .tname { color: var(--gold-deep); }
 /* Trait pips (click to set) — kept in DOM for editing, hidden by default */
-.theah .trait .pips { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); display: none; gap: 3px; }
-.theah .trait:hover .pips,
-.theah .trait:focus-within .pips { display: flex; }
-.theah .trait .pips i { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--gold-deep); background: transparent; cursor: pointer; }
+/* Trait rating pips: always visible + in normal flow (below the medallion) so
+   Traits are directly editable, not hidden behind a hover. */
+.theah .trait .pips { display: flex; justify-content: center; gap: 4px; }
+.theah .trait .pips i { width: 11px; height: 11px; border-radius: 50%; border: 1.2px solid var(--gold-deep); background: transparent; cursor: pointer; }
 .theah .trait .pips i.on { background: radial-gradient(var(--gold-leaf), var(--gold)); }
 
 /* Skills ledger */
@@ -261,6 +271,12 @@
 .theah .skill .pips i.on { background: radial-gradient(var(--gold-leaf), var(--gold)); box-shadow: 0 0 4px rgba(176,135,63,.45); }
 .theah .skill .go { opacity: 0; color: var(--gold-deep); transition: opacity .15s; width: 15px; }
 .theah .skill:hover .go { opacity: 1; }
+
+/* Info affordance (Skills / Traits) — native Foundry tooltip via data-tooltip. */
+.theah .info-dot { font-size: 10px; color: var(--ink-soft); opacity: .4; cursor: help; transition: opacity .12s, color .12s; }
+.theah .info-dot:hover { opacity: 1; color: var(--gold-deep); }
+.theah .skill .info-dot { margin-left: 1px; flex: none; }
+.theah .trait .tname .info-dot { margin-left: 3px; vertical-align: middle; }
 
 /* Two-up lower panels */
 .theah .lower { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 26px; }
@@ -314,6 +330,8 @@
 .theah .roller .top { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: linear-gradient(180deg, color-mix(in srgb,var(--navy) 90%,#000 10%), var(--navy-deep)); color: #efe4c7; flex-wrap: wrap; }
 .theah .roller .formula { font-family: var(--thd-display); font-size: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .theah .roller .formula b { color: var(--gold-leaf); }
+.theah .roller .roller-info { color: var(--gold-leaf); opacity: .75; cursor: help; font-size: 13px; margin-right: 2px; }
+.theah .roller .roller-info:hover { opacity: 1; }
 .theah .roller .formula select {
   background: rgba(0,0,0,.28); border: 1px solid rgba(217,178,98,.35); border-radius: 3px; color: #f4ead0;
   font-family: var(--thd-display); font-size: 14px; padding: 4px 6px; height: auto;
