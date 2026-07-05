@@ -16,7 +16,9 @@ export class HeroCreator extends FormApplication {
     this.actor = actor;
     this._step = 0;
     this._catalog = null; // { backgrounds, advantages, virtues, hubris }
-    this._state = {
+    // NB: NOT `_state` — Application reserves `this._wizard` for its render-state
+    // integer and overwrites it on render, which would wipe the wizard's data.
+    this._wizard = {
       name: actor.name && actor.name !== 'New Actor' ? actor.name : '',
       epithet: actor.system.epithet || '',
       concept: '',
@@ -95,7 +97,7 @@ export class HeroCreator extends FormApplication {
 
   /** Selected background objects, in pick order. */
   _selectedBackgrounds() {
-    return this._state.backgrounds
+    return this._wizard.backgrounds
       .map((id) => this._catalog.backgrounds.find((b) => b._id === id))
       .filter(Boolean);
   }
@@ -104,7 +106,7 @@ export class HeroCreator extends FormApplication {
   _derivedSkills() {
     const out = {};
     for (const [key, label] of Object.entries(CONFIG.SVNSEA2E.skills)) {
-      out[key] = { label, bg: 0, alloc: this._state.skillAlloc[key] || 0 };
+      out[key] = { label, bg: 0, alloc: this._wizard.skillAlloc[key] || 0 };
     }
     for (const bg of this._selectedBackgrounds()) {
       for (const sk of bg.system.skills || []) {
@@ -116,21 +118,21 @@ export class HeroCreator extends FormApplication {
   }
 
   _skillPointsSpent() {
-    return Object.values(this._state.skillAlloc).reduce((a, b) => a + (b || 0), 0);
+    return Object.values(this._wizard.skillAlloc).reduce((a, b) => a + (b || 0), 0);
   }
 
   /** Advantage cost for the chosen Nation (applies the national discount if any). */
   _advantageCost(adv) {
     const cost = adv.system?.cost?.normal ?? 1;
     const discounts = adv.flags?.theah?.nationalDiscounts || [];
-    if (discounts.includes(this._state.nation)) {
+    if (discounts.includes(this._wizard.nation)) {
       return Math.max(1, adv.system?.cost?.reducecost || cost - 1);
     }
     return cost;
   }
 
   _advantageSpent() {
-    return this._state.advantages
+    return this._wizard.advantages
       .map((id) => this._catalog.advantages.find((a) => a._id === id))
       .filter(Boolean)
       .reduce((sum, a) => sum + this._advantageCost(a), 0);
@@ -146,16 +148,16 @@ export class HeroCreator extends FormApplication {
   }
 
   _traitFinal(key) {
-    const bonus = this._state.nationBonusTrait === key ? 1 : 0;
-    return CONFIG.SVNSEA2E.creation.traitStart + (this._state.traitAlloc[key] || 0) + bonus;
+    const bonus = this._wizard.nationBonusTrait === key ? 1 : 0;
+    return CONFIG.SVNSEA2E.creation.traitStart + (this._wizard.traitAlloc[key] || 0) + bonus;
   }
 
   _traitPointsSpent() {
-    return Object.values(this._state.traitAlloc).reduce((a, b) => a + (b || 0), 0);
+    return Object.values(this._wizard.traitAlloc).reduce((a, b) => a + (b || 0), 0);
   }
 
   _nativeLanguage() {
-    return CONFIG.SVNSEA2E.languages[this._state.nation] ? this._state.nation : null;
+    return CONFIG.SVNSEA2E.languages[this._wizard.nation] ? this._wizard.nation : null;
   }
 
   /* -------------------------------------------- */
@@ -183,7 +185,7 @@ export class HeroCreator extends FormApplication {
       stepTotal: this.constructor.STEPS.length,
       isFirst: this._step === 0,
       isLast: this._step === this.constructor.STEPS.length - 1,
-      state: this._state,
+      state: this._wizard,
       config: C,
       nations: C.nations,
       religions: null,
@@ -193,31 +195,31 @@ export class HeroCreator extends FormApplication {
     data.nationOptions = C.nations;
 
     // Traits
-    const bonusChoices = C.nationBonus[this._state.nation] || Object.keys(C.traits).filter((t) => !['influence', 'strength'].includes(t));
+    const bonusChoices = C.nationBonus[this._wizard.nation] || Object.keys(C.traits).filter((t) => !['influence', 'strength'].includes(t));
     data.traits = ['brawn', 'finesse', 'resolve', 'wits', 'panache'].map((key) => ({
       key,
       label: C.traits[key],
-      alloc: this._state.traitAlloc[key] || 0,
-      bonus: this._state.nationBonusTrait === key,
+      alloc: this._wizard.traitAlloc[key] || 0,
+      bonus: this._wizard.nationBonusTrait === key,
       canBonus: bonusChoices.includes(key),
       final: this._traitFinal(key),
     }));
     data.traitPointsSpent = this._traitPointsSpent();
     data.traitPointsTotal = C.creation.traitPoints;
     data.traitPointsLeft = C.creation.traitPoints - this._traitPointsSpent();
-    data.nationBonusTrait = this._state.nationBonusTrait;
+    data.nationBonusTrait = this._wizard.nationBonusTrait;
 
     // Backgrounds
     data.backgroundList = this._catalog.backgrounds.map((b) => ({
       id: b._id,
       name: b.name,
-      selected: this._state.backgrounds.includes(b._id),
+      selected: this._wizard.backgrounds.includes(b._id),
       skills: (b.system.skills || []).map((s) => C.skills[s] || s).join(', '),
       advantages: (b.system.advantages || []).join(', '),
       quirk: foundry.utils.getProperty(b, 'system.quirk') || '',
       description: b.system.description || '',
     }));
-    data.backgroundsPicked = this._state.backgrounds.length;
+    data.backgroundsPicked = this._wizard.backgrounds.length;
     data.backgroundsNeeded = C.creation.backgroundsCount;
 
     // Skills
@@ -241,7 +243,7 @@ export class HeroCreator extends FormApplication {
       id: a._id,
       name: a.name,
       cost: this._advantageCost(a),
-      selected: this._state.advantages.includes(a._id),
+      selected: this._wizard.advantages.includes(a._id),
       free: data.freeAdvantages.includes(a.name),
       description: a.system.description || '',
     }));
@@ -251,10 +253,10 @@ export class HeroCreator extends FormApplication {
 
     // Arcana
     const findArc = (list, id) => list.find((a) => a._id === id);
-    data.virtues = this._catalog.virtues.map((v) => ({ id: v._id, name: v.name, selected: this._state.virtueId === v._id }));
-    data.hubris = this._catalog.hubris.map((h) => ({ id: h._id, name: h.name, selected: this._state.hubrisId === h._id }));
-    const vSel = findArc(this._catalog.virtues, this._state.virtueId);
-    const hSel = findArc(this._catalog.hubris, this._state.hubrisId);
+    data.virtues = this._catalog.virtues.map((v) => ({ id: v._id, name: v.name, selected: this._wizard.virtueId === v._id }));
+    data.hubris = this._catalog.hubris.map((h) => ({ id: h._id, name: h.name, selected: this._wizard.hubrisId === h._id }));
+    const vSel = findArc(this._catalog.virtues, this._wizard.virtueId);
+    const hSel = findArc(this._catalog.hubris, this._wizard.hubrisId);
     data.virtueDesc = vSel?.system.description || '';
     data.hubrisDesc = hSel?.system.description || '';
 
@@ -269,15 +271,15 @@ export class HeroCreator extends FormApplication {
     const C = CONFIG.SVNSEA2E;
     const native = this._nativeLanguage();
     const langs = [C.creation.baseLanguage, native].filter(Boolean).map((l) => C.languages[l] || l);
-    const virtue = this._catalog.virtues.find((v) => v._id === this._state.virtueId);
-    const hubris = this._catalog.hubris.find((h) => h._id === this._state.hubrisId);
-    const purchased = this._state.advantages
+    const virtue = this._catalog.virtues.find((v) => v._id === this._wizard.virtueId);
+    const hubris = this._catalog.hubris.find((h) => h._id === this._wizard.hubrisId);
+    const purchased = this._wizard.advantages
       .map((id) => this._catalog.advantages.find((a) => a._id === id))
       .filter(Boolean)
       .map((a) => a.name);
     return {
-      name: this._state.name,
-      nation: C.nations[this._state.nation],
+      name: this._wizard.name,
+      nation: C.nations[this._wizard.nation],
       traits: ['brawn', 'finesse', 'resolve', 'wits', 'panache'].map((k) => ({ label: C.traits[k], value: this._traitFinal(k) })),
       skills: Object.entries(skills)
         .filter(([, v]) => v.final > 0)
@@ -305,11 +307,11 @@ export class HeroCreator extends FormApplication {
     root.querySelectorAll('[data-state]').forEach((el) => {
       el.addEventListener('change', (ev) => {
         const key = ev.currentTarget.dataset.state;
-        this._state[key] = ev.currentTarget.value;
+        this._wizard[key] = ev.currentTarget.value;
         // Nation change invalidates the previously chosen bonus Trait; no
         // re-render here (it would discard unsaved text in the other fields —
         // the bonus options are recomputed when we reach the Traits step).
-        if (key === 'nation') this._state.nationBonusTrait = null;
+        if (key === 'nation') this._wizard.nationBonusTrait = null;
       });
     });
 
@@ -322,7 +324,7 @@ export class HeroCreator extends FormApplication {
     );
     root.querySelectorAll('[data-bonus-trait]').forEach((el) =>
       el.addEventListener('click', (ev) => {
-        this._state.nationBonusTrait = ev.currentTarget.dataset.bonusTrait;
+        this._wizard.nationBonusTrait = ev.currentTarget.dataset.bonusTrait;
         this.render(false);
       }),
     );
@@ -348,7 +350,7 @@ export class HeroCreator extends FormApplication {
     // Arcana selects.
     root.querySelectorAll('[data-arcana]').forEach((el) =>
       el.addEventListener('change', (ev) => {
-        this._state[ev.currentTarget.dataset.arcana] = ev.currentTarget.value || null;
+        this._wizard[ev.currentTarget.dataset.arcana] = ev.currentTarget.value || null;
         this.render(false);
       }),
     );
@@ -362,28 +364,28 @@ export class HeroCreator extends FormApplication {
   _readConceptInputs() {
     const root = this.element[0] ?? this.element;
     for (const el of root.querySelectorAll('[data-state]')) {
-      this._state[el.dataset.state] = el.value;
+      this._wizard[el.dataset.state] = el.value;
     }
   }
 
   _allocTrait(key, delta) {
     const C = CONFIG.SVNSEA2E.creation;
-    const cur = this._state.traitAlloc[key] || 0;
+    const cur = this._wizard.traitAlloc[key] || 0;
     if (delta > 0) {
       if (this._traitPointsSpent() >= C.traitPoints) return;
       if (this._traitFinal(key) >= C.rankCap) return;
-      this._state.traitAlloc[key] = cur + 1;
+      this._wizard.traitAlloc[key] = cur + 1;
     } else if (cur > 0) {
-      this._state.traitAlloc[key] = cur - 1;
+      this._wizard.traitAlloc[key] = cur - 1;
     }
     this.render(false);
   }
 
   _toggleBackground(id) {
-    const idx = this._state.backgrounds.indexOf(id);
-    if (idx >= 0) this._state.backgrounds.splice(idx, 1);
-    else if (this._state.backgrounds.length < CONFIG.SVNSEA2E.creation.backgroundsCount)
-      this._state.backgrounds.push(id);
+    const idx = this._wizard.backgrounds.indexOf(id);
+    if (idx >= 0) this._wizard.backgrounds.splice(idx, 1);
+    else if (this._wizard.backgrounds.length < CONFIG.SVNSEA2E.creation.backgroundsCount)
+      this._wizard.backgrounds.push(id);
     else return ui.notifications.warn(game.i18n.localize('SVNSEA2E.WizTwoBackgrounds'));
     // Re-clamp skill allocations against new background ranks.
     this._clampSkillAlloc();
@@ -395,34 +397,34 @@ export class HeroCreator extends FormApplication {
     const cap = CONFIG.SVNSEA2E.creation.skillCreationCap;
     for (const [key, v] of Object.entries(skills)) {
       const maxAlloc = Math.max(0, cap - v.bg);
-      if ((this._state.skillAlloc[key] || 0) > maxAlloc) this._state.skillAlloc[key] = maxAlloc;
+      if ((this._wizard.skillAlloc[key] || 0) > maxAlloc) this._wizard.skillAlloc[key] = maxAlloc;
     }
   }
 
   _allocSkill(key, delta) {
     const C = CONFIG.SVNSEA2E.creation;
     const skills = this._derivedSkills();
-    const cur = this._state.skillAlloc[key] || 0;
+    const cur = this._wizard.skillAlloc[key] || 0;
     if (delta > 0) {
       if (this._skillPointsSpent() >= C.skillPoints) return;
       if (skills[key].final >= C.skillCreationCap) return;
-      this._state.skillAlloc[key] = cur + 1;
+      this._wizard.skillAlloc[key] = cur + 1;
     } else if (cur > 0) {
-      this._state.skillAlloc[key] = cur - 1;
+      this._wizard.skillAlloc[key] = cur - 1;
     }
     this.render(false);
   }
 
   _toggleAdvantage(id) {
-    const idx = this._state.advantages.indexOf(id);
+    const idx = this._wizard.advantages.indexOf(id);
     if (idx >= 0) {
-      this._state.advantages.splice(idx, 1);
+      this._wizard.advantages.splice(idx, 1);
     } else {
       const adv = this._catalog.advantages.find((a) => a._id === id);
       if (!adv) return;
       if (this._advantageSpent() + this._advantageCost(adv) > CONFIG.SVNSEA2E.creation.advantagePoints)
         return ui.notifications.warn(game.i18n.localize('SVNSEA2E.WizAdvBudget'));
-      this._state.advantages.push(id);
+      this._wizard.advantages.push(id);
     }
     this.render(false);
   }
@@ -446,21 +448,21 @@ export class HeroCreator extends FormApplication {
     const L = (k) => game.i18n.localize(k);
     switch (this.constructor.STEPS[this._step].key) {
       case 'concept':
-        if (!this._state.name?.trim()) return L('SVNSEA2E.WizNeedName');
-        if (!this._state.nation || this._state.nation === 'none') return L('SVNSEA2E.WizNeedNation');
+        if (!this._wizard.name?.trim()) return L('SVNSEA2E.WizNeedName');
+        if (!this._wizard.nation || this._wizard.nation === 'none') return L('SVNSEA2E.WizNeedNation');
         break;
       case 'traits':
         if (this._traitPointsSpent() !== C.traitPoints) return L('SVNSEA2E.WizSpendTraits');
-        if (!this._state.nationBonusTrait) return L('SVNSEA2E.WizNeedBonus');
+        if (!this._wizard.nationBonusTrait) return L('SVNSEA2E.WizNeedBonus');
         break;
       case 'backgrounds':
-        if (this._state.backgrounds.length !== C.backgroundsCount) return L('SVNSEA2E.WizTwoBackgrounds');
+        if (this._wizard.backgrounds.length !== C.backgroundsCount) return L('SVNSEA2E.WizTwoBackgrounds');
         break;
       case 'skills':
         if (this._skillPointsSpent() !== C.skillPoints) return L('SVNSEA2E.WizSpendSkills');
         break;
       case 'arcana':
-        if (!this._state.virtueId || !this._state.hubrisId) return L('SVNSEA2E.WizNeedArcana');
+        if (!this._wizard.virtueId || !this._wizard.hubrisId) return L('SVNSEA2E.WizNeedArcana');
         break;
     }
     return null;
@@ -499,11 +501,11 @@ export class HeroCreator extends FormApplication {
     const languages = [...new Set([cr.baseLanguage, native].filter(Boolean))];
 
     await this.actor.update({
-      name: this._state.name.trim(),
-      'system.epithet': this._state.epithet?.trim() || '',
-      'system.nation': this._state.nation,
-      'system.religion': this._state.religion?.trim() || '',
-      'system.concept': this._state.concept || '',
+      name: this._wizard.name.trim(),
+      'system.epithet': this._wizard.epithet?.trim() || '',
+      'system.nation': this._wizard.nation,
+      'system.religion': this._wizard.religion?.trim() || '',
+      'system.concept': this._wizard.concept || '',
       'system.heropts': cr.startingHeroPoints,
       'system.wealth': 0,
       'system.reputation': '',
@@ -532,10 +534,10 @@ export class HeroCreator extends FormApplication {
       toCreate.push(obj);
     };
     for (const name of this._freeAdvantageNames()) grant(advByName.get(name));
-    for (const id of this._state.advantages) grant(this._catalog.advantages.find((a) => a._id === id));
+    for (const id of this._wizard.advantages) grant(this._catalog.advantages.find((a) => a._id === id));
 
-    const virtue = this._catalog.virtues.find((v) => v._id === this._state.virtueId);
-    const hubris = this._catalog.hubris.find((h) => h._id === this._state.hubrisId);
+    const virtue = this._catalog.virtues.find((v) => v._id === this._wizard.virtueId);
+    const hubris = this._catalog.hubris.find((h) => h._id === this._wizard.hubrisId);
     for (const arc of [virtue, hubris]) {
       if (!arc) continue;
       const obj = foundry.utils.deepClone(arc);
@@ -545,7 +547,7 @@ export class HeroCreator extends FormApplication {
 
     if (toCreate.length) await this.actor.createEmbeddedDocuments('Item', toCreate);
 
-    ui.notifications.info(game.i18n.format('SVNSEA2E.WizDone', { name: this._state.name.trim() }));
+    ui.notifications.info(game.i18n.format('SVNSEA2E.WizDone', { name: this._wizard.name.trim() }));
     await this.close();
     this.actor.sheet?.render(true);
   }

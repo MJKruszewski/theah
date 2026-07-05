@@ -26,7 +26,7 @@ export class AdvancementCreator extends FormApplication {
     this.actor = actor;
     this._step = 0;
     this._catalog = null; // { advantages, virtues, hubris }
-    this._state = {
+    this._wizard = {
       reward: '', // reward type key
       skill: '', // skillRaise
       trait: '', // traitIncrease / traitShift (raised)
@@ -153,7 +153,7 @@ export class AdvancementCreator extends FormApplication {
 
   _arcById(id) {
     const list =
-      this._state.arcanaSlot === 'hubris' ? this._catalog?.hubris : this._catalog?.virtues;
+      this._wizard.arcanaSlot === 'hubris' ? this._catalog?.hubris : this._catalog?.virtues;
     return list?.find((a) => a._id === id) || null;
   }
 
@@ -193,7 +193,7 @@ export class AdvancementCreator extends FormApplication {
 
   /** Steps for the currently-configured Reward (0 until enough is chosen). */
   _stepCost() {
-    const s = this._state;
+    const s = this._wizard;
     const A = CONFIG.SVNSEA2E.advancement;
     switch (s.reward) {
       case 'skillRaise':
@@ -224,7 +224,7 @@ export class AdvancementCreator extends FormApplication {
     await this._loadCatalog();
     const C = CONFIG.SVNSEA2E;
     const A = C.advancement;
-    const s = this._state;
+    const s = this._wizard;
     const steps = this.constructor.STEPS.map((st, i) => ({
       ...st,
       num: i + 1,
@@ -333,10 +333,10 @@ export class AdvancementCreator extends FormApplication {
 
   _buildReview() {
     return {
-      name: this._state.name,
+      name: this._wizard.name,
       reward: this._rewardSummary(),
-      goal: this._state.goal,
-      firstStep: this._state.firstStep,
+      goal: this._wizard.goal,
+      firstStep: this._wizard.firstStep,
       steps: this._stepCost(),
     };
   }
@@ -344,7 +344,7 @@ export class AdvancementCreator extends FormApplication {
   /** Human-readable one-liner for the configured Reward. */
   _rewardSummary() {
     const C = CONFIG.SVNSEA2E;
-    const s = this._state;
+    const s = this._wizard;
     const L = (k, d) => (d ? game.i18n.format(k, d) : game.i18n.localize(k));
     switch (s.reward) {
       case 'skillRaise':
@@ -404,7 +404,7 @@ export class AdvancementCreator extends FormApplication {
       el.addEventListener('click', (ev) => {
         const card = ev.currentTarget;
         if (card.classList.contains('disabled')) return;
-        this._state.reward = card.dataset.reward;
+        this._wizard.reward = card.dataset.reward;
         this.render(false);
       }),
     );
@@ -414,7 +414,7 @@ export class AdvancementCreator extends FormApplication {
       el.addEventListener('click', (ev) => {
         const t = ev.currentTarget;
         if (t.classList.contains('disabled')) return;
-        this._state[t.dataset.choice] = t.dataset.value;
+        this._wizard[t.dataset.choice] = t.dataset.value;
         this.render(false);
       }),
     );
@@ -422,8 +422,8 @@ export class AdvancementCreator extends FormApplication {
     // Arcana slot toggle (virtue / hubris).
     root.querySelectorAll('[data-arcana-slot]').forEach((el) =>
       el.addEventListener('click', (ev) => {
-        this._state.arcanaSlot = ev.currentTarget.dataset.arcanaSlot;
-        this._state.arcanaId = '';
+        this._wizard.arcanaSlot = ev.currentTarget.dataset.arcanaSlot;
+        this._wizard.arcanaId = '';
         this.render(false);
       }),
     );
@@ -431,7 +431,7 @@ export class AdvancementCreator extends FormApplication {
     // Free-text fields persisted into state.
     root.querySelectorAll('[data-state]').forEach((el) =>
       el.addEventListener('change', (ev) => {
-        this._state[ev.currentTarget.dataset.state] = ev.currentTarget.value;
+        this._wizard[ev.currentTarget.dataset.state] = ev.currentTarget.value;
       }),
     );
 
@@ -445,7 +445,7 @@ export class AdvancementCreator extends FormApplication {
     const root = this.element?.[0] ?? this.element;
     if (!root) return;
     for (const el of root.querySelectorAll('[data-state]')) {
-      this._state[el.dataset.state] = el.value;
+      this._wizard[el.dataset.state] = el.value;
     }
   }
 
@@ -464,7 +464,7 @@ export class AdvancementCreator extends FormApplication {
   }
 
   _validateStep() {
-    const s = this._state;
+    const s = this._wizard;
     const A = CONFIG.SVNSEA2E.advancement;
     const L = (k) => game.i18n.localize(k);
     switch (this.constructor.STEPS[this._step].key) {
@@ -486,7 +486,7 @@ export class AdvancementCreator extends FormApplication {
   }
 
   _validateConfigure(A, L) {
-    const s = this._state;
+    const s = this._wizard;
     switch (s.reward) {
       case 'skillRaise':
         if (!s.skill) return L('SVNSEA2E.AdvPickSkill');
@@ -531,7 +531,7 @@ export class AdvancementCreator extends FormApplication {
   /* -------------------------------------------- */
 
   _buildAdvancement() {
-    const s = this._state;
+    const s = this._wizard;
     const A = CONFIG.SVNSEA2E.advancement;
     const adv = {
       active: true,
@@ -595,7 +595,7 @@ export class AdvancementCreator extends FormApplication {
     }
     this._step = saved;
 
-    const s = this._state;
+    const s = this._wizard;
     const advancement = this._buildAdvancement();
     const rewardHtml = `<p><strong>${this._rewardSummary()}</strong> — ${game.i18n.format(
       'SVNSEA2E.AdvStepsToGo',
