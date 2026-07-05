@@ -141,6 +141,8 @@
 .theah .meta { display: grid; grid-template-columns: auto 1fr; gap: 5px 12px; font-size: 14px; margin: 4px 6px 6px; align-items: center; }
 .theah .meta dt { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #b9a877; align-self: center; }
 .theah .meta dd { margin: 0; color: #efe4c7; }
+/* Identity fields set at creation — shown read-only, not editable on the sheet. */
+.theah .meta dd.ro-field { font-family: var(--thd-body); font-size: 13.5px; line-height: 1.35; padding: 3px 2px; color: #efe4c7; }
 .theah .meta dd input,
 .theah .meta dd select {
   width: 100%; background: rgba(0,0,0,.16); border: 1px solid rgba(217,178,98,.2); border-radius: 2px;
@@ -177,7 +179,9 @@
 
 /* Corruption pips (villainy) */
 .theah .rail-corruption { margin: 14px 2px 0; }
-.theah .rail-corruption .k { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: #b9a877; }
+.theah .rail-corruption .lbl { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #b9a877; }
+.theah .rail-corruption .lbl .info-dot { color: #b9a877; opacity: .55; margin-left: 4px; font-size: 10px; }
+.theah .rail-corruption .lbl .info-dot:hover { opacity: 1; color: var(--gold-leaf); }
 .theah .corruption-pips { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
 .theah .corruption-pips i { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(181,69,58,.6); cursor: pointer; }
 .theah .corruption-pips i.on { background: radial-gradient(var(--oxblood), var(--oxblood-deep)); border-color: var(--oxblood); }

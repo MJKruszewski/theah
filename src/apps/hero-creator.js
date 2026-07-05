@@ -24,6 +24,7 @@ export class HeroCreator extends FormApplication {
       concept: '',
       nation: actor.system.nation || 'none',
       religion: actor.system.religion || '',
+      age: actor.system.age || '',
       traitAlloc: { brawn: 0, finesse: 0, resolve: 0, wits: 0, panache: 0 },
       nationBonusTrait: null,
       backgrounds: [], // compendium ids (max 2)
@@ -560,6 +561,7 @@ export class HeroCreator extends FormApplication {
       'system.epithet': this._wizard.epithet?.trim() || '',
       'system.nation': this._wizard.nation,
       'system.religion': this._wizard.religion?.trim() || '',
+      'system.age': this._wizard.age?.trim() || '',
       'system.concept': this._wizard.concept || '',
       'system.heropts': cr.startingHeroPoints,
       'system.wealth': 0,

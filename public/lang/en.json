@@ -447,6 +447,8 @@
   "SVNSEA2E.DwEffect4": "Death Spiral: Helpless — you can no longer act.",
 
   "SVNSEA2E.Corruption": "Corruption",
+  "SVNSEA2E.CorruptionInfo": "Corruption comes from Evil Acts (1st = +1, 2nd = +2, 3rd = +3, 4th = +4, up to 10). Each time you gain Corruption the GM rolls 1d10 — if it's ≤ your Corruption, your Hero falls from grace and becomes a Villain. A 5-step Redemption Story removes 1 Corruption. (Core p.203)",
+  "SVNSEA2E.SetAtCreation": "Set during Hero creation.",
   "SVNSEA2E.AdvCreator": "Advancement",
   "SVNSEA2E.AdvNew": "New Advancement Story",
   "SVNSEA2E.AdvStepReward": "Reward",

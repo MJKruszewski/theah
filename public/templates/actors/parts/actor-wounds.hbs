@@ -23,20 +23,18 @@
     </div>
   </div>
 
-  {{#if isCorrupt}}
-    <div class="rail-corruption">
-      <div class="k">{{localize "SVNSEA2E.CorruptionPoints"}}</div>
-      <div class="corruption-pips">
-        {{#for 1 10 1}}
-          {{#iff corruptionpts '>=' @index}}
-            <i data-name="system.corruptionpts" data-value="{{@index}}" data-type="corrupt" data-key="corruptionpts" class="fillable rating corrupt on"></i>
-          {{else}}
-            <i data-name="system.corruptionpts" data-value="{{@index}}" data-type="corrupt" data-key="corruptionpts" class="fillable rating corrupt"></i>
-          {{/iff}}
-        {{/for}}
-      </div>
+  <div class="rail-corruption {{#if isCorrupt}}is-corrupt{{/if}}">
+    <div class="lbl"><span>{{localize "SVNSEA2E.Corruption"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.CorruptionInfo'}}"></i></span><span>{{corruptionpts}} / 10</span></div>
+    <div class="corruption-pips">
+      {{#for 1 10 1}}
+        {{#iff corruptionpts '>=' @index}}
+          <i data-name="system.corruptionpts" data-value="{{@index}}" data-type="corrupt" data-key="corruptionpts" class="fillable rating corrupt on"></i>
+        {{else}}
+          <i data-name="system.corruptionpts" data-value="{{@index}}" data-type="corrupt" data-key="corruptionpts" class="fillable rating corrupt"></i>
+        {{/iff}}
+      {{/for}}
     </div>
-  {{/if}}
+  </div>
 {{/if}}
 
 <div class="wounds">

@@ -26,11 +26,11 @@
 
       <dl class="meta">
         <dt>{{localize "SVNSEA2E.Nation"}}</dt>
-        <dd><select name="system.nation">{{selectOptions config.nations selected=nation localize=true}}</select></dd>
+        <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if nation}}{{localize (lookup config.nations nation)}}{{else}}&mdash;{{/if}}</dd>
         <dt>{{localize "SVNSEA2E.Religion"}}</dt>
-        <dd><input type="text" name="system.religion" value="{{religion}}" placeholder="—" /></dd>
+        <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if religion}}{{religion}}{{else}}&mdash;{{/if}}</dd>
         <dt>{{localize "SVNSEA2E.Age"}}</dt>
-        <dd><input type="text" name="system.age" value="{{age}}" placeholder="—" /></dd>
+        <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if age}}{{age}}{{else}}&mdash;{{/if}}</dd>
         <dt>{{localize "SVNSEA2E.Languages"}}</dt>
         <dd class="rail-langs">
           <ul class="tag-list">
