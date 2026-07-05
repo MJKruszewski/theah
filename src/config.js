@@ -142,6 +142,28 @@ SVNSEA2E.creation = {
   baseLanguage: 'thean', // Old Théan, known by every Hero
 };
 
+// --- Advancement (Core Rulebook, "Rewarding the Journey", pp.159-160) ---
+// There is no XP: Heroes advance only by completing Stories. A Story's Reward is
+// chosen up-front and its cost (in Steps) sets the Story's length. Caps below are
+// applied when the Reward is finally claimed.
+SVNSEA2E.advancement = {
+  traitMax: 5, // no Trait above Rank 5
+  traitMin: 2, // no Trait below Rank 2
+  traitTotalCap: 15, // at most 15 total Ranks of Traits
+  traitIncreaseLifetimeCap: 2, // the "increase a Trait" Reward may be taken twice, ever
+  skillMax: 5, // no Skill above Rank 5
+  // Step costs per Reward type. A string means "computed" (see AdvancementCreator).
+  stepCost: {
+    skillRaise: 'newRank', // Steps = the new Skill Rank
+    traitIncrease: 5,
+    traitShift: 4,
+    advantage: 'cost', // Steps = the Advantage's point cost
+    arcanaChange: 4,
+    quirkChange: 3,
+    corruptionRemove: 5,
+  },
+};
+
 // Nation Bonus: +1 to one of two Traits, applied AFTER the 2 free points
 // (core "great nations"; other nations left open to any Trait at the table's discretion).
 SVNSEA2E.nationBonus = {

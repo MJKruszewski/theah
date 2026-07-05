@@ -1,5 +1,9 @@
 import LanguageSelector from '../../apps/language-selector.js';
 import { openHeroCreator } from '../../apps/hero-creator.js';
+import {
+  openAdvancementCreator,
+  applyStoryAdvancement,
+} from '../../apps/advancement-creator.js';
 import { updateInitiative } from '../../combat.js';
 import { ActorType } from '../../enums.js';
 import { getAllPackAdvantages, isValidGlamorIsles } from '../../helpers.js';
@@ -90,7 +94,113 @@ export default class ActorSheetSS2e extends ActorSheet {
     } else if (actor.type === ActorType.BRUTE) {
       sheetData.ability = actorData.ability;
     }
+
+    // Enrich advancement Stories with step-tracker view data.
+    if (Array.isArray(sheetData.stories)) {
+      sheetData.stories = sheetData.stories.map((s) => this._decorateStory(s));
+    }
     return sheetData;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Build a sheet-friendly view of a Story, adding step-tracker fields for
+   * structured advancement Stories (plain Stories pass through untouched).
+   * @param {Object} s   A Story item (document or source object).
+   * @private
+   */
+  _decorateStory(s) {
+    const adv = foundry.utils.getProperty(s, 'system.advancement');
+    const view = {
+      _id: s._id ?? s.id,
+      name: s.name,
+      editlabel: s.editlabel,
+      deletelabel: s.deletelabel,
+      isAdvancement: !!(adv && adv.active),
+    };
+    if (!view.isAdvancement) return view;
+    const total = adv.stepsTotal || 0;
+    const done = Math.min(adv.stepsDone || 0, total);
+    view.stepsTotal = total;
+    view.stepsDone = done;
+    view.pips = Array.from({ length: total }, (_, i) => ({ n: i + 1, filled: i < done }));
+    view.complete = total > 0 && done >= total;
+    view.claimable = view.complete && !adv.applied;
+    view.applied = !!adv.applied;
+    view.rewardLabel = this._advRewardLabel(adv);
+    view.goal = this._stripTags(foundry.utils.getProperty(s, 'system.endings') || '');
+    return view;
+  }
+
+  /** Strip HTML tags for a short inline preview of the Story's Goal. */
+  _stripTags(html) {
+    return String(html)
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  /** Localized one-line label for an advancement Reward. */
+  _advRewardLabel(adv) {
+    const C = CONFIG.SVNSEA2E;
+    const L = (k, d) => (d ? game.i18n.format(k, d) : game.i18n.localize(k));
+    switch (adv.type) {
+      case 'skillRaise':
+        return L('SVNSEA2E.AdvLblSkill', { skill: C.skills[adv.targetKey] || adv.targetKey, rank: adv.newRank });
+      case 'traitIncrease':
+        return L('SVNSEA2E.AdvLblTrait', { trait: C.traits[adv.targetKey] || adv.targetKey, rank: adv.newRank });
+      case 'traitShift':
+        return L('SVNSEA2E.AdvLblShift', {
+          up: C.traits[adv.targetKey] || adv.targetKey,
+          down: C.traits[adv.targetKey2] || adv.targetKey2,
+        });
+      case 'advantage':
+        return L('SVNSEA2E.AdvLblAdvantage', { name: adv.targetName });
+      case 'arcanaChange':
+        return L('SVNSEA2E.AdvLblArcana', {
+          slot: L(adv.targetKey === 'virtue' ? 'SVNSEA2E.Virtue' : 'SVNSEA2E.Hubris'),
+          name: adv.targetName,
+        });
+      case 'quirkChange':
+        return L('SVNSEA2E.AdvLblQuirk');
+      case 'corruptionRemove':
+        return L('SVNSEA2E.AdvLblCorruption');
+      default:
+        return '';
+    }
+  }
+
+  /**
+   * Tick a Story's Steps up/down (click a pip; click the current pip to undo it).
+   * @param {Event} event
+   * @private
+   */
+  async _onStoryStep(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const el = event.currentTarget;
+    const story = this.actor.items.get(el.dataset.storyId);
+    if (!story) return;
+    const adv = story.system.advancement;
+    if (!adv?.active || adv.applied) return;
+    const n = Number(el.dataset.step);
+    let done = adv.stepsDone || 0;
+    done = done === n ? n - 1 : n;
+    done = Math.max(0, Math.min(done, adv.stepsTotal));
+    await story.update({ 'system.advancement.stepsDone': done });
+  }
+
+  /**
+   * Claim a completed advancement Story's Reward (applies it to the actor).
+   * @param {Event} event
+   * @private
+   */
+  async _onStoryClaim(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const story = this.actor.items.get(event.currentTarget.dataset.storyId);
+    if (story) await applyStoryAdvancement(this.actor, story);
   }
 
   /* -------------------------------------------- */
@@ -156,6 +266,14 @@ export default class ActorSheetSS2e extends ActorSheet {
       event.preventDefault();
       openHeroCreator(this.actor);
     });
+
+    // Advancement Stories: launch the creator, tick off Steps, claim the Reward.
+    html.find('.new-advancement').on('click', (event) => {
+      event.preventDefault();
+      openAdvancementCreator(this.actor);
+    });
+    html.find('.story-step').on('click', this._onStoryStep.bind(this));
+    html.find('.story-claim').on('click', this._onStoryClaim.bind(this));
 
     // Update Inventory Item
     html.find('.item-edit').on('click', this._onItemEdit.bind(this));
@@ -352,7 +470,12 @@ export default class ActorSheetSS2e extends ActorSheet {
         dwounds = actorData.dwounds.value - 1;
       else dwounds = eValue;
 
-      if (actorData.wounds.value > (eValue + 1) * nWoundByStep) wounds = (eValue + 1) * nWoundByStep;
+      // Keep Wounds inside the resulting Dramatic-Wound tier so the death-spiral
+      // stays self-consistent: trunc(wounds / step) === dwounds. Clamping against
+      // the *clicked* value instead left healed Dramatic Wounds able to reappear
+      // the next time a Wound pip was touched.
+      const cap = (dwounds + 1) * nWoundByStep - 1;
+      if (wounds > cap) wounds = cap;
     }
 
     updateObj['system.wounds.value'] = wounds;
@@ -460,8 +583,8 @@ export default class ActorSheetSS2e extends ActorSheet {
     const item = this.actor.items.get(li.dataset.itemId);
 
     if (item) {
-      if (item.system.type === 'background')
-        await this._processBackgroundDelete(item.system.data);
+      if (item.type === 'background')
+        await this._processBackgroundDelete(item);
 
       return item.delete();
     }
@@ -678,20 +801,17 @@ export default class ActorSheetSS2e extends ActorSheet {
    * Backgrounds increase skills and add advantages
    * @param itemData data for the item that is being deleted
    */
-  async _processBackgroundDelete(bkgData) {
-    const actorData = this.actor.data.data;
-    const updateData = {};
-    for (let i = 0; i < bkgData.skills.length; i++) {
-      const skill = bkgData.skills[i];
-      updateData['skills.' + skill + '.value'] =
-        actorData.skills[skill].value - 1;
-    }
-    await this.actor.update(updateData);
+  async _processBackgroundDelete(item) {
+    const bkgData = item.system;
 
+    // Reverse the +1 skill bumps this background applied on drop (clamped 0-5).
+    await this._updateBackgroundSkills(item, -1);
+
+    // Remove the advantages this background granted.
     const charAdvs = await this._getAdvantages();
     for (let i = 0; i < bkgData.advantages.length; i++) {
       for (let j = 0; j < charAdvs.length; j++) {
-        if (charAdvs[j].data.name === bkgData.advantages[i]) {
+        if (charAdvs[j].name === bkgData.advantages[i]) {
           await this.actor.deleteEmbeddedDocuments('Item', [charAdvs[j].id]);
         }
       }

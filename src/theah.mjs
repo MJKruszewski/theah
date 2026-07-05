@@ -5,6 +5,7 @@ import { SVNSEA2E } from './config.js';
 import { applyTheahTheme, registerSystemSettings } from './settings.js';
 import { seedCompendia } from './packs.js';
 import { preloadHandlebarsTemplates } from './templates.js';
+import { getAllPackAdvantages } from './helpers.js';
 import { ActorType, ItemTypes } from './enums';
 
 // Import System Data Models
@@ -409,24 +410,6 @@ Hooks.on('renderActorDirectory', (app, html, data) => {
   }
 });
 
-async function getAllPackAdvantages() {
-  const advantages = [];
-  const packs = game.packs.entries;
-  for (var i = 0; i < packs.length; i++) {
-    const pack = packs[i];
-    if (pack.metadata.entity === 'Item') {
-      const pitems = await pack.getIndex();
-      for (let j = 0; j < pitems.length; j++) {
-        const document = await pack.getDocument(pitems[j]._id);
-        const entry = document.data;
-        if (entry.type === 'advantage') {
-          advantages.push(entry);
-        }
-      }
-    }
-  }
-  return advantages;
-}
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

@@ -504,7 +504,86 @@
 .theah .create-hero-btn:hover { filter: brightness(1.05); }
 .theah .identity-rail .create-hero-btn { display: flex; width: fit-content; margin: 2px auto 10px; }
 
+/* ============================================================= *
+ *  Advancement Creator (reuses .hero-creator-form scaffolding)  *
+ * ============================================================= */
+.theah.advancement-creator .window-content { padding: 0; background: var(--panel); color: var(--ink); font-family: var(--thd-body); }
+
+/* Reward cards (step 0) */
+.advancement-creator-form .adv-reward-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.advancement-creator-form .adv-reward-card { position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: color-mix(in srgb,var(--panel) 94%,#fff 6%); cursor: pointer; transition: border-color .12s; }
+.advancement-creator-form .adv-reward-card:hover:not(.disabled) { border-color: var(--gold); }
+.advancement-creator-form .adv-reward-card.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
+.advancement-creator-form .adv-reward-card.disabled { opacity: .42; cursor: default; }
+.advancement-creator-form .adv-reward-card .arc-icon { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; flex: none; background: linear-gradient(180deg, var(--navy), var(--navy-deep)); color: var(--gold-leaf); font-size: 16px; }
+.advancement-creator-form .adv-reward-card .arc-text { flex: 1; }
+.advancement-creator-form .adv-reward-card .arc-name { font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
+.advancement-creator-form .adv-reward-card .arc-hint { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.advancement-creator-form .adv-reward-card .arc-cost { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); border-radius: 999px; padding: 3px 8px; flex: none; }
+.advancement-creator-form .adv-reward-card .arc-check { position: absolute; top: 8px; right: 10px; color: var(--teal); }
+
+/* Configure step */
+.advancement-creator-form .adv-stepcost { float: right; font-family: var(--thd-label); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.advancement-creator-form .adv-stepcost b { font-family: var(--thd-display); font-size: 16px; color: var(--oxblood); }
+.advancement-creator-form .adv-choice-list { display: flex; flex-direction: column; gap: 6px; }
+.advancement-creator-form .adv-scroll { max-height: 320px; overflow-y: auto; padding-right: 4px; }
+.advancement-creator-form .adv-choice { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; cursor: pointer; background: color-mix(in srgb,var(--panel) 94%,#fff 6%); }
+.advancement-creator-form .adv-choice:hover:not(.disabled) { border-color: var(--gold); }
+.advancement-creator-form .adv-choice.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
+.advancement-creator-form .adv-choice.disabled { opacity: .45; cursor: default; }
+.advancement-creator-form .adv-choice .ac-name { flex: 1; font-size: 14px; color: var(--ink); }
+.advancement-creator-form .adv-choice .ac-delta { font-family: var(--thd-display); font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.advancement-creator-form .adv-choice .ac-delta b { color: var(--ink); font-size: 16px; }
+.advancement-creator-form .adv-choice .ac-delta em { font-style: normal; font-size: 11px; opacity: .75; }
+.advancement-creator-form .adv-choice .ac-note { font-family: var(--thd-label); font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--oxblood); }
+.advancement-creator-form .adv-choice .ac-cost { font-family: var(--thd-display); font-size: 12px; color: #fff; background: linear-gradient(180deg,var(--gold),var(--gold-deep)); min-width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+.advancement-creator-form .adv-choice .ac-quirk { flex-basis: 100%; font-size: 12px; font-style: italic; color: var(--ink-soft); }
+.advancement-creator-form .adv-choice .fa-check { color: var(--teal); }
+.advancement-creator-form .adv-shift { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.advancement-creator-form .adv-shift-col h4 { font-family: var(--thd-label); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 8px; display: flex; align-items: center; gap: 6px; }
+.advancement-creator-form .adv-slot-toggle { display: flex; gap: 8px; margin-bottom: 12px; }
+.advancement-creator-form .adv-slot-toggle button { font-family: var(--thd-label); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 16px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-soft); border-radius: 999px; cursor: pointer; }
+.advancement-creator-form .adv-slot-toggle button.on { background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); color: #2a1c10; border-color: var(--gold-deep); }
+.advancement-creator-form .adv-corruption { font-size: 13.5px; color: var(--ink); }
+.advancement-creator-form .rev-reward { font-family: var(--thd-display); font-size: 15px; color: var(--ink); margin: 0; }
+.advancement-creator-form .rev-steps { font-family: var(--thd-display); font-size: 24px; color: var(--oxblood); margin: 0; }
+.advancement-creator-form .rev-card-wide { grid-column: 1 / -1; }
+.advancement-creator-form .rev-card p { margin: 0; font-size: 13px; color: var(--ink); }
+
+/* Story advancement tracker on the character sheet */
+.theah .story-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.theah .story-card { border: 1px solid var(--line); border-radius: 5px; background: color-mix(in srgb,var(--panel) 96%,#fff 4%); padding: 8px 10px; }
+.theah .story-card.is-complete { border-color: var(--gold); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 25%, transparent); }
+.theah .story-card.is-claimed { opacity: .82; }
+.theah .story-card.empty { color: var(--ink-soft); font-style: italic; padding: 10px; }
+.theah .story-main { display: flex; align-items: center; gap: 10px; }
+.theah .story-main .item-name { flex: 1; margin: 0; }
+.theah .story-adv { margin-top: 8px; padding-top: 8px; border-top: 1px dotted var(--line); display: flex; flex-direction: column; gap: 7px; }
+.theah .story-reward { font-family: var(--thd-display); font-size: 14px; color: var(--ink); display: flex; align-items: center; gap: 7px; }
+.theah .story-reward i { color: var(--gold-deep); }
+.theah .story-goal { font-size: 12.5px; font-style: italic; color: var(--ink-soft); }
+.theah .story-track { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.theah .story-step { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line-strong); background: color-mix(in srgb,var(--panel) 88%,#000 12%); cursor: pointer; display: inline-block; transition: border-color .12s, background .12s; }
+.theah .story-step:hover { border-color: var(--gold); }
+.theah .story-step.filled { background: linear-gradient(180deg,var(--gold-leaf),var(--gold-deep)); border-color: var(--gold-deep); box-shadow: inset 0 0 2px rgba(0,0,0,.3); }
+.theah .story-count { font-family: var(--thd-display); font-size: 12px; color: var(--ink-soft); margin-left: 4px; font-variant-numeric: tabular-nums; }
+.theah .story-claim { align-self: flex-start; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); border-radius: 3px; padding: 5px 12px; cursor: pointer; display: inline-flex; gap: 7px; align-items: center; }
+.theah .story-claim:hover { filter: brightness(1.05); }
+.theah .story-claimed { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--teal); display: flex; align-items: center; gap: 6px; }
+.theah .new-advancement { color: var(--gold-deep); }
+
+/* Story-complete chat card */
+#chat .theah-adv { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }
+#chat .theah-adv .adv-head { display: flex; align-items: center; gap: 9px; padding: 9px 12px; font-family: var(--thd-display); font-size: 15px; background: linear-gradient(180deg, color-mix(in srgb,var(--navy) 92%,#000 8%), var(--navy-deep)); color: #efe4c7; }
+#chat .theah-adv .adv-head i { color: var(--gold-leaf); }
+#chat .theah-adv .adv-body { padding: 11px 12px; }
+#chat .theah-adv .adv-story { font-style: italic; color: var(--ink-soft); font-size: 13px; margin-bottom: 6px; }
+#chat .theah-adv .adv-reward { font-family: var(--thd-display); font-size: 15px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+#chat .theah-adv .adv-reward i { color: var(--gold-deep); }
+
 @media (max-width: 640px) {
+  .advancement-creator-form .adv-reward-grid,
+  .advancement-creator-form .adv-shift { grid-template-columns: 1fr; }
   .hero-creator-form .wiz-fields,
   .hero-creator-form .wiz-pick-list,
   .hero-creator-form .wiz-adv-list,

@@ -216,13 +216,20 @@ export class SvnSea2EActor extends Actor {
     const effectKey = dwEffects[Math.min(newD, dMax)];
     const effect = newD > 0 && effectKey ? game.i18n.localize(effectKey) : '';
 
+    // Brutes and other minions have no Dramatic-Wound track (dMax === 0); omit
+    // the meaningless "0/0 Dramatic Wounds" line for them.
+    const dwLine =
+      dMax > 0
+        ? `<span class="ws dw"><b>${newD}</b>/${dMax} ${L('SVNSEA2E.DramaticWounds')}</span>`
+        : '';
+
     const content = `
       <div class="theah theah-wound${severe ? ' severe' : ''}">
         <div class="wound-head"><i class="fas ${icon}"></i> ${headline}</div>
         <div class="wound-body">
           <div class="wound-stats">
             <span class="ws"><b>${newW}</b>/${wMax} ${L('SVNSEA2E.Wounds')}</span>
-            <span class="ws dw"><b>${newD}</b>/${dMax} ${L('SVNSEA2E.DramaticWounds')}</span>
+            ${dwLine}
           </div>
           ${effect ? `<div class="wound-effect">${effect}</div>` : ''}
         </div>

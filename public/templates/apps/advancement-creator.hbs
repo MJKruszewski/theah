@@ -1,0 +1,188 @@
+<form class="hero-creator-form advancement-creator-form theah" autocomplete="off">
+
+  <ol class="wiz-steps">
+    {{#each steps}}
+      <li class="{{#if active}}active{{/if}} {{#if done}}done{{/if}}"><span class="wiz-dot">{{num}}</span>{{localize label}}</li>
+    {{/each}}
+  </ol>
+
+  <div class="wiz-body">
+    {{#if emptyCatalog}}
+      <p class="wiz-empty">{{localize "SVNSEA2E.WizNoCompendia"}}</p>
+    {{else}}
+
+    {{!-- Step 0 — Reward --}}
+    {{#iff step '==' 0}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.AdvRewardIntro"}}</p>
+        <div class="adv-reward-grid">
+          {{#each rewards}}
+            <div class="adv-reward-card {{#if selected}}selected{{/if}} {{#unless available}}disabled{{/unless}}"
+                 data-reward="{{key}}" title="{{#unless available}}{{reason}}{{/unless}}">
+              <div class="arc-icon"><i class="fas {{icon}}"></i></div>
+              <div class="arc-text">
+                <div class="arc-name">{{label}}</div>
+                <div class="arc-hint">{{hint}}</div>
+              </div>
+              <div class="arc-cost">{{cost}}</div>
+              {{#if selected}}<i class="fas fa-check arc-check"></i>{{/if}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/iff}}
+
+    {{!-- Step 1 — Configure --}}
+    {{#iff step '==' 1}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.AdvConfigureIntro"}}
+          {{#if rewardChosen}}<span class="adv-stepcost">{{localize "SVNSEA2E.AdvSteps"}}: <b>{{stepCost}}</b></span>{{/if}}
+        </p>
+
+        {{#iff configKey '==' 'skillRaise'}}
+          <div class="adv-choice-list">
+            {{#each skillChoices}}
+              <div class="adv-choice {{#if selected}}selected{{/if}} {{#if atMax}}disabled{{/if}}"
+                   data-choice="skill" data-value="{{key}}">
+                <span class="ac-name">{{label}}</span>
+                {{#if atMax}}<span class="ac-note">{{localize "SVNSEA2E.AdvMaxed"}}</span>
+                {{else}}<span class="ac-delta">{{cur}} &rarr; <b>{{next}}</b> <em>({{next}} {{localize "SVNSEA2E.AdvSteps"}})</em></span>{{/if}}
+                {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+              </div>
+            {{/each}}
+          </div>
+        {{/iff}}
+
+        {{#iff configKey '==' 'traitIncrease'}}
+          <p class="wiz-budget">{{localize "SVNSEA2E.AdvTraitTotal"}}: <b>{{traitTotal}}</b>/{{traitTotalCap}}
+            &middot; {{localize "SVNSEA2E.AdvIncreasesUsed"}}: <b>{{traitIncreasesUsed}}</b>/{{traitIncreaseCap}}</p>
+          <div class="adv-choice-list">
+            {{#each traitRaiseChoices}}
+              <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="trait" data-value="{{key}}">
+                <span class="ac-name">{{label}}</span>
+                <span class="ac-delta">{{cur}} &rarr; <b>{{next}}</b></span>
+                {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+              </div>
+            {{/each}}
+          </div>
+        {{/iff}}
+
+        {{#iff configKey '==' 'traitShift'}}
+          <div class="adv-shift">
+            <div class="adv-shift-col">
+              <h4><i class="fas fa-arrow-up"></i> {{localize "SVNSEA2E.AdvRaise"}}</h4>
+              <div class="adv-choice-list">
+                {{#each traitRaiseChoices}}
+                  <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="trait" data-value="{{key}}">
+                    <span class="ac-name">{{label}}</span><span class="ac-delta">{{cur}} &rarr; <b>{{next}}</b></span>
+                    {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+                  </div>
+                {{/each}}
+              </div>
+            </div>
+            <div class="adv-shift-col">
+              <h4><i class="fas fa-arrow-down"></i> {{localize "SVNSEA2E.AdvLower"}}</h4>
+              <div class="adv-choice-list">
+                {{#each traitLowerChoices}}
+                  <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="traitDown" data-value="{{key}}">
+                    <span class="ac-name">{{label}}</span><span class="ac-delta">{{cur}} &rarr; <b>{{next}}</b></span>
+                    {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+                  </div>
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        {{/iff}}
+
+        {{#iff configKey '==' 'advantage'}}
+          <div class="adv-choice-list adv-scroll">
+            {{#each advantageChoices}}
+              <div class="adv-choice {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}"
+                   data-choice="advId" data-value="{{id}}" title="{{name}}">
+                <span class="ac-cost">{{cost}}</span>
+                <span class="ac-name">{{name}}</span>
+                {{#if disabled}}<span class="ac-note">{{localize "SVNSEA2E.AdvOwned"}}</span>{{/if}}
+                {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+              </div>
+            {{/each}}
+          </div>
+        {{/iff}}
+
+        {{#iff configKey '==' 'arcanaChange'}}
+          <div class="adv-slot-toggle">
+            <button type="button" class="{{#iff arcanaSlot '==' 'virtue'}}on{{/iff}}" data-arcana-slot="virtue">{{localize "SVNSEA2E.Virtue"}}</button>
+            <button type="button" class="{{#iff arcanaSlot '==' 'hubris'}}on{{/iff}}" data-arcana-slot="hubris">{{localize "SVNSEA2E.Hubris"}}</button>
+          </div>
+          <div class="adv-choice-list adv-scroll">
+            {{#each arcanaChoices}}
+              <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="arcanaId" data-value="{{id}}">
+                <span class="ac-name">{{name}}</span>{{#if selected}}<i class="fas fa-check"></i>{{/if}}
+              </div>
+            {{/each}}
+          </div>
+          {{#if arcanaDesc}}<div class="arc-desc">{{{arcanaDesc}}}</div>{{/if}}
+        {{/iff}}
+
+        {{#iff configKey '==' 'quirkChange'}}
+          <div class="adv-choice-list">
+            {{#each backgroundChoices}}
+              <div class="adv-choice {{#if selected}}selected{{/if}}" data-choice="bgId" data-value="{{id}}">
+                <span class="ac-name">{{name}}</span>
+                {{#if quirk}}<span class="ac-quirk">{{{quirk}}}</span>{{/if}}
+                {{#if selected}}<i class="fas fa-check"></i>{{/if}}
+              </div>
+            {{/each}}
+          </div>
+          <label class="wiz-field wiz-field-wide"><span>{{localize "SVNSEA2E.AdvNewQuirk"}}</span>
+            <input type="text" data-state="quirk" value="{{state.quirk}}" placeholder="{{localize 'SVNSEA2E.AdvNewQuirkPlaceholder'}}" /></label>
+        {{/iff}}
+
+        {{#iff configKey '==' 'corruptionRemove'}}
+          <p class="adv-corruption">{{localize "SVNSEA2E.AdvCorruptionIntro"}}</p>
+          <p class="wiz-budget">{{localize "SVNSEA2E.Corruption"}}: <b>{{corruption}}</b> &rarr; <b>{{corruptionAfter}}</b></p>
+        {{/iff}}
+      </div>
+    {{/iff}}
+
+    {{!-- Step 2 — Story --}}
+    {{#iff step '==' 2}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.AdvStoryIntro"}}</p>
+        <div class="wiz-fields">
+          <label class="wiz-field wiz-field-wide"><span>{{localize "SVNSEA2E.AdvStoryName"}}</span>
+            <input type="text" data-state="name" value="{{state.name}}" placeholder="{{localize 'SVNSEA2E.AdvStoryNamePlaceholder'}}" /></label>
+          <label class="wiz-field wiz-field-wide"><span>{{localize "SVNSEA2E.AdvGoal"}}</span>
+            <textarea data-state="goal" rows="2" placeholder="{{localize 'SVNSEA2E.AdvGoalPlaceholder'}}">{{state.goal}}</textarea></label>
+          <label class="wiz-field wiz-field-wide"><span>{{localize "SVNSEA2E.AdvFirstStep"}}</span>
+            <textarea data-state="firstStep" rows="2" placeholder="{{localize 'SVNSEA2E.AdvFirstStepPlaceholder'}}">{{state.firstStep}}</textarea></label>
+        </div>
+      </div>
+    {{/iff}}
+
+    {{!-- Step 3 — Review --}}
+    {{#iff step '==' 3}}
+      <div class="wiz-step wiz-review">
+        <h3 class="rev-title">{{review.name}}</h3>
+        <div class="rev-grid">
+          <div class="rev-card"><b>{{localize "SVNSEA2E.AdvReward"}}</b><p class="rev-reward">{{review.reward}}</p></div>
+          <div class="rev-card"><b>{{localize "SVNSEA2E.AdvSteps"}}</b><p class="rev-steps">{{review.steps}}</p></div>
+          <div class="rev-card rev-card-wide"><b>{{localize "SVNSEA2E.AdvGoal"}}</b><p>{{review.goal}}</p></div>
+          {{#if review.firstStep}}<div class="rev-card rev-card-wide"><b>{{localize "SVNSEA2E.AdvFirstStep"}}</b><p>{{review.firstStep}}</p></div>{{/if}}
+        </div>
+        <p class="rev-foot">{{localize "SVNSEA2E.AdvReviewFoot"}}</p>
+      </div>
+    {{/iff}}
+
+    {{/if}}
+  </div>
+
+  <footer class="wiz-nav">
+    <button type="button" data-nav="back" {{#if isFirst}}disabled{{/if}}><i class="fas fa-chevron-left"></i> {{localize "SVNSEA2E.WizBack"}}</button>
+    <span class="wiz-count">{{localize "SVNSEA2E.WizStep"}} {{stepNumber}} / {{stepTotal}}</span>
+    {{#if isLast}}
+      <button type="button" data-nav="finish" class="finish"><i class="fas fa-feather"></i> {{localize "SVNSEA2E.AdvStart"}}</button>
+    {{else}}
+      <button type="button" data-nav="next">{{localize "SVNSEA2E.WizNext"}} <i class="fas fa-chevron-right"></i></button>
+    {{/if}}
+  </footer>
+</form>

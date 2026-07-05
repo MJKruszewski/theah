@@ -28,6 +28,7 @@ export const preloadHandlebarsTemplates = async function () {
 
     // Applications
     'systems/theah/templates/apps/hero-creator.hbs',
+    'systems/theah/templates/apps/advancement-creator.hbs',
   ];
 
   // Load the template parts

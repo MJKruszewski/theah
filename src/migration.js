@@ -113,17 +113,19 @@ export const migrateActorData = function (actor) {
   const updateData = {};
 
   if (actor.type === ActorType.PLAYER && actor.system.wealth == null) {
-    updateData['wealth'] = 0;
+    updateData['system.wealth'] = 0;
   }
 
+  // Book-accurate Death Spiral: 16 Wounds (4 per Dramatic Wound). Only the
+  // Hero-side actors carry a stored wounds.max; villain/monster wounds.max is
+  // derived from Strength in prepareData, so migrating it would be pointless
+  // churn (recomputed on every load).
   if (
-    actor.type !== ActorType.DANGERPOINTS &&
-    actor.type !== ActorType.BRUTE &&
+    (actor.type === ActorType.PLAYER || actor.type === ActorType.HERO) &&
     actor.system.wounds.max != 16
   ) {
-    // Book-accurate Death Spiral: 16 Wounds (4 per Dramatic Wound).
-    updateData['wounds.max'] = 16;
-    if (actor.system.wounds.value > 16) updateData['wounds.value'] = 16;
+    updateData['system.wounds.max'] = 16;
+    if (actor.system.wounds.value > 16) updateData['system.wounds.value'] = 16;
   }
 
   if (
@@ -132,38 +134,41 @@ export const migrateActorData = function (actor) {
       actor.type === ActorType.VILLAIN) &&
     actor.system.nation === 'rahuris'
   ) {
-    updateData['nation'] = 'rahuri';
+    updateData['system.nation'] = 'rahuri';
   }
 
   if (
     (actor.type === ActorType.VILLAIN || actor.type === ActorType.MONSTER) &&
-    actor.system.traits.strength.max != 10
+    actor.system.traits.strength.max != 20
   ) {
-    updateData['traits.strength.max'] = 20;
-    updateData['traits.influence.max'] = 20;
-    updateData['traits.influence.min'] = 0;
+    updateData['system.traits.strength.max'] = 20;
+    updateData['system.traits.influence.max'] = 20;
+    updateData['system.traits.influence.min'] = 0;
   }
 
-  if (actor.type === ActorType.BRUTE) {
-    updateData['traits.strength.max'] = 20;
+  if (
+    actor.type === ActorType.BRUTE &&
+    actor.system.traits.strength.max != 20
+  ) {
+    updateData['system.traits.strength.max'] = 20;
   }
 
   if (actor.type === ActorType.DANGERPOINTS && actor.system.points < 5) {
-    updateData['points'] = 5;
+    updateData['system.points'] = 5;
   }
 
   if (actor.type === ActorType.MONSTER && actor.system.fear.max != 5) {
-    updateData['fear.value'] = 0;
-    updateData['fear.min'] = 0;
-    updateData['fear.max'] = 5;
+    updateData['system.fear.value'] = 0;
+    updateData['system.fear.min'] = 0;
+    updateData['system.fear.max'] = 5;
   }
 
-  if (actor.type === ActorType.SHIP && actor.system.crewstatus == null) {
+  if (actor.type === ActorType.SHIP) {
     if (actor.system.crewstatus == null) {
-      updateData['crewstatus'] = '';
+      updateData['system.crewstatus'] = '';
     }
     if (actor.system.wealth == null) {
-      updateData['wealth'] = '0';
+      updateData['system.wealth'] = '0';
     }
   }
 
@@ -175,7 +180,7 @@ export const migrateActorData = function (actor) {
     if (actor.system.arcana) {
       migrateVirtue(actor);
       migrateHubris(actor);
-      actor.update({ data: { arcana: null } });
+      actor.update({ 'system.arcana': null }, { theahSilent: true });
     }
   }
 
@@ -195,11 +200,11 @@ export const migrateItemData = function (item) {
     item.type === 'secretsociety' &&
     typeof item.system.favor === 'undefined'
   ) {
-    updateData['favor'] = 0;
+    updateData['system.favor'] = 0;
   }
 
   if (item.type === 'story' && typeof item.system.status === 'undefined') {
-    updateData['status'] = '';
+    updateData['system.status'] = 'current';
   }
 
   return updateData;

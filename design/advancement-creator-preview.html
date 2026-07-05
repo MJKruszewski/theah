@@ -1,0 +1,221 @@
+<title>Théah — Advancement Creator Preview</title>
+<style>
+  :root{
+    --paper:#e7d8b6;--paper-deep:#d8c49a;--panel:#f1e7cc;--panel-edge:#cbb488;--ink:#3a2c1c;--ink-soft:#6b5a41;
+    --navy:#16323f;--navy-deep:#0e232c;--teal:#2b6b6b;--gold:#b0873f;--gold-leaf:#d9b262;--gold-deep:#8a642a;
+    --oxblood:#7c2b22;--oxblood-deep:#591c16;--line:rgba(58,44,28,.28);--line-strong:rgba(58,44,28,.5);
+    --thd-display:"Hoefler Text","Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --thd-body:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --thd-label:ui-sans-serif,"Gill Sans","Segoe UI",system-ui,sans-serif;
+  }
+  :root[data-theme="sea"]{
+    --paper:#12262f;--paper-deep:#0e1f27;--panel:#173039;--panel-edge:#2b4a55;--ink:#e8dcc0;--ink-soft:#a9b9bb;
+    --navy:#0b1b22;--navy-deep:#060f14;--teal:#5fb0a6;--gold:#c9a24b;--gold-leaf:#e6c887;--gold-deep:#9c7a34;
+    --oxblood:#b5453a;--oxblood-deep:#7c2b22;--line:rgba(201,162,75,.22);--line-strong:rgba(201,162,75,.42);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--thd-body);padding:28px 20px 60px;transition:background .2s;}
+  .page{max-width:1040px;margin:0 auto;}
+  .page-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+  h1{font-family:var(--thd-display);font-variant:small-caps;letter-spacing:.05em;font-size:30px;margin:0;background:linear-gradient(180deg,var(--gold-leaf),var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{color:var(--ink-soft);font-size:14px;max-width:60ch;line-height:1.5;margin:2px 0 22px;}
+  .theme-btn{font-family:var(--thd-label);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:8px 14px;border-radius:3px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;}
+  .theme-btn:hover{border-color:var(--gold);color:var(--gold-deep);}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start;}
+  .col-wide{grid-column:1 / -1;}
+  .cap{font-family:var(--thd-label);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 8px;}
+
+  /* Window shell */
+  .win{border:1px solid var(--panel-edge);border-radius:6px;overflow:hidden;box-shadow:0 18px 44px -22px rgba(30,18,8,.5);background:var(--panel);}
+  .hc{display:flex;flex-direction:column;}
+  .hc *{box-sizing:border-box;}
+  .wiz-steps{list-style:none;display:flex;flex-wrap:wrap;gap:4px 6px;margin:0;padding:14px 20px;background:linear-gradient(180deg,color-mix(in srgb,var(--navy) 92%,#000 8%),var(--navy-deep));border-bottom:2px solid var(--gold-deep);}
+  .wiz-steps li{display:flex;align-items:center;gap:7px;font-family:var(--thd-label);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#9fb0b3;padding:4px 8px;border-radius:3px;}
+  .wiz-steps li .dot{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-family:var(--thd-display);font-size:12px;border:1px solid rgba(217,178,98,.4);color:#cdbb8c;}
+  .wiz-steps li.done .dot{background:var(--teal);color:#fff;border-color:var(--teal);}
+  .wiz-steps li.active{color:#f4ead0;}
+  .wiz-steps li.active .dot{background:linear-gradient(180deg,var(--gold-leaf),var(--gold-deep));color:#2a1c10;border-color:var(--gold-deep);}
+  .wiz-body{padding:20px 22px;}
+  .wiz-intro{font-size:14px;margin:0 0 14px;}
+  .adv-stepcost{float:right;font-family:var(--thd-label);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
+  .adv-stepcost b{font-family:var(--thd-display);font-size:16px;color:var(--oxblood);}
+  .wiz-budget{font-family:var(--thd-label);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px;}
+  .wiz-budget b{font-family:var(--thd-display);font-size:16px;color:var(--oxblood);}
+  .wiz-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-top:1px solid var(--line-strong);background:color-mix(in srgb,var(--panel) 96%,#000 4%);}
+  .wiz-nav button{font-family:var(--thd-label);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:9px 16px;border-radius:3px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+  .wiz-nav button.finish{color:#2a1c10;background:linear-gradient(180deg,var(--gold-leaf),var(--gold));border-color:var(--gold-deep);}
+  .wiz-count{font-family:var(--thd-label);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+
+  /* Reward grid */
+  .adv-reward-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .adv-reward-card{position:relative;display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:color-mix(in srgb,var(--panel) 94%,#fff 6%);cursor:pointer;}
+  .adv-reward-card.selected{border-color:var(--gold-deep);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%,transparent);}
+  .adv-reward-card.disabled{opacity:.42;}
+  .adv-reward-card .ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;background:linear-gradient(180deg,var(--navy),var(--navy-deep));color:var(--gold-leaf);font-size:16px;}
+  .adv-reward-card .tx{flex:1;}
+  .adv-reward-card .nm{font-family:var(--thd-display);font-size:15px;}
+  .adv-reward-card .hn{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+  .adv-reward-card .ct{font-family:var(--thd-label);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:#2a1c10;background:linear-gradient(180deg,var(--gold-leaf),var(--gold));border:1px solid var(--gold-deep);border-radius:999px;padding:3px 8px;flex:none;}
+  .adv-reward-card .ck{position:absolute;top:8px;right:10px;color:var(--teal);}
+
+  /* Choice list */
+  .adv-choice-list{display:flex;flex-direction:column;gap:6px;}
+  .adv-choice{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:4px;cursor:pointer;background:color-mix(in srgb,var(--panel) 94%,#fff 6%);}
+  .adv-choice.selected{border-color:var(--gold-deep);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%,transparent);}
+  .adv-choice.disabled{opacity:.45;}
+  .adv-choice .nm{flex:1;font-size:14px;}
+  .adv-choice .dl{font-family:var(--thd-display);font-size:13px;color:var(--ink-soft);}
+  .adv-choice .dl b{color:var(--ink);font-size:16px;}
+  .adv-choice .dl em{font-style:normal;font-size:11px;opacity:.75;}
+  .adv-choice .note{font-family:var(--thd-label);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--oxblood);}
+  .adv-choice .ck{color:var(--teal);}
+
+  /* Sheet story tab */
+  .sheet-tab{padding:16px 18px;}
+  .sec-title{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .sec-title h3{font-family:var(--thd-display);font-variant:small-caps;letter-spacing:.05em;font-size:19px;margin:0;color:var(--ink);}
+  .sec-title span{flex:1;height:1px;background:var(--line);}
+  .add-btn{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line-strong);color:var(--gold-deep);cursor:pointer;text-decoration:none;}
+  .story-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+  .story-card{border:1px solid var(--line);border-radius:5px;background:color-mix(in srgb,var(--panel) 96%,#fff 4%);padding:8px 10px;}
+  .story-card.is-complete{border-color:var(--gold);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 25%,transparent);}
+  .story-main{display:flex;align-items:center;gap:10px;}
+  .story-main .cost{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:var(--gold-deep);border:1px solid var(--line);}
+  .story-main .nm{flex:1;font-family:var(--thd-display);font-size:15px;}
+  .story-main .ctl{color:var(--ink-soft);display:flex;gap:8px;}
+  .story-adv{margin-top:8px;padding-top:8px;border-top:1px dotted var(--line);display:flex;flex-direction:column;gap:7px;}
+  .story-reward{font-family:var(--thd-display);font-size:14px;display:flex;align-items:center;gap:7px;}
+  .story-reward i{color:var(--gold-deep);}
+  .story-goal{font-size:12.5px;font-style:italic;color:var(--ink-soft);}
+  .story-track{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .story-step{width:18px;height:18px;border-radius:50%;border:1px solid var(--line-strong);background:color-mix(in srgb,var(--panel) 88%,#000 12%);cursor:pointer;}
+  .story-step.filled{background:linear-gradient(180deg,var(--gold-leaf),var(--gold-deep));border-color:var(--gold-deep);box-shadow:inset 0 0 2px rgba(0,0,0,.3);}
+  .story-count{font-family:var(--thd-display);font-size:12px;color:var(--ink-soft);margin-left:4px;font-variant-numeric:tabular-nums;}
+  .story-claim{align-self:flex-start;font-family:var(--thd-label);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:#2a1c10;background:linear-gradient(180deg,var(--gold-leaf),var(--gold));border:1px solid var(--gold-deep);border-radius:3px;padding:5px 12px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;}
+  .story-claimed{font-family:var(--thd-label);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:6px;}
+
+  /* Chat card */
+  .theah-adv{font-family:var(--thd-body);color:var(--ink);background:var(--panel);border:1px solid var(--panel-edge);border-left:4px solid var(--gold-deep);border-radius:4px;overflow:hidden;max-width:320px;}
+  .theah-adv .hd{display:flex;align-items:center;gap:9px;padding:9px 12px;font-family:var(--thd-display);font-size:15px;background:linear-gradient(180deg,color-mix(in srgb,var(--navy) 92%,#000 8%),var(--navy-deep));color:#efe4c7;}
+  .theah-adv .hd i{color:var(--gold-leaf);}
+  .theah-adv .bd{padding:11px 12px;}
+  .theah-adv .st{font-style:italic;color:var(--ink-soft);font-size:13px;margin-bottom:6px;}
+  .theah-adv .rw{font-family:var(--thd-display);font-size:15px;display:flex;align-items:center;gap:8px;}
+  .theah-adv .rw i{color:var(--gold-deep);}
+  @media(max-width:760px){.grid{grid-template-columns:1fr;}.adv-reward-grid{grid-template-columns:1fr;}}
+</style>
+
+<div class="page">
+  <div class="page-head">
+    <h1>Advancement Creator</h1>
+    <button class="theme-btn" onclick="var r=document.documentElement;r.setAttribute('data-theme',r.getAttribute('data-theme')==='sea'?'paper':'sea')">Toggle theme</button>
+  </div>
+  <p class="sub">Book-accurate (Core Rulebook, "Rewarding the Journey", pp.159–160): no XP — Heroes advance by finishing Stories. Choose one Reward; its cost sets the Story's Steps; tick Steps off in play; claim the Reward when done.</p>
+
+  <div class="grid">
+
+    <div>
+      <p class="cap">Wizard · Step 1 — choose the Reward</p>
+      <div class="win"><div class="hc">
+        <ol class="wiz-steps">
+          <li class="active"><span class="dot">1</span>Reward</li>
+          <li><span class="dot">2</span>Details</li>
+          <li><span class="dot">3</span>Story</li>
+          <li><span class="dot">4</span>Review</li>
+        </ol>
+        <div class="wiz-body">
+          <p class="wiz-intro">You don't spend experience — Heroes grow by finishing Stories. Choose the one Reward this Story earns; its cost sets how many Steps it takes.</p>
+          <div class="adv-reward-grid">
+            <div class="adv-reward-card selected"><span class="ic">&#9678;</span><span class="tx"><div class="nm">Raise a Skill</div><div class="hn">Improve one Skill by one Rank.</div></span><span class="ct">Steps = new Rank</span><i class="ck">&#10003;</i></div>
+            <div class="adv-reward-card"><span class="ic">&#8593;</span><span class="tx"><div class="nm">Increase a Trait</div><div class="hn">Raise a Trait. Only twice, ever.</div></span><span class="ct">5 Steps</span></div>
+            <div class="adv-reward-card"><span class="ic">&#8646;</span><span class="tx"><div class="nm">Shift a Trait</div><div class="hn">Move a Rank between Traits.</div></span><span class="ct">4 Steps</span></div>
+            <div class="adv-reward-card"><span class="ic">&#9733;</span><span class="tx"><div class="nm">Gain an Advantage</div><div class="hn">Buy from the compendium.</div></span><span class="ct">Steps = cost</span></div>
+            <div class="adv-reward-card"><span class="ic">&#10022;</span><span class="tx"><div class="nm">Change an Arcana</div><div class="hn">Swap Virtue or Hubris.</div></span><span class="ct">4 Steps</span></div>
+            <div class="adv-reward-card disabled"><span class="ic">&#9825;</span><span class="tx"><div class="nm">Remove Corruption</div><div class="hn">No Corruption to remove.</div></span><span class="ct">5 Steps</span></div>
+          </div>
+        </div>
+        <footer class="wiz-nav"><button disabled>&#8249; Back</button><span class="wiz-count">Step 1 / 4</span><button>Next &#8250;</button></footer>
+      </div></div>
+    </div>
+
+    <div>
+      <p class="cap">Wizard · Step 2 — configure (Raise a Skill)</p>
+      <div class="win"><div class="hc">
+        <ol class="wiz-steps">
+          <li class="done"><span class="dot">&#10003;</span>Reward</li>
+          <li class="active"><span class="dot">2</span>Details</li>
+          <li><span class="dot">3</span>Story</li>
+          <li><span class="dot">4</span>Review</li>
+        </ol>
+        <div class="wiz-body">
+          <p class="wiz-intro">Pick exactly what this Story earns. <span class="adv-stepcost">Steps: <b>3</b></span></p>
+          <div class="adv-choice-list">
+            <div class="adv-choice"><span class="nm">Athletics</span><span class="dl">1 &rarr; <b>2</b> <em>(2 Steps)</em></span></div>
+            <div class="adv-choice selected"><span class="nm">Weaponry</span><span class="dl">2 &rarr; <b>3</b> <em>(3 Steps)</em></span><i class="ck">&#10003;</i></div>
+            <div class="adv-choice"><span class="nm">Notice</span><span class="dl">1 &rarr; <b>2</b> <em>(2 Steps)</em></span></div>
+            <div class="adv-choice disabled"><span class="nm">Aim</span><span class="note">at maximum</span></div>
+            <div class="adv-choice"><span class="nm">Convince</span><span class="dl">0 &rarr; <b>1</b> <em>(1 Step)</em></span></div>
+          </div>
+        </div>
+        <footer class="wiz-nav"><button>&#8249; Back</button><span class="wiz-count">Step 2 / 4</span><button>Next &#8250;</button></footer>
+      </div></div>
+    </div>
+
+    <div class="col-wide">
+      <p class="cap">On the character sheet — the "Stories" tab tracks Steps and claims Rewards</p>
+      <div class="grid">
+        <div class="win"><div class="sheet-tab">
+          <div class="sec-title"><h3>Stories</h3><span></span><a class="add-btn" title="New Advancement Story">&#10070;</a><a class="add-btn">+</a></div>
+          <ul class="story-list">
+            <li class="story-card">
+              <div class="story-main"><span class="cost">&#128220;</span><span class="nm">The Duelist's Oath</span><span class="ctl">&#9998; &#128465;</span></div>
+              <div class="story-adv">
+                <div class="story-reward"><i>&#127942;</i> Weaponry to Rank 3</div>
+                <div class="story-goal">&ldquo;Best the Master of the Silver Blade before the Carnival ends.&rdquo;</div>
+                <div class="story-track">
+                  <i class="story-step filled"></i><i class="story-step filled"></i><i class="story-step"></i>
+                  <span class="story-count">2/3</span>
+                </div>
+              </div>
+            </li>
+            <li class="story-card is-complete">
+              <div class="story-main"><span class="cost">&#128220;</span><span class="nm">A Debt Repaid</span><span class="ctl">&#9998; &#128465;</span></div>
+              <div class="story-adv">
+                <div class="story-reward"><i>&#127942;</i> Gain Sorcery</div>
+                <div class="story-goal">&ldquo;Reclaim the family's bloodline birthright in Montaigne.&rdquo;</div>
+                <div class="story-track">
+                  <i class="story-step filled"></i><i class="story-step filled"></i>
+                  <span class="story-count">2/2</span>
+                </div>
+                <button class="story-claim"><i>&#127873;</i> Claim Reward</button>
+              </div>
+            </li>
+            <li class="story-card is-claimed" style="opacity:.82">
+              <div class="story-main"><span class="cost">&#128220;</span><span class="nm">Panache Under Fire</span><span class="ctl">&#9998; &#128465;</span></div>
+              <div class="story-adv">
+                <div class="story-reward"><i>&#127942;</i> Panache to Rank 4</div>
+                <div class="story-track">
+                  <i class="story-step filled"></i><i class="story-step filled"></i><i class="story-step filled"></i><i class="story-step filled"></i><i class="story-step filled"></i>
+                  <span class="story-count">5/5</span>
+                </div>
+                <div class="story-claimed"><i>&#9989;</i> Reward claimed</div>
+              </div>
+            </li>
+          </ul>
+        </div></div>
+
+        <div>
+          <p class="cap" style="margin-top:2px">…and a public chat card when a Story is claimed</p>
+          <div class="theah-adv">
+            <div class="hd"><i>&#10047;</i> Amélie completes a Story</div>
+            <div class="bd">
+              <div class="st">&ldquo;A Debt Repaid&rdquo;</div>
+              <div class="rw"><i>&#127942;</i> Gain Sorcery</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
