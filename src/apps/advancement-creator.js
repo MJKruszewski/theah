@@ -89,9 +89,9 @@ export class AdvancementCreator extends FormApplication {
 
   async _loadCatalog() {
     if (this._catalog) return this._catalog;
-    const advantages = await this._packDocs('theah.advantages');
-    const arcana = await this._packDocs('theah.arcana');
-    const byName = (a, b) => a.name.localeCompare(b.name);
+    const advantages = await this._loadPack('theah.advantages', 'advantages');
+    const arcana = await this._loadPack('theah.arcana', 'arcana');
+    const byName = (a, b) => (a.name || '').localeCompare(b.name || '');
     this._catalog = {
       advantages: advantages.sort(byName),
       virtues: arcana.filter((i) => i.type === 'virtue').sort(byName),
@@ -105,6 +105,24 @@ export class AdvancementCreator extends FormApplication {
     if (!pack) return [];
     const docs = await pack.getDocuments();
     return docs.map((d) => d.toObject());
+  }
+
+  /** Load from compendium; fall back to shipped packs-data JSON if it's empty/corrupt. */
+  async _loadPack(packId, file) {
+    const docs = await this._packDocs(packId);
+    const valid = docs.filter((d) => d && d.name && String(d.name).trim());
+    if (valid.length) return valid;
+    console.warn(`Théah | compendium "${packId}" empty or corrupt — loading shipped ${file}.json instead.`);
+    try {
+      const res = await fetch(`systems/theah/packs-data/${file}.json`);
+      if (res.ok) {
+        const shipped = await res.json();
+        if (Array.isArray(shipped) && shipped.length) return shipped;
+      }
+    } catch (e) {
+      console.error(`Théah | failed loading shipped ${file}.json`, e);
+    }
+    return docs;
   }
 
   /* -------------------------------------------- */

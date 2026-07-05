@@ -2489,10 +2489,16 @@
   padding: 6px 8px;
 }
 
-/* Foundry's core shrinks bare <select> to ~1.5rem which clips 14px text — force a legible height. */
+/* Foundry's core shrinks bare <select>; force a legible height and match text
+   inputs so every field in a row is the same height (consistency). */
+.hero-creator-form .wiz-field input,
+.hero-creator-form .wiz-field select {
+  min-height: 34px;
+  box-sizing: border-box;
+}
+
 .hero-creator-form .wiz-field select {
   height: auto;
-  min-height: 34px;
 }
 
 .hero-creator-form .wiz-field select option {
@@ -2506,50 +2512,80 @@
   outline: none;
 }
 
-/* Nation reference box (Concept step) */
-.hero-creator-form .nation-info {
-  margin-top: 16px;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--gold-deep);
-  border-radius: 5px;
-  background: color-mix(in srgb, var(--panel) 92%, #fff 8%);
+/* Nation picker — cards (consistent with Backgrounds / Arcana), not a dropdown */
+.hero-creator-form .wiz-nation-block {
+  margin-top: 18px;
 }
 
-.hero-creator-form .nation-info .ni-name {
-  font-family: var(--thd-display);
-  font-variant: small-caps;
-  letter-spacing: 0.05em;
-  font-size: 17px;
-  color: var(--ink);
-  margin: 0 0 6px;
-}
-
-.hero-creator-form .nation-info .ni-row {
-  font-size: 13px;
-  color: var(--ink-soft);
-  margin: 3px 0;
-}
-
-.hero-creator-form .nation-info .ni-row b {
+.hero-creator-form .wiz-nation-label {
   font-family: var(--thd-label);
-  font-size: 10px;
-  letter-spacing: 0.1em;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold-deep);
-  margin-right: 6px;
+  color: var(--ink-soft);
+  margin-bottom: 9px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.hero-creator-form .nation-info .ni-row .ni-val {
-  color: var(--ink);
+.hero-creator-form .wiz-nation-hint {
   font-family: var(--thd-body);
-}
-
-.hero-creator-form .nation-info .ni-hint {
-  font-size: 11.5px;
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--ink-soft);
   font-style: italic;
-  margin: 6px 0 0;
+}
+
+.hero-creator-form .wiz-nation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.hero-creator-form .wiz-nation {
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
+  transition: border-color 0.12s;
+}
+
+.hero-creator-form .wiz-nation:hover {
+  border-color: var(--gold);
+}
+
+.hero-creator-form .wiz-nation.selected {
+  border-color: var(--gold-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
+}
+
+.hero-creator-form .wiz-nation .nn {
+  font-family: var(--thd-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-creator-form .wiz-nation .nn .fa-check {
+  color: var(--teal);
+  font-size: 12px;
+}
+
+.hero-creator-form .wiz-nation .nb {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 3px;
+}
+
+.hero-creator-form .wiz-nation .nsorc {
+  color: var(--gold-deep);
 }
 
 /* Traits */
@@ -3615,7 +3651,7 @@
   <p style="font:600 13px/1.5 system-ui;color:#cbb98a;margin:0 0 4px">Hero Creator — redesigned steps (paper theme)</p>
   <p style="font:400 12px/1.5 system-ui;color:#8a8378;margin:0">Faithful render: the actual compiled <code>dist/theah.css</code> over the real template markup and compendium data.</p>
 
-  <p class="preview-label">Step 1 — Concept &amp; Nation (info box)</p>
+  <p class="preview-label">Step 1 — Concept &amp; Nation (card picker)</p>
   <div class="preview-frame"><form class="hero-creator-form theah">
     <ol class="wiz-steps"><li class="active "><span class="wiz-dot">1</span>Concept</li><li class=" "><span class="wiz-dot">2</span>Traits</li><li class=" "><span class="wiz-dot">3</span>Backgrounds</li><li class=" "><span class="wiz-dot">4</span>Skills</li><li class=" "><span class="wiz-dot">5</span>Advantages</li><li class=" "><span class="wiz-dot">6</span>Arcana</li><li class=" "><span class="wiz-dot">7</span>Review</li></ol>
     <div class="wiz-body">
@@ -3624,15 +3660,14 @@
         <div class="wiz-fields">
           <label class="wiz-field"><span>Name</span><input type="text" value="Amélie de Trélan" /></label>
           <label class="wiz-field"><span>Epithet</span><input type="text" value="the Left-Handed" /></label>
-          <label class="wiz-field"><span>Nation</span><select><option>Montaigne</option></select></label>
           <label class="wiz-field"><span>Religion</span><input type="text" value="—" /></label>
           <label class="wiz-field wiz-field-wide"><span>Concept</span><textarea rows="3">Disgraced fencer turned spy for the Rose &amp; Cross.</textarea></label>
         </div>
-        <div class="nation-info">
-          <p class="ni-name">Montaigne</p>
-          <p class="ni-row"><b>Nation +1</b><span class="ni-val">Finesse / Panache</span></p>
-          <p class="ni-row"><b>Sorcery</b><span class="ni-val">Porté</span></p>
-          <p class="ni-hint">The +1 applies to one of these Traits after your 2 free points. National sorcery is bought later as an Advantage.</p>
+        <div class="wiz-nation-block">
+          <div class="wiz-nation-label">Nation <span class="wiz-nation-hint">The +1 applies to one of these Traits after your 2 free points. National sorcery is bought later as an Advantage.</span></div>
+          <div class="wiz-nation-grid">
+            <div class="wiz-nation"><div class="nn">Avalon</div><div class="nb">+1 Panache / Resolve <span class="nsorc">· Knights of Avalon</span></div></div><div class="wiz-nation"><div class="nn">Castille</div><div class="nb">+1 Finesse / Wits</div></div><div class="wiz-nation"><div class="nn">Eisen</div><div class="nb">+1 Brawn / Resolve <span class="nsorc">· Hexenwerk</span></div></div><div class="wiz-nation selected"><div class="nn">Montaigne <i class="fas fa-check">✓</i></div><div class="nb">+1 Finesse / Panache <span class="nsorc">· Porté</span></div></div><div class="wiz-nation"><div class="nn">Sarmatia</div><div class="nb">+1 Brawn / Panache <span class="nsorc">· Sanderis</span></div></div><div class="wiz-nation"><div class="nn">Ussura</div><div class="nb">+1 Resolve / Wits <span class="nsorc">· Mother's Touch</span></div></div><div class="wiz-nation"><div class="nn">Vesten</div><div class="nb">+1 Brawn / Wits</div></div><div class="wiz-nation"><div class="nn">Vodacce</div><div class="nb">+1 Finesse / Resolve <span class="nsorc">· Sorte</span></div></div><div class="wiz-nation"><div class="nn">Numa</div><div class="nb">+1 Any Trait (GM's discretion)</div></div>
+          </div>
         </div>
       </div>
     </div>

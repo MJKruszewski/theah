@@ -113,25 +113,28 @@ export async function seedCompendia({ force = false } = {}) {
   if (!game.user?.isGM) return;
 
   const seededVersion = game.settings.get('theah', 'packSeedVersion') || 0;
-  const newVersion = force || seededVersion < PACK_SEED_VERSION;
 
-  // Fast path: current version, not forced, and no pack is empty → nothing to do.
-  if (!newVersion) {
-    const anyMissing = SEED_TARGETS.some((t) => {
-      const c = game.packs.get(t.pack);
-      return c && c.index.size === 0;
-    });
-    if (!anyMissing) return;
-  }
+  // Corruption = an empty pack OR any blank-named doc. Detect it every load so a
+  // pack that seeded badly self-heals even at the current version (a version bump
+  // alone wasn't enough — the old gate only checked for empty packs).
+  const corrupt = SEED_TARGETS.some((t) => {
+    const c = game.packs.get(t.pack);
+    if (!c) return false;
+    if (c.index.size === 0) return true;
+    return c.index.some((i) => !i.name || !String(i.name).trim());
+  });
+
+  const heal = force || seededVersion < PACK_SEED_VERSION || corrupt;
+  if (!heal) return;
 
   let created = 0;
   let updated = 0;
   for (const { pack, file } of SEED_TARGETS) {
     const docs = await loadSeedData(file);
     if (!docs) continue;
-    // On a version bump (or forced), heal existing docs too — this repairs packs
-    // that seeded badly in a prior version.
-    const r = await syncPack(pack, docs, newVersion);
+    // Heal existing docs too (purge blanks + rewrite to canonical) — repairs
+    // packs that seeded badly in a prior version.
+    const r = await syncPack(pack, docs, true);
     created += r.created;
     updated += r.updated;
   }

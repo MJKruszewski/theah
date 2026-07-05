@@ -62,7 +62,7 @@ ${css}
   <p style="font:600 13px/1.5 system-ui;color:#cbb98a;margin:0 0 4px">Hero Creator — redesigned steps (paper theme)</p>
   <p style="font:400 12px/1.5 system-ui;color:#8a8378;margin:0">Faithful render: the actual compiled <code>dist/theah.css</code> over the real template markup and compendium data.</p>
 
-  <p class="preview-label">Step 1 — Concept &amp; Nation (info box)</p>
+  <p class="preview-label">Step 1 — Concept &amp; Nation (card picker)</p>
   <div class="preview-frame"><form class="hero-creator-form theah">
     <ol class="wiz-steps">${steps(0)}</ol>
     <div class="wiz-body">
@@ -71,15 +71,26 @@ ${css}
         <div class="wiz-fields">
           <label class="wiz-field"><span>Name</span><input type="text" value="Amélie de Trélan" /></label>
           <label class="wiz-field"><span>Epithet</span><input type="text" value="the Left-Handed" /></label>
-          <label class="wiz-field"><span>Nation</span><select><option>Montaigne</option></select></label>
           <label class="wiz-field"><span>Religion</span><input type="text" value="—" /></label>
           <label class="wiz-field wiz-field-wide"><span>Concept</span><textarea rows="3">Disgraced fencer turned spy for the Rose &amp; Cross.</textarea></label>
         </div>
-        <div class="nation-info">
-          <p class="ni-name">Montaigne</p>
-          <p class="ni-row"><b>Nation +1</b><span class="ni-val">Finesse / Panache</span></p>
-          <p class="ni-row"><b>Sorcery</b><span class="ni-val">Porté</span></p>
-          <p class="ni-hint">The +1 applies to one of these Traits after your 2 free points. National sorcery is bought later as an Advantage.</p>
+        <div class="wiz-nation-block">
+          <div class="wiz-nation-label">Nation <span class="wiz-nation-hint">The +1 applies to one of these Traits after your 2 free points. National sorcery is bought later as an Advantage.</span></div>
+          <div class="wiz-nation-grid">
+            ${[
+              ['Avalon', 'Panache / Resolve', 'Knights of Avalon'],
+              ['Castille', 'Finesse / Wits', ''],
+              ['Eisen', 'Brawn / Resolve', 'Hexenwerk'],
+              ['Montaigne', 'Finesse / Panache', 'Porté', true],
+              ['Sarmatia', 'Brawn / Panache', 'Sanderis'],
+              ['Ussura', 'Resolve / Wits', "Mother's Touch"],
+              ['Vesten', 'Brawn / Wits', ''],
+              ['Vodacce', 'Finesse / Resolve', 'Sorte'],
+              ['Numa', 'Any Trait (GM\'s discretion)', ''],
+            ].map(([n, b, s, sel]) =>
+              `<div class="wiz-nation${sel ? ' selected' : ''}"><div class="nn">${n}${sel ? ' <i class="fas fa-check">✓</i>' : ''}</div><div class="nb">+1 ${b}${s ? ` <span class="nsorc">· ${s}</span>` : ''}</div></div>`,
+            ).join('')}
+          </div>
         </div>
       </div>
     </div>

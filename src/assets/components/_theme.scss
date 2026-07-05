@@ -439,20 +439,28 @@
 .hero-creator-form .wiz-field input,
 .hero-creator-form .wiz-field select,
 .hero-creator-form .wiz-field textarea { background: color-mix(in srgb,var(--panel) 92%, #fff 8%); border: 1px solid var(--line); border-radius: 3px; color: var(--ink); font-family: var(--thd-body); font-size: 14px; line-height: 1.4; padding: 6px 8px; }
-/* Foundry's core shrinks bare <select> to ~1.5rem which clips 14px text — force a legible height. */
-.hero-creator-form .wiz-field select { height: auto; min-height: 34px; }
+/* Foundry's core shrinks bare <select>; force a legible height and match text
+   inputs so every field in a row is the same height (consistency). */
+.hero-creator-form .wiz-field input,
+.hero-creator-form .wiz-field select { min-height: 34px; box-sizing: border-box; }
+.hero-creator-form .wiz-field select { height: auto; }
 .hero-creator-form .wiz-field select option { color: #1a1a1a; }
 .hero-creator-form .wiz-field input:focus,
 .hero-creator-form .wiz-field select:focus,
 .hero-creator-form .wiz-field textarea:focus { border-color: var(--gold); outline: none; }
 
-/* Nation reference box (Concept step) */
-.hero-creator-form .nation-info { margin-top: 16px; padding: 12px 14px; border: 1px solid var(--line); border-left: 3px solid var(--gold-deep); border-radius: 5px; background: color-mix(in srgb,var(--panel) 92%, #fff 8%); }
-.hero-creator-form .nation-info .ni-name { font-family: var(--thd-display); font-variant: small-caps; letter-spacing: .05em; font-size: 17px; color: var(--ink); margin: 0 0 6px; }
-.hero-creator-form .nation-info .ni-row { font-size: 13px; color: var(--ink-soft); margin: 3px 0; }
-.hero-creator-form .nation-info .ni-row b { font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); margin-right: 6px; }
-.hero-creator-form .nation-info .ni-row .ni-val { color: var(--ink); font-family: var(--thd-body); }
-.hero-creator-form .nation-info .ni-hint { font-size: 11.5px; color: var(--ink-soft); font-style: italic; margin: 6px 0 0; }
+/* Nation picker — cards (consistent with Backgrounds / Arcana), not a dropdown */
+.hero-creator-form .wiz-nation-block { margin-top: 18px; }
+.hero-creator-form .wiz-nation-label { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 9px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.hero-creator-form .wiz-nation-hint { font-family: var(--thd-body); font-size: 11px; letter-spacing: 0; text-transform: none; color: var(--ink-soft); font-style: italic; }
+.hero-creator-form .wiz-nation-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.hero-creator-form .wiz-nation { padding: 8px 11px; border: 1px solid var(--line); border-radius: 5px; cursor: pointer; background: color-mix(in srgb,var(--panel) 94%, #fff 6%); transition: border-color .12s; }
+.hero-creator-form .wiz-nation:hover { border-color: var(--gold); }
+.hero-creator-form .wiz-nation.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
+.hero-creator-form .wiz-nation .nn { font-family: var(--thd-display); font-size: 14px; font-weight: 600; color: var(--ink); display: flex; align-items: center; justify-content: space-between; }
+.hero-creator-form .wiz-nation .nn .fa-check { color: var(--teal); font-size: 12px; }
+.hero-creator-form .wiz-nation .nb { font-size: 11px; color: var(--ink-soft); margin-top: 3px; }
+.hero-creator-form .wiz-nation .nsorc { color: var(--gold-deep); }
 
 /* Traits */
 .hero-creator-form .wiz-traits { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }

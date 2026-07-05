@@ -20,21 +20,23 @@
             <input type="text" data-state="name" value="{{state.name}}" placeholder="{{localize 'SVNSEA2E.ActorName'}}" /></label>
           <label class="wiz-field"><span>{{localize "SVNSEA2E.Epithet"}}</span>
             <input type="text" data-state="epithet" value="{{state.epithet}}" placeholder="{{localize 'SVNSEA2E.EpithetPlaceholder'}}" /></label>
-          <label class="wiz-field"><span>{{localize "SVNSEA2E.Nation"}}</span>
-            <select data-state="nation">{{selectOptions nationOptions selected=state.nation localize=true}}</select></label>
           <label class="wiz-field"><span>{{localize "SVNSEA2E.Religion"}}</span>
             <input type="text" data-state="religion" value="{{state.religion}}" placeholder="—" /></label>
           <label class="wiz-field wiz-field-wide"><span>{{localize "SVNSEA2E.Concept"}}</span>
             <textarea data-state="concept" rows="3" placeholder="…">{{state.concept}}</textarea></label>
         </div>
-        {{#if nationInfo}}
-          <div class="nation-info">
-            <p class="ni-name">{{nationInfo.name}}</p>
-            <p class="ni-row"><b>{{localize "SVNSEA2E.WizNationBonus"}}</b><span class="ni-val">{{nationInfo.bonusTraits}}</span></p>
-            {{#if nationInfo.sorcery}}<p class="ni-row"><b>{{localize "SVNSEA2E.Sorcery"}}</b><span class="ni-val">{{nationInfo.sorcery}}</span></p>{{/if}}
-            <p class="ni-hint">{{localize "SVNSEA2E.WizNationInfoHint"}}</p>
+
+        <div class="wiz-nation-block">
+          <div class="wiz-nation-label">{{localize "SVNSEA2E.Nation"}} <span class="wiz-nation-hint">{{localize "SVNSEA2E.WizNationInfoHint"}}</span></div>
+          <div class="wiz-nation-grid">
+            {{#each nationCards}}
+              <div class="wiz-nation {{#if selected}}selected{{/if}}" data-nation-pick="{{key}}">
+                <div class="nn">{{label}}{{#if selected}} <i class="fas fa-check"></i>{{/if}}</div>
+                <div class="nb">+1 {{bonus}}{{#if sorcery}} <span class="nsorc">&middot; {{sorcery}}</span>{{/if}}</div>
+              </div>
+            {{/each}}
           </div>
-        {{/if}}
+        </div>
       </div>
     {{/iff}}
 
@@ -103,7 +105,7 @@
     {{#iff step '==' 4}}
       <div class="wiz-step">
         <p class="wiz-intro">{{localize "SVNSEA2E.WizAdvantagesIntro"}}</p>
-        <p class="wiz-budget">{{localize "SVNSEA2E.WizPointsLeft"}}: <b>{{advPointsLeft}}</b> / {{advPointsTotal}}</p>
+        <p class="wiz-budget">{{localize "SVNSEA2E.WizPointsLeft"}}: <b>{{advPointsLeft}}</b> / {{advPointsTotal}} &middot; {{advantageList.length}} {{localize "SVNSEA2E.WizAvailable"}}</p>
         {{#if freeAdvantages.length}}
           <div class="wiz-free"><b>{{localize "SVNSEA2E.WizFreeFromBg"}}:</b> {{#each freeAdvantages}}<span class="tag">{{this}}</span>{{/each}}</div>
         {{/if}}

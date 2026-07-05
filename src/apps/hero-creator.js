@@ -71,10 +71,10 @@ export class HeroCreator extends FormApplication {
 
   async _loadCatalog() {
     if (this._catalog) return this._catalog;
-    const backgrounds = await this._packDocs('theah.backgrounds');
-    const advantages = await this._packDocs('theah.advantages');
-    const arcana = await this._packDocs('theah.arcana');
-    const byName = (a, b) => a.name.localeCompare(b.name);
+    const backgrounds = await this._loadPack('theah.backgrounds', 'backgrounds');
+    const advantages = await this._loadPack('theah.advantages', 'advantages');
+    const arcana = await this._loadPack('theah.arcana', 'arcana');
+    const byName = (a, b) => (a.name || '').localeCompare(b.name || '');
     this._catalog = {
       backgrounds: backgrounds.sort(byName),
       advantages: advantages.sort(byName),
@@ -89,6 +89,33 @@ export class HeroCreator extends FormApplication {
     if (!pack) return [];
     const docs = await pack.getDocuments();
     return docs.map((d) => d.toObject());
+  }
+
+  /**
+   * Load a category from its compendium, falling back to the shipped
+   * `packs-data/<file>.json` when the compendium is missing, empty, or corrupt
+   * (blank-named docs). This is why the wizard now works even if a world's
+   * compendium never seeded properly: it always has real, valid data to show and
+   * to clone onto the actor.
+   * @param {string} packId  Compendium collection id.
+   * @param {string} file    Base filename under packs-data/.
+   * @returns {Promise<object[]>}
+   */
+  async _loadPack(packId, file) {
+    const docs = await this._packDocs(packId);
+    const valid = docs.filter((d) => d && d.name && String(d.name).trim());
+    if (valid.length) return valid;
+    console.warn(`Théah | compendium "${packId}" empty or corrupt — loading shipped ${file}.json instead.`);
+    try {
+      const res = await fetch(`systems/theah/packs-data/${file}.json`);
+      if (res.ok) {
+        const shipped = await res.json();
+        if (Array.isArray(shipped) && shipped.length) return shipped;
+      }
+    } catch (e) {
+      console.error(`Théah | failed loading shipped ${file}.json`, e);
+    }
+    return docs;
   }
 
   /* -------------------------------------------- */
@@ -191,18 +218,24 @@ export class HeroCreator extends FormApplication {
       religions: null,
     };
 
-    // Concept — nation reference box (bonus Traits + national sorcery)
-    data.nationOptions = C.nations;
-    const nkey = this._wizard.nation;
-    if (nkey && nkey !== 'none') {
-      const sorcKey = C.nationSorcery[nkey];
-      const bonusKeys = C.nationBonus[nkey] || [];
-      data.nationInfo = {
-        name: C.nations[nkey],
-        bonusTraits: bonusKeys.map((k) => C.traits[k]).join(' / ') || game.i18n.localize('SVNSEA2E.WizAnyTrait'),
-        sorcery: sorcKey ? game.i18n.localize(C.sorceryTypes[sorcKey] || sorcKey) : null,
-      };
-    }
+    // Concept — nation chosen from cards (consistent with Backgrounds / Arcana),
+    // each card showing its +1 Traits and national sorcery so there's no hunting
+    // through a dropdown.
+    const L = (s) => game.i18n.localize(s);
+    data.nationCards = Object.entries(C.nations)
+      .filter(([key]) => key !== 'none')
+      .map(([key, label]) => {
+        const bonusKeys = C.nationBonus[key] || [];
+        const sorcKey = C.nationSorcery[key];
+        return {
+          key,
+          label: L(label),
+          bonus: bonusKeys.length ? bonusKeys.map((k) => L(C.traits[k])).join(' / ') : L('SVNSEA2E.WizAnyTrait'),
+          sorcery: sorcKey ? L(C.sorceryTypes[sorcKey] || sorcKey) : '',
+          selected: this._wizard.nation === key,
+        };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label));
 
     // Traits
     const bonusChoices = C.nationBonus[this._wizard.nation] || Object.keys(C.traits).filter((t) => !['influence', 'strength'].includes(t));
@@ -318,21 +351,22 @@ export class HeroCreator extends FormApplication {
     super.activateListeners(html);
     const root = html[0] ?? html;
 
-    // Persist free-text / selects into state as they change.
+    // Persist free-text fields into state as they change.
     root.querySelectorAll('[data-state]').forEach((el) => {
       el.addEventListener('change', (ev) => {
-        const key = ev.currentTarget.dataset.state;
-        this._wizard[key] = ev.currentTarget.value;
-        if (key === 'nation') {
-          // Nation change invalidates the previously chosen bonus Trait, and
-          // refreshes the reference box. Capture the other typed fields first
-          // so the re-render doesn't discard them.
-          this._wizard.nationBonusTrait = null;
-          this._readConceptInputs();
-          this.render(false);
-        }
+        this._wizard[ev.currentTarget.dataset.state] = ev.currentTarget.value;
       });
     });
+
+    // Nation pick cards (single-select).
+    root.querySelectorAll('[data-nation-pick]').forEach((el) =>
+      el.addEventListener('click', (ev) => {
+        this._readConceptInputs(); // preserve typed name/epithet/religion/concept
+        this._wizard.nation = ev.currentTarget.dataset.nationPick;
+        this._wizard.nationBonusTrait = null; // nation change invalidates the bonus Trait
+        this.render(false);
+      }),
+    );
 
     // Trait allocation.
     root.querySelectorAll('[data-trait-inc]').forEach((el) =>
