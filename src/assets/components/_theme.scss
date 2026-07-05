@@ -225,9 +225,9 @@
 .theah .sheet-tabs .item.active h2 { color: var(--ink); text-shadow: none; }
 .theah .sheet-tabs .item.active::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: -2px; height: 2px; background: linear-gradient(90deg,var(--gold-leaf),var(--gold-deep)); }
 /* Compact icon-only theme switch, pinned to the right of the tab strip. */
-.theah .sheet-tabs .theme-toggle { margin-left: auto; align-self: center; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; padding: 0; background: transparent; border: 1px solid var(--line-strong); border-radius: 3px; color: var(--ink-soft); cursor: pointer; margin-bottom: 5px; line-height: 1; }
-.theah .sheet-tabs .theme-toggle:hover { color: var(--gold-deep); border-color: var(--gold); }
-.theah .sheet-tabs .theme-toggle i { font-size: 12px; margin: 0; }
+.theah .sheet-tabs .theme-toggle { margin-left: auto; align-self: center; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; background: transparent; border: 1px solid var(--line-strong); border-radius: 4px; color: var(--ink-soft); cursor: pointer; margin-bottom: 4px; line-height: 1; }
+.theah .sheet-tabs .theme-toggle:hover { color: var(--gold-deep); border-color: var(--gold); background: color-mix(in srgb, var(--gold-leaf) 12%, transparent); }
+.theah .sheet-tabs .theme-toggle i { font-size: 16px; margin: 0; }
 
 /* Section rule */
 .theah .sec-title { display: flex; align-items: center; gap: 12px; margin: 6px 0 14px; }
