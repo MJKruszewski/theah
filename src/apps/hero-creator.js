@@ -32,6 +32,8 @@ export class HeroCreator extends FormApplication {
       advantages: [], // compendium ids (purchased)
       virtueId: null,
       hubrisId: null,
+      duelStyleId: null, // compendium id (chosen when Duelist Academy is bought)
+      societyId: null, // compendium id (optional single Secret Society, or null)
     };
   }
 
@@ -43,6 +45,7 @@ export class HeroCreator extends FormApplication {
       { key: 'skills', label: 'SVNSEA2E.Skills' },
       { key: 'advantages', label: 'SVNSEA2E.Advantages' },
       { key: 'arcana', label: 'SVNSEA2E.Arcana' },
+      { key: 'prowess', label: 'SVNSEA2E.WizProwess' },
       { key: 'review', label: 'SVNSEA2E.WizReview' },
     ];
   }
@@ -75,12 +78,16 @@ export class HeroCreator extends FormApplication {
     const backgrounds = await this._loadPack('theah.backgrounds', 'backgrounds');
     const advantages = await this._loadPack('theah.advantages', 'advantages');
     const arcana = await this._loadPack('theah.arcana', 'arcana');
+    const duelstyles = await this._loadPack('theah.duelstyles', 'duelstyles');
+    const secretsocieties = await this._loadPack('theah.secretsocieties', 'secretsocieties');
     const byName = (a, b) => (a.name || '').localeCompare(b.name || '');
     this._catalog = {
       backgrounds: backgrounds.sort(byName),
       advantages: advantages.sort(byName),
       virtues: arcana.filter((i) => i.type === 'virtue').sort(byName),
       hubris: arcana.filter((i) => i.type === 'hubris').sort(byName),
+      duelstyles: duelstyles.sort(byName),
+      secretsocieties: secretsocieties.sort(byName),
     };
     return this._catalog;
   }
@@ -173,6 +180,21 @@ export class HeroCreator extends FormApplication {
       for (const name of bg.system.advantages || []) names.add(name);
     }
     return [...names];
+  }
+
+  /**
+   * Dueling Styles are learned by purchasing the Duelist Academy Advantage
+   * (Core p.154 / p.234). The wizard offers a Style pick when that Advantage is
+   * bought (purchased, or granted free by a Background).
+   * @returns {boolean}
+   */
+  _hasDuelistAcademy() {
+    const names = new Set(this._freeAdvantageNames());
+    for (const id of this._wizard.advantages) {
+      const adv = this._catalog.advantages.find((a) => a._id === id);
+      if (adv) names.add(adv.name);
+    }
+    return names.has('Duelist Academy');
   }
 
   _traitFinal(key) {
@@ -309,6 +331,22 @@ export class HeroCreator extends FormApplication {
       description: h.system.description || '',
     }));
 
+    // Prowess — Dueling Style (only if Duelist Academy was bought) + optional
+    // single Secret Society. Both use the same .wiz-pick card as Backgrounds.
+    data.hasDuelistAcademy = this._hasDuelistAcademy();
+    data.duelstyleList = (this._catalog.duelstyles || []).map((d) => ({
+      id: d._id,
+      name: d.name,
+      selected: this._wizard.duelStyleId === d._id,
+      description: d.system.bonus || d.system.description || '',
+    }));
+    data.societyList = (this._catalog.secretsocieties || []).map((s) => ({
+      id: s._id,
+      name: s.name,
+      selected: this._wizard.societyId === s._id,
+      description: s.system.concern || s.system.description || '',
+    }));
+
     // Review
     data.review = this._buildReview(skills);
     data.emptyCatalog = !this._catalog.backgrounds.length;
@@ -326,6 +364,10 @@ export class HeroCreator extends FormApplication {
       .map((id) => this._catalog.advantages.find((a) => a._id === id))
       .filter(Boolean)
       .map((a) => a.name);
+    const duelStyle = this._hasDuelistAcademy()
+      ? (this._catalog.duelstyles || []).find((d) => d._id === this._wizard.duelStyleId)
+      : null;
+    const society = (this._catalog.secretsocieties || []).find((s) => s._id === this._wizard.societyId);
     return {
       name: this._wizard.name,
       nation: C.nations[this._wizard.nation],
@@ -338,6 +380,8 @@ export class HeroCreator extends FormApplication {
       purchased,
       virtue: virtue?.name,
       hubris: hubris?.name,
+      duelStyle: duelStyle?.name,
+      society: society?.name,
       languages: langs,
       heroPoints: C.creation.startingHeroPoints,
     };
@@ -407,6 +451,23 @@ export class HeroCreator extends FormApplication {
         const field = ev.currentTarget.dataset.arcanaPick; // virtueId | hubrisId
         const id = ev.currentTarget.dataset.arcId;
         this._wizard[field] = this._wizard[field] === id ? null : id;
+        this.render(false);
+      }),
+    );
+
+    // Prowess pick cards — Dueling Style + Secret Society (single-select each;
+    // click again to clear).
+    root.querySelectorAll('[data-duelstyle-pick]').forEach((el) =>
+      el.addEventListener('click', (ev) => {
+        const id = ev.currentTarget.dataset.duelstylePick;
+        this._wizard.duelStyleId = this._wizard.duelStyleId === id ? null : id;
+        this.render(false);
+      }),
+    );
+    root.querySelectorAll('[data-society-pick]').forEach((el) =>
+      el.addEventListener('click', (ev) => {
+        const id = ev.currentTarget.dataset.societyPick;
+        this._wizard.societyId = this._wizard.societyId === id ? null : id;
         this.render(false);
       }),
     );
@@ -520,6 +581,11 @@ export class HeroCreator extends FormApplication {
       case 'arcana':
         if (!this._wizard.virtueId || !this._wizard.hubrisId) return L('SVNSEA2E.WizNeedArcana');
         break;
+      case 'prowess':
+        // Buying Duelist Academy means choosing a Style; a Secret Society is
+        // optional (a Hero may join one in their background, or none).
+        if (this._hasDuelistAcademy() && !this._wizard.duelStyleId) return L('SVNSEA2E.WizNeedDuelStyle');
+        break;
     }
     return null;
   }
@@ -598,6 +664,19 @@ export class HeroCreator extends FormApplication {
     for (const arc of [virtue, hubris]) {
       if (!arc) continue;
       const obj = foundry.utils.deepClone(arc);
+      delete obj._id;
+      toCreate.push(obj);
+    }
+
+    // Prowess: the chosen Dueling Style (only if Duelist Academy was bought) and
+    // an optional single Secret Society.
+    const duelStyle = this._hasDuelistAcademy()
+      ? (this._catalog.duelstyles || []).find((d) => d._id === this._wizard.duelStyleId)
+      : null;
+    const society = (this._catalog.secretsocieties || []).find((s) => s._id === this._wizard.societyId);
+    for (const it of [duelStyle, society]) {
+      if (!it) continue;
+      const obj = foundry.utils.deepClone(it);
       delete obj._id;
       toCreate.push(obj);
     }

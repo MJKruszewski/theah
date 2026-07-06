@@ -537,6 +537,8 @@
 .hero-creator-form .wiz-pick { padding: 10px 12px; border: 1px solid var(--line); border-radius: 5px; cursor: pointer; background: color-mix(in srgb,var(--panel) 94%, #fff 6%); transition: border-color .12s; }
 .hero-creator-form .wiz-pick:hover { border-color: var(--gold); }
 .hero-creator-form .wiz-pick.selected { border-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--gold) 35%, transparent); }
+/* Secret Society picks use a teal rail so they read distinctly from Dueling Styles. */
+.hero-creator-form .wiz-pick.society.selected { border-color: var(--teal); box-shadow: inset 3px 0 0 var(--teal); }
 .hero-creator-form .pick-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
 .hero-creator-form .pick-name { font-family: var(--thd-display); font-size: 15px; font-weight: 600; color: var(--ink); }
 .hero-creator-form .wiz-pick .fa-check { color: var(--teal); }

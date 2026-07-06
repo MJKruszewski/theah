@@ -157,8 +157,41 @@
       </div>
     {{/iff}}
 
-    {{!-- Step 6 — Review --}}
+    {{!-- Step 6 — Prowess (Dueling Style + Secret Society) --}}
     {{#iff step '==' 6}}
+      <div class="wiz-step">
+        <p class="wiz-intro">{{localize "SVNSEA2E.WizProwessIntro"}}</p>
+
+        <div class="sec-title"><h3>{{localize "SVNSEA2E.DuelingStyles"}}</h3><span></span></div>
+        {{#if hasDuelistAcademy}}
+          <p class="wiz-budget">{{localize "SVNSEA2E.WizDuelStyleHint"}}</p>
+          <div class="wiz-pick-list">
+            {{#each duelstyleList}}
+              <div class="wiz-pick {{#if selected}}selected{{/if}}" data-duelstyle-pick="{{id}}">
+                <div class="pick-head"><span class="pick-name">{{name}}</span>{{#if selected}}<i class="fas fa-check"></i>{{/if}}</div>
+                {{#if description}}<div class="pick-meta pick-desc">{{{description}}}</div>{{/if}}
+              </div>
+            {{/each}}
+          </div>
+        {{else}}
+          <p class="wiz-empty">{{localize "SVNSEA2E.WizNoDuelistAcademy"}}</p>
+        {{/if}}
+
+        <div class="sec-title" style="margin-top:20px"><h3>{{localize "SVNSEA2E.SecretSociety"}}</h3><span></span></div>
+        <p class="wiz-budget">{{localize "SVNSEA2E.WizSocietyHint"}}</p>
+        <div class="wiz-pick-list">
+          {{#each societyList}}
+            <div class="wiz-pick society {{#if selected}}selected{{/if}}" data-society-pick="{{id}}">
+              <div class="pick-head"><span class="pick-name">{{name}}</span>{{#if selected}}<i class="fas fa-check"></i>{{/if}}</div>
+              {{#if description}}<div class="pick-meta pick-desc">{{{description}}}</div>{{/if}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/iff}}
+
+    {{!-- Step 7 — Review --}}
+    {{#iff step '==' 7}}
       <div class="wiz-step wiz-review">
         <h3 class="rev-title">{{review.name}} <span class="rev-nation">{{review.nation}}</span></h3>
         <div class="rev-grid">
@@ -167,6 +200,8 @@
           <div class="rev-card"><b>{{localize "SVNSEA2E.Backgrounds"}}</b><ul>{{#each review.backgrounds}}<li>{{this}}</li>{{/each}}</ul></div>
           <div class="rev-card"><b>{{localize "SVNSEA2E.Advantages"}}</b><ul>{{#each review.freeAdvantages}}<li>{{this}} <em>{{localize "SVNSEA2E.WizFree"}}</em></li>{{/each}}{{#each review.purchased}}<li>{{this}}</li>{{/each}}</ul></div>
           <div class="rev-card"><b>{{localize "SVNSEA2E.Arcana"}}</b><ul><li>{{localize "SVNSEA2E.Virtue"}}: {{review.virtue}}</li><li>{{localize "SVNSEA2E.Hubris"}}: {{review.hubris}}</li></ul></div>
+          {{#if review.duelStyle}}<div class="rev-card"><b>{{localize "SVNSEA2E.DuelingStyles"}}</b><ul><li>{{review.duelStyle}}</li></ul></div>{{/if}}
+          {{#if review.society}}<div class="rev-card"><b>{{localize "SVNSEA2E.SecretSociety"}}</b><ul><li>{{review.society}}</li></ul></div>{{/if}}
           <div class="rev-card"><b>{{localize "SVNSEA2E.Languages"}}</b><ul>{{#each review.languages}}<li>{{this}}</li>{{/each}}</ul></div>
         </div>
         <p class="rev-foot">{{localize "SVNSEA2E.HeroPoints"}}: {{review.heroPoints}} &middot; {{localize "SVNSEA2E.WealthPts"}} 0 &middot; {{localize "SVNSEA2E.Reputation"}} —</p>
