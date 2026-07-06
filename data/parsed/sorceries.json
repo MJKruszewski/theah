@@ -1,8 +1,0 @@
-[
-  { "name": "Hexenwerk", "sorctype": "hex", "page": 206 },
-  { "name": "Knights of Avalon", "sorctype": "knight", "page": 210 },
-  { "name": "Mother's Touch", "sorctype": "darm", "page": 217 },
-  { "name": "Porté", "sorctype": "porte", "page": 219 },
-  { "name": "Sanderis", "sorctype": "sanderis", "page": 222 },
-  { "name": "Sorte", "sorctype": "sorte", "page": 228 }
-]

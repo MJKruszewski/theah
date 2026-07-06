@@ -326,6 +326,31 @@
 .theah .perk-row .item-controls a:hover { color: var(--gold-deep); }
 .theah .item-summary { flex-basis: 100%; margin: 6px 0 2px; padding: 8px 10px; font-size: 13px; color: var(--ink-soft); border-left: 2px solid var(--gold-deep); background: color-mix(in srgb, var(--gold-leaf) 8%, transparent); }
 
+/* Prowess tab — Dueling Style / Secret Society cards (content shown upfront). */
+.theah .prowess-list { display: flex; flex-direction: column; gap: 12px; }
+.theah .prowess-card { border: 1px solid var(--panel-edge); border-left: 3px solid var(--gold-deep); border-radius: 3px; background: color-mix(in srgb, var(--gold-leaf) 5%, transparent); padding: 10px 12px; }
+.theah .prowess-card.society { border-left-color: var(--teal); }
+.theah .prowess-card .pc-head { display: flex; align-items: center; gap: 9px; }
+.theah .prowess-card .pc-icon { color: var(--gold-deep); font-size: 14px; flex: none; }
+.theah .prowess-card.society .pc-icon { color: var(--teal); }
+.theah .prowess-card .pc-name { flex: 1; margin: 0; border: 0; font-family: var(--thd-display); font-size: 16px; color: var(--ink); }
+.theah .prowess-card .favor-tag { font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--teal); border: 1px solid color-mix(in srgb, var(--teal) 45%, transparent); border-radius: 10px; padding: 2px 8px; white-space: nowrap; }
+.theah .prowess-card .item-controls { display: flex; gap: 8px; opacity: 0; transition: opacity .15s; }
+.theah .prowess-card:hover .item-controls { opacity: 1; }
+.theah .prowess-card .item-controls a { color: var(--ink-soft); font-size: 12px; cursor: pointer; }
+.theah .prowess-card .item-controls a:hover { color: var(--gold-deep); }
+.theah .prowess-card .pc-desc { margin-top: 7px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+.theah .prowess-card .pc-desc p { margin: 0 0 6px; }
+.theah .prowess-card .pc-mech, .theah .prowess-card .pc-concern, .theah .prowess-card .pc-favor-block { margin-top: 8px; font-size: 13px; line-height: 1.5; color: var(--ink); }
+.theah .prowess-card .pc-mech { padding: 8px 10px; border-left: 2px solid var(--gold-deep); background: color-mix(in srgb, var(--gold-leaf) 8%, transparent); }
+.theah .prowess-card .pc-mech p, .theah .prowess-card .pc-concern p { margin: 0; }
+.theah .prowess-card .pc-lbl { display: block; font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 3px; }
+.theah .prowess-card.society .pc-lbl { color: var(--teal); }
+.theah .prowess-card .pc-favor-block ul { margin: 0; padding-left: 18px; }
+.theah .prowess-card .pc-favor-block li { margin-bottom: 5px; }
+.theah .prowess-card .pc-mech ul { margin: 4px 0 0; padding-left: 18px; }
+.theah .prowess-card .pc-mech li { margin-bottom: 5px; }
+
 /* Backgrounds tags */
 .theah .bg-tags { list-style: none; display: flex; gap: 6px; flex-wrap: wrap; margin: 0; padding: 0; }
 .theah .tag { font-family: var(--thd-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; display: inline-flex; align-items: center; gap: 6px; }

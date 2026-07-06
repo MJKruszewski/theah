@@ -113,5 +113,47 @@ if (existsSync(resolve(DATA, "arcana.json"))) {
   written.push("arcana: skipped (data/parsed/arcana.json not present yet)");
 }
 
+/* --------------------------- Dueling Styles --------------------------- */
+{
+  const src = readJson("duelstyles.json");
+  const docs = src.map((d) => ({
+    _id: id16("duelstyle:" + d.name),
+    name: d.name,
+    type: "duelstyle",
+    img: "systems/theah/icons/item.svg",
+    system: {
+      description: para(d.description),
+      infosource: `Core Rulebook p.${d.page}`,
+      // bonus is authored as HTML in the source data; keep it verbatim.
+      bonus: d.bonus ?? "",
+    },
+  }));
+  writeFileSync(resolve(OUT, "duelstyles.json"), JSON.stringify(docs, null, 2));
+  written.push(`duelstyles: ${docs.length}`);
+}
+
+/* -------------------------- Secret Societies -------------------------- */
+{
+  const src = readJson("secretsocieties.json");
+  const docs = src.map((s) => ({
+    _id: id16("secretsociety:" + s.name),
+    name: s.name,
+    type: "secretsociety",
+    img: "systems/theah/icons/item.svg",
+    system: {
+      description: para(s.description),
+      infosource: `Core Rulebook p.${s.page}`,
+      concern: para(s.concern),
+      // earnfavor / callupon are authored as HTML lists; keep them verbatim.
+      earnfavor: s.earnfavor ?? "",
+      callupon: s.callupon ?? "",
+      // Favor is a live tracker on the actor; compendium templates start at 0.
+      favor: "0",
+    },
+  }));
+  writeFileSync(resolve(OUT, "secretsocieties.json"), JSON.stringify(docs, null, 2));
+  written.push(`secretsocieties: ${docs.length}`);
+}
+
 console.log("packs-data →", OUT);
 for (const w of written) console.log("  " + w);

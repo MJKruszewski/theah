@@ -3,7 +3,7 @@
   "type": "system",
   "title": "Théah — 7th Sea 2e (Unofficial)",
   "description": "Théah: an unofficial 7th Sea Second Edition system for Foundry VTT — swashbuckling heroes, the Raises dice pool, and data-rich compendiums.",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "compatibility": {
     "minimum": "13",
     "verified": "14"
@@ -71,13 +71,29 @@
       "type": "Item",
       "system": "theah",
       "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
+    },
+    {
+      "name": "duelstyles",
+      "label": "Dueling Styles (Core)",
+      "path": "packs/duelstyles",
+      "type": "Item",
+      "system": "theah",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
+    },
+    {
+      "name": "secretsocieties",
+      "label": "Secret Societies (Core)",
+      "path": "packs/secretsocieties",
+      "type": "Item",
+      "system": "theah",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
     }
   ],
   "packFolders": [
     {
       "name": "Théah — Core",
       "sorting": "m",
-      "packs": ["backgrounds", "advantages", "arcana"]
+      "packs": ["backgrounds", "advantages", "arcana", "duelstyles", "secretsocieties"]
     }
   ],
   "grid": {

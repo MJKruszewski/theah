@@ -617,7 +617,7 @@ export default class ActorSheetSS2e extends ActorSheet {
    * @type {string[]}
    */
   static get COMPENDIUM_LOCKED_TYPES() {
-    return ['advantage', 'background', 'virtue', 'hubris'];
+    return ['advantage', 'background', 'virtue', 'hubris', 'duelstyle', 'secretsociety'];
   }
 
   /**

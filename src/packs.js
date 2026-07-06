@@ -18,12 +18,15 @@
  */
 
 // Bump when the shipped catalog changes OR to force-heal existing worlds.
-export const PACK_SEED_VERSION = 2;
+// v3: added Dueling Styles + Secret Societies compendia.
+export const PACK_SEED_VERSION = 3;
 
 const SEED_TARGETS = [
   { pack: 'theah.backgrounds', file: 'backgrounds' },
   { pack: 'theah.advantages', file: 'advantages' },
   { pack: 'theah.arcana', file: 'arcana' },
+  { pack: 'theah.duelstyles', file: 'duelstyles' },
+  { pack: 'theah.secretsocieties', file: 'secretsocieties' },
 ];
 
 /**
