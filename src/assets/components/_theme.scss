@@ -185,6 +185,13 @@
 .theah .corruption-pips { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
 .theah .corruption-pips i { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(181,69,58,.6); cursor: pointer; }
 .theah .corruption-pips i.on { background: radial-gradient(var(--oxblood), var(--oxblood-deep)); border-color: var(--oxblood); }
+/* GM-only Evil Act button: applies escalating Corruption + rolls Fall from Grace. */
+.theah .rail-corruption .evil-act-roll { margin-top: 9px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase; color: #f2e6c9; background: linear-gradient(180deg, rgba(124,43,34,.5), rgba(90,30,22,.72)); border: 1px solid rgba(181,69,58,.55); border-radius: 3px; padding: 6px 8px; cursor: pointer; transition: filter .15s, border-color .15s; }
+.theah .rail-corruption .evil-act-roll:hover { filter: brightness(1.14); border-color: var(--oxblood); }
+.theah .rail-corruption .evil-act-roll i { font-size: 11px; opacity: .9; }
+
+/* Engraved hairline separating the Corruption block from the Wound tracks. */
+.theah .rail-sep { height: 1px; margin: 20px 2px 6px; background: linear-gradient(90deg, transparent, rgba(217,178,98,.36) 18%, rgba(217,178,98,.36) 82%, transparent); }
 
 /* Wounds + death spiral */
 .theah .wounds { margin: 18px 2px 0; }
@@ -416,6 +423,23 @@
 #chat .theah-wound .wound-stats b { font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
 #chat .theah-wound .wound-stats .dw b { color: var(--oxblood); }
 #chat .theah-wound .wound-effect { margin-top: 7px; font-size: 12.5px; font-style: italic; color: var(--ink-soft); }
+
+/* Corruption chat card (gain/shed) + the GM Evil Act / Fall-from-Grace card. */
+#chat .theah-corruption { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }
+#chat .theah-corruption.severe, #chat .theah-corruption.evil-act { border-left-color: var(--oxblood); }
+#chat .theah-corruption .corr-head { display: flex; align-items: center; gap: 9px; padding: 9px 12px; font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
+#chat .theah-corruption.severe .corr-head, #chat .theah-corruption.evil-act .corr-head { color: var(--oxblood); }
+#chat .theah-corruption .corr-head i { font-size: 14px; }
+#chat .theah-corruption .corr-body { padding: 0 12px 11px; }
+#chat .theah-corruption .corr-stats { display: flex; gap: 14px; margin-top: 4px; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+#chat .theah-corruption .corr-stats b { font-family: var(--thd-display); font-size: 15px; color: var(--oxblood); }
+#chat .theah-corruption .corr-roll { margin-top: 8px; font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
+#chat .theah-corruption .corr-roll b { font-size: 18px; }
+#chat .theah-corruption .corr-roll b.bad { color: var(--oxblood); }
+#chat .theah-corruption .corr-roll b.good { color: var(--teal); }
+#chat .theah-corruption .corr-note { margin-top: 7px; font-size: 12.5px; font-style: italic; color: var(--ink-soft); }
+#chat .theah-corruption .corr-verdict { margin-top: 8px; font-family: var(--thd-display); font-size: 14px; color: var(--teal); }
+#chat .theah-corruption .corr-verdict.fell { color: var(--oxblood); font-size: 16px; }
 
 /* ========================= Hero Creator wizard ========================= */
 .theah.hero-creator .window-content { padding: 0; background: var(--panel); color: var(--ink); font-family: var(--thd-body); }

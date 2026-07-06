@@ -37,9 +37,9 @@
           </div>
 
           <dl class="meta">
-            <dt>Nation</dt><dd><select><option>Montaigne</option></select></dd>
-            <dt>Religion</dt><dd><input value="Vaticine (lapsed)" /></dd>
-            <dt>Age</dt><dd><input value="27" /></dd>
+            <dt>Nation</dt><dd class="ro-field" title="Set during Hero creation.">Montaigne</dd>
+            <dt>Religion</dt><dd class="ro-field" title="Set during Hero creation.">Vaticine (lapsed)</dd>
+            <dt>Age</dt><dd class="ro-field" title="Set during Hero creation.">27</dd>
             <dt>Languages</dt>
             <dd class="rail-langs"><ul class="tag-list"><li class="tag">Montaigne</li><li class="tag">Théan</li><li class="tag">Castillian</li></ul><a class="language-selector"><i class="fas fa-edit"></i></a></dd>
           </dl>
@@ -54,6 +54,16 @@
             <span class="k">Raises</span>
             <div class="init-ctl"><button type="button">&minus;</button><input value="0" disabled /><button type="button">+</button></div>
           </div>
+
+          <div class="rail-corruption is-corrupt">
+            <div class="lbl"><span>Corruption<i class="fas fa-circle-info info-dot" title="Corruption from Evil Acts…"></i></span><span>3 / 10</span></div>
+            <div class="corruption-pips">
+              <i class="fillable rating corrupt on"></i><i class="fillable rating corrupt on"></i><i class="fillable rating corrupt on"></i><i class="fillable rating corrupt"></i><i class="fillable rating corrupt"></i><i class="fillable rating corrupt"></i><i class="fillable rating corrupt"></i><i class="fillable rating corrupt"></i><i class="fillable rating corrupt"></i><i class="fillable rating corrupt"></i>
+            </div>
+            <button type="button" class="evil-act-roll"><i class="fas fa-skull"></i> Evil Act</button>
+          </div>
+
+          <div class="rail-sep"></div>
 
           <div class="wounds">
             <div class="lbl"><span>Wounds</span><span>6 / 16</span></div>
@@ -119,12 +129,12 @@
 
                 <div class="lower-col">
                   <div class="sec-title"><h3>Advantages</h3><span></span><a class="add-btn"><i class="fas fa-plus"></i></a></div>
-                  <ul class="adv-list">
-                    <li class="adv-row item"><span class="cost">5</span><h4 class="an item-name">Duelist Academy</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
-                    <li class="adv-row item"><span class="cost">2</span><h4 class="an item-name">Fascinate</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
-                    <li class="adv-row item"><span class="cost">3</span><h4 class="an item-name">Fencer</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
-                    <li class="adv-row item"><span class="cost">1</span><h4 class="an item-name">Direction Sense</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
-                    <li class="adv-row item"><span class="cost">1</span><h4 class="an item-name">Linguist</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                  <ul class="perk-list">
+                    <li class="perk-row item"><span class="cost">5</span><h4 class="an item-name">Duelist Academy</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                    <li class="perk-row item"><span class="cost">2</span><h4 class="an item-name">Fascinate</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                    <li class="perk-row item"><span class="cost">3</span><h4 class="an item-name">Fencer</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                    <li class="perk-row item"><span class="cost">1</span><h4 class="an item-name">Direction Sense</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
+                    <li class="perk-row item"><span class="cost">1</span><h4 class="an item-name">Linguist</h4><span class="item-controls"><a class="item-control"><i class="fas fa-edit"></i></a><a class="item-control"><i class="fas fa-trash"></i></a></span></li>
                   </ul>
                 </div>
               </div>
@@ -158,6 +168,25 @@
         </main>
       </div>
     </form>
+  </div>
+
+  <!-- Chat card showcase: the themed cards these mechanics post. -->
+  <div id="chat" style="max-width:340px;margin:26px auto 0;display:flex;flex-direction:column;gap:12px;">
+    <div class="theah theah-corruption severe">
+      <div class="corr-head"><i class="fas fa-skull"></i> Amélie gains 2 Corruption</div>
+      <div class="corr-body">
+        <div class="corr-stats"><span class="cs"><b>3</b>/10 Corruption</span></div>
+        <div class="corr-note">Fall from Grace looms — a 1d10 of 3 or less would turn the Hero Villain.</div>
+      </div>
+    </div>
+    <div class="theah theah-corruption evil-act fell">
+      <div class="corr-head"><i class="fas fa-skull"></i> Evil Act #2</div>
+      <div class="corr-body">
+        <div class="corr-stats"><span class="cs"><b>+2</b> Corruption</span><span class="cs"><b>3</b>/10 Total</span></div>
+        <div class="corr-roll">1d10 &rarr; <b class="bad">2</b> vs 3 Corruption</div>
+        <div class="corr-verdict fell">Amélie Falls from Grace — the Hero becomes a Villain!</div>
+      </div>
+    </div>
   </div>
 </div>
 

@@ -155,6 +155,13 @@ export class SvnSea2EActor extends Actor {
         d: this.system.dwounds?.value ?? 0,
       };
     }
+    // Stash the prior Corruption so _onUpdate can post an accurate gain/shed
+    // card for whichever client made the change. (0 is a valid prior, so the
+    // presence of the key — not its truthiness — is what _onUpdate checks.)
+    const c = foundry.utils.getProperty(changed, 'system.corruptionpts');
+    if (c !== undefined) {
+      options.theahPriorCorruption = this.system.corruptionpts ?? 0;
+    }
   }
 
   /** @override */
@@ -162,9 +169,54 @@ export class SvnSea2EActor extends Actor {
     super._onUpdate(changed, options, userId);
     // Only the client that made the change reacts, so the chat card and token
     // status update exactly once regardless of how many players are connected.
-    if (options.theahPriorWounds && userId === game.user.id && !options.theahSilent) {
-      this._reactToWoundChange(options.theahPriorWounds);
+    if (userId === game.user.id && !options.theahSilent) {
+      if (options.theahPriorWounds) {
+        this._reactToWoundChange(options.theahPriorWounds);
+      }
+      if (options.theahPriorCorruption !== undefined) {
+        this._reactToCorruptionChange(options.theahPriorCorruption);
+      }
     }
+  }
+
+  /**
+   * Post a themed public chat card describing a Corruption gain or shed. Fires
+   * for ANY change to system.corruptionpts (pip click, wizard, macro) because
+   * it lives on the document, not a sheet handler. The GM "Evil Act" button
+   * suppresses this with {theahSilent:true} and posts its own richer card
+   * (Corruption gain + Fall-from-Grace 1d10) instead.
+   * @param {number} prior  The pre-update Corruption value.
+   * @private
+   */
+  async _reactToCorruptionChange(prior) {
+    const cMax = 10;
+    const newC = this.system.corruptionpts ?? 0;
+    const delta = newC - prior;
+    if (delta === 0) return;
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const name = this.name;
+    const gained = delta > 0;
+    const headline = gained
+      ? L('SVNSEA2E.CorruptionGains', { name, n: delta })
+      : L('SVNSEA2E.CorruptionSheds', { name, n: -delta });
+    const note = newC > 0
+      ? L('SVNSEA2E.CorruptionRisk', { n: newC })
+      : L('SVNSEA2E.CorruptionClean', { name });
+
+    const content = `
+      <div class="theah theah-corruption${gained ? ' severe' : ''}">
+        <div class="corr-head"><i class="fas ${gained ? 'fa-skull' : 'fa-dove'}"></i> ${headline}</div>
+        <div class="corr-body">
+          <div class="corr-stats"><span class="cs"><b>${newC}</b>/${cMax} ${L('SVNSEA2E.Corruption')}</span></div>
+          <div class="corr-note">${note}</div>
+        </div>
+      </div>`;
+
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      content,
+    });
   }
 
   /**

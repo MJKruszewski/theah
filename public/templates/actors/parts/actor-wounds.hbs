@@ -34,7 +34,14 @@
         {{/iff}}
       {{/for}}
     </div>
+    {{#if isGM}}
+      <button type="button" class="evil-act-roll" data-tooltip="{{localize 'SVNSEA2E.EvilActHint'}}">
+        <i class="fas fa-skull"></i> {{localize "SVNSEA2E.EvilAct"}}
+      </button>
+    {{/if}}
   </div>
+
+  <div class="rail-sep"></div>
 {{/if}}
 
 <div class="wounds">

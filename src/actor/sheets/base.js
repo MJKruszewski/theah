@@ -38,6 +38,7 @@ export default class ActorSheetSS2e extends ActorSheet {
       options: this.options,
       editable: this.isEditable,
       cssClass: owner ? 'editable' : 'locked',
+      isGM: game.user.isGM,
       isCorrupt: actorData.corruptionpts > 0,
       isPlayerCharacter: actor.type === ActorType.PLAYER,
       isHero: actor.type === ActorType.HERO,
@@ -249,6 +250,10 @@ export default class ActorSheetSS2e extends ActorSheet {
       .find('.language-selector')
       .on('click', this._onLanguageSelector.bind(this));
 
+    // GM-only: commit an Evil Act — gain escalating Corruption + roll the
+    // 1d10 Fall-from-Grace check (Core p.203).
+    html.find('.evil-act-roll').on('click', this._onEvilAct.bind(this));
+
     html
       .find('.add-1-initiative')
       .on('click', this._onAddInitiative.bind(this));
@@ -347,6 +352,101 @@ export default class ActorSheetSS2e extends ActorSheet {
     event.preventDefault();
     const initiative = (this.actor.system.initiative || 0) - 1;
     updateInitiative(this.actor.id, initiative);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * GM-only: the Hero commits an Evil Act. Per Core p.203 the Nth Evil Act
+   * grants N Corruption (cumulative totals 1 / 3 / 6 / 10), then the GM rolls
+   * 1d10 — a result ≤ the Hero's *new* Corruption total means they Fall from
+   * Grace and become a Villain. The Corruption is applied automatically; the
+   * update is silent so the rich card below supersedes the generic gain card.
+   * @param {Event} event   The originating click event.
+   * @private
+   */
+  async _onEvilAct(event) {
+    event.preventDefault();
+    if (!game.user.isGM) return;
+    const actor = this.actor;
+    const max = 10;
+    const cur = actor.system.corruptionpts ?? 0;
+
+    // Recover how many Evil Acts have been committed from the cumulative total
+    // (triangular number N(N+1)/2). Non-canonical totals degrade gracefully.
+    const priorActs = Math.floor((Math.sqrt(8 * cur + 1) - 1) / 2);
+    const actNumber = priorActs + 1;
+    const newTotal = Math.min(max, cur + actNumber);
+    const gain = newTotal - cur;
+    // Already at maximum Corruption: the book's escalation tops out at the 4th
+    // Evil Act (total 10), so there is no honest "5th act" or further gain — the
+    // Fall check here is simply a guaranteed loss. Present it as such rather than
+    // leaking the uncapped act number and a meaningless "+0".
+    const maxed = gain === 0;
+
+    // Book: the GM always warns before assigning Corruption.
+    const confirmed = await Dialog.confirm({
+      title: game.i18n.localize('SVNSEA2E.EvilAct'),
+      content: `<p>${
+        maxed
+          ? game.i18n.format('SVNSEA2E.EvilActConfirmMaxed', { name: actor.name })
+          : game.i18n.format('SVNSEA2E.EvilActConfirm', {
+              name: actor.name,
+              act: actNumber,
+              gain,
+              total: newTotal,
+            })
+      }</p>`,
+      defaultYes: false,
+    });
+    if (!confirmed) return;
+
+    // Apply the Corruption automatically (silent → this card is the record).
+    await actor.update({ 'system.corruptionpts': newTotal }, { theahSilent: true });
+
+    // Roll the Fall-from-Grace check.
+    const r = new Roll('1d10');
+    await r.evaluate();
+    if (game.dice3d) {
+      try {
+        await game.dice3d.showForRoll(r, game.user, true);
+      } catch (e) {
+        /* Dice So Nice is optional */
+      }
+    }
+    const die = r.total;
+    const fell = die <= newTotal;
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const verdict = fell
+      ? L('SVNSEA2E.FallFromGrace', { name: actor.name })
+      : L('SVNSEA2E.HeldTheLine', { name: actor.name, die });
+
+    const headline = maxed
+      ? L('SVNSEA2E.FallFromGraceCheck')
+      : L('SVNSEA2E.EvilActN', { act: actNumber });
+    const gainStat = maxed
+      ? ''
+      : `<span class="cs"><b>+${gain}</b> ${L('SVNSEA2E.Corruption')}</span>`;
+    const content = `
+      <div class="theah theah-corruption evil-act${fell ? ' fell' : ''}">
+        <div class="corr-head"><i class="fas fa-skull"></i> ${headline}</div>
+        <div class="corr-body">
+          <div class="corr-stats">
+            ${gainStat}
+            <span class="cs"><b>${newTotal}</b>/${max} ${L('SVNSEA2E.Total')}</span>
+          </div>
+          <div class="corr-roll">1d10 &rarr; <b class="${fell ? 'bad' : 'good'}">${die}</b> ${L('SVNSEA2E.VsCorruption', { n: newTotal })}</div>
+          <div class="corr-verdict${fell ? ' fell' : ''}">${verdict}</div>
+        </div>
+      </div>`;
+
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content,
+      rolls: [r],
+      sound: CONFIG.sounds.dice,
+    });
   }
 
   /* -------------------------------------------- */
