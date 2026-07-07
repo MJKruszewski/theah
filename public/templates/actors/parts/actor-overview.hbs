@@ -44,7 +44,6 @@
             {{/for}}
           </div>
           <span class="val">{{skill.value}}</span>
-          <svg class="go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </div>
       {{/each}}
     </div>
@@ -142,12 +141,7 @@
           {{#each skills as |s|}}<option value="{{s.value}}" data-key="{{s.name}}">{{s.label}} &middot; {{s.value}}</option>{{/each}}
         </select>
         <span>=</span> <b class="pool-count">0</b> <span>d10</span>
-        <span>&middot; {{localize "SVNSEA2E.Threshold"}}</span>
-        <select class="rp-threshold" aria-label="{{localize 'SVNSEA2E.Threshold'}}">
-          <option value="10">10</option>
-          <option value="15" selected>15</option>
-          <option value="20">20</option>
-        </select>
+        <span class="sets-hint" data-tooltip="{{localize 'SVNSEA2E.RaisesInfo'}}">&middot; {{localize "SVNSEA2E.SetsOfTen"}}</span>
       </div>
       <div class="hp-ctl" data-tooltip="{{localize 'SVNSEA2E.HeroPointsInfo'}}">
         <button type="button" class="hp-step" data-hp-delta="-1" aria-label="-1 {{localize 'SVNSEA2E.HeroPoints'}}">&minus;</button>

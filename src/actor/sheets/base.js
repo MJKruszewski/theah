@@ -15,6 +15,9 @@ import { roll } from '../../roll/roll.js';
  * @extends {ActorSheet}
  */
 export default class ActorSheetSS2e extends ActorSheet {
+  /** The dice sum that forms one Raise. Core p.172: always 10. */
+  static RAISE_TARGET = 10;
+
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -400,7 +403,7 @@ export default class ActorSheetSS2e extends ActorSheet {
     if (roller.length) {
       const rollerEl = roller[0];
       const refresh = () => this._updatePoolFormula(rollerEl);
-      roller.find('.rp-trait, .rp-skill, .rp-threshold').on('change', refresh);
+      roller.find('.rp-trait, .rp-skill').on('change', refresh);
       roller.find('.roll-pool').on('click', (event) => this._onPoolRoll(event));
       roller.find('.hp-step').on('click', (event) => this._onHeroPointStep(event));
       refresh();
@@ -1453,33 +1456,87 @@ export default class ActorSheetSS2e extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
-   * 7th Sea Raises engine: greedily group the dice into sets that each sum to
-   * at least the threshold. Ported verbatim from the design preview so the
-   * on-sheet roller behaves exactly like the gold-standard mock-up.
+   * 7th Sea Raises engine (Core p.172-173): group the dice into as many sets as
+   * possible where each set sums to at least the threshold (a Raise is a set of
+   * 10; a single 10 counts and a set may exceed 10; dice you can't fit into a set
+   * are wasted). This returns the MAXIMUM number of Raises — a naive greedy can
+   * undercount (e.g. 8,5,4,3,1 → greedy 1 but optimal 2), which would rob the
+   * player of Raises they could find by hand.
+   *
+   * Exact optimum via a small memoised search: the largest remaining die is
+   * either wasted or anchors a *minimal* covering group (no redundant die — an
+   * extra die never helps and could seed another Raise). Realistic pools are
+   * ≤ ~15 dice, so this is instantaneous; a huge-pool guard falls back to greedy.
    * @param {number[]} dice        The rolled d10 face values.
-   * @param {number} threshold     Sum needed per Raise (10 / 15 / 20).
+   * @param {number} threshold     Sum needed per Raise (always 10 in core play).
    * @returns {{raises:number, combos:string[], used:number[]}}
    */
   static computeRaises(dice, threshold) {
-    const arr = [...dice].sort((a, b) => b - a);
-    const used = [];
-    const combos = [];
-    let raises = 0;
-    while (arr.length) {
-      const set = [arr.shift()];
-      while (set.reduce((a, b) => a + b, 0) < threshold && arr.length) {
-        set.push(arr.pop());
+    // Defensive fallback for pathologically large pools (never reached in play).
+    if (dice.length > 24) {
+      const arr = [...dice].sort((a, b) => b - a);
+      const used = [];
+      const combos = [];
+      let raises = 0;
+      while (arr.length) {
+        const set = [arr.shift()];
+        while (set.reduce((a, b) => a + b, 0) < threshold && arr.length) set.push(arr.pop());
+        if (set.reduce((a, b) => a + b, 0) >= threshold) {
+          raises++;
+          combos.push(set.join('+'));
+          used.push(...set);
+        } else break;
       }
-      const sum = set.reduce((a, b) => a + b, 0);
-      if (sum >= threshold) {
-        raises++;
-        combos.push(set.join('+'));
-        used.push(...set);
-      } else {
-        break;
-      }
+      return { raises, combos, used };
     }
-    return { raises, combos, used };
+
+    const memo = new Map();
+    const solve = (arr) => {
+      if (arr.length === 0) return { raises: 0, groups: [] };
+      const memoKey = arr.join(',');
+      const hit = memo.get(memoKey);
+      if (hit) return hit;
+
+      const h = arr[0];
+      const rest = arr.slice(1);
+
+      // Option A: waste the largest die.
+      let best = solve(rest);
+
+      const need = threshold - h;
+      if (need <= 0) {
+        // {h} is already a Raise on its own (h ≥ threshold, i.e. a 10).
+        const sub = solve(rest);
+        if (1 + sub.raises > best.raises) best = { raises: 1 + sub.raises, groups: [[h], ...sub.groups] };
+      } else {
+        // Option B: h anchors a minimal group — enumerate minimal subsets of the
+        // rest whose sum first reaches `need` (stop the moment a subset qualifies).
+        const n = rest.length;
+        const covers = [];
+        const dfs = (start, chosen, sum) => {
+          for (let i = start; i < n; i++) {
+            const ns = sum + rest[i];
+            const nc = [...chosen, i];
+            if (ns >= need) covers.push(nc);
+            else dfs(i + 1, nc, ns);
+          }
+        };
+        dfs(0, [], 0);
+        for (const cover of covers) {
+          const pick = new Set(cover);
+          const set = [h, ...cover.map((i) => rest[i])];
+          const remaining = rest.filter((_, i) => !pick.has(i));
+          const sub = solve(remaining);
+          if (1 + sub.raises > best.raises) best = { raises: 1 + sub.raises, groups: [set, ...sub.groups] };
+        }
+      }
+      memo.set(memoKey, best);
+      return best;
+    };
+
+    const sorted = [...dice].sort((a, b) => b - a);
+    const { raises, groups } = solve(sorted);
+    return { raises, combos: groups.map((g) => g.join('+')), used: groups.flat() };
   }
 
   /* -------------------------------------------- */
@@ -1537,7 +1594,8 @@ export default class ActorSheetSS2e extends ActorSheet {
     const skillSel = rollerEl.querySelector('.rp-skill');
     const t = parseInt(traitSel?.value) || 0;
     const s = parseInt(skillSel?.value) || 0;
-    const threshold = parseInt(rollerEl.querySelector('.rp-threshold')?.value) || 10;
+    // Core p.172: a Raise is always a set of dice totalling 10 — no other target.
+    const threshold = this.constructor.RAISE_TARGET;
     const pool = t + s;
 
     if (pool <= 0) {
@@ -1635,7 +1693,7 @@ export default class ActorSheetSS2e extends ActorSheet {
     const raisesLabel = game.i18n.localize('SVNSEA2E.RaisesLabel');
     const content = `
       <div class="theah theah-pool">
-        <div class="pool-head">${st.skillLabel} <b>${st.s}</b> + ${st.traitLabel} <b>${st.t}</b> = <b>${st.pool}</b>d10 &middot; ${game.i18n.localize('SVNSEA2E.Threshold')} <b>${st.threshold}</b></div>
+        <div class="pool-head">${st.skillLabel} <b>${st.s}</b> + ${st.traitLabel} <b>${st.t}</b> = <b>${st.pool}</b>d10 &middot; ${game.i18n.localize('SVNSEA2E.SetsOfTen')}</div>
         <div class="pool-body">
           <div class="dice">${diceHtml}</div>
           <div class="raises"><span class="big">${raises}</span><div><div class="lab">${raisesLabel}</div><div class="combos">${combosText}</div></div></div>

@@ -295,8 +295,6 @@
 .theah .skill .pips { flex: none; }
 .theah .skill .pips i { width: 12px; height: 12px; border-radius: 50%; border: 1.2px solid var(--gold-deep); background: transparent; cursor: pointer; }
 .theah .skill .pips i.on { background: radial-gradient(var(--gold-leaf), var(--gold)); box-shadow: 0 0 4px rgba(176,135,63,.45); }
-.theah .skill .go { opacity: 0; color: var(--gold-deep); transition: opacity .15s; width: 15px; flex: none; }
-.theah .skill:hover .go { opacity: 1; }
 
 /* Info affordance (Skills / Traits) — native Foundry tooltip via data-tooltip. */
 .theah .info-dot { font-size: 10px; color: var(--ink-soft); opacity: .4; cursor: help; transition: opacity .12s, color .12s; }
@@ -419,6 +417,7 @@
 .theah .roller .formula b { color: var(--gold-leaf); }
 .theah .roller .roller-info { color: var(--gold-leaf); opacity: .75; cursor: help; font-size: 13px; margin-right: 2px; }
 .theah .roller .roller-info:hover { opacity: 1; }
+.theah .roller .sets-hint { cursor: help; opacity: .85; border-bottom: 1px dotted rgba(217,178,98,.5); }
 .theah .roller .formula select {
   background: rgba(0,0,0,.28); border: 1px solid rgba(217,178,98,.35); border-radius: 3px; color: #f4ead0;
   font-family: var(--thd-display); font-size: 14px; padding: 4px 6px; height: auto;
