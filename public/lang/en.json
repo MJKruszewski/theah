@@ -43,6 +43,7 @@
   "SVNSEA2E.DeleteLabel": "Delete {label}",
   "SVNSEA2E.DeleteContent": "Delete {content}",
   "SVNSEA2E.Description": "Description",
+  "SVNSEA2E.PostToChat": "Post to chat",
   "SVNSEA2E.DramaWounds": "Dramatic Wounds",
   "SVNSEA2E.Edit": "Edit",
   "SVNSEA2E.EditLabel": "Edit {label}",

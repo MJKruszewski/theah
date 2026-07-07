@@ -257,6 +257,10 @@ export default class ActorSheetSS2e extends ActorSheet {
     // Secret Society Favor +/- stepper (Prowess tab).
     html.find('.favor-step').on('click', this._onFavorStep.bind(this));
 
+    // Universal "post item to chat" (advantages, backgrounds, arcana, dueling
+    // styles, secret societies …) so players can read the rules in chat.
+    html.find('.item-to-chat').on('click', this._onItemToChat.bind(this));
+
     html
       .find('.add-1-initiative')
       .on('click', this._onAddInitiative.bind(this));
@@ -374,6 +378,103 @@ export default class ActorSheetSS2e extends ActorSheet {
     const delta = Number(event.currentTarget.dataset.favorDelta) || 0;
     const next = Math.max(0, (Number(item.system.favor) || 0) + delta);
     await item.update({ 'system.favor': next });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Post an item's rules to chat as a themed card so the table can read it
+   * (advantages, backgrounds, arcana, dueling styles, secret societies, …).
+   * @param {Event} event   The originating click on a .item-to-chat control.
+   * @private
+   */
+  async _onItemToChat(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const li = event.currentTarget.closest('.item');
+    const item = this.actor.items.get(li?.dataset.itemId);
+    if (!item) return;
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      content: this.constructor._itemChatContent(item),
+    });
+  }
+
+  /**
+   * Build the themed `.theah-item` chat card for an item, adapting the fields
+   * shown to the item type. The system's HTML fields are static markup (no
+   * embedded @UUID links), so they're inserted verbatim.
+   * @param {Item} item
+   * @returns {string}
+   * @private
+   */
+  static _itemChatContent(item) {
+    const L = (k) => game.i18n.localize(k);
+    const s = item.system || {};
+
+    const secs = [];
+    const add = (label, html) => {
+      if (html === undefined || html === null || String(html).trim() === '') return;
+      secs.push(
+        `<div class="ti-sec"><span class="ti-lbl">${label}</span><div class="ti-body">${html}</div></div>`,
+      );
+    };
+
+    const ICONS = {
+      advantage: 'fa-award',
+      background: 'fa-scroll',
+      duelstyle: 'fa-khanda',
+      secretsociety: 'fa-user-secret',
+      virtue: 'fa-hands-praying',
+      hubris: 'fa-masks-theater',
+      sorcery: 'fa-hat-wizard',
+      story: 'fa-book-open',
+    };
+    const icon = ICONS[item.type] || 'fa-scroll';
+    let sub = '';
+
+    switch (item.type) {
+      case 'advantage':
+        sub = `${L('SVNSEA2E.Advantages')} &middot; ${L('SVNSEA2E.Cost')} ${s.cost?.normal ?? 1}`;
+        add(L('SVNSEA2E.Description'), s.description);
+        break;
+      case 'background':
+        sub = L('SVNSEA2E.Backgrounds');
+        add(L('SVNSEA2E.Description'), s.description);
+        add(L('SVNSEA2E.Quirk'), s.quirk);
+        break;
+      case 'duelstyle':
+        sub = L('SVNSEA2E.DuelingStyles');
+        add(L('SVNSEA2E.Description'), s.description);
+        add(L('SVNSEA2E.Bonus'), s.bonus);
+        break;
+      case 'secretsociety':
+        sub = `${L('SVNSEA2E.SecretSociety')} &middot; ${L('SVNSEA2E.Favor')} ${s.favor ?? 0}`;
+        add(L('SVNSEA2E.Description'), s.description);
+        add(L('SVNSEA2E.Concern'), s.concern);
+        add(L('SVNSEA2E.EarnFavor'), s.earnfavor);
+        add(L('SVNSEA2E.UseFavor'), s.callupon);
+        break;
+      case 'virtue':
+        sub = L('SVNSEA2E.Virtue');
+        add(L('SVNSEA2E.Description'), s.description);
+        break;
+      case 'hubris':
+        sub = L('SVNSEA2E.Hubris');
+        add(L('SVNSEA2E.Description'), s.description);
+        break;
+      default:
+        add(L('SVNSEA2E.Description'), s.description);
+    }
+
+    const img = item.img && !item.img.includes('mystery-man')
+      ? `<img src="${item.img}" alt="" />`
+      : '';
+    return `
+      <div class="theah theah-item">
+        <div class="ti-head">${img}<div class="ti-title"><span class="ti-name"><i class="fas ${icon}"></i> ${item.name}</span>${sub ? `<span class="ti-sub">${sub}</span>` : ''}</div></div>
+        ${secs.length ? `<div class="ti-body-wrap">${secs.join('')}</div>` : ''}
+      </div>`;
   }
 
   /* -------------------------------------------- */

@@ -470,6 +470,24 @@
 #chat .theah-corruption .corr-verdict { margin-top: 8px; font-family: var(--thd-display); font-size: 14px; color: var(--teal); }
 #chat .theah-corruption .corr-verdict.fell { color: var(--oxblood); font-size: 16px; }
 
+/* Universal "item posted to chat" card (advantages, dueling styles, societies…). */
+#chat .theah-item { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }
+#chat .theah-item .ti-head { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: linear-gradient(180deg, color-mix(in srgb,var(--navy) 92%,#000 8%), var(--navy-deep)); }
+#chat .theah-item .ti-head img { width: 34px; height: 34px; flex: none; object-fit: cover; border: 1px solid var(--gold-deep); border-radius: 3px; background: rgba(0,0,0,.2); }
+#chat .theah-item .ti-title { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+#chat .theah-item .ti-name { font-family: var(--thd-display); font-size: 16px; color: #f4ead0; }
+#chat .theah-item .ti-name i { color: var(--gold-leaf); margin-right: 4px; }
+#chat .theah-item .ti-sub { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: color-mix(in srgb, var(--gold-leaf) 78%, #fff); }
+#chat .theah-item .ti-body-wrap { padding: 10px 12px; }
+#chat .theah-item .ti-sec { margin-bottom: 9px; }
+#chat .theah-item .ti-sec:last-child { margin-bottom: 0; }
+#chat .theah-item .ti-lbl { display: block; font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 3px; }
+#chat .theah-item .ti-body { font-size: 13px; line-height: 1.5; color: var(--ink); }
+#chat .theah-item .ti-body p { margin: 0 0 6px; }
+#chat .theah-item .ti-body p:last-child { margin-bottom: 0; }
+#chat .theah-item .ti-body ul { margin: 4px 0 0; padding-left: 18px; }
+#chat .theah-item .ti-body li { margin-bottom: 4px; }
+
 /* ========================= Hero Creator wizard ========================= */
 .theah.hero-creator .window-content { padding: 0; background: var(--panel); color: var(--ink); font-family: var(--thd-body); }
 .hero-creator-form { display: flex; flex-direction: column; height: 100%; }
