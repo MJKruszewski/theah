@@ -363,7 +363,9 @@
 .theah.sorcery-picker .sp-item { border: 1px solid var(--panel-edge); border-left: 3px solid var(--gold-deep); border-radius: 3px; background: color-mix(in srgb, var(--gold-leaf) 5%, transparent); padding: 8px 10px; }
 .theah.sorcery-picker .sp-row { display: flex; align-items: center; gap: 8px; }
 .theah.sorcery-picker .sp-name { flex: 1; font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
-.theah.sorcery-picker .sp-add { flex: none; font-family: var(--thd-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); border-radius: 3px; padding: 4px 9px; cursor: pointer; white-space: nowrap; }
+/* flex:0 0 auto + width:auto so it sizes to its label — Foundry core forces
+   width:100% on dialog buttons, which would otherwise stretch it full-width. */
+.theah.sorcery-picker .sp-add { flex: 0 0 auto; width: auto; align-self: center; font-family: var(--thd-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); border-radius: 3px; padding: 4px 10px; cursor: pointer; white-space: nowrap; line-height: 1.4; }
 .theah.sorcery-picker .sp-add:hover { filter: brightness(1.06); }
 .theah.sorcery-picker .sp-add:disabled { background: none; color: var(--teal); border-color: color-mix(in srgb, var(--teal) 50%, transparent); cursor: default; filter: none; }
 .theah.sorcery-picker .sp-desc { margin-top: 6px; font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
