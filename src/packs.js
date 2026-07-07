@@ -21,7 +21,8 @@
 // v3: added Dueling Styles + Secret Societies compendia.
 // v4: Secret Society Favor is now numeric (0), not the "0" HTML string.
 // v5: adds the Sorceries (Core) pack — 116 effects across the 5 core traditions.
-export const PACK_SEED_VERSION = 5;
+// v6: adds Ussura's Dar Matushki (Mother's Touch) — 8 Gifts + 5 Restrictions (129 total).
+export const PACK_SEED_VERSION = 6;
 
 const SEED_TARGETS = [
   { pack: 'theah.backgrounds', file: 'backgrounds' },

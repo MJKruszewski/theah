@@ -907,22 +907,29 @@ export default class ActorSheetSS2e extends ActorSheet {
       return ui.notifications.warn(game.i18n.localize('SVNSEA2E.NoSorceryEffects'));
     }
 
-    // Group by tier (Major → Minor → untiered), then alphabetical within a tier.
+    // Group by tier (Major → Minor → untiered), then by kind for untiered
+    // traditions (Dar Matushki's Gifts before Restrictions), then by name.
     const order = { major: 0, minor: 1, none: 2 };
+    const catOrder = { gift: 0, restriction: 1 };
     docs.sort(
       (a, b) =>
         (order[a.system?.sorcsubcat] ?? 9) - (order[b.system?.sorcsubcat] ?? 9) ||
+        (catOrder[a.system?.sorccat] ?? 9) - (catOrder[b.system?.sorccat] ?? 9) ||
         a.name.localeCompare(b.name),
     );
 
     const rows = docs
       .map((d) => {
         const sc = d.system?.sorcsubcat;
-        const tier = sc && sc !== 'none' ? L(C.sorcerySubcats?.[sc] || '') : '';
+        const cat = d.system?.sorccat;
+        // Show the tier tag when tiered; otherwise the Gift/Restriction kind.
+        let tag = '';
+        if (sc && sc !== 'none') tag = L(C.sorcerySubcats?.[sc] || '');
+        else if (cat === 'gift' || cat === 'restriction') tag = L(C.sorceryCats?.[cat] || '');
         return `<div class="sp-item">
           <div class="sp-row">
             <span class="sp-name">${d.name}</span>
-            ${tier ? `<span class="sorc-tag tier">${tier}</span>` : ''}
+            ${tag ? `<span class="sorc-tag tier">${tag}</span>` : ''}
             <button type="button" class="sp-add" data-add-id="${d._id}"><i class="fas fa-plus"></i> ${L('SVNSEA2E.Add')}</button>
           </div>
           ${d.system?.description ? `<div class="sp-desc">${d.system.description}</div>` : ''}

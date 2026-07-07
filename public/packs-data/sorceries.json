@@ -1622,5 +1622,187 @@
       "sorccat": "none",
       "sorcsubcat": "major"
     }
+  },
+  {
+    "_id": "6fc99e82561b8683",
+    "name": "Command",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Gift</em></p><p>Select an animal from the Animal Forms sidebar. You may summon one of your selected animals and issue any instruction you like to the creature. If there are no creatures within travel distance to you or the summoned creature is unable to fulfill your command, the GM refunds your Hero Point. If the command you issue would require a Risk, the animal rolls 5 dice, but you decide how it spends Raises. It gains 2 Bonus Dice if the command is particularly suited to it—if you command a wolf to track a creature, for example.</p>",
+      "infosource": "Core Rulebook p.217",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "gift",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "e96c166002372a67",
+    "name": "Illuminate",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Gift</em></p><p>The area around you becomes perfectly illuminated. Not too dark, not too bright. A magical and perfect ambient light fills the space. If you activate this power outdoors, the effect is centered on the user and spreads out dozens of feet. All Undead creatures in the area suffer 5 Wounds immediately, and they roll 2 fewer dice for any Risks they make while Illuminate is in effect.</p>",
+      "infosource": "Core Rulebook p.217",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "gift",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "693a3aa8286856e6",
+    "name": "Purify",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Gift</em></p><p>You cleanse a room of toxins, poisons, diseases, and even dirt. The room is perfectly sterile after its use. Purify affects every surface, inside closed and locked drawers, and even affects food and drink. A potentially unfortunate side effect of this is that any alcohol in the room loses its potency.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "gift",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "ef028c076c94f5e7",
+    "name": "See",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Gift</em></p><p>Select an animal from the Animal Forms sidebar. You perceive the world through all the senses of the nearest animal matching your choice. Although you are using the animal's senses instead of your own, any Risks you make regarding perception are made using your Traits and Skills, not the animal's. If the animal's form would be particularly advantageous for such a Risk (such as a cat seeing something in the darkness of night) you gain 2 Bonus Dice.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "gift",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "42536d7fcb402203",
+    "name": "Sew",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Gift</em></p><p>Touch an item: it is perfectly restored to its original form. Cracked swords are mended, jammed guns are restored, and faded paintings regain their vibrancy. This Gift cannot make an item better than it originally was or fix any defects present at its creation.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "gift",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "dc88fc479a75f287",
+    "name": "Storm",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Gift</em></p><p>You can intensify or lessen whatever weather you're currently experiencing. You can turn light rain into a thunderstorm or a ray of sunlight into a clear sky.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "gift",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "98d691b2b137ce5b",
+    "name": "Regeneration",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Gift</em></p><p>You recover from injury at an incredible rate. Any missing or crippled limbs are completely restored. Missing hands regrow, cataracted eyes are unclouded and broken kneecaps reform. You heal one Dramatic Wound.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "gift",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "cd5efefaebb01f59",
+    "name": "Transformation",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Gift</em></p><p>Select a form from the Animal Forms sidebar. You may take the form of that creature for the Scene. Your skills, knowledge, and abilities are all retained in your new form—although they may be limited, such as Weaponry being unusable if you cannot hold weapons. If the animal's form would be particularly advantageous (such as trying to avoid notice while you are in the form of a mouse), you gain 2 Bonus Dice.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "scene",
+      "sorccat": "gift",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "eae95182b803ba59",
+    "name": "Efficacy",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Restriction</em></p><p>Limit: You must never change your course of action due to fear. Penance: You must seek out whatever is the most terrifying for you and confront it.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "restriction",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "e5a1f737549d1d51",
+    "name": "Forgiveness",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Restriction</em></p><p>Limit: You must always show mercy to your enemies and may never hold a grudge against those that act against you. Penance: You must seek out the one you wronged and do whatever it takes to make amends.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "restriction",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "05ca197d7ea384f2",
+    "name": "Honesty",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Restriction</em></p><p>Limit: You must never tell a lie, mistruth, or obscure the truth. Penance: You may only recover it by spending a month without lying.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "restriction",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "6ab8788d086da729",
+    "name": "Kindness",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Restriction</em></p><p>Limit: You must always offer aid to those in need—friends, strangers—no matter how desperate the situation. Penance: You must aid someone who wronged you.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "restriction",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "f8dd2cc2f161edfb",
+    "name": "Moderation",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Restriction</em></p><p>Limit: You must do all things in moderation and if you ever overindulge yourself, you lose your Gifts. Penance: You must submit to an act of fasting, never indulging in your most favorite activity, for a month.</p>",
+      "infosource": "Core Rulebook p.218",
+      "sorctype": "darm",
+      "sorcdur": "none",
+      "sorccat": "restriction",
+      "sorcsubcat": "none"
+    }
   }
 ]
