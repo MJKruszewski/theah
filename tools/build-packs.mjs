@@ -155,5 +155,34 @@ if (existsSync(resolve(DATA, "arcana.json"))) {
   written.push(`secretsocieties: ${docs.length}`);
 }
 
+/* ------------------------------ Sorceries ----------------------------- */
+// The 5 core traditions (Hexenwerk, Glamour, Porté, Sanderis, Sorte). Each
+// effect keeps its book grouping label (e.g. "Luck Glamour", "Major Unguent")
+// as an italic kicker atop the description; sorctype/sorccat/sorcsubcat are
+// config keys the sheet renders as tags.
+{
+  const src = readJson("sorceries.json");
+  const docs = src.map((e) => {
+    let desc = e.group ? `<p><em>${e.group}</em></p>` : "";
+    desc += para(e.description);
+    return {
+      _id: id16("sorcery:" + e.sorctype + ":" + e.name),
+      name: e.name,
+      type: "sorcery",
+      img: "systems/theah/icons/item.svg",
+      system: {
+        description: desc,
+        infosource: e.page ? `Core Rulebook p.${e.page}` : "Core Rulebook",
+        sorctype: e.sorctype,
+        sorcdur: e.sorcdur || "none",
+        sorccat: e.sorccat || "none",
+        sorcsubcat: e.sorcsubcat || "none",
+      },
+    };
+  });
+  writeFileSync(resolve(OUT, "sorceries.json"), JSON.stringify(docs, null, 2));
+  written.push(`sorceries: ${docs.length}`);
+}
+
 console.log("packs-data →", OUT);
 for (const w of written) console.log("  " + w);

@@ -428,6 +428,7 @@ export default class ActorSheetSS2e extends ActorSheet {
       virtue: 'fa-hands-praying',
       hubris: 'fa-masks-theater',
       sorcery: 'fa-hat-wizard',
+      artifact: 'fa-gem',
       story: 'fa-book-open',
     };
     const icon = ICONS[item.type] || 'fa-scroll';
@@ -463,6 +464,18 @@ export default class ActorSheetSS2e extends ActorSheet {
         sub = L('SVNSEA2E.Hubris');
         add(L('SVNSEA2E.Description'), s.description);
         break;
+      case 'sorcery': {
+        const C = CONFIG.SVNSEA2E;
+        const tt = C.sorceryTypes?.[s.sorctype];
+        const cat = s.sorccat && s.sorccat !== 'none' ? C.sorceryCats?.[s.sorccat] : null;
+        const scat = s.sorcsubcat && s.sorcsubcat !== 'none' ? C.sorcerySubcats?.[s.sorcsubcat] : null;
+        // Dedupe: for Glamour the tradition and category both localize to
+        // "Glamour" — collapse to a single chip rather than "Glamour · Glamour".
+        const parts = [tt ? L(tt) : L('SVNSEA2E.Sorcery'), cat ? L(cat) : null, scat ? L(scat) : null].filter(Boolean);
+        sub = [...new Set(parts)].join(' &middot; ');
+        add(L('SVNSEA2E.Description'), s.description);
+        break;
+      }
       default:
         add(L('SVNSEA2E.Description'), s.description);
     }
@@ -740,7 +753,7 @@ export default class ActorSheetSS2e extends ActorSheet {
    * @type {string[]}
    */
   static get COMPENDIUM_LOCKED_TYPES() {
-    return ['advantage', 'background', 'virtue', 'hubris', 'duelstyle', 'secretsociety'];
+    return ['advantage', 'background', 'virtue', 'hubris', 'duelstyle', 'secretsociety', 'sorcery'];
   }
 
   /**

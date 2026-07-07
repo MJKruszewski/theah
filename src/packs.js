@@ -20,7 +20,8 @@
 // Bump when the shipped catalog changes OR to force-heal existing worlds.
 // v3: added Dueling Styles + Secret Societies compendia.
 // v4: Secret Society Favor is now numeric (0), not the "0" HTML string.
-export const PACK_SEED_VERSION = 4;
+// v5: adds the Sorceries (Core) pack — 116 effects across the 5 core traditions.
+export const PACK_SEED_VERSION = 5;
 
 const SEED_TARGETS = [
   { pack: 'theah.backgrounds', file: 'backgrounds' },
@@ -28,6 +29,7 @@ const SEED_TARGETS = [
   { pack: 'theah.arcana', file: 'arcana' },
   { pack: 'theah.duelstyles', file: 'duelstyles' },
   { pack: 'theah.secretsocieties', file: 'secretsocieties' },
+  { pack: 'theah.sorceries', file: 'sorceries' },
 ];
 
 /**

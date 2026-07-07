@@ -1,0 +1,1626 @@
+[
+  {
+    "_id": "9016913b3aa70eb6",
+    "name": "Dead Man's Blood",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Major Unguent</em></p><p>A mixture of blood from a fresh corpse and a number of herbs, poisons, roots, and other such things. If you introduce Dead Man's Blood into the body of an undead (via injection, getting them to eat it, etc) the afflicted Monster is Helpless for the rest of the Scene. Note that in order for Dead Man's Blood to be effective, a relatively large amount must be ingested. This makes it ineffective if simply applied to a weapon and then used to attack.</p>",
+      "infosource": "Core Rulebook p.207",
+      "sorctype": "hex",
+      "sorcdur": "scene",
+      "sorccat": "unguents",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "26a786f5ebc9b3e8",
+    "name": "Ghost Eyes",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Major Unguent</em></p><p>Eyes carved from the recent dead, mixed with holy water and mandrake, and then smeared across the eyelids. Ghost Eyes allows you to see—for a single Scene—spirits, ghosts, and other such Monsters that would typically be invisible.</p>",
+      "infosource": "Core Rulebook p.207",
+      "sorctype": "hex",
+      "sorcdur": "scene",
+      "sorccat": "unguents",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "0edea99f37f41942",
+    "name": "Corpse Tongue",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Major Unguent</em></p><p>The severed tongue of a corpse, soaked in nightshade and ground into a paste, rubbed on the hexe's tongue. Corpse Tongue allows you to speak with a dead body, receiving messages from it about anything it knew in life. You can ask two questions for each point of Resolve you have, and the corpse must answer you honestly. After you ask your last question, you vomit, and the corpse you have been questioning crumbles into dust—you cannot question it further, even if you have an additional dose of Corpse Tongue.</p>",
+      "infosource": "Core Rulebook p.208",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "8c1d26966c05ad64",
+    "name": "Master's Bread",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Major Unguent</em></p><p>A dead brain with a number of hallucinogenic herbs, mushrooms, and the like and mixed into a dough-like substance before being allowed to dry. After eating, you can give a single command an undead Monster Squad must immediately perform (such as to attack a particular target, break down a barricade, etc.). A Monster Squad cannot attack itself. Against an undead Villain, Master's Bread grants 1 Raise on any social Risk against the Villain.</p>",
+      "infosource": "Core Rulebook p.208",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "4ac35d196cbb1ce5",
+    "name": "Spectral Prison",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Major Unguent</em></p><p>Moss from a tombstone or mausoleum, boiled and dissolved, mixed with salt and bone meal into a thick, gooey paste. Draw a closed circle, square, pentagram, or similar shape with this Unguent. As long as the shape remains intact and closed, no undead Monster can cross the shape or affect any creature on the other side of the line. The Monster can take other actions as normal—such as making a social Risk if it is capable of speech or shooting a gun if it knows how to do so—but no supernatural effects can cross the line. The Monster itself cannot break the line (by throwing a normal item over it, by breaking the surface the line is drawn upon, etc.), but it may be able to convince someone else to break it.</p>",
+      "infosource": "Core Rulebook p.208",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "d483b0e2853fd675",
+    "name": "Funeral Porridge",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Major Unguent</em></p><p>Kidney and liver from a corpse, mashed into a lumpy porridge along with powerful sedatives and poisons. When consumed by the living, Funeral Porridge causes 1 Dramatic Wound immediately. If a person dies on the same day he has consumed Funeral Porridge, he rises as an undead Monster under your command within three days of his death. You determine the type of undead when you make the porridge—a walking corpse, a spirit, etc—and the Monster treats all of your commands as if he was always under the effect of Master's Bread. Creating a dose of Funeral Porridge always results in Corruption. Feeding Funeral Porridge to a character also always results in Corruption. If you brew a dose of Funeral Porridge and then feed it to another character, you gain Corruption twice.</p>",
+      "infosource": "Core Rulebook p.208",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "fbb2f92b732d9e75",
+    "name": "Wraith Walk",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Major Unguent</em></p><p>A human heart, ground up and mixed with herbs and sedatives. Consuming this Unguent causes you to immediately fall unconscious, and forces your spirit out of your body. As a spirit you can move freely, perfectly aware of the surroundings of your spirit—but not your body. You can fly, move through walls, and are invisible. While a spirit, you are subject to any effects that would affect undead and can be detected by any effect that would allow detection of invisible Monsters (such as Ghost Eyes). Your spirit is extremely fragile—you take Wounds as normal, and if you take a Dramatic Wound while you are a spirit you immediately return to your body and take an additional Dramatic Wound. If you do not return to your body before the next sunrise or the next sunset (whichever comes first), you die. If your spirit is destroyed but cannot return to your body (for example, if it is trapped in a Spectral Prison), you die.</p>",
+      "infosource": "Core Rulebook p.208",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "192484494e656405",
+    "name": "Revenant Venom",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>Potent venom from natural creatures, such as spiders and snakes. Revenant Venom is applied to a weapon upon being mixed, and then the weapon is sheathed until ready. When that weapon is next drawn, for 1 Round all Wounds dealt to an undead Monster are doubled. Revenant Venom cannot be applied to a dracheneisen weapon—the two materials are anathema to one another. The dracheneisen causes the Venom to boil away.</p>",
+      "infosource": "Core Rulebook p.208",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "fffc2df0698ca66f",
+    "name": "Reaper's Poison",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>A caustic blend of natural poisons sprinkled with shavings of pure silver. When you attack the undead using a flask of Reaper's Poison, spend Raises as normal to inflict Wounds. If the Monster takes at least 1 Wound, it is inflicted with Reaper's Poison, causing 1 Wound every time it takes an action until the end of the Round. These Wounds cannot be cancelled.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "15a8884c2b62311c",
+    "name": "Scourgebane",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>A mixture of numerous herbs, poisons, and a splash of communion wine. When you attack an undead Monster using a flask of Scourgebane, you spend Raises as normal to inflict Wounds. If it takes at least 1 Wound from the attack, the GM cannot spend Danger Points to activate any of its Monstrous Qualities for the rest of the Round.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "74cbc985df854f3a",
+    "name": "Tears of the Prophet",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>A viscous substance made from anointing oil and rare spices. You can apply Tears of the Prophet to a dead body that has not been affected by Hexenwerk. This body cannot return to life.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "ca75286e72b89398",
+    "name": "Mother's Mercy",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>A thin soup with wild vegetables and holy water. Drinking Mother's Mercy removes all effects of any disease, curse, or debilitating effect resulting from the undead. If a character who has eaten Funeral Porridge drinks Mother's Mercy, he immediately dies but does not return as an undead Monster.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "a68d8753ebe023d0",
+    "name": "Father's Fury",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>A stake of holly wood, smeared with a mash made from herbs and natural poisons, and then blessed by a priest. You can take an action to use Father's Fury on a Helpless undead Monster. The Monster is utterly destroyed, and can never be brought to life again.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "e7be7283ca7761b7",
+    "name": "Black Broth",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>Moldy bread mixed in Monster's blood and fetid swamp water. Choose a single Monstrous Quality at the time of brewing. When Black Broth is consumed, it grants that Monstrous Quality to the person who eats it until the end of the Scene. Willingly and knowingly drinking Black Broth, or tricking another character into drinking it, results in Corruption.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "scene",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "38f7960cddda859e",
+    "name": "Red Thirst",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>Rotten meat and berries, boiled together with pungent roots and herbs. Spend 1 Raise during an Action Sequence to smear Red Thirst on yourself. Any undead Monsters who attack this Round must target you with all their attacks.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "a2763a5612f0c41b",
+    "name": "Summer's Smile",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>A poultice brewed from water from a fast-flowing stream and sickeningly sweet herbs. When applied to a Dramatic Wound caused by an undead Monster, the Dramatic Wound is healed at the end of the Scene.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "scene",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "1bd9544ca532adbe",
+    "name": "Winter's Scowl",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>Holy water, a thorny rose stem, and a few drops of hexe blood. The holy water hardens into an impossibly thin and sharp blade of ice. When you make an attack against an undead Monster using Winter's Scowl, you spend Raises as normal to inflict Wounds. If you inflict a Wound, the Monster is stunned for the rest of this Round, meaning it cannot take any actions (but may still spend Raises to defend itself, if it is a Villain). After a single use, Winter's Scowl shatters.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "086bd28023935ea6",
+    "name": "Autumn's Sigh",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>Seeds from a rotten pumpkin, common red table wine, and a teardrop. Characters who drink Autumn's Sigh will sleep soundly for the night, untroubled by nightmares (natural or supernatural). They will awaken as normal due to outside stimulus (such as being woken normally, loud noises, etc.), but they fall asleep easily, and their sleep is idyllic and restful.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "462c895fe735e578",
+    "name": "Spring's Laugh",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>Fresh spring flowers, tree sap, and rain water mixed into a thick syrup. A character who consumes Spring's Laugh is immune to an undead Monster's Fear rating for one Scene.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "scene",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "4e2dbd18c42e2139",
+    "name": "Widow's Veil",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Minor Unguent</em></p><p>A wilted chrysanthemum taken from a grave, washed with holy water, and then blessed by a priest. A character who pins a Widow's Veil to her clothing is immune to the first attack or supernatural effect that comes from an undead Monster. After the attack or effect is prevented, the Widow's Veil crumbles into dust and is useless.</p>",
+      "infosource": "Core Rulebook p.209",
+      "sorctype": "hex",
+      "sorcdur": "none",
+      "sorccat": "unguents",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "e13ce1da0a3d1147",
+    "name": "Petty Luck",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Luck Glamour</em></p><p>Activate this Glamour. For the rest of the Scene, after you make a Risk using your Minor Trait, you can replace any one die with a die whose value is equal to 1 + the Ranks you have in this Glamour.</p>",
+      "infosource": "Core Rulebook p.214",
+      "sorctype": "glamour",
+      "sorcdur": "scene",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "03e6f3cbfe6102a2",
+    "name": "Greater Luck",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Luck Glamour</em></p><p>Activate this Glamour to add your Rank in this Glamour to the value of any die. For example, if you have 5 Ranks in this Glamour, you could add 5 points to any die you rolled. If the value of a die reaches 10 or higher, that die Explodes.</p>",
+      "infosource": "Core Rulebook p.214",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "f598c6e038c456ef",
+    "name": "Heroic",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Luck Glamour</em></p><p>Activate this Glamour after a Risk using your Minor Trait. You may re-roll a number of dice equal to your Rank in this Glamour. You must keep the new value on any dice that you re-roll, even if they are lower.</p>",
+      "infosource": "Core Rulebook p.214",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "87a203fe5d9a383c",
+    "name": "Mythic",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Luck Glamour</em></p><p>Activate this Glamour after a Risk using your Major Trait. You may re-roll a number of dice equal to your Rank in this Glamour. You may choose which value to keep between the old roll and the new roll.</p>",
+      "infosource": "Core Rulebook p.214",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "4e543f12c412370c",
+    "name": "Mad Luck",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Luck Glamour</em></p><p>Activate this Glamour to roll a number of dice equal to your Rank in this Glamour. You may pass these dice out to other Heroes who may keep that die for all rolls for the rest of the Scene. For example, if you choose to give an 8 to a duelist, for the rest of the Scene that Hero always adds that die to every Risk.</p>",
+      "infosource": "Core Rulebook p.214",
+      "sorctype": "glamour",
+      "sorcdur": "scene",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "502349a46ce7fa2d",
+    "name": "Legend",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Luck Glamour</em></p><p>Activate this Glamour to add your Ranks in this Glamour to your Major Trait for the rest of the Scene.</p>",
+      "infosource": "Core Rulebook p.214",
+      "sorctype": "glamour",
+      "sorcdur": "scene",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "4a826b6a944e68d0",
+    "name": "Reduce the Brute",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Brawn Glamour</em></p><p>Activate this Glamour to eliminate any Brute Squads in a Scene with a Strength rating equal to or less than the Ranks you have in this Glamour.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "dce25f87a9e5fb21",
+    "name": "Stronger Than You",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Brawn Glamour</em></p><p>Activate this Glamour to add a number of dice to any Brawn Risk equal to your Ranks in this Glamour, plus one.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "4e225c3e7bb80a3f",
+    "name": "Reduce the Villain",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Brawn Glamour</em></p><p>Activate this Glamour to temporarily reduce a Villain's Strength by the number of Ranks you have in this Glamour. The Villain's Strength returns at the end of the Episode.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "5879c32a27c21477",
+    "name": "Strongest There Is",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Brawn Glamour</em></p><p>Activate this Glamour to add a number of Raises equal to your Ranks in this Glamour to any roll using Brawn.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "8ab87e17ad4c95a2",
+    "name": "Flash",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Finesse Glamour</em></p><p>Activate this Glamour to take actions as if you had additional Raises equal to your Ranks in Flash. These additional Raises are only to determine when you take Actions, and cannot be spent.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "eafd0007d215476c",
+    "name": "Vanish",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Finesse Glamour</em></p><p>Activate this Glamour and anyone looking for you is unable to locate you for one hour for every Rank you have in Vanish. Any attempts to track you, to locate you via supernatural means, or to learn your location from others, automatically fail. This doesn't make you invisible; if someone can physically see you, this Glamour has no effect.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "808b40f021985608",
+    "name": "First",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Finesse Glamour</em></p><p>Activate this Glamour to immediately gain a number of Raises equal to your Ranks in First. This Glamour is activated at the beginning of an Action Sequence, before anyone else rolls any dice. If more than one Knight wishes to use this Glamour, the one with the most Ranks in this Glamour goes first.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "3f036e6d7c4262d2",
+    "name": "Sure Strike",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Finesse Glamour</em></p><p>Activate this Glamour after you determine Raises for a Weapon Risk. All of your attacks deal additional Wounds equal to your Ranks in this Glamour. This effect lasts for the Round.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "10727ccda7f0883c",
+    "name": "Sense Sorcery",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Panache Glamour</em></p><p>Activate this Glamour to detect whenever someone (or something) that possesses Sorcery comes within a number of feet of you equal to ten times your Ranks in this Glamour. This effect persists for the rest of the Scene.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "scene",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "a4ce63557fe26fbe",
+    "name": "Mend Ship",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Panache Glamour</em></p><p>Touch a ship and activate this Glamour to instantly repair the ship's Hits. You repair five Hits for every Rank you have in this Glamour. You cannot repair Critical Hits.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "152aee334c4868eb",
+    "name": "Resist Sorcery",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Panache Glamour</em></p><p>Activate this Glamour when someone uses Sorcery to target you directly. The Sorcerer still pays the cost, but the magic fails to take hold of you. You can activate this Glamour once per game session for each Rank you have in Resist Sorcery.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "0530aa61875c8998",
+    "name": "Subsume Ship",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Panache Glamour</em></p><p>When aboard a ship, grab the wheel and activate this Glamour. The two of you are considered a single entity. When making a Risk of any sort while aboard, you add your Ranks in this Glamour as Bonus Dice. This Glamour ends as soon as you release the ship's wheel. When you suffer a Dramatic Wound, the ship suffers a Critical Hit, and vice versa.</p>",
+      "infosource": "Core Rulebook p.215",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "b182bb51c8807f2e",
+    "name": "Pain Is Temporary",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Resolve Glamour</em></p><p>Activate this Glamour to instantly heal yourself of five Wounds for every Rank you have in this Glamour. Dramatic Wounds are not healed.</p>",
+      "infosource": "Core Rulebook p.216",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "742d710b02e4dee1",
+    "name": "No Fear",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Resolve Glamour</em></p><p>Activate this Glamour to reduce the effects of a Fear effect equal to your Ranks in this Glamour until the end of the Scene. This only affects the Hero activating the Glamour.</p>",
+      "infosource": "Core Rulebook p.216",
+      "sorctype": "glamour",
+      "sorcdur": "scene",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "49b23ece16ab8069",
+    "name": "Endless Vigil",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Resolve Glamour</em></p><p>Choose a patch of ground no more than ten feet in diameter. Until a sunrise and a sunset for every Rank you have in this Glamour have passed, and as long as you do not leave your chosen ground, you cannot die, be crippled, or rendered Helpless. You still can suffer Dramatic Wounds, but they do not affect you until the effect ends. Leaving the chosen area ends the effect immediately. When the Glamour expires, if you have taken more Dramatic Wounds than you would normally be allowed, you drop dead on the spot.</p>",
+      "infosource": "Core Rulebook p.216",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "b605d8c96fcf93f2",
+    "name": "Reborn",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Resolve Glamour</em></p><p>Activate this Glamour when you are killed. At dawn the next morning, you return to life, all wounds healed and all harmful substances purged from your body. Your Resolve drops by five minus Ranks in this Glamour from the stress of dying. If this would drop your Resolve below 0, this Glamour is permanently lost and the next time you die you are dead for good. Of course, even if the power works, you may have been buried in the meantime…</p>",
+      "infosource": "Core Rulebook p.216",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "f3939a2be4b3cec6",
+    "name": "Arrow Catch",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Wits Glamour</em></p><p>Activate this Glamour to catch anything thrown or shot at you, except from firearms. This includes knives, axes, or even arrows. You must have one free hand to perform this maneuver, and you take one fewer Wound for every Rank you have in this Glamour.</p>",
+      "infosource": "Core Rulebook p.216",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "3b75545606172fb9",
+    "name": "Summon Sidhe",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Wits Glamour</em></p><p>Activate this Glamour to call out to the nearest Sidhe for aid. The more Ranks you have in this Glamour, the more powerful the Sidhe can be. Unless the Game Master spends a Danger Point, a Seelie answers your call and aids you as best it can—for a price, naturally. If the Game Master spends a Danger Point, then an Unseelie has answered your call. The price it demands for its assistance, assuming it doesn't try to kill you out of hand, will be much, much harsher. However, if you spend a second Hero Point, you may cancel the Game Master's Danger Point and force a Seelie to appear.</p>",
+      "infosource": "Core Rulebook p.216",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "b3bc09494361d4a7",
+    "name": "Bullet Catch",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Wits Glamour</em></p><p>Activate this Glamour to catch anything, including a bullet, that was fired at you. You must have one free hand to perform this maneuver, and you do not take the automatic Dramatic Wound from being shot by a gun. For every Rank you have in this Glamour you may activate this Glamour an additional time per Episode.</p>",
+      "infosource": "Core Rulebook p.216",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "d9578063162ecfe1",
+    "name": "Sidhe Circle",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Wits Glamour</em></p><p>Activate this Glamour to create a circle ten feet in diameter, centered on you, that Sidhe cannot enter. They are hurled away from you if they are inside the circle when you activate this power, and they may not use their magic on you while the effect lasts. You may maintain this effect for a number of sunsets equal to your Ranks in this Glamour. If you move from the spot the effect ends, and anyone else who leaves it is instantly vulnerable to the Sidhe.</p>",
+      "infosource": "Core Rulebook p.216",
+      "sorctype": "glamour",
+      "sorcdur": "none",
+      "sorccat": "glamour",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "4230b65039016e40",
+    "name": "Blood Marks",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>A Porté sorcier's power comes from her blood—literally. When a sorcier wishes to place her Mark upon someone or something, she pricks her finger, places a drop of her blood upon an object and concentrates, forging a bond between herself and the piece of her that she's used to anoint the object. Then she spends a Hero Point. That object is now Marked.</p>",
+      "infosource": "Core Rulebook p.221",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "f75315734e65521e",
+    "name": "Minor Marks",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>Smaller objects (something that can be held in one hand such as a sword, locket, hat) are usually marked with a Minor Mark, allowing the sorcier to know where the object is and Pull the object to her using Porté.</p>",
+      "infosource": "Core Rulebook p.221",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "6126589c06b4a3e9",
+    "name": "Major Marks",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>Large objects (something too large to be held in one hand such as a boat, wagon, treasure chest), a place, or another person can only bear a Major Mark, allowing the sorcier to also Walk to the object, place, or person. Smaller objects can bear Major Marks as well, but it's more common for a sorcier to place a Major Mark on stable locations or buildings. A direct, one-step blood relative (such as a brother, a daughter, or a mother) is always considered to have a Major Mark placed upon them at no cost to the sorcier, so long as they are alive.</p>",
+      "infosource": "Core Rulebook p.221",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "d5b44b920e9f2eed",
+    "name": "Maintaining Marks",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>A sorcier can only maintain her connection to a certain number of marks at a time. Once placed, a Mark remains until something explicit happens in order to remove it (such as the mark being discovered and purposefully washed away) or the object is destroyed. Incidental contact or washing is usually not enough to erase a Mark. If a sorcier were to mark the wall of a tavern with a Major Mark, for example, a routine cleaning by the tavern staff would not remove the mark. If the Mark is discovered, however, it can be quickly and easily removed. For each time she has purchased the Sorcery Advantage, she can maintain a connection to 2 Minor Marks and 1 Major Mark. If the sorcier is already at her maximum number of Marks and wishes to place a new one, she must sever her connection to one that already exists. Severing a connection takes just a few moments of concentration. During an Action Scene, it requires one Raise.</p>",
+      "infosource": "Core Rulebook p.221",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "9abb0af488207769",
+    "name": "Using a Mark",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>A sorcier can, with a moment's concentration, know the general direction and distance to any of her Marks. Using Porté during an Action Sequence requires a Raise. The sorcier chooses a Mark, and then the GM informs her the rough distance and general direction (\"that Mark is around 250 miles away, roughly north\"). If a sorcier comes within approximately 100 feet of any of her Marks, she immediately knows but cannot pinpoint its location any more closely.</p>",
+      "infosource": "Core Rulebook p.221",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "f542352d2ae2b089",
+    "name": "Opening a Portal",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>In order to Pull or Walk to one of her Marks, a sorcier must spill her own blood. While creating a Mark requires only a drop (and thus doesn't cause significant harm), opening a portal is different. It is a bloody affair. The sorcier practically opens a vein. This causes a Dramatic Wound. If this Dramatic Wound would cause the sorcier to become Helpless, she becomes Helpless as soon as she completes her Sorcery. If a sorcier wishes to open a portal during an Action Sequence, it costs a single Raise in addition to the Dramatic Wound.</p>",
+      "infosource": "Core Rulebook p.221",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "8f24dca81bc5e628",
+    "name": "Pull",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>A sorcier can Pull a Minor Mark to herself. This allows her to open a portal, reach through, and take hold of the Marked object.</p>",
+      "infosource": "Core Rulebook p.221",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "fdab23416776a634",
+    "name": "Pulling Through",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>Heroes with Porté can pull objects through the doorways toward them and pull themselves toward blooded objects. There is no other physical connection between the two doorways. In other words, if a Hero drops a blooded pin into the ocean and opens a doorway to that pin, water will not rush out through the doorway; however, the pin will be wet when the Hero pulls it through. Likewise, if a Hero tries to pull himself through a doorway toward an object and the object is in a place the Hero cannot enter, he will find his passage blocked and he'll be forced to go to another blooded object in order to get out of the portal…not a very pleasant option. For example, if a Hero leaves a blooded pin in a lady's chamber and the lady places the pin in her jewelry box, the Hero will not be able to move through the portal into the jewelry box. However, he will be able to pull the pin toward him without compromising the integrity of the box.</p>",
+      "infosource": "Core Rulebook p.220",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "db9a3b50c8688a44",
+    "name": "Walk",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>A sorcier can Walk to a Major Mark. This allows her to open a portal and step through, appearing through a similar portal standing within 5 feet of her Major Mark. If there is not enough space for the sorcier to occupy on the other side, the Walk fails—she must immediately choose another Major Mark to walk to (but doesn't need to suffer an additional Dramatic Wound), or become lost in the Place Between Worlds.</p>",
+      "infosource": "Core Rulebook p.221",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "ba27e639a235ed5d",
+    "name": "Trapped on the Walkway",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>If a Hero steps through a doorway, walks to his item, finds that he cannot connect with it and has no other blooded objects to home in on, he's trapped in the walkway forever, or at least until something finds him. For this reason, many sorciers create and hide blooded objects that can act as emergency exits, safeguarding the knowledge of their existence from even their close friends and family.</p>",
+      "infosource": "Core Rulebook p.220",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "c8b2aa3b33cff5c6",
+    "name": "Bringing Others",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>It is possible for a sorcier to bring other people with her when she Walks through a portal. The sorcier must spend 1 Hero Point for each character she wishes to bring along. Of course, the larger a group a sorcier tries to bring through the Place Between Worlds, the more attention the group will draw.</p>",
+      "infosource": "Core Rulebook p.221",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "a590442094fb16fb",
+    "name": "Blessures",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Porté Ability</em></p><p>These blessures are screaming, bleeding fissures in the fabric of the world. A blessure can only be closed from the inside, from within the Place Between Worlds, and the things there do not take kindly to trespassers, no matter how noble their intentions. Opening a blessure functions the same as opening a portal, but the sorcier doesn't take a Dramatic Wound—instead, the world pays the cost. Opening a blessure always results in Corruption. Let me be clear—opening a blessure ALWAYS results in Corruption. There are no exceptions. There is no end that justifies that means.</p>",
+      "infosource": "Core Rulebook p.220",
+      "sorctype": "porte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "139db07734915aea",
+    "name": "Darkness — Cause an Eclipse",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Cause an eclipse, plunging a large area (such as an entire city) into utter darkness.</p>",
+      "infosource": "Core Rulebook p.224",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "c4d44aa761a1878c",
+    "name": "Darkness — Summon a Shadow Beast",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Summon a shadow beast, a terrifying monster made of pure darkness, to stalk and kill one creature of your choice.</p>",
+      "infosource": "Core Rulebook p.224",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "565df638b3afa02f",
+    "name": "Darkness — Make a Room Dark as Night",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Make a room dark as night.</p>",
+      "infosource": "Core Rulebook p.224",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "195dc529cca150d0",
+    "name": "Darkness — Observe an Area or Character Through Shadows",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Observe an area or another character through shadows. You see and hear everything as if you were standing in the shadow, and all of your senses function normally.</p>",
+      "infosource": "Core Rulebook p.224",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "9babcd3622f2a9eb",
+    "name": "Darkness — Open a Shadowy Portal",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Open a shadowy portal to instantly travel a short distance to another shadow in sight.</p>",
+      "infosource": "Core Rulebook p.224",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "74bd56104ef974b0",
+    "name": "Darkness — Cause a Creature to Be Attacked by Its Own Shadow",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Cause a creature to be attacked by its own shadow, inflicting 1 Wound each time they take an Action this Round.</p>",
+      "infosource": "Core Rulebook p.224",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "7044b1a356898193",
+    "name": "Darkness — Wrap Shadows Around Yourself",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Wrap shadows around yourself to become impossible to detect. Any attempts to locate you with mundane means automatically fail (requiring no Raises to avoid).</p>",
+      "infosource": "Core Rulebook p.224",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "5e0acd96066aeac1",
+    "name": "Fire — Create a Massive Firestorm",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Create a massive firestorm, utterly destroying everything within 100 feet of the center point.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "60212d6ad2e967de",
+    "name": "Fire — Summon a Monster of Living Flame",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Summon an unstoppable Monster of living flame, which will attack an enemy or enemies in accordance to a single command (although it ignores qualifiers, such as \"without killing anyone\" or \"but don't set anything on fire\").</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "53fc061196bdc533",
+    "name": "Fire — Create a Controlled Fire",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Create a controlled and contained fire, the size of a bonfire or smaller.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "387635490f79ce06",
+    "name": "Fire — Snuff Out All Open Flames",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Snuff out all open flames in a room.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "d0ac86a4f0148f07",
+    "name": "Fire — Set a Creature's Clothes Aflame",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Set another creature's clothes aflame, inflicting 2 Wounds each time they take an Action this Round. The creature can take an Action to put the flames out, ending the effect.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "79c785682992057e",
+    "name": "Fire — Reconstruct an Object Destroyed by Fire",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Reconstruct a hand-held object that was destroyed by fire, returning it to the condition it was before being exposed to the fire.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "64778ec7205dd856",
+    "name": "Fire — Wreath a Weapon with Flame",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Wreath a weapon with supernatural flame, causing it to inflict 1 additional Wound each time it is used to attack; the weapon melts or is burned to ash at the end of the Scene.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "scene",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "45851aeb25fe66ff",
+    "name": "Cold — Plunge a Region into Winter",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Plunge a region into sudden and violent winter, causing plant life to die from the extreme cold snap, lakes and streams to freeze over, and torrential snowfall in an area approximately half a mile in every direction of its center point.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "3bb4db3b0b962029",
+    "name": "Cold — Cause an Avalanche",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Cause an avalanche, and all of the destruction that would entail. Such an avalanche is large enough to completely destroy a moderately sized mountain village.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "9ae41da310b7250d",
+    "name": "Cold — Freeze a Character or Object Solid",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Cause a character or object the losejas touches to be frozen solid, encased in a thin layer of ice. While encased, the character or object cannot be harmed or destroyed directly.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "cd476278e1195cec",
+    "name": "Cold — Reform or Reshape Existing Ice",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Reform or reshape existing ice into a shape of your choosing, with precise and exact detail. The object appears exactly as you require it—for example, you could form a key made out of ice to unlock a specific door, even if you've never seen the key that opens it.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "f5f3ce25c1d4cc43",
+    "name": "Cold — Freeze Water to Walk Upon",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Cause still or slowly flowing water to freeze over solid enough to walk upon in an area of approximately 100 square feet.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "7840c10dc18c232d",
+    "name": "Cold — Create an Object of Solid Ice",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Create a hand-held object made of solid ice, such as a sword. The object functions as a normal item of its type for one Scene, then it melts harmlessly away.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "scene",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "a59acc07532b2bcc",
+    "name": "Cold — Shatter a Block of Ice",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Cause a block of ice to shatter with a simple touch. If something is imprisoned within the ice you shatter, you can choose to free it harmlessly or have it shatter, as well.</p>",
+      "infosource": "Core Rulebook p.225",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "2f6d3aefb6811f3c",
+    "name": "Storm — Gather a Storm",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Gather a storm, such as a hurricane or tornado, from calm weather. Such a storm ravages an area approximately one mile in every direction of its center point.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "5b59af86748821c3",
+    "name": "Storm — Call a Lightning Bolt",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Call a lightning bolt down during a storm to strike a creature of your choice, killing them instantly.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "6b60e9f0af2f1f4c",
+    "name": "Storm — Create a Steady Wind",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Create a steady wind that blows in a direction of your choice for one Scene.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "scene",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "5b5c0d3ba7bf78b5",
+    "name": "Storm — Calm or Empower an Existing Storm",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Calm an existing storm, turning a torrential downpour into a gentle rain. Empower an existing storm, turning a gentle rain into a torrential downpour.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "9d42523242b60528",
+    "name": "Storm — Cause Lightning or Thunder as a Distraction",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Gain the ability to cause lightning or a crash of thunder for one Scene, to use as a distraction. You can cause a lightning strike or a roll of thunder by spending a Raise during any Risk.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "scene",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "b0b35b4a71334c1c",
+    "name": "Storm — Summon a Powerful Updraft",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Summon a powerful updraft of wind, allowing you to leap a distance or height that would be otherwise impossible or to cushion a fall that would have been deadly.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "fcb2a3c30ff16e40",
+    "name": "Storm — Throw a Bolt of Lightning",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Throw a bolt of lightning to knock back a creature (or creatures, if they are a Brute or Monster Squad) up to ten feet directly away from you. If the creature strikes something solid (such as a wall), it takes 3 Wounds from the impact. Regardless, it falls to the ground afterward, stunned, and must spend its next Action regaining its feet.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "57e2655ffb4cfbb4",
+    "name": "Sea — Create a Tidal Wave",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Create a tidal wave of nearly apocalyptic proportions, capable of wiping out an entire coastal city.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "6e1b7abdd4676ae2",
+    "name": "Sea — Summon a Monster from the Deep",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Summon a Monster from the deep to drag an entire ship below the waves. The creature doesn't follow instructions, but it will not directly attack the one who summoned it or a ship that they are aboard unless provoked.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "f33fca03ca142115",
+    "name": "Sea — Know a Ship's Location",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Know the exact location of any ship within 10 nautical miles of your current location.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "c9d71c4a67cc9c97",
+    "name": "Sea — Calm or Rage Waters",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Calm raging waters to make them navigable or swimmable, or cause calm waters to rage and froth.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "8a07e04bad69b419",
+    "name": "Sea — Survive in Water as if It Were Air",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Gain the ability to survive in water as if it were air for one Scene. You still swim normally, but you gain the ability to breathe and see underwater just as well as you can on land.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "scene",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "fdc2a133c39b9bfc",
+    "name": "Sea — Raise or Lower Water Level",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Cause the level of an existing body of water to rise or fall up to five feet. It takes one minute for each foot of change in water level.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "a59a3b0db30c0f7f",
+    "name": "Sea — Purify Water",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Remove any toxins, poisons, or harmful substances from a container of water up to five gallons. The water becomes perfectly pure, clean, and clear. This won't turn seawater into fresh water.</p>",
+      "infosource": "Core Rulebook p.226",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "244d9ca86b661dcf",
+    "name": "Knowledge — Sever a Mind from Its Body",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Sever a creature's mind from its body—the creature remains alive, but can no longer speak or move.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "3b5e4dabd7bae570",
+    "name": "Knowledge — Alter a Memory in Many People",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Alter a specific memory in a large number of people. You could cause everyone who has caught sight of you within the last 24 hours to completely forget your presence. They remember everything else, but there is effectively a void where you would be.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "0c41831cffb7cb87",
+    "name": "Knowledge — Answer a Factual Question Yes or No",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Answer a single, factual question with a yes or no. The question must concern only events that have already transpired—no matter how much it might insist otherwise, a dievas cannot predict the future with any more accuracy than its losejas.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "a2eb9962d4b2faf1",
+    "name": "Knowledge — Find an Object's Location",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Find the precise location of any object you wish, with exact accuracy both as to the object's location and the object itself.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "c6bba5151cf3a0f2",
+    "name": "Knowledge — Uncover Lost Knowledge",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Uncover some scrap of knowledge, even if it is otherwise lost—anything from an ancient alchemical formula to a map that would guide you to a hidden nautical retreat.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "430774bb290732c1",
+    "name": "Knowledge — Wipe a Specific Memory",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Wipe a specific memory from a single character's mind. You could cause a man to forget he ever spoke to you, or cause your enemy to forget your face. This often has grave after-effects on the victim's psyche, especially if the forgotten memory comes under scrutiny.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "89c8f9cce8650186",
+    "name": "Knowledge — Restore an Addled Mind",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Restore an addled mind to full function. Sadly, this effect only persists for one Scene, and the character returns to her previous mental acuity afterward.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "scene",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "ccbecaa15a6bd77e",
+    "name": "Love — Cause Madly in Love",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Cause a person to fall madly in love with someone. The key word here is \"madly\"—the victim becomes obsessed with the object of their infatuation, and will do literally anything to be with him.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "2ef811e38b9fd577",
+    "name": "Love — Cause a Mad Frenzy",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Cause every creature within 500 feet of you to fly into a mad frenzy, attacking anyone and anything around them. Those affected are impossible to calm, and must be dealt with physically.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "55b38ff89fb454b9",
+    "name": "Love — Know an Emotional Connection",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Know the answer to a single question regarding the emotional connection between any two people, simply by looking at them. The GM must answer this question honestly, but usually in five or fewer words.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "7ccba80fd9d7a6b0",
+    "name": "Love — Manipulate the Fires of Passion",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Manipulate the fires of passion in another creature, heightening its emotional state and putting it into a mode of \"fight or flight,\" or forcing it to become calm, almost docile.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "77d077206cb322f0",
+    "name": "Love — Know a Greatest Fear or Desire",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Know a character's single greatest fear, or the one thing that she loves or desires more than anything else</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "4083e6df5b602902",
+    "name": "Love — Discover a Lie",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Discover whether another character is lying to you. This pertains only to what the character believes to be true, rather than the actual truth—if someone tells you that your father is dead, you only know whether or not he honestly believes it to be true.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "29509bfd9020f9c6",
+    "name": "Love — Push to Baser Instincts",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Deal</em></p><p>Push another character to give in to her baser instincts, even if she otherwise wouldn't.</p>",
+      "infosource": "Core Rulebook p.227",
+      "sorctype": "sanderis",
+      "sorcdur": "none",
+      "sorccat": "deal",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "f1cd8dda13da4c95",
+    "name": "Read",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Read</em></p><p>Read is a special Tessere all Streghe learn. Using Read requires no Hero Points or Lashes and has only a single Effect (rather than a Minor and Major Effect). In order to use any other Weave, a Strega must first use Read to see the Arcana surrounding her. If a Strega cannot see (if she is blindfolded, has salt in the eyes, or is permanently blinded), she cannot use Read. Using Read costs a Raise during Action Sequences. Once she uses it, she can see all the strands and Arcana for the rest of the Scene.</p>",
+      "infosource": "Core Rulebook p.229",
+      "sorctype": "sorte",
+      "sorcdur": "scene",
+      "sorccat": "none",
+      "sorcsubcat": "none"
+    }
+  },
+  {
+    "_id": "35c8a3391cc8f04f",
+    "name": "Arcana (Minor)",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Arcana</em></p><p>Strega can see the Arcana of others, knowing both their greatest strengths and weaknesses. To use this Weave, you must first Read your target to determine their Arcana. Spend a Hero Point and take a Lash to activate your target's Virtue or Hubris. If you choose Virtue, your target immediately gains the benefit of his Virtue. If you choose Hubris, your target gains double the benefit if he activates his Hubris on his next Action. You can use this Tessere even if your target has already activated his Virtue or Hubris this session, and the character you target may still use his Virtue or Hubris again if he has not activated them this session. No character can be affected by this more than once per session.</p>",
+      "infosource": "Core Rulebook p.229",
+      "sorctype": "sorte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "ed3fe33050b764de",
+    "name": "Arcana (Major)",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Arcana</em></p><p>Strega can see the Arcana of others, knowing both their greatest strengths and weaknesses. To use this Weave, you must first Read your target to determine their Arcana. Spend a Hero Point and take a Lash. You choose a card from the Sorte deck and—for the rest of the scene—you replace another character's Virtue or Hubris with the Virtue or Hubris associated with the card you selected, drawing out a hidden aspect of the target's Arcana. All other rules for Virtue and Hubris still apply—if the character has already activated either, she cannot activate the new one again. A Strega can only use this power once per session.</p>",
+      "infosource": "Core Rulebook p.229",
+      "sorctype": "sorte",
+      "sorcdur": "scene",
+      "sorccat": "none",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "a6a0beffcd87bb04",
+    "name": "Blessing (Minor)",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Blessing</em></p><p>You may bestow a Blessing on another character. This requires a kiss (chaste or otherwise). Kissing someone during an Action Sequence costs a Raise. Take one or more Lashes to give another Hero or Villain a Minor Blessing—Bonus Dice equal to the number of Lashes you have when you cast it. He may keep his Bonus Dice until used or until the end of the Scene (whichever comes first), but only for one Risk. If a character chooses to use his Blessing on a Risk, he must use all of the Bonus Dice granted.</p>",
+      "infosource": "Core Rulebook p.230",
+      "sorctype": "sorte",
+      "sorcdur": "scene",
+      "sorccat": "none",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "bf702094a09f4dce",
+    "name": "Blessing (Major)",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Blessing</em></p><p>You may bestow a Blessing on another character. This requires a kiss (chaste or otherwise). Kissing someone during an Action Sequence costs a Raise. Spend a Hero Point and take one or more Lashes to give another Hero or Villain a Major Blessing. Unlike the Minor Blessing, a Hero or Villain may use the Bonus Dice for any Risk until the end of the Scene or until he runs out of Bonus Dice.</p>",
+      "infosource": "Core Rulebook p.230",
+      "sorctype": "sorte",
+      "sorcdur": "scene",
+      "sorccat": "none",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "d2d125e83e98e7da",
+    "name": "Curse (Minor)",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Curse</em></p><p>You can put a Curse on another character. This requires a kiss (chaste or otherwise). Kissing someone during an Action Sequence costs Raise. You can only activate a Curse if you can see the character. All Curses fade at the end of the current Scene. Take one or more Lashes to give another Hero or Villain a Minor Curse with a Rank equal to the number of Lashes you have when you place it. The character remains Cursed until you choose to activate it (after she gathers dice to make a Risk, but before she rolls). When activated, your Curse removes 1 die from her Risk pool per Rank of the Curse.</p>",
+      "infosource": "Core Rulebook p.230",
+      "sorctype": "sorte",
+      "sorcdur": "scene",
+      "sorccat": "none",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "ba5288b107eec568",
+    "name": "Curse (Major)",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Curse</em></p><p>You can put a Curse on another character. This requires a kiss (chaste or otherwise). Kissing someone during an Action Sequence costs Raise. You can only activate a Curse if you can see the character. All Curses fade at the end of the current Scene. Spend a Hero Point and take one or more Lashes to give another Hero or Villain a Major Curse with a Rank equal to the number of Lashes you have when you place it. The character remains Cursed until you choose to activate it (after she rolls dice for a Risk). When activated, your Curse removes 1 Raise from her Risk per Rank of the Curse.</p>",
+      "infosource": "Core Rulebook p.230",
+      "sorctype": "sorte",
+      "sorcdur": "scene",
+      "sorccat": "none",
+      "sorcsubcat": "major"
+    }
+  },
+  {
+    "_id": "0e6f476e11d107a3",
+    "name": "Pull (Minor)",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Pull</em></p><p>You can pull another character toward you by grabbing hold of the strands and physically tugging on them. You must be able to see your target to use this Weave. You cannot pull characters through walls or stationary objects, but non-stationary objects (tables, chairs, etc.) will move out of the way. Take one Lash to pull your target toward you. The character loses one Raise as he stumbles headlong toward you and struggle to recover his balance and footing. Of course, characters on balconies and banisters may tumble to the ground if pulled toward you. If the character is on the other side of some movable obstruction, or one that is easily broken (such as a table or a window) he takes 1 Wound.</p>",
+      "infosource": "Core Rulebook p.231",
+      "sorctype": "sorte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "minor"
+    }
+  },
+  {
+    "_id": "153d30292c294187",
+    "name": "Pull (Major)",
+    "type": "sorcery",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p><em>Pull</em></p><p>You can pull another character toward you by grabbing hold of the strands and physically tugging on them. You must be able to see your target to use this Weave. You cannot pull characters through walls or stationary objects, but non-stationary objects (tables, chairs, etc.) will move out of the way. Spend a Hero Point and take one or more Lashes to pull multiple targets toward you. The target of your Tessere always takes 1 Wound due to the sheer force of your pull, regardless of whether there are movable or easily destroyed obstructions separating you or not—those obstructions do not cause a second Wound. When you use this Tessere, you can target a number of Brutes equal to the number of Lashes you have. If you can target at least half of the Brutes in a Squad this way (for example, if you have 5 Lashes and you use this Tessere against a Squad of 10 Strength), the Squad loses their ability to act at the end of the Round as they struggle back to their feet and stumble over their fallen comrades. Otherwise, this Tessere functions similar to the Minor version, except you can target two Heroes or Villains with one use, pulling on one character's strands with each hand. You take at least one Lash for each Hero or Villain you target in this manner. If they are on the other side of some immovable obstruction that is difficult to break (a wooden door or the iron bars of a jail cell), they slam into the obstruction, taking 2 Wounds. On each of your Actions, you can spend a Raise and take an additional Lash to hold such a character pinned in place, but only so long as you can do so by pulling him directly toward you.</p>",
+      "infosource": "Core Rulebook p.231",
+      "sorctype": "sorte",
+      "sorcdur": "none",
+      "sorccat": "none",
+      "sorcsubcat": "major"
+    }
+  }
+]

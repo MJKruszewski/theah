@@ -201,6 +201,7 @@ SVNSEA2E.storyStatuses = {
 SVNSEA2E.sorceryTypes = {
   none: 'SVNSEA2E.Empty',
   hex: 'SVNSEA2E.SorceryHexenwerk',
+  glamour: 'SVNSEA2E.SorceryGlamour',
   knight: 'SVNSEA2E.SorceryAvalonKnight',
   alquimia: 'SVNSEA2E.SorceryAlquimia',
   galdr: 'SVNSEA2E.SorceryGaldr',

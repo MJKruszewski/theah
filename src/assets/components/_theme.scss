@@ -339,6 +339,11 @@
 .theah .prowess-card .favor-val b { font-family: var(--thd-display); font-size: 14px; color: var(--ink); margin-left: 3px; font-variant-numeric: tabular-nums; }
 .theah .prowess-card .favor-step { width: 20px; height: 20px; flex: none; display: grid; place-items: center; padding: 0; border: 1px solid color-mix(in srgb, var(--teal) 50%, transparent); border-radius: 50%; background: transparent; color: var(--teal); cursor: pointer; font-size: 14px; line-height: 1; transition: background .12s, color .12s; }
 .theah .prowess-card .favor-step:hover { background: var(--teal); color: #fff; }
+/* Sorcery cards reuse the .prowess-card shell (gold accent + hat-wizard icon); the
+   tradition + tier show as small tags. Themed tokens so both paper/sea work. */
+.theah .sorc-tags { display: inline-flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+.theah .sorc-tag { font-family: var(--thd-label); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-deep); border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); border-radius: 10px; padding: 2px 8px; white-space: nowrap; }
+.theah .sorc-tag.tier { color: var(--oxblood); border-color: color-mix(in srgb, var(--oxblood) 45%, transparent); }
 .theah .prowess-card .item-controls { display: flex; gap: 8px; opacity: 0; transition: opacity .15s; }
 .theah .prowess-card:hover .item-controls { opacity: 1; }
 .theah .prowess-card .item-controls a { color: var(--ink-soft); font-size: 12px; cursor: pointer; }
