@@ -102,6 +102,11 @@ export default class ActorSheetSS2e extends ActorSheet {
       const dwv = actorData.dwounds?.value ?? 0;
       sheetData.dwBonus = dwv >= 1 ? 1 : 0;
       sheetData.autoExplode = dwv >= 3;
+      // Joie de Vivre is only usable if the Hero actually owns the Advantage
+      // (Core p.154 — spend a Hero Point before a Villain confrontation).
+      sheetData.hasJoie = actor.items.some(
+        (i) => i.type === 'advantage' && /joie de vivre/i.test(i.name),
+      );
     }
 
     // Gold talers: a 0–10 Wealth track where each taler's tooltip describes what
@@ -200,6 +205,8 @@ export default class ActorSheetSS2e extends ActorSheet {
             key: k,
             label: game.i18n.localize(C.sorceryTypes?.[k] || k),
             desc: game.i18n.localize(C.sorceryDesc?.[k] || ''),
+            // Book-accurate "when may you learn this tradition" conditions for the explainer.
+            acquire: C.sorceryAcquire?.[k] ? game.i18n.localize(C.sorceryAcquire[k]) : '',
             learned: !!learned, // has actually taken the Sorcery Advantage
           }
         : null;
@@ -413,7 +420,7 @@ export default class ActorSheetSS2e extends ActorSheet {
       const refresh = () => this._updatePoolFormula(rollerEl);
       roller.find('.rp-trait, .rp-skill').on('change', refresh);
       roller.find('.roll-pool').on('click', (event) => this._onPoolRoll(event));
-      roller.find('.hp-step').on('click', (event) => this._onHeroPointStep(event));
+      roller.find('.hpd-step').on('click', (event) => this._onHeroPointDiceStep(event));
       roller.find('.bonus-step').on('click', (event) => this._onBonusStep(event));
       refresh();
     }
@@ -1586,8 +1593,9 @@ export default class ActorSheetSS2e extends ActorSheet {
     const s = parseInt(rollerEl.querySelector('.rp-skill')?.value) || 0;
     const bonus = parseInt(rollerEl.querySelector('.bonus-val')?.textContent) || 0;
     const dw = parseInt(rollerEl.dataset.dwBonus) || 0;
+    const hpDice = parseInt(rollerEl.querySelector('.hpd-val')?.textContent) || 0;
     const el = rollerEl.querySelector('.pool-count');
-    if (el) el.textContent = t + s + bonus + dw;
+    if (el) el.textContent = t + s + bonus + dw + hpDice;
   }
 
   /* -------------------------------------------- */
@@ -1611,9 +1619,23 @@ export default class ActorSheetSS2e extends ActorSheet {
     const dwBonus = parseInt(rollerEl.dataset.dwBonus) || 0;
     const explode = !!rollerEl.querySelector('.rp-explode')?.checked;
     const joie = !!rollerEl.querySelector('.rp-joie')?.checked;
+
+    // Hero Points spent on this Risk: each buys +1 die (Core p.177); Joie de Vivre
+    // costs 1 Hero Point to activate (Core p.154). You can't spend more than you
+    // have — the book's blockade.
+    const heropts = Number(this.actor.system.heropts) || 0;
+    const hpDice = Math.max(0, parseInt(rollerEl.querySelector('.hpd-val')?.textContent) || 0);
+    const joieCost = joie ? 1 : 0;
+    const hpSpend = hpDice + joieCost;
+    if (hpSpend > heropts) {
+      return ui.notifications.warn(
+        game.i18n.format('SVNSEA2E.NotEnoughHeroPoints', { need: hpSpend, have: heropts }),
+      );
+    }
+
     // Core p.172: a Raise is always a set of dice totalling 10 — no other target.
     const threshold = this.constructor.RAISE_TARGET;
-    const pool = t + s + bonus + dwBonus;
+    const pool = t + s + bonus + dwBonus + hpDice;
 
     if (pool <= 0) {
       return ui.notifications.warn(game.i18n.localize('SVNSEA2E.PoolEmpty'));
@@ -1643,13 +1665,40 @@ export default class ActorSheetSS2e extends ActorSheet {
     this._poolState = {
       raw,
       threshold,
-      t, s, bonus, dwBonus, pool,
+      t, s, bonus, dwBonus, hpDice, joieCost, pool,
       explode, joie, skillRank: s,
       traitLabel, skillLabel,
     };
 
+    // Spend the Hero Points on the sheet (render:false so the inline result isn't
+    // wiped) and reset the roller's spend stepper to 0.
+    if (hpSpend > 0) {
+      await this.actor.update({ 'system.heropts': heropts - hpSpend }, { render: false });
+      this._syncHeroPointsDom(rollerEl, heropts - hpSpend);
+    }
+
     const { used, combosText } = this._renderPoolResult(rollerEl);
     await this._postPoolChat(r, used, combosText);
+  }
+
+  /**
+   * Reflect a Hero-Point spend made with {render:false} in the roller's "N Hero
+   * Points" readout, reset the spend stepper, and update the rail input by hand.
+   * @param {HTMLElement} rollerEl
+   * @param {number} hp   The new Hero Point total.
+   * @private
+   */
+  _syncHeroPointsDom(rollerEl, hp) {
+    const avail = rollerEl.querySelector('.hp-avail b');
+    if (avail) avail.textContent = hp;
+    const spend = rollerEl.querySelector('.hpd-val');
+    if (spend) {
+      spend.textContent = '0';
+      spend.dataset.max = hp;
+    }
+    this._updatePoolFormula(rollerEl);
+    const railInput = this.element?.[0]?.querySelector('.res input[name="system.heropts"]');
+    if (railInput) railInput.value = hp;
   }
 
   /**
@@ -1740,16 +1789,20 @@ export default class ActorSheetSS2e extends ActorSheet {
     const diceHtml = this.constructor.renderDiceRow(eff, used);
     const raisesLabel = game.i18n.localize('SVNSEA2E.RaisesLabel');
     const L = (k) => game.i18n.localize(k);
+    const F = (k, d) => game.i18n.format(k, d);
 
-    // Build the pool breakdown (base + any Bonus Dice + the Dramatic-Wound die).
+    // Build the pool breakdown (base + Bonus Dice + Dramatic-Wound die + HP dice).
     let poolParts = `${st.skillLabel} <b>${st.s}</b> + ${st.traitLabel} <b>${st.t}</b>`;
     if (st.bonus) poolParts += ` + <b>${st.bonus}</b> ${L('SVNSEA2E.BonusDice')}`;
     if (st.dwBonus) poolParts += ` + <b>${st.dwBonus}</b> ${L('SVNSEA2E.DramaticWound')}`;
+    if (st.hpDice) poolParts += ` + <b>${st.hpDice}</b> ${L('SVNSEA2E.HeroPoints')}`;
 
-    // Modifiers that change how dice count, not the pool size.
+    // Modifiers that change how dice count, or Hero Points spent to activate.
     const mods = [];
     if (st.explode) mods.push(L('SVNSEA2E.ExplodingTens'));
-    if (st.joie) mods.push(L('SVNSEA2E.JoieDeVivre'));
+    if (st.joie) mods.push(`${L('SVNSEA2E.JoieDeVivre')} (1 ${L('SVNSEA2E.HeroPoint')})`);
+    const totalHp = (st.hpDice || 0) + (st.joieCost || 0);
+    if (totalHp) mods.push(F('SVNSEA2E.HeroPointsSpent', { n: totalHp }));
     const modLine = mods.length ? `<div class="pool-mods">${mods.join(' &middot; ')}</div>` : '';
 
     const content = `
@@ -1875,17 +1928,21 @@ export default class ActorSheetSS2e extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
-   * Spend or gain a Hero Point from the roller's inline stepper (never below 0).
+   * Choose how many Hero Points to spend on the NEXT roll for +1 die each (Core
+   * p.177). Clamped to 0..(available Hero Points); the actual deduction happens
+   * when the pool is rolled. Does not touch the sheet by itself.
    * @param {Event} event   The originating click event.
    * @private
    */
-  async _onHeroPointStep(event) {
+  _onHeroPointDiceStep(event) {
     event.preventDefault();
-    const delta = Number(event.currentTarget.dataset.hpDelta) || 0;
-    const cur = Number(this.actor.system.heropts) || 0;
-    const next = Math.max(0, cur + delta);
-    if (next === cur) return;
-    await this.actor.update({ 'system.heropts': next });
+    const delta = Number(event.currentTarget.dataset.hpdDelta) || 0;
+    const rollerEl = event.currentTarget.closest('.roller');
+    const el = rollerEl.querySelector('.hpd-val');
+    const max = Number(this.actor.system.heropts) || 0;
+    const next = Math.min(max, Math.max(0, (parseInt(el.textContent) || 0) + delta));
+    el.textContent = next;
+    this._updatePoolFormula(rollerEl);
   }
 
   /* -------------------------------------------- */

@@ -12,6 +12,18 @@
     </div>
   {{/if}}
 
+  {{!-- When may a Hero learn a sorcery? (book conditions, so nobody adds one freely) --}}
+  <details class="sorc-guide">
+    <summary><i class="fas fa-circle-question"></i> {{localize "SVNSEA2E.SorceryGuideTitle"}}</summary>
+    <div class="sg-general">{{{localize "SVNSEA2E.SorceryGuideGeneral"}}}</div>
+    {{#if sorceryTradition.acquire}}
+      <div class="sg-yours">
+        <span class="sg-lbl">{{localize "SVNSEA2E.SorceryGuideYours"}} {{sorceryTradition.label}}</span>
+        <div class="sg-cond">{{{sorceryTradition.acquire}}}</div>
+      </div>
+    {{/if}}
+  </details>
+
   {{!-- Sorcery — compendium-locked; browse & drag from the pack. --}}
   <div class="sec-title">
     <h3>{{localize "SVNSEA2E.Sorcery"}}</h3><span></span>

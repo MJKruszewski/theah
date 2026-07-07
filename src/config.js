@@ -267,6 +267,18 @@ SVNSEA2E.sorceryDesc = {
   darm: 'SVNSEA2E.SorceryDescDarm',
 };
 
+// Book-accurate "when may a Hero learn THIS tradition?" conditions, shown on the
+// Sorcery tab's explainer so nobody adds a sorcery freely. Page refs per tradition.
+SVNSEA2E.sorceryAcquire = {
+  hex: 'SVNSEA2E.SorceryAcquireHex',
+  glamour: 'SVNSEA2E.SorceryAcquireGlamour',
+  knight: 'SVNSEA2E.SorceryAcquireGlamour',
+  porte: 'SVNSEA2E.SorceryAcquirePorte',
+  sanderis: 'SVNSEA2E.SorceryAcquireSanderis',
+  sorte: 'SVNSEA2E.SorceryAcquireSorte',
+  darm: 'SVNSEA2E.SorceryAcquireDarm',
+};
+
 SVNSEA2E.durations = {
   none: 'SVNSEA2E.Empty',
   scene: 'SVNSEA2E.Scene',

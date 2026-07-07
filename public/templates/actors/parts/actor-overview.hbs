@@ -143,10 +143,12 @@
         <span>=</span> <b class="pool-count">0</b> <span>d10</span>
         <span class="sets-hint" data-tooltip="{{localize 'SVNSEA2E.RaisesInfo'}}">&middot; {{localize "SVNSEA2E.SetsOfTen"}}</span>
       </div>
-      <div class="hp-ctl" data-tooltip="{{localize 'SVNSEA2E.HeroPointsInfo'}}">
-        <button type="button" class="hp-step" data-hp-delta="-1" aria-label="-1 {{localize 'SVNSEA2E.HeroPoints'}}">&minus;</button>
-        <span class="hp-val"><i class="fas fa-star"></i> {{localize "SVNSEA2E.HeroPoints"}} <b>{{heropts}}</b></span>
-        <button type="button" class="hp-step" data-hp-delta="1" aria-label="+1 {{localize 'SVNSEA2E.HeroPoints'}}">+</button>
+      <div class="hp-ctl" data-tooltip="{{localize 'SVNSEA2E.HeroPointDiceInfo'}}">
+        <span class="hp-avail"><i class="fas fa-star"></i> <b>{{heropts}}</b> {{localize "SVNSEA2E.HeroPoints"}}</span>
+        <span class="hp-spend-lbl">{{localize "SVNSEA2E.Spend"}}</span>
+        <button type="button" class="hpd-step" data-hpd-delta="-1" aria-label="-1">&minus;</button>
+        <span class="hpd-val" data-max="{{heropts}}">0</span>
+        <button type="button" class="hpd-step" data-hpd-delta="1" aria-label="+1">+</button>
       </div>
       <button type="button" class="roll-btn roll-pool">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.3" fill="currentColor"/><circle cx="15" cy="15" r="1.3" fill="currentColor"/><circle cx="15" cy="9" r="1.3" fill="currentColor"/><circle cx="9" cy="15" r="1.3" fill="currentColor"/></svg>
@@ -166,9 +168,15 @@
       <label class="mod-check" data-tooltip="{{localize 'SVNSEA2E.ExplodeInfo'}}">
         <input type="checkbox" class="rp-explode" {{#if autoExplode}}checked{{/if}} /> {{localize "SVNSEA2E.ExplodingTens"}}{{#if autoExplode}} <i class="fas fa-lock" title="{{localize 'SVNSEA2E.AutoAtThreeDw'}}"></i>{{/if}}
       </label>
-      <label class="mod-check" data-tooltip="{{localize 'SVNSEA2E.JoieInfo'}}">
-        <input type="checkbox" class="rp-joie" /> {{localize "SVNSEA2E.JoieDeVivre"}}
-      </label>
+      {{#if hasJoie}}
+        <label class="mod-check" data-tooltip="{{localize 'SVNSEA2E.JoieInfo'}}">
+          <input type="checkbox" class="rp-joie" /> {{localize "SVNSEA2E.JoieDeVivre"}} <span class="mod-cost">(1 <i class="fas fa-star"></i>)</span>
+        </label>
+      {{else}}
+        <label class="mod-check disabled" data-tooltip="{{localize 'SVNSEA2E.JoieInfo'}}">
+          <input type="checkbox" class="rp-joie" disabled /> {{localize "SVNSEA2E.JoieDeVivre"}} <span class="mod-req" data-tooltip="{{localize 'SVNSEA2E.JoieRequires'}}"><i class="fas fa-lock"></i></span>
+        </label>
+      {{/if}}
     </div>
     <div class="result">
       <div class="dice"></div>

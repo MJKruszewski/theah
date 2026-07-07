@@ -367,6 +367,20 @@
 .theah .sorc-tradition.not-learned { opacity: .9; border-left-style: dashed; }
 .theah .sorc-tradition .st-hint { margin-top: 6px; font-family: var(--thd-label); font-size: 10px; letter-spacing: .04em; text-transform: uppercase; color: var(--oxblood); }
 .theah .sorc-tradition .st-hint i { margin-right: 4px; }
+
+/* Collapsible "when may a Hero learn a sorcery?" explainer (mirrors .roller-guide). */
+.theah .sorc-guide { border: 1px solid var(--panel-edge); border-radius: 3px; margin-bottom: 14px; padding: 0 14px; background: color-mix(in srgb, var(--panel) 60%, transparent); }
+.theah .sorc-guide > summary { list-style: none; cursor: pointer; padding: 10px 0; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); display: flex; align-items: center; gap: 8px; }
+.theah .sorc-guide > summary::-webkit-details-marker { display: none; }
+.theah .sorc-guide > summary:hover { color: var(--gold); }
+.theah .sorc-guide[open] > summary { border-bottom: 1px dotted var(--line); }
+.theah .sorc-guide .sg-general { margin: 10px 0; font-size: 13px; line-height: 1.55; color: var(--ink); }
+.theah .sorc-guide .sg-general strong { color: var(--gold-deep); font-weight: 600; }
+.theah .sorc-guide .sg-yours { margin: 6px 0 12px; padding: 10px 12px; border-left: 2px solid var(--gold-deep); background: color-mix(in srgb, var(--gold-leaf) 8%, transparent); }
+.theah .sorc-guide .sg-lbl { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); }
+.theah .sorc-guide .sg-cond { margin-top: 5px; font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+.theah .sorc-guide .sg-cond strong { color: var(--ink); font-weight: 600; }
+.theah .sorc-guide .sg-cond em { font-style: italic; }
 /* Filtered Sorcery picker dialog — bloodline-only effect list with add buttons. */
 .theah.sorcery-picker { font-family: var(--thd-body); color: var(--ink); }
 .theah.sorcery-picker .sp-head { display: flex; align-items: center; gap: 8px; font-family: var(--thd-display); font-size: 18px; color: var(--ink); padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
@@ -423,13 +437,21 @@
   font-family: var(--thd-display); font-size: 14px; padding: 4px 6px; height: auto;
 }
 .theah .roller .formula select option { color: #1a1a1a; }
-/* Hero Points, right on the roller — spend one as you roll, gain one back. */
+/* Hero Points on the roller — how many you have, and how many to SPEND for dice
+   this roll (each = +1 die, Core p.177); deducted from the sheet when you roll. */
 .theah .roller .hp-ctl { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; }
-.theah .roller .hp-val { font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #efe4c7; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
-.theah .roller .hp-val i { color: var(--gold-leaf); font-size: 11px; }
-.theah .roller .hp-val b { font-family: var(--thd-display); font-size: 16px; color: var(--gold-leaf); font-variant-numeric: tabular-nums; }
-.theah .roller .hp-step { width: 22px; height: 22px; flex: none; display: grid; place-items: center; padding: 0; border: 1px solid rgba(217,178,98,.5); border-radius: 50%; background: rgba(0,0,0,.22); color: var(--gold-leaf); cursor: pointer; font-size: 15px; line-height: 1; transition: background .12s, color .12s; }
-.theah .roller .hp-step:hover { background: var(--gold-leaf); color: #2a1c10; }
+.theah .roller .hp-avail { font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #efe4c7; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
+.theah .roller .hp-avail i { color: var(--gold-leaf); font-size: 11px; }
+.theah .roller .hp-avail b { font-family: var(--thd-display); font-size: 16px; color: var(--gold-leaf); font-variant-numeric: tabular-nums; }
+.theah .roller .hp-spend-lbl { font-family: var(--thd-label); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #cdbd93; margin-left: 4px; }
+.theah .roller .hpd-val { font-family: var(--thd-display); font-size: 16px; color: var(--gold-leaf); font-variant-numeric: tabular-nums; min-width: 12px; text-align: center; }
+.theah .roller .hpd-step { width: 22px; height: 22px; flex: none; display: grid; place-items: center; padding: 0; border: 1px solid rgba(217,178,98,.5); border-radius: 50%; background: rgba(0,0,0,.22); color: var(--gold-leaf); cursor: pointer; font-size: 15px; line-height: 1; transition: background .12s, color .12s; }
+.theah .roller .hpd-step:hover { background: var(--gold-leaf); color: #2a1c10; }
+.theah .roller .mod-cost { color: var(--gold-leaf); font-family: var(--thd-body); }
+.theah .roller .mod-cost i { font-size: 9px; }
+.theah .roller .mod-check.disabled { opacity: .5; cursor: not-allowed; }
+.theah .roller .mod-req { color: #cdbd93; }
+.theah .roller .mod-req i { font-size: 9px; }
 .theah .roll-btn { margin-left: 12px; display: flex; align-items: center; gap: 9px; font-family: var(--thd-label); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
   color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 0; border-radius: 3px; padding: 10px 16px; cursor: pointer; box-shadow: 0 4px 12px -6px rgba(0,0,0,.6); }
 .theah .roll-btn:hover { filter: brightness(1.06); }
