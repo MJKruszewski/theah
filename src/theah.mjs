@@ -57,8 +57,7 @@ import { chatEventHandler } from './eventhandler.js';
 import { ItemSheetSS2eHubris } from './item/sheets/hubris.js';
 import { ItemSheetSS2eVirtue } from './item/sheets/virtue.js';
 import * as migrations from './migration.js';
-import { emitCharacterChange } from './toolbox/socket.js';
-import { Toolbox } from './toolbox/toolbox.js';
+import { openRiskBuilder } from './apps/risk-builder.js';
 
 
 Hooks.once('init', async function () {
@@ -71,7 +70,8 @@ Hooks.once('init', async function () {
     },
     config: SVNSEA2E,
     migrations: migrations,
-    toolbox: new Toolbox(),
+    // GM Risk Builder (Consequences / Opportunities / Time Limits → chat card).
+    openRiskBuilder,
     // GM console helper: repair the core compendia from the shipped JSON.
     reseedCompendia,
   };
@@ -304,8 +304,6 @@ Hooks.once('ready', async function () {
   // Populate the core compendia (advantages / backgrounds / arcana) on first
   // load. GM-only, idempotent, version-gated.
   await seedCompendia();
-
-  game.theah.toolbox.render(true);
 });
 
 /* -------------------------------------------- */
@@ -387,26 +385,19 @@ Hooks.on('preCreateActor', function (document, entity, options, userId) {
   });
 });
 
-Hooks.on('updateActor', function () {
-  emitCharacterChange();
-});
-
 Hooks.on('renderActorDirectory', (app, html, data) => {
   if (game.user.isGM) {
     const div = document.createElement('div');
     div.className = 'header-actions action-buttons flexrow';
-    
+
     const button = document.createElement('button');
+    button.type = 'button';
     button.style.width = '95%';
-    button.innerHTML = game.i18n.localize('SVNSEA2E.OpenToolbox');
-    button.addEventListener('click', () => {
-      game.theah.toolbox.render(true);
-    });
-    // We want the "Open Toolbox" button to Actors directory but we want it to be a
-    // full width button between the defefault header actions and the directory
-    // search box.
+    button.innerHTML = `<i class="fas fa-triangle-exclamation"></i> ${game.i18n.localize('SVNSEA2E.NewRisk')}`;
+    button.addEventListener('click', () => openRiskBuilder());
+    // Full-width GM button between the default header actions and the search box.
     const el = html?.querySelector('.directory-header');
-    const searchBox = el.querySelector('search');  
+    const searchBox = el.querySelector('search');
     div.appendChild(button);
     el.insertBefore(div, searchBox);
   }

@@ -467,6 +467,17 @@
 .theah .die.rerollable:hover::after { opacity: 1; }
 .theah .roller .reroll-hint { margin-top: 12px; font-size: 12px; font-style: italic; color: var(--gold-deep); }
 .theah .roller .reroll-hint:empty { display: none; }
+/* Collapsible "how rolling works" guide + live scenario under the roller. */
+.theah .roller-guide { border-top: 1px solid var(--line); padding: 0 16px; }
+.theah .roller-guide > summary { list-style: none; cursor: pointer; padding: 10px 0; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); display: flex; align-items: center; gap: 8px; }
+.theah .roller-guide > summary::-webkit-details-marker { display: none; }
+.theah .roller-guide > summary:hover { color: var(--gold); }
+.theah .roller-guide[open] > summary { border-bottom: 1px dotted var(--line); }
+.theah .roller-guide .rg-steps { margin: 10px 0 4px; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+.theah .roller-guide .rg-steps li { font-size: 13px; line-height: 1.5; color: var(--ink); }
+.theah .roller-guide .rg-steps b { color: var(--gold-deep); font-weight: 600; }
+.theah .roller-guide .rg-live { margin: 6px 0 14px; padding: 10px 12px; border-left: 2px solid var(--gold-deep); background: color-mix(in srgb, var(--gold-leaf) 8%, transparent); font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+.theah .roller-guide .rg-live-lbl { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); margin-right: 4px; }
 .theah .raises { display: flex; align-items: center; gap: 12px; font-family: var(--thd-display); }
 .theah .raises .big { font-size: 34px; color: var(--oxblood); font-variant-numeric: tabular-nums; }
 :root[data-theah-theme="sea"] .theah .raises .big { color: var(--gold-leaf); }
@@ -590,6 +601,55 @@
 #chat .theah-favor.down { border-left-color: var(--oxblood); }
 #chat .theah-favor .ti-name i { color: var(--gold-leaf); }
 #chat .theah-favor .ti-body b { font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
+
+/* ============================ Risk card (GM) ============================ */
+#chat .theah-risk { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--oxblood); border-radius: 4px; overflow: hidden; }
+#chat .theah-risk .risk-head { display: flex; align-items: center; gap: 9px; padding: 9px 12px; background: linear-gradient(180deg, color-mix(in srgb,var(--oxblood) 30%,var(--navy-deep)), var(--navy-deep)); color: #f2e3c6; font-family: var(--thd-display); font-size: 16px; letter-spacing: .02em; }
+#chat .theah-risk .risk-head i { color: var(--gold-leaf); }
+#chat .theah-risk .risk-body { padding: 11px 12px; }
+#chat .theah-risk .risk-situation { font-size: 13px; line-height: 1.5; color: var(--ink); margin-bottom: 8px; }
+#chat .theah-risk .risk-approach { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 10px; }
+#chat .theah-risk .risk-approach .ra-lbl { font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); cursor: help; }
+#chat .theah-risk .risk-group { margin-top: 10px; }
+#chat .theah-risk .rg-title { font-family: var(--thd-label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 4px; cursor: help; display: flex; align-items: center; gap: 6px; }
+#chat .theah-risk .consequences .rg-title { color: var(--oxblood); }
+#chat .theah-risk .opportunities .rg-title { color: var(--teal); }
+#chat .theah-risk .risk-group ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+#chat .theah-risk .risk-group li { display: flex; align-items: baseline; gap: 8px; font-size: 13px; line-height: 1.45; }
+#chat .theah-risk .rg-cost { flex: none; min-width: 20px; height: 20px; padding: 0 5px; display: inline-grid; place-items: center; border-radius: 10px; font-family: var(--thd-display); font-variant-numeric: tabular-nums; font-size: 12px; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold-deep)); cursor: help; }
+#chat .theah-risk .rg-desc { flex: 1; }
+#chat .theah-risk .rg-time { flex: none; font-family: var(--thd-label); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: var(--oxblood); border: 1px solid color-mix(in srgb,var(--oxblood) 45%,transparent); border-radius: 8px; padding: 1px 6px; white-space: nowrap; }
+#chat .theah-risk .risk-example { margin-top: 12px; padding-top: 9px; border-top: 1px dotted var(--line); font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
+#chat .theah-risk .risk-example .rx-lbl { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); }
+
+/* ========================= Risk Builder (GM app) ========================= */
+.theah.risk-builder-app .window-content { padding: 0; background: var(--panel); color: var(--ink); font-family: var(--thd-body); }
+.risk-builder-form { display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; }
+.risk-builder-form .rb-intro { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); font-style: italic; }
+.risk-builder-form .rb-field { display: flex; flex-direction: column; gap: 4px; }
+.risk-builder-form .rb-field > label { font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); display: flex; align-items: center; }
+.risk-builder-form .info-dot { font-size: 10px; color: var(--ink-soft); opacity: .5; margin-left: 5px; cursor: help; }
+.risk-builder-form .info-dot:hover { opacity: 1; color: var(--gold-deep); }
+.risk-builder-form textarea, .risk-builder-form input[type="text"], .risk-builder-form input[type="number"] { font-family: var(--thd-body); font-size: 13px; color: var(--ink); background: color-mix(in srgb, var(--paper) 60%, #fff 6%); border: 1px solid var(--line-strong); border-radius: 3px; padding: 6px 8px; box-sizing: border-box; min-height: 32px; }
+.risk-builder-form textarea { resize: vertical; }
+.risk-builder-form .rb-section { border: 1px solid var(--panel-edge); border-radius: 4px; padding: 10px 11px; background: color-mix(in srgb, var(--gold-leaf) 4%, transparent); }
+.risk-builder-form .rb-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.risk-builder-form .rb-head h3 { margin: 0; border: 0; font-family: var(--thd-display); font-size: 15px; color: var(--ink); display: flex; align-items: center; gap: 7px; }
+.risk-builder-form .consequences .rb-head h3 > .fa-skull-crossbones, .risk-builder-form .rb-head h3 > .fa-skull-crossbones { color: var(--oxblood); }
+.risk-builder-form .rb-add { font-family: var(--thd-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-deep); cursor: pointer; white-space: nowrap; }
+.risk-builder-form .rb-add:hover { color: var(--gold); }
+.risk-builder-form .rb-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.risk-builder-form .rb-row .rb-desc { flex: 1 1 auto; min-width: 0; }
+.risk-builder-form .rb-mini { display: inline-flex; align-items: center; gap: 5px; font-family: var(--thd-label); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); cursor: help; flex: none; }
+.risk-builder-form .rb-mini input { width: 46px; text-align: center; }
+.risk-builder-form .rb-remove { flex: none; color: var(--ink-soft); cursor: pointer; padding: 4px; }
+.risk-builder-form .rb-remove:hover { color: var(--oxblood); }
+.risk-builder-form .rb-empty { margin: 2px 0; font-size: 12px; font-style: italic; color: var(--ink-soft); }
+.risk-builder-form .rb-example { padding: 10px 12px; border-left: 2px solid var(--gold-deep); background: color-mix(in srgb, var(--gold-leaf) 8%, transparent); font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
+.risk-builder-form .rb-example .rx-lbl { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); }
+.risk-builder-form .rb-actions { display: flex; justify-content: flex-end; }
+.risk-builder-form .rb-post { display: inline-flex; align-items: center; gap: 8px; width: auto; font-family: var(--thd-label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); border-radius: 3px; padding: 9px 16px; cursor: pointer; }
+.risk-builder-form .rb-post:hover { filter: brightness(1.06); }
 
 /* ========================= Hero Creator wizard ========================= */
 .theah.hero-creator .window-content { padding: 0; background: var(--panel); color: var(--ink); font-family: var(--thd-body); }

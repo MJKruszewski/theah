@@ -37,9 +37,5 @@
   @import 'components/items';
 }
 
-.toolbox {
-  @import 'components/toolbox';
-}
-
 // Théah reskin — comprehensive sheet theme (imported last so it wins the cascade)
 @import 'components/theme';

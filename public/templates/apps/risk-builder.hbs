@@ -1,0 +1,57 @@
+<form class="risk-builder-form" autocomplete="off">
+  <p class="rb-intro">{{localize "SVNSEA2E.RiskBuilderIntro"}}</p>
+
+  <div class="rb-field">
+    <label>{{localize "SVNSEA2E.RiskSituation"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.RiskSituationHint'}}"></i></label>
+    <textarea name="situation" rows="2" placeholder="{{localize 'SVNSEA2E.RiskSituationPlaceholder'}}">{{risk.situation}}</textarea>
+  </div>
+
+  <div class="rb-field">
+    <label>{{localize "SVNSEA2E.RiskApproach"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.RiskApproachHint'}}"></i></label>
+    <input type="text" name="approach" value="{{risk.approach}}" placeholder="{{localize 'SVNSEA2E.RiskApproachPlaceholder'}}" />
+  </div>
+
+  {{!-- Consequences --}}
+  <div class="rb-section">
+    <div class="rb-head">
+      <h3><i class="fas fa-skull-crossbones"></i> {{localize "SVNSEA2E.RiskConsequences"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.RiskConsequencesHint'}}"></i></h3>
+      <a class="rb-add" data-kind="consequence"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.AddConsequence"}}</a>
+    </div>
+    {{#each risk.consequences as |c i|}}
+      <div class="rb-row" data-kind="consequence" data-i="{{i}}">
+        <input type="text" class="rb-desc" value="{{c.desc}}" placeholder="{{localize 'SVNSEA2E.RiskDescPlaceholder'}}" />
+        <label class="rb-mini" data-tooltip="{{localize 'SVNSEA2E.RiskRaisesHint'}}">{{localize "SVNSEA2E.RiskRaises"}}<input type="number" class="rb-cost" value="{{c.cost}}" min="0" /></label>
+        <label class="rb-mini" data-tooltip="{{localize 'SVNSEA2E.RiskTimeLimitHint'}}">{{localize "SVNSEA2E.RiskTimeLimit"}}<input type="number" class="rb-time" value="{{c.time}}" min="0" placeholder="—" /></label>
+        <a class="rb-remove" data-kind="consequence" data-i="{{i}}" title="{{localize 'SVNSEA2E.Remove'}}"><i class="fas fa-times"></i></a>
+      </div>
+    {{else}}
+      <p class="rb-empty">{{localize "SVNSEA2E.RiskNoConsequences"}}</p>
+    {{/each}}
+  </div>
+
+  {{!-- Opportunities --}}
+  <div class="rb-section">
+    <div class="rb-head">
+      <h3><i class="fas fa-hand-sparkles"></i> {{localize "SVNSEA2E.RiskOpportunities"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.RiskOpportunitiesHint'}}"></i></h3>
+      <a class="rb-add" data-kind="opportunity"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.AddOpportunity"}}</a>
+    </div>
+    {{#each risk.opportunities as |o i|}}
+      <div class="rb-row" data-kind="opportunity" data-i="{{i}}">
+        <input type="text" class="rb-desc" value="{{o.desc}}" placeholder="{{localize 'SVNSEA2E.RiskOppPlaceholder'}}" />
+        <label class="rb-mini" data-tooltip="{{localize 'SVNSEA2E.RiskRaisesHint'}}">{{localize "SVNSEA2E.RiskRaises"}}<input type="number" class="rb-cost" value="{{o.cost}}" min="0" /></label>
+        <label class="rb-mini" data-tooltip="{{localize 'SVNSEA2E.RiskTimeLimitHint'}}">{{localize "SVNSEA2E.RiskTimeLimit"}}<input type="number" class="rb-time" value="{{o.time}}" min="0" placeholder="—" /></label>
+        <a class="rb-remove" data-kind="opportunity" data-i="{{i}}" title="{{localize 'SVNSEA2E.Remove'}}"><i class="fas fa-times"></i></a>
+      </div>
+    {{else}}
+      <p class="rb-empty">{{localize "SVNSEA2E.RiskNoOpportunities"}}</p>
+    {{/each}}
+  </div>
+
+  <div class="rb-example">
+    <span class="rx-lbl">{{localize "SVNSEA2E.RiskExampleTitle"}}</span> {{localize "SVNSEA2E.RiskExample"}}
+  </div>
+
+  <div class="rb-actions">
+    <button type="button" class="rb-post"><i class="fas fa-comment"></i> {{localize "SVNSEA2E.PostRisk"}}</button>
+  </div>
+</form>
