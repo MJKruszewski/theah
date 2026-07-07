@@ -1,4 +1,5 @@
 import { ActorType } from "../enums";
+import { postThemedChat } from "../helpers.js";
 
 /**
  * Extend the base Actor entity by definin`g` a custom roll data structure which is ideal for the Simple system.
@@ -213,10 +214,7 @@ export class SvnSea2EActor extends Actor {
         </div>
       </div>`;
 
-    await ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      content,
-    });
+    await postThemedChat({ actor: this, content });
   }
 
   /**
@@ -287,10 +285,7 @@ export class SvnSea2EActor extends Actor {
         </div>
       </div>`;
 
-    await ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      content,
-    });
+    await postThemedChat({ actor: this, content });
 
     // Keep the "Helpless" token status in sync only when the DW count changed.
     if (dD !== 0 && typeof this.toggleStatusEffect === 'function') {

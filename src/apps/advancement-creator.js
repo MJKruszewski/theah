@@ -1,5 +1,5 @@
 import { ActorType } from '../enums.js';
-import { getAllPackAdvantages } from '../helpers.js';
+import { getAllPackAdvantages, postThemedChat } from '../helpers.js';
 
 const TRAITS = ['brawn', 'finesse', 'resolve', 'wits', 'panache'];
 
@@ -819,5 +819,5 @@ export async function applyStoryAdvancement(actor, story) {
         <div class="reward-line"><i class="fas fa-trophy"></i> ${summary}</div>
       </div>
     </div>`;
-  await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content });
+  await postThemedChat({ actor, content });
 }

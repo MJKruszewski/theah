@@ -1,0 +1,46 @@
+<div class="tab sorcery" data-group="primary" data-tab="sorcery">
+
+  {{#if sorceryTradition}}
+    <div class="sorc-tradition">
+      <i class="fas fa-hat-wizard st-icon"></i>
+      <div class="st-text">
+        <div class="st-label">{{localize "SVNSEA2E.SorceryTradition"}}</div>
+        <div class="st-name">{{sorceryTradition.label}}</div>
+        {{#if sorceryTradition.desc}}<div class="st-desc">{{sorceryTradition.desc}}</div>{{/if}}
+      </div>
+    </div>
+  {{/if}}
+
+  {{!-- Sorcery — compendium-locked; browse & drag from the pack. --}}
+  <div class="sec-title">
+    <h3>{{localize "SVNSEA2E.Sorcery"}}</h3><span></span>
+    {{#if sorceryTradition}}
+      <a class="add-btn browse-sorcery" title="{{localize 'SVNSEA2E.BrowseSorcery'}}"><i class="fas fa-book-open"></i></a>
+    {{else}}
+      <a class="add-btn open-compendium" data-pack="theah.sorceries" title="{{localize 'SVNSEA2E.BrowseCompendium'}}"><i class="fas fa-book-open"></i></a>
+    {{/if}}
+  </div>
+  <div class="prowess-list">
+    {{#each sorcery as |item id|}}
+      <div class="prowess-card sorcery item" data-item-id="{{item._id}}">
+        <div class="pc-head">
+          <i class="fas fa-hat-wizard pc-icon"></i>
+          <h4 class="pc-name">{{item.name}}</h4>
+          <span class="sorc-tags">
+            {{#if item.system.sorctype}}{{#iff item.system.sorctype '!=' 'none'}}<span class="sorc-tag">{{localize (lookup config.sorceryTypes item.system.sorctype)}}</span>{{/iff}}{{/if}}
+            {{#if item.system.sorcsubcat}}{{#iff item.system.sorcsubcat '!=' 'none'}}<span class="sorc-tag tier">{{localize (lookup config.sorcerySubcats item.system.sorcsubcat)}}</span>{{/iff}}{{/if}}
+          </span>
+          <span class="item-controls">
+            <a class="item-control item-to-chat" title="{{localize 'SVNSEA2E.PostToChat'}}"><i class="fas fa-comment"></i></a>
+            <a class="item-control item-edit" title="{{item.editlabel}}"><i class="fas fa-edit"></i></a>
+            <a class="item-control item-delete" title="{{item.deletelabel}}"><i class="fas fa-trash"></i></a>
+          </span>
+        </div>
+        {{#if item.system.description}}<div class="pc-desc">{{{item.system.description}}}</div>{{/if}}
+      </div>
+    {{else}}
+      <p class="empty-note">{{localize "SVNSEA2E.NoSorcery"}}</p>
+    {{/each}}
+  </div>
+
+</div>

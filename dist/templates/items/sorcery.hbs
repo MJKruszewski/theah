@@ -1,0 +1,52 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" />
+    <div class="header-fields">
+      {{> "systems/theah/templates/items/parts/item-header.hbs"}}
+      <div class="grid grid-2col">
+        <div class="form-group flex-group">
+          <label for="system.sorctype">{{localize "SVNSEA2E.Type"}}</label>
+          <select class="sorcery-type" id="system.sorctype" name="system.sorctype">
+            {{selectOptions config.sorceryTypes selected=sorceryType localize=true}}
+          </select>
+        </div>
+        <div class="form-group flex-group">
+          <label for="system.sorcdur">{{localize "SVNSEA2E.Duration"}}</label>
+          <select class="sorcery-type" id="system.sorcdur" name="system.sorcdur">
+            {{selectOptions config.durations selected=sorceryDuration localize=true}}
+          </select>
+        </div>
+      </div>
+      <div class="relrep grid grid-2col">
+        <div class="form-group flex-group">
+          <label for="system.sorccat">{{localize "SVNSEA2E.Category"}}</label>
+          <select class="sorcery-category" id="system.sorccat" name="system.sorccat">
+            {{selectOptions config.sorceryCats selected=sorceryCategory localize=true}}
+          </select>
+          </div><div class="form-group flex-group">
+            <label for="system.sorcsubcat">{{localize "SVNSEA2E.SubCategory"}}</label>
+            <select class="sorcery-subcategory" id="system.sorcsubcat" name="system.sorcsubcat">
+              {{selectOptions config.sorcerySubcats selected=sorcerySubCategory localize=true}}
+            </select>
+            </div>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">
+      <h2>{{localize "SVNSEA2E.Description"}}</h2>
+    </a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      {{editor description target="system.description" button=true owner=owner editable=editable}}
+    </div>
+
+  </section>
+</form>

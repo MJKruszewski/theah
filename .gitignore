@@ -1,4 +1,7 @@
 node_modules/
-dist/
 foundryconfig.json
 *.log
+
+# NOTE: dist/ is intentionally committed. The system is deployed by uploading the
+# built dist/ to a Foundry env, so each tag must contain a ready-to-run build.
+# Always run `bun run build` before committing so dist/ matches the source.

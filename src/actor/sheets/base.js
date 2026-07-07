@@ -6,7 +6,7 @@ import {
 } from '../../apps/advancement-creator.js';
 import { updateInitiative } from '../../combat.js';
 import { ActorType } from '../../enums.js';
-import { getAllPackAdvantages, isValidGlamorIsles } from '../../helpers.js';
+import { getAllPackAdvantages, isValidGlamorIsles, postThemedChat } from '../../helpers.js';
 import { roll } from '../../roll/roll.js';
 
 /**
@@ -465,7 +465,7 @@ export default class ActorSheetSS2e extends ActorSheet {
           ${L('SVNSEA2E.Favor')}: <b>${prior}</b> &rarr; <b>${next}</b>
         </div></div></div>
       </div>`;
-    ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content });
+    postThemedChat({ actor, content });
   }
 
   /* -------------------------------------------- */
@@ -482,10 +482,7 @@ export default class ActorSheetSS2e extends ActorSheet {
     const li = event.currentTarget.closest('.item');
     const item = this.actor.items.get(li?.dataset.itemId);
     if (!item) return;
-    await ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content: this.constructor._itemChatContent(item),
-    });
+    await postThemedChat({ actor: this.actor, content: this.constructor._itemChatContent(item) });
   }
 
   /**
@@ -665,12 +662,7 @@ export default class ActorSheetSS2e extends ActorSheet {
         </div>
       </div>`;
 
-    await ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor }),
-      content,
-      rolls: [r],
-      sound: CONFIG.sounds.dice,
-    });
+    await postThemedChat({ actor, content, rolls: [r], sound: CONFIG.sounds.dice });
   }
 
   /* -------------------------------------------- */
@@ -1560,12 +1552,7 @@ export default class ActorSheetSS2e extends ActorSheet {
         </div>
       </div>`;
 
-    await ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content,
-      rolls: [r],
-      sound: CONFIG.sounds.dice,
-    });
+    await postThemedChat({ actor: this.actor, content, rolls: [r], sound: CONFIG.sounds.dice });
   }
 
   /* -------------------------------------------- */

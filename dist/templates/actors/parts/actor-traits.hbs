@@ -1,0 +1,52 @@
+<div class="tab traits" data-group="primary" data-tab="traits">
+
+  {{!-- Traits: engraved medallions over a compass rose --}}
+  <div class="sec-title"><h3>{{localize "SVNSEA2E.Traits"}}</h3><span></span></div>
+  <div class="traits">
+    <div class="compass-bg" aria-hidden="true">
+      <svg viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="34"/>
+        <path d="M50 4 L54 50 L50 96 L46 50 Z M4 50 L50 46 L96 50 L50 54 Z"/>
+        <path d="M22 22 L50 47 L78 78 M78 22 L50 47 L22 78" stroke-width=".6"/>
+      </g></svg>
+    </div>
+    {{#each traits as |trait key|}}
+      <div class="trait">
+        <div class="medallion"><span class="num">{{trait.value}}</span></div>
+        <div class="pips">
+          {{#for 1 trait.max 1}}
+            {{#iff trait.value '>=' @index}}
+              <i data-name="system.traits.{{trait.name}}.value" data-value="{{@index}}" data-type="trait" data-key="{{trait.name}}" class="fillable rating on"></i>
+            {{else}}
+              <i data-name="system.traits.{{trait.name}}.value" data-value="{{@index}}" data-type="trait" data-key="{{trait.name}}" class="fillable rating"></i>
+            {{/iff}}
+          {{/for}}
+        </div>
+        <div class="tname">{{trait.label}}</div>
+      </div>
+    {{/each}}
+  </div>
+
+  {{#if hasSkills}}
+    <div class="sec-title"><h3>{{localize "SVNSEA2E.Skills"}}</h3><span></span></div>
+    <div class="skills">
+      {{#each skills as |skill key|}}
+        <div class="skill">
+          <span class="sname rollable" data-roll="{{skill.value}}" data-label="{{skill.name}}" title="{{localize 'SVNSEA2E.Roll'}}">{{skill.label}}</span>
+          <div class="pips">
+            {{#for 1 skill.max 1}}
+              {{#iff skill.value '>=' @index}}
+                <i data-name="system.skills.{{skill.name}}.value" data-value="{{@index}}" data-type="skill" data-key="{{skill.name}}" class="fillable rating on"></i>
+              {{else}}
+                <i data-name="system.skills.{{skill.name}}.value" data-value="{{@index}}" data-type="skill" data-key="{{skill.name}}" class="fillable rating"></i>
+              {{/iff}}
+            {{/for}}
+          </div>
+          <span class="val">{{skill.value}}</span>
+          <svg class="go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+
+</div>

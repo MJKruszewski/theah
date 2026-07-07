@@ -11,6 +11,32 @@ export const skillsToSheetData = (actorData, CONFIG) =>
 export const getItems = (data, type) =>
   data.items.filter((item) => item.type === type);
 
+/**
+ * Post a themed system chat card honoring the user's current chat roll mode
+ * (Public Roll / Private GM Roll / Blind GM Roll / Self Roll) from the chat-input
+ * dropdown. Centralizes `ChatMessage.applyRollMode` so every card the system
+ * emits — item-to-chat, Favor, Wounds, Corruption, the Raises pool, advancement,
+ * Evil Act — respects the selection, not just dice-dialog rolls.
+ * @param {object}  opts
+ * @param {Actor}   [opts.actor]    Actor to speak as (used when `speaker` omitted).
+ * @param {object}  [opts.speaker]  Explicit speaker (overrides `actor`).
+ * @param {string}  opts.content    Card HTML.
+ * @param {Roll[]}  [opts.rolls]    Rolls to attach (Blind mode hides their result).
+ * @param {string}  [opts.sound]    Optional sound to play.
+ * @returns {Promise<ChatMessage>}
+ */
+export function postThemedChat({ actor, speaker, content, rolls, sound } = {}) {
+  const data = {
+    speaker: speaker ?? ChatMessage.getSpeaker(actor ? { actor } : {}),
+    content,
+  };
+  if (rolls && rolls.length) data.rolls = rolls;
+  if (sound) data.sound = sound;
+  // Applies whisper / blind / rollMode based on the chat-input dropdown.
+  ChatMessage.applyRollMode(data, game.settings.get('core', 'rollMode'));
+  return ChatMessage.create(data);
+}
+
 export async function getAllPackAdvantages() {
   let itemPacks = game.packs.filter((p) => p.metadata.type === 'Item');
   const bar = async (p, i) => {

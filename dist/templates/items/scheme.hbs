@@ -1,0 +1,30 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" />
+    <div class="header-fields">
+      {{> "systems/theah/templates/items/parts/item-header.hbs"}}
+      <div class="traits grid grid-3col">
+        <div class="trait flexrow">
+          <label for="system.influence.value" class="trait-name">{{localize "SVNSEA2E.Influence"}}</label>
+          <input type="text" id="system.influence.value" name="system.influence.value" value="{{ influence.value }}"data-dtype="Number" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">
+      <h2>{{localize "SVNSEA2E.Description"}}</h2>
+    </a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      {{editor description target="system.description" button=true owner=owner editable=editable}}
+    </div>
+  </section>
+</form>

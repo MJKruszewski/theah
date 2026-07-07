@@ -1,0 +1,67 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+  <div class="theah-layout">
+
+    {{!-- ===================== Identity rail ===================== --}}
+    <aside class="identity-rail">
+      <span class="edge"></span>
+
+      <div class="portrait">
+        <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" alt="{{name}}" />
+        <svg class="corner tl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+        <svg class="corner tr" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+        <svg class="corner bl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+        <svg class="corner br" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+      </div>
+
+      <div class="nameplate">
+        <input class="name" type="text" name="name" value="{{name}}" placeholder="{{localize 'SVNSEA2E.ActorName'}}" />
+        <input class="epithet" type="text" name="system.epithet" value="{{epithet}}" placeholder="{{localize 'SVNSEA2E.EpithetPlaceholder'}}" />
+      </div>
+
+      <div class="filet" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg>
+      </div>
+
+      <button type="button" class="create-hero-btn" title="{{localize 'SVNSEA2E.HeroCreator'}}"><i class="fas fa-hat-wizard"></i> {{localize "SVNSEA2E.CreateHero"}}</button>
+
+      <dl class="meta">
+        <dt>{{localize "SVNSEA2E.Nation"}}</dt>
+        <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if nation}}{{localize (lookup config.nations nation)}}{{else}}&mdash;{{/if}}</dd>
+        <dt>{{localize "SVNSEA2E.Religion"}}</dt>
+        <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if religion}}{{religion}}{{else}}&mdash;{{/if}}</dd>
+        <dt>{{localize "SVNSEA2E.Age"}}</dt>
+        <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if age}}{{age}}{{else}}&mdash;{{/if}}</dd>
+        <dt>{{localize "SVNSEA2E.Languages"}}</dt>
+        <dd class="rail-langs">
+          <ul class="tag-list">
+            {{#each selectedlangs as |v k|}}<li class="tag">{{v}}</li>{{/each}}
+          </ul>
+          <a class="language-selector" data-options="languages" title="{{localize 'SVNSEA2E.Languages'}}"><i class="fas fa-edit"></i></a>
+        </dd>
+      </dl>
+
+      {{> "systems/theah/templates/actors/parts/actor-wounds.hbs"}}
+    </aside>
+
+    {{!-- ===================== Ledger ===================== --}}
+    <main class="sheet-main">
+      <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="traits"><h2>{{localize "SVNSEA2E.TraitsAndSkills"}}</h2></a>
+        <a class="item" data-tab="prowess"><h2>{{localize "SVNSEA2E.Prowess"}}</h2></a>
+        <a class="item" data-tab="stories"><h2>{{localize "SVNSEA2E.Stories"}}</h2></a>
+        <a class="item" data-tab="inventory"><h2>{{localize "SVNSEA2E.Inventory"}}</h2></a>
+        <a class="item" data-tab="sorcery"><h2>{{localize "SVNSEA2E.Sorcery"}}</h2></a>
+        <button type="button" class="theme-toggle" title="{{localize 'SVNSEA2E.ToggleTheme'}}"><i class="fas fa-circle-half-stroke"></i></button>
+      </nav>
+
+      <section class="sheet-body">
+        {{> "systems/theah/templates/actors/parts/actor-overview.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-prowess.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-stories.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-inventory.hbs"}}
+        {{> "systems/theah/templates/actors/parts/actor-sorcery.hbs"}}
+      </section>
+    </main>
+
+  </div>
+</form>

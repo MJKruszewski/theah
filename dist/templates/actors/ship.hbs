@@ -1,0 +1,110 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" />
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{name}}" placeholder="{{localize 'SVNSEA2E.ActorName'}}" /></h1>
+      <div class="form-group flex-group">
+        <span class="flex-group">
+          <label for="system.class">{{localize "SVNSEA2E.Class"}}</label>
+          <input type="text" id="system.class" name="system.class" value="{{class}}" placeholder="{{localize 'SVNSEA2E.Class'}}" />
+        </span>
+        <span class="flex-group">
+          <label for="system.origin">{{localize "SVNSEA2E.Origin"}}</label>
+          <input type="text" id="system.origin" name="system.origin" value="{{origin}}" placeholder="{{localize 'SVNSEA2E.Origin'}}" />
+        </span>
+      </div>
+    </div>
+    <div class="grid grid-2col">
+      <div class="form-group flex-group-left">
+        <label for="system.crewstatus">{{localize "SVNSEA2E.CrewStatus"}}</label>
+        <select id="system.crewstatus" class="crewstatus" name="system.crewstatus">
+          {{selectOptions config.crewStatuses selected=crewstatus localize=true}}
+        </select>
+      </div>
+      <div class="form-group flex-group">
+        <label for="system.wealth">{{localize "SVNSEA2E.WealthPts"}}</label>
+        <input type="text" id="system.wealth" name="system.wealth" value="{{wealth}}" placeholder="{{localize 'SVNSEA2E.WealthPts'}}" />
+      </div>
+    </div>
+    {{> "systems/theah/templates/actors/parts/actor-wounds.hbs"}}
+  </header>
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="roster">
+      <h2>{{localize "SVNSEA2E.Roster"}}</h2>
+    </a>
+    <a class="item" data-tab="cargo">
+      <h2>{{localize "SVNSEA2E.Cargo"}}</h2>
+    </a>
+    <a class="item" data-tab="features">
+      <h2>{{localize "SVNSEA2E.Features"}}</h2>
+    </a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    <div class="tab roster" data-group="primary" data-tab="roster">
+      <ol class="items-list crew">
+        {{#each crew as |role|}}
+          <li class="flexrow item-header {{role.cssClass}}" {{#each role.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>
+            <h3 class="item-name flexrow" {{#each role.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>{{role.label}}</h3>
+          </li>
+          {{#each role.actors as |actor a|}}
+            <li class="item flexrow draggable {{role.cssClass}}" data-actor-id="{{actor.id}}">
+              <div class="item-image"><img src="{{actor.img}}" title="{{actor.name}}" /></div>
+              <h4 class="item-name">{{actor.name}}</h4>
+              <div class="item-controls">
+                <a class="item-control item-delete" title="{{localize 'SVNSEA2E.RemoveCrew'}}">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </li>
+          {{/each}}
+        {{/each}}
+      </ol>
+    </div>
+    <div class="tab cargo" data-group="primary" data-tab="cargo">
+      {{editor cargo target="system.cargo" button=true owner=owner editable=editable}}
+    </div>
+    <div class="tab features" data-group="primary" data-tab="features">
+      <ol class="items-list">
+        <li class="flexrow item-header story">
+          <h3 class="item-name flexrow">{{localize "SVNSEA2E.Adventures"}}</h3>
+          <div class="item-controls">
+            <a class="item-control item-create" title="{{localize 'SVNSEA2E.AddShipAdventure'}}" data-type="shipadventure" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>
+              <i class="fas fa-plus"></i> {{localize "SVNSEA2E.Add"}}
+            </a>
+          </div>
+        </li>
+      {{#each adventures as |item id|}}
+        <li class="item flexrow adventure" data-item-id="{{item._id}}">
+          <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" /></div>
+          <h4 class="item-name">{{item.name}}</h4>
+          <div class="item-controls">
+            <a class="item-control item-edit" title="{{item.editlabel}}"><i class="fas fa-edit"></i></a>
+            <a class="item-control item-delete" title="{{item.deletelabel}}"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+      {{/each}}
+        <li class="flexrow item-header story">
+          <h3 class="item-name flexrow">{{localize "SVNSEA2E.Backgrounds"}}</h3>
+          <div class="item-controls">
+            <a class="item-control item-create" title="{{localize 'SVNSEA2E.AddShipBackground'}}" data-type="shipbackground" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>
+              <i class="fas fa-plus"></i> {{localize "SVNSEA2E.Add"}}
+            </a>
+          </div>
+        </li>
+      {{#each backgrounds as |item id|}}
+        <li class="item flexrow background" data-item-id="{{item._id}}">
+          <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" /></div>
+          <h4 class="item-name">{{item.name}}</h4>
+          <div class="item-controls">
+            <a class="item-control item-edit" title="{{item.editlabel}}"><i class="fas fa-edit"></i></a>
+            <a class="item-control item-delete" title="{{item.deletelabel}}"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+      {{/each}}
+      </ol>
+    </div>
+  </section>
+</form>

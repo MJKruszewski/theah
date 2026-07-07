@@ -1,0 +1,54 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" />
+    <div class="header-fields">
+      {{> "systems/theah/templates/items/parts/item-header.hbs"}}
+      <div class="form-group">
+        <label for="system.nation">{{localize "SVNSEA2E.Status"}}</label>
+        <select class="status" id="system.nation" name="system.status">
+          {{selectOptions config.storyStatuses selected=storyStatus localize=true}}
+        </select>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">
+      <h2>{{localize "SVNSEA2E.Description"}}</h2>
+    </a>
+    <a class="item" data-tab="reward">
+      <h2>{{localize "SVNSEA2E.Reward"}}</h2>
+    </a>
+    <a class="item" data-tab="endings">
+      <h2>{{localize "SVNSEA2E.Endings"}}</h2>
+    </a>
+    <a class="item" data-tab="steps">
+      <h2>{{localize "SVNSEA2E.Steps"}}</h2>
+      </a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      {{editor description target="system.description" button=true owner=owner editable=editable}}
+    </div>
+
+    {{!-- Reward Tab --}}
+    <div class="tab endings" data-group="primary" data-tab="reward">
+      {{editor reward target="system.reward" button=true owner=owner editable=editable}}
+    </div>
+
+    {{!-- Endings Tab --}}
+    <div class="tab endings" data-group="primary" data-tab="endings">
+      {{editor endings target="system.endings" button=true owner=owner editable=editable}}
+    </div>
+
+    {{!-- Steps Tab --}}
+    <div class="tab steps" data-group="primary" data-tab="steps">
+      {{editor steps target="system.steps" button=true owner=owner editable=editable}}
+    </div>
+  </section>
+</form>

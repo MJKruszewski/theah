@@ -1,0 +1,402 @@
+[
+  {
+    "_id": "83d97357f488706b",
+    "name": "Friendly",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue when you meet a character (even a Villain) for the first time. She treats you as friendly for one scene.</p><p>Arcana: The Road.</p>",
+      "infosource": "Core Rulebook p.156"
+    }
+  },
+  {
+    "_id": "9b4e4055705a820d",
+    "name": "Underconfident",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero decides he cannot take an action without help from another Hero—insisting another Hero spend a Hero Point to give you Bonus Dice, or asking her to use one of her Advantages to aid you, for example.</p><p>Arcana: The Road.</p>",
+      "infosource": "Core Rulebook p.156"
+    }
+  },
+  {
+    "_id": "6766d7f8b3d58f0e",
+    "name": "Willful",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue and target a Villain. Until the end of this Scene, you cannot spend Hero Points and the Villain cannot spend Danger Points.</p><p>Arcana: The Magician.</p>",
+      "infosource": "Core Rulebook p.156"
+    }
+  },
+  {
+    "_id": "f84a7bebbf28ce9d",
+    "name": "Ambitious",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when you chase after power and the deal you're after is dangerous or causes trouble.</p><p>Arcana: The Magician.</p>",
+      "infosource": "Core Rulebook p.156"
+    }
+  },
+  {
+    "_id": "40aad15ee1b34771",
+    "name": "Passionate",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue when another Hero takes Wounds to prevent her from suffering those Wounds. You take one Dramatic Wound instead.</p><p>Arcana: The Lovers.</p>",
+      "infosource": "Core Rulebook p.156"
+    }
+  },
+  {
+    "_id": "9b11f3e3efe04459",
+    "name": "Star-Crossed",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero becomes enamored with someone she really shouldn't.</p><p>Arcana: The Lovers.</p>",
+      "infosource": "Core Rulebook p.156"
+    }
+  },
+  {
+    "_id": "7066242abe2c667e",
+    "name": "Wily",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to escape danger from the current Scene. You cannot rescue anyone but yourself.</p><p>Arcana: The Fool.</p>",
+      "infosource": "Core Rulebook p.156"
+    }
+  },
+  {
+    "_id": "7b783105a0b27b78",
+    "name": "Curious",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when you investigate something unusual, especially if it looks dangerous.</p><p>Arcana: The Fool.</p>",
+      "infosource": "Core Rulebook p.156"
+    }
+  },
+  {
+    "_id": "ae552804f7f3a8c8",
+    "name": "Fortunate",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to delay an Opportunity or a Consequence by 1 Action.</p><p>Arcana: The Wheel.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "b08d09734519182d",
+    "name": "Unfortunate",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive 2 Hero Points when you choose to fail an important Risk before rolling.</p><p>Arcana: The Wheel.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "ef15b3c02a1bc936",
+    "name": "Astute",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue after a Villain spends Raises for an Action. That Action fails. The Villain still loses the Raises she spent.</p><p>Arcana: The Devil.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "48efda7103601133",
+    "name": "Trusting",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when you accept someone's lies or lopsided deal.</p><p>Arcana: The Devil.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "72b79f3dbea9d507",
+    "name": "Humble",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to gain 2 Hero Points instead of 1 when you activate your Hubris or trigger a Quirk.</p><p>Arcana: The Tower.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "a1441191591da898",
+    "name": "Arrogant",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero shows disdain, contempt, or otherwise looks down.</p><p>Arcana: The Tower.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "e73d8fc834766d9f",
+    "name": "Insightful",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to discover a Brute Squad's type, or to know a Villain's Rank and Advantages.</p><p>Arcana: The Beggar.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "f0227992d9c5f258",
+    "name": "Envious",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero covets something, and does something unwise to get it.</p><p>Arcana: The Beggar.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "1fa5048d7ec3a677",
+    "name": "Intuitive",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to ask the GM one yes or no question about an NPC. The GM must answer honestly and should be generous—for example, if there is a qualifier, he should tell you and explain more fully.</p><p>Arcana: The Witch.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "55e9d2520ecf0bbf",
+    "name": "Manipulative",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when you try to get someone else to do your dirty work for you, and it backfires.</p><p>Arcana: The Witch.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "027fa9ca6b25e1de",
+    "name": "Victorious",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue the first time you Wound a Villain during a fight to make her take a Dramatic Wound in addition to the Wounds you normally deal.</p><p>Arcana: The War.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "008f42e2287cae8c",
+    "name": "Loyal",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero goes back for a fallen comrade or refuses to leave a wounded ally.</p><p>Arcana: The War.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "c68d0d1e7bd2aea0",
+    "name": "Altruistic",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to suffer a Risk's Consequences in place of another Hero.</p><p>Arcana: The Hanged Man.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "b1028e95ee5d9b99",
+    "name": "Indecisive",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero takes an Action to pause in hesitation, doubt, or uncertainty before she makes a move.</p><p>Arcana: The Hanged Man.</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "31a92615c3fbd39b",
+    "name": "Adaptable",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to take your first Action before anyone else in a Round.</p><p>Arcana: Coins (for the Ferryman).</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "ba57759ce6f9c3a8",
+    "name": "Relentless",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when you refuse to leave well enough alone or quit while you're ahead, and it gets you into trouble.</p><p>Arcana: Coins (for the Ferryman).</p>",
+      "infosource": "Core Rulebook p.157"
+    }
+  },
+  {
+    "_id": "0c2d48928fd93fe0",
+    "name": "Comforting",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to cancel the effects of Fear on you and your friends.</p><p>Arcana: The Thrones.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "2c9b95aa4ead4369",
+    "name": "Stubborn",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero is stubborn and refuses to change her mind in the face of evidence.</p><p>Arcana: The Thrones.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "5f6a3914f1c777d5",
+    "name": "Subtle",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue when you act behind the scenes, from the shadows, or through a proxy. For the next Risk, when you determine Raises, every die counts as a Raise.</p><p>Arcana: The Moonless Night.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "42691aaf168bb2bc",
+    "name": "Confusion",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero fails to understand an important plot element and that misunderstanding leads to danger for herself or others.</p><p>Arcana: The Moonless Night.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "c8846ee5efe642b5",
+    "name": "Glorious",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue when you are the center of attention. For the next Risk, when you determine Raises, every die counts as a Raise.</p><p>Arcana: The Sun.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "95d47921c5da0115",
+    "name": "Proud",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero refuses an offer of aid—for example, if a Hero tries to spend a Hero Point to give you Bonus Dice and you turn them down.</p><p>Arcana: The Sun.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "4ddb6d0b9f7c0065",
+    "name": "Illuminating",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to know whenever any other character lies to you until the end of the Scene.</p><p>Arcana: The Prophet.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "7004bd7fcbc246d9",
+    "name": "Overzealous",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero strongly defends one of her opinions when the time or place is inappropriate.</p><p>Arcana: The Prophet.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "6b6f816957c422a5",
+    "name": "Exemplary",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue and choose another Hero in the same scene to pool your Raises for the round, spending Raises to take Actions from your shared pool.</p><p>Arcana: Reunion.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "f5185e0d27c3dca3",
+    "name": "Bitterness",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when you bring up old grudges or bad feelings when doing so will lead to trouble.</p><p>Arcana: Reunion.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "724e776a9ba159e8",
+    "name": "Courageous",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to add Bonus Dice to your Risk equal to the Fear rating of your target.</p><p>Arcana: The Hero.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "7543d919f07fde78",
+    "name": "Foolhardy",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your brash, cocky, or reckless actions cause trouble for you and another Hero.</p><p>Arcana: The Hero.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "d89de08645f10e42",
+    "name": "Temperate",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue to prevent any magical effect (Sorcery, Artifacts, Monsters, etc.) from affecting you.</p><p>Arcana: The Glyph.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "c6b5ab562506458b",
+    "name": "Superstitious",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when you refuse to solve a problem using Sorcery, an artifact, or some other mystical effect that you don't trust.</p><p>Arcana: The Glyph.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "3a54b81ed99bdf37",
+    "name": "Commanding",
+    "type": "virtue",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Activate your Virtue. The GM gives a Hero Point to all other Heroes in this Scene.</p><p>Arcana: The Emperor.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  },
+  {
+    "_id": "7693cb8bfec646df",
+    "name": "Hot-Headed",
+    "type": "hubris",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You receive a Hero Point when your Hero flies off the handle and loses her temper, causing trouble.</p><p>Arcana: The Emperor.</p>",
+      "infosource": "Core Rulebook p.158"
+    }
+  }
+]
