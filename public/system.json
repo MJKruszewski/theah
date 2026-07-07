@@ -3,7 +3,7 @@
   "type": "system",
   "title": "Théah — 7th Sea 2e (Unofficial)",
   "description": "Théah: an unofficial 7th Sea Second Edition system for Foundry VTT — swashbuckling heroes, the Raises dice pool, and data-rich compendiums.",
-  "version": "0.1.24",
+  "version": "0.1.25",
   "compatibility": {
     "minimum": "13",
     "verified": "14"
