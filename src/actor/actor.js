@@ -163,6 +163,11 @@ export class SvnSea2EActor extends Actor {
     if (c !== undefined) {
       options.theahPriorCorruption = this.system.corruptionpts ?? 0;
     }
+    // Stash the prior Wealth so _onUpdate can post an accurate earn/spend card.
+    const wl = foundry.utils.getProperty(changed, 'system.wealth');
+    if (wl !== undefined) {
+      options.theahPriorWealth = this.system.wealth ?? 0;
+    }
   }
 
   /** @override */
@@ -176,6 +181,9 @@ export class SvnSea2EActor extends Actor {
       }
       if (options.theahPriorCorruption !== undefined) {
         this._reactToCorruptionChange(options.theahPriorCorruption);
+      }
+      if (options.theahPriorWealth !== undefined) {
+        this._reactToWealthChange(options.theahPriorWealth);
       }
     }
   }
@@ -211,6 +219,44 @@ export class SvnSea2EActor extends Actor {
         <div class="corr-body">
           <div class="corr-stats"><span class="cs"><b>${newC}</b>/${cMax} ${L('SVNSEA2E.Corruption')}</span></div>
           <div class="corr-note">${note}</div>
+        </div>
+      </div>`;
+
+    await postThemedChat({ actor: this, content });
+  }
+
+  /**
+   * Post a themed public chat card describing a Wealth earn or spend. Fires for
+   * ANY change to system.wealth (taler click, wizard, macro, the roller's
+   * spend-to-reroll) because it lives on the document, not a sheet handler.
+   * @param {number} prior  The pre-update Wealth value.
+   * @private
+   */
+  async _reactToWealthChange(prior) {
+    const newW = this.system.wealth ?? 0;
+    const delta = newW - prior;
+    if (delta === 0) return;
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const name = this.name;
+    const gained = delta > 0;
+    const headline = gained
+      ? L('SVNSEA2E.WealthGains', { name, n: delta })
+      : L('SVNSEA2E.WealthSpends', { name, n: -delta });
+
+    // Affordance note keyed to the Core spending thresholds (1 / 3 / 5 / 8-10).
+    let affordKey = 'SVNSEA2E.WealthAfford0';
+    if (newW >= 8) affordKey = 'SVNSEA2E.WealthAfford8';
+    else if (newW >= 5) affordKey = 'SVNSEA2E.WealthAfford5';
+    else if (newW >= 3) affordKey = 'SVNSEA2E.WealthAfford3';
+    else if (newW >= 1) affordKey = 'SVNSEA2E.WealthAfford1';
+
+    const content = `
+      <div class="theah theah-wealth${gained ? '' : ' spend'}">
+        <div class="wealth-head"><i class="fas fa-coins"></i> ${headline}</div>
+        <div class="wealth-body">
+          <div class="wealth-stats"><span class="wl"><b>${newW}</b> ${L('SVNSEA2E.WealthPts')}</span></div>
+          <div class="wealth-note">${L(affordKey)}</div>
         </div>
       </div>`;
 

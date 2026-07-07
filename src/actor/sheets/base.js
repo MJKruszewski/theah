@@ -93,6 +93,20 @@ export default class ActorSheetSS2e extends ActorSheet {
       });
     }
 
+    // Gold talers: a 0–10 Wealth track where each taler's tooltip describes what
+    // that many Wealth Points can buy, per the Core spending guidelines (p.164-165).
+    if (actor.type === ActorType.PLAYER) {
+      const wealth = actorData.wealth ?? 0;
+      sheetData.wealthTalers = Array.from({ length: 10 }, (_, i) => {
+        const level = i + 1;
+        return {
+          level,
+          filled: wealth >= level,
+          tip: game.i18n.localize(`SVNSEA2E.WealthLevel${level}`),
+        };
+      });
+    }
+
     // Which national Sorcery the Hero practices (for the Sorcery-tab banner).
     sheetData.sorceryTradition = this._detectSorceryTradition(actor);
 
@@ -362,8 +376,12 @@ export default class ActorSheetSS2e extends ActorSheet {
       .find('.item h4.item-name')
       .on('click', (event) => this._onItemSummary(event));
 
-    // Rollable abilities.
-    if (this.actor.type === ActorType.PLAYER || this.actor.type === ActorType.HERO) {
+    // Rollable abilities. For the player character, clicking a Skill drives the
+    // on-sheet Raises roller (populate + scroll + flash) so the two rolling
+    // surfaces are one. The hero NPC type has no roller, so it keeps the dialog.
+    if (this.actor.type === ActorType.PLAYER) {
+      html.find('.rollable').on('click', this._onSkillToRoller.bind(this));
+    } else if (this.actor.type === ActorType.HERO) {
       html.find('.rollable').on('click', this._onHeroRoll.bind(this));
     } else if (this.actor.type === ActorType.VILLAIN || this.actor.type === ActorType.MONSTER) {
       html.find('.rollable').on('click', this._onVillainRoll.bind(this));
@@ -384,6 +402,7 @@ export default class ActorSheetSS2e extends ActorSheet {
       const refresh = () => this._updatePoolFormula(rollerEl);
       roller.find('.rp-trait, .rp-skill, .rp-threshold').on('change', refresh);
       roller.find('.roll-pool').on('click', (event) => this._onPoolRoll(event));
+      roller.find('.hp-step').on('click', (event) => this._onHeroPointStep(event));
       refresh();
     }
 
@@ -725,6 +744,9 @@ export default class ActorSheetSS2e extends ActorSheet {
           }
           break;
         case 'corrupt':
+          tval = actorData[dataSet.key];
+          break;
+        case 'wealth':
           tval = actorData[dataSet.key];
           break;
         case 'fear':
@@ -1532,33 +1554,218 @@ export default class ActorSheetSS2e extends ActorSheet {
       }
     }
 
-    const dice = r.dice[0].results.map((d) => d.result);
-    const { raises, combos, used } = this.constructor.computeRaises(dice, threshold);
-    const diceHtml = this.constructor.renderDiceRow(dice, used);
+    const dice = r.dice[0].results.map((d) => d.result).sort((a, b) => b - a);
+    const traitLabel = traitSel ? traitSel.options[traitSel.selectedIndex].text.split(' ')[0] : '';
+    const skillLabel = skillSel ? skillSel.options[skillSel.selectedIndex].text.split(' ')[0] : '';
+
+    // Remember this roll so Wealth can be spent to reroll individual dice.
+    this._poolState = { dice, threshold, t, s, pool, traitLabel, skillLabel };
+
+    const { used, combosText } = this._renderPoolResult(rollerEl);
+    await this._postPoolChat(r, used, combosText);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Render the current `_poolState` into the on-sheet result area: dice tiles
+   * (clickable to reroll when the Hero has Wealth), the Raise count, the combos
+   * and the Wealth-reroll hint. Re-binds die clicks because the markup is rebuilt.
+   * @param {HTMLElement} rollerEl   The `.roller` container.
+   * @returns {{raises:number, used:number[], combosText:string}}
+   * @private
+   */
+  _renderPoolResult(rollerEl) {
+    const st = this._poolState;
+    const { raises, combos, used } = this.constructor.computeRaises(st.dice, st.threshold);
+    const wealth = Number(this.actor.system.wealth) || 0;
+    const canReroll = wealth > 0;
+
+    // Dice tiles carry their index so a click can reroll exactly that die.
+    const usedCopy = [...used];
+    const diceHtml = st.dice
+      .map((d, i) => {
+        let cls = 'die' + (d === 10 ? ' ten' : '');
+        const idx = usedCopy.indexOf(d);
+        if (idx > -1) {
+          cls += ' used';
+          usedCopy.splice(idx, 1);
+        }
+        if (canReroll) cls += ' rerollable';
+        return `<div class="${cls}" data-die-index="${i}">${d}</div>`;
+      })
+      .join('');
     const combosText = combos.length
       ? combos.join('   ·   ')
       : game.i18n.localize('SVNSEA2E.NoRaises');
 
-    // Inline result on the sheet.
-    rollerEl.querySelector('.dice').innerHTML = diceHtml;
-    rollerEl.querySelector('.big').textContent = raises;
-    rollerEl.querySelector('.combos').textContent = combosText;
-    rollerEl.querySelector('.result').classList.add('show');
+    const resultEl = rollerEl.querySelector('.result');
+    resultEl.querySelector('.dice').innerHTML = diceHtml;
+    resultEl.querySelector('.big').textContent = raises;
+    resultEl.querySelector('.combos').textContent = combosText;
+    const hintEl = resultEl.querySelector('.reroll-hint');
+    if (hintEl) {
+      hintEl.textContent = canReroll
+        ? game.i18n.format('SVNSEA2E.WealthRerollHint', { n: wealth })
+        : '';
+    }
+    resultEl.classList.toggle('can-reroll', canReroll);
+    resultEl.classList.add('show');
 
-    // Matching chat card.
-    const traitLabel = traitSel ? traitSel.options[traitSel.selectedIndex].text.split(' ')[0] : '';
-    const skillLabel = skillSel ? skillSel.options[skillSel.selectedIndex].text.split(' ')[0] : '';
+    if (canReroll) {
+      resultEl.querySelectorAll('.die.rerollable').forEach((el) =>
+        el.addEventListener('click', (ev) => this._onWealthReroll(ev)),
+      );
+    }
+    return { raises, used, combosText };
+  }
+
+  /**
+   * Post the themed `.theah-pool` chat card for the current `_poolState`.
+   * @param {Roll} roll         The Roll to attach (Dice So Nice / inspection).
+   * @param {number[]} used     Dice consumed by Raises.
+   * @param {string} combosText Pre-formatted combo string.
+   * @param {string} [note]     Optional extra line (e.g. a Wealth reroll note).
+   * @private
+   */
+  async _postPoolChat(roll, used, combosText, note = '') {
+    const st = this._poolState;
+    const { raises } = this.constructor.computeRaises(st.dice, st.threshold);
+    const diceHtml = this.constructor.renderDiceRow(st.dice, used);
     const raisesLabel = game.i18n.localize('SVNSEA2E.RaisesLabel');
     const content = `
       <div class="theah theah-pool">
-        <div class="pool-head">${skillLabel} <b>${s}</b> + ${traitLabel} <b>${t}</b> = <b>${pool}</b>d10 &middot; ${game.i18n.localize('SVNSEA2E.Threshold')} <b>${threshold}</b></div>
+        <div class="pool-head">${st.skillLabel} <b>${st.s}</b> + ${st.traitLabel} <b>${st.t}</b> = <b>${st.pool}</b>d10 &middot; ${game.i18n.localize('SVNSEA2E.Threshold')} <b>${st.threshold}</b></div>
         <div class="pool-body">
           <div class="dice">${diceHtml}</div>
           <div class="raises"><span class="big">${raises}</span><div><div class="lab">${raisesLabel}</div><div class="combos">${combosText}</div></div></div>
         </div>
+        ${note ? `<div class="pool-reroll"><i class="fas fa-coins"></i> ${note}</div>` : ''}
       </div>`;
+    await postThemedChat({
+      actor: this.actor,
+      content,
+      rolls: roll ? [roll] : undefined,
+      sound: CONFIG.sounds.dice,
+    });
+  }
 
-    await postThemedChat({ actor: this.actor, content, rolls: [r], sound: CONFIG.sounds.dice });
+  /* -------------------------------------------- */
+
+  /**
+   * Spend 1 Wealth to reroll a single die (Core p.164: in money-driven social
+   * Risks each Wealth Point spent rerolls one d10). Updates the die in place,
+   * recomputes Raises, syncs the Wealth track without a full re-render (so the
+   * inline result survives) and posts a reroll chat card.
+   * @param {Event} event   The die click event.
+   * @private
+   */
+  async _onWealthReroll(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const st = this._poolState;
+    if (!st) return;
+    const wealth = Number(this.actor.system.wealth) || 0;
+    if (wealth <= 0) {
+      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.WealthNone'));
+    }
+    const dieEl = event.currentTarget;
+    const rollerEl = dieEl.closest('.roller');
+    const i = Number(dieEl.dataset.dieIndex);
+    if (!Number.isInteger(i) || i < 0 || i >= st.dice.length) return;
+
+    const oldVal = st.dice[i];
+    const r = new Roll('1d10');
+    await r.evaluate();
+    if (game.dice3d) {
+      try {
+        await game.dice3d.showForRoll(r, game.user, true);
+      } catch (e) {
+        /* Dice So Nice is optional */
+      }
+    }
+    const newVal = r.total;
+    st.dice[i] = newVal;
+    st.dice.sort((a, b) => b - a);
+
+    // Spend the Wealth silently (this card carries the spend) and skip the sheet
+    // re-render so the inline result isn't wiped; sync the rail track by hand.
+    const remaining = wealth - 1;
+    await this.actor.update(
+      { 'system.wealth': remaining },
+      { render: false, theahSilent: true },
+    );
+    this._syncWealthDom(remaining);
+
+    const { used, combosText } = this._renderPoolResult(rollerEl);
+    const note = game.i18n.format('SVNSEA2E.WealthRerollNote', {
+      old: oldVal,
+      nu: newVal,
+      n: remaining,
+    });
+    await this._postPoolChat(r, used, combosText, note);
+  }
+
+  /**
+   * Keep the identity-rail Wealth track (count + talers) in step with a value
+   * changed via {render:false} (the reroll path), avoiding a full re-render.
+   * @param {number} wealth   The new Wealth value.
+   * @private
+   */
+  _syncWealthDom(wealth) {
+    const root = this.element?.[0];
+    if (!root) return;
+    const count = root.querySelector('.rail-wealth .lbl span:last-child');
+    if (count) count.innerHTML = `<i class="fas fa-coins"></i> ${wealth}`;
+    root.querySelectorAll('.rail-wealth .wealth-talers i').forEach((el) => {
+      el.classList.toggle('on', wealth >= Number(el.dataset.value));
+    });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Clicking a Skill name loads it into the on-sheet Raises roller instead of
+   * opening a separate dialog: it selects the matching Skill option, refreshes
+   * the pool count, scrolls the roller into view and flashes it. The player then
+   * picks the Trait for this roll (7th Sea pairs every Skill with a chosen Trait)
+   * and rolls the pool. One rolling surface, no mystery pop-up.
+   * @param {Event} event   The originating click event.
+   * @private
+   */
+  _onSkillToRoller(event) {
+    event.preventDefault();
+    const key = event.currentTarget.dataset.label;
+    const rollerEl = this.element[0]?.querySelector('.roller');
+    if (!rollerEl) return;
+
+    const skillSel = rollerEl.querySelector('.rp-skill');
+    if (skillSel && key) {
+      const opt = skillSel.querySelector(`option[data-key="${key}"]`);
+      if (opt) skillSel.selectedIndex = opt.index;
+    }
+    this._updatePoolFormula(rollerEl);
+
+    rollerEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    rollerEl.classList.remove('flash');
+    void rollerEl.offsetWidth; // restart the flash animation
+    rollerEl.classList.add('flash');
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Spend or gain a Hero Point from the roller's inline stepper (never below 0).
+   * @param {Event} event   The originating click event.
+   * @private
+   */
+  async _onHeroPointStep(event) {
+    event.preventDefault();
+    const delta = Number(event.currentTarget.dataset.hpDelta) || 0;
+    const cur = Number(this.actor.system.heropts) || 0;
+    const next = Math.max(0, cur + delta);
+    if (next === cur) return;
+    await this.actor.update({ 'system.heropts': next });
   }
 
   /* -------------------------------------------- */

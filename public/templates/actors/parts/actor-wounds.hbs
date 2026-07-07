@@ -1,16 +1,21 @@
 {{#if isPlayerCharacter}}
   <div class="res">
     <div class="cell">
-      <div class="k">{{localize "SVNSEA2E.HeroPoints"}}</div>
+      <div class="k">{{localize "SVNSEA2E.HeroPoints"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.HeroPointsInfo'}}"></i></div>
       <div class="v"><input type="text" name="system.heropts" value="{{heropts}}" /></div>
     </div>
     <div class="cell">
-      <div class="k">{{localize "SVNSEA2E.WealthPts"}}</div>
-      <div class="v"><input type="text" name="system.wealth" value="{{wealth}}" data-dtype="String" /></div>
-    </div>
-    <div class="cell">
-      <div class="k">{{localize "SVNSEA2E.Reputation"}}</div>
+      <div class="k">{{localize "SVNSEA2E.Reputation"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.ReputationInfo'}}"></i></div>
       <div class="v"><input type="text" name="system.reputation" value="{{reputation}}" placeholder="—" /></div>
+    </div>
+  </div>
+
+  <div class="rail-wealth">
+    <div class="lbl"><span>{{localize "SVNSEA2E.WealthPts"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.WealthInfo'}}"></i></span><span><i class="fas fa-coins"></i> {{wealth}}</span></div>
+    <div class="wealth-talers">
+      {{#each wealthTalers}}
+        <i data-name="system.wealth" data-value="{{level}}" data-type="wealth" data-key="wealth" data-tooltip="{{tip}}" class="fillable rating taler {{#if filled}}on{{/if}}"></i>
+      {{/each}}
     </div>
   </div>
 

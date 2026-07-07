@@ -156,7 +156,9 @@
 .theah .meta dd.rail-langs .language-selector { color: var(--gold-leaf); font-size: 12px; }
 
 /* Resources */
-.theah .res { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 16px 2px 4px; }
+.theah .res { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin: 16px 2px 4px; }
+.theah .res .k .info-dot { color: #b9a877; opacity: .5; margin-left: 4px; font-size: 9px; }
+.theah .res .k .info-dot:hover { opacity: 1; color: var(--gold-leaf); }
 .theah .res .cell { text-align: center; border: 1px solid rgba(217,178,98,.28); border-radius: 2px; padding: 9px 4px 7px; background: rgba(0,0,0,.14); }
 .theah .res .k { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: #b9a877; }
 .theah .res .v { font-family: var(--thd-display); font-size: 23px; color: #f4ead0; font-variant-numeric: tabular-nums; margin-top: 1px; }
@@ -189,6 +191,18 @@
 .theah .rail-corruption .evil-act-roll { margin-top: 9px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase; color: #f2e6c9; background: linear-gradient(180deg, rgba(124,43,34,.5), rgba(90,30,22,.72)); border: 1px solid rgba(181,69,58,.55); border-radius: 3px; padding: 6px 8px; cursor: pointer; transition: filter .15s, border-color .15s; }
 .theah .rail-corruption .evil-act-roll:hover { filter: brightness(1.14); border-color: var(--oxblood); }
 .theah .rail-corruption .evil-act-roll i { font-size: 11px; opacity: .9; }
+
+/* Wealth — a 0–10 track of clickable gold talers; each has a book tooltip. */
+.theah .rail-wealth { margin: 14px 2px 0; }
+.theah .rail-wealth .lbl { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-deep); }
+.theah .rail-wealth .lbl .info-dot { color: var(--gold-deep); opacity: .55; margin-left: 4px; font-size: 10px; }
+.theah .rail-wealth .lbl .info-dot:hover { opacity: 1; color: var(--gold); }
+.theah .rail-wealth .lbl span:last-child { font-family: var(--thd-display); letter-spacing: 0; font-size: 14px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.theah .rail-wealth .lbl span:last-child i { color: var(--gold-deep); font-size: 11px; margin-right: 3px; }
+.theah .wealth-talers { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+.theah .wealth-talers i { width: 13px; height: 13px; border-radius: 50%; border: 1px solid var(--gold-deep); cursor: pointer; background: transparent; transition: transform .1s; }
+.theah .wealth-talers i.on { background: radial-gradient(circle at 38% 32%, var(--gold-leaf), var(--gold) 62%, var(--gold-deep)); border-color: var(--gold-deep); box-shadow: 0 0 4px rgba(176,135,63,.5), inset 0 0 2px rgba(255,255,255,.35); }
+.theah .wealth-talers i:hover { transform: scale(1.18); }
 
 /* Engraved hairline separating the Corruption block from the Wound tracks. */
 .theah .rail-sep { height: 1px; margin: 20px 2px 6px; background: linear-gradient(90deg, transparent, rgba(217,178,98,.36) 18%, rgba(217,178,98,.36) 82%, transparent); }
@@ -274,13 +288,14 @@
 .theah .skills { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 30px; }
 .theah .skill { display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 3px; background: none; border: 0; font: inherit; color: inherit; text-align: left; width: 100%; border-bottom: 1px dotted var(--line); }
 .theah .skill:hover { background: color-mix(in srgb, var(--gold-leaf) 14%, transparent); }
-.theah .skill .sname { flex: 1; font-size: 15px; color: var(--ink); cursor: pointer; }
+.theah .skill .sname { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; color: var(--ink); cursor: pointer; }
 .theah .skill .sname:hover { color: var(--gold-deep); }
-.theah .skill .val { font-family: var(--thd-display); font-variant-numeric: tabular-nums; font-size: 15px; color: var(--ink-soft); width: 14px; text-align: center; }
+.theah .skill .val { font-family: var(--thd-display); font-variant-numeric: tabular-nums; font-size: 15px; color: var(--ink-soft); width: 14px; text-align: center; flex: none; }
 .theah .pips { display: flex; gap: 4px; }
+.theah .skill .pips { flex: none; }
 .theah .skill .pips i { width: 12px; height: 12px; border-radius: 50%; border: 1.2px solid var(--gold-deep); background: transparent; cursor: pointer; }
 .theah .skill .pips i.on { background: radial-gradient(var(--gold-leaf), var(--gold)); box-shadow: 0 0 4px rgba(176,135,63,.45); }
-.theah .skill .go { opacity: 0; color: var(--gold-deep); transition: opacity .15s; width: 15px; }
+.theah .skill .go { opacity: 0; color: var(--gold-deep); transition: opacity .15s; width: 15px; flex: none; }
 .theah .skill:hover .go { opacity: 1; }
 
 /* Info affordance (Skills / Traits) — native Foundry tooltip via data-tooltip. */
@@ -409,9 +424,20 @@
   font-family: var(--thd-display); font-size: 14px; padding: 4px 6px; height: auto;
 }
 .theah .roller .formula select option { color: #1a1a1a; }
-.theah .roll-btn { margin-left: auto; display: flex; align-items: center; gap: 9px; font-family: var(--thd-label); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
+/* Hero Points, right on the roller — spend one as you roll, gain one back. */
+.theah .roller .hp-ctl { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; }
+.theah .roller .hp-val { font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #efe4c7; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
+.theah .roller .hp-val i { color: var(--gold-leaf); font-size: 11px; }
+.theah .roller .hp-val b { font-family: var(--thd-display); font-size: 16px; color: var(--gold-leaf); font-variant-numeric: tabular-nums; }
+.theah .roller .hp-step { width: 22px; height: 22px; flex: none; display: grid; place-items: center; padding: 0; border: 1px solid rgba(217,178,98,.5); border-radius: 50%; background: rgba(0,0,0,.22); color: var(--gold-leaf); cursor: pointer; font-size: 15px; line-height: 1; transition: background .12s, color .12s; }
+.theah .roller .hp-step:hover { background: var(--gold-leaf); color: #2a1c10; }
+.theah .roll-btn { margin-left: 12px; display: flex; align-items: center; gap: 9px; font-family: var(--thd-label); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
   color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 0; border-radius: 3px; padding: 10px 16px; cursor: pointer; box-shadow: 0 4px 12px -6px rgba(0,0,0,.6); }
 .theah .roll-btn:hover { filter: brightness(1.06); }
+/* Flash the roller when a Skill click loads it, so the connection is obvious. */
+.theah .roller.flash { animation: theah-roller-flash 1s ease; }
+@keyframes theah-roller-flash { 0%, 100% { box-shadow: none; } 12% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold-leaf) 75%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .theah .roller.flash { animation: none; } }
 .theah .roller .result { padding: 16px; display: none; }
 .theah .roller .result.show { display: block; animation: theah-fade .35s ease; }
 @keyframes theah-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -420,10 +446,19 @@
 .theah .die { width: 38px; height: 38px; border-radius: 6px; display: grid; place-items: center; font-family: var(--thd-display); font-variant-numeric: tabular-nums; font-size: 17px; border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink); position: relative; }
 .theah .die.used { background: linear-gradient(180deg,var(--teal),color-mix(in srgb,var(--teal) 70%,#000)); color: #fff; border-color: var(--teal); }
 .theah .die.ten { background: linear-gradient(180deg,var(--gold-leaf),var(--gold-deep)); color: #2a1c10; border-color: var(--gold-deep); }
+/* A die you can spend Wealth to reroll (money-driven social Risk). */
+.theah .die.rerollable { cursor: pointer; transition: transform .1s, box-shadow .12s; }
+.theah .die.rerollable:hover { transform: translateY(-2px); box-shadow: 0 4px 10px -4px rgba(0,0,0,.5); }
+.theah .die.rerollable::after { content: "\f021"; font-family: "Font Awesome 6 Free", "Font Awesome 5 Free"; font-weight: 900; position: absolute; top: -6px; right: -6px; font-size: 9px; width: 15px; height: 15px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(180deg,var(--gold-leaf),var(--gold-deep)); color: #2a1c10; opacity: 0; transition: opacity .12s; }
+.theah .die.rerollable:hover::after { opacity: 1; }
+.theah .roller .reroll-hint { margin-top: 12px; font-size: 12px; font-style: italic; color: var(--gold-deep); }
+.theah .roller .reroll-hint:empty { display: none; }
 .theah .raises { display: flex; align-items: center; gap: 12px; font-family: var(--thd-display); }
 .theah .raises .big { font-size: 34px; color: var(--oxblood); font-variant-numeric: tabular-nums; }
 :root[data-theah-theme="sea"] .theah .raises .big { color: var(--gold-leaf); }
-.theah .raises .lab { font-family: var(--thd-label); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
+.theah .raises .lab { font-family: var(--thd-label); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); cursor: help; }
+.theah .raises .lab i { font-size: 9px; opacity: .55; margin-left: 3px; }
+.theah .raises .lab:hover i { opacity: 1; color: var(--gold-deep); }
 .theah .raises .combos { margin-top: 6px; font-size: 13px; color: var(--ink-soft); }
 
 /* Extended tabs (prowess / inventory / sorcery / stories) share the ledger idiom */
@@ -457,6 +492,8 @@
 #chat .theah-pool .raises .big { font-size: 30px; color: var(--oxblood); }
 #chat .theah-pool .raises .lab { font-family: var(--thd-label); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
 #chat .theah-pool .combos { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+#chat .theah-pool .pool-reroll { margin: 0 12px 11px; padding-top: 9px; border-top: 1px dotted var(--line); font-size: 12px; font-style: italic; color: var(--gold-deep); }
+#chat .theah-pool .pool-reroll i { margin-right: 5px; }
 
 /* Skill/trait roll card (from the roll dialog) */
 #chat .theah-roll { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-radius: 4px; overflow: hidden; }
@@ -501,6 +538,17 @@
 #chat .theah-corruption .corr-note { margin-top: 7px; font-size: 12.5px; font-style: italic; color: var(--ink-soft); }
 #chat .theah-corruption .corr-verdict { margin-top: 8px; font-family: var(--thd-display); font-size: 14px; color: var(--teal); }
 #chat .theah-corruption .corr-verdict.fell { color: var(--oxblood); font-size: 16px; }
+
+/* Wealth earn / spend card. */
+#chat .theah-wealth { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }
+#chat .theah-wealth.spend { border-left-color: var(--teal); }
+#chat .theah-wealth .wealth-head { display: flex; align-items: center; gap: 9px; padding: 9px 12px; font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
+#chat .theah-wealth .wealth-head i { color: var(--gold-deep); font-size: 14px; }
+#chat .theah-wealth.spend .wealth-head i { color: var(--teal); }
+#chat .theah-wealth .wealth-body { padding: 0 12px 11px; }
+#chat .theah-wealth .wealth-stats { display: flex; gap: 14px; margin-top: 4px; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+#chat .theah-wealth .wealth-stats b { font-family: var(--thd-display); font-size: 15px; color: var(--gold-deep); }
+#chat .theah-wealth .wealth-note { margin-top: 7px; font-size: 12.5px; font-style: italic; color: var(--ink-soft); }
 
 /* Universal "item posted to chat" card (advantages, dueling styles, societies…). */
 #chat .theah-item { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }
