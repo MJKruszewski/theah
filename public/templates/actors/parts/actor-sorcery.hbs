@@ -1,12 +1,13 @@
 <div class="tab sorcery" data-group="primary" data-tab="sorcery">
 
   {{#if sorceryTradition}}
-    <div class="sorc-tradition">
+    <div class="sorc-tradition{{#unless sorceryTradition.learned}} not-learned{{/unless}}">
       <i class="fas fa-hat-wizard st-icon"></i>
       <div class="st-text">
         <div class="st-label">{{localize "SVNSEA2E.SorceryTradition"}}</div>
         <div class="st-name">{{sorceryTradition.label}}</div>
         {{#if sorceryTradition.desc}}<div class="st-desc">{{sorceryTradition.desc}}</div>{{/if}}
+        {{#unless sorceryTradition.learned}}<div class="st-hint"><i class="fas fa-circle-info"></i> {{localize "SVNSEA2E.SorceryNotLearned"}}</div>{{/unless}}
       </div>
     </div>
   {{/if}}

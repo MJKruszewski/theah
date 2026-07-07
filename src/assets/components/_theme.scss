@@ -344,13 +344,16 @@
 .theah .sorc-tags { display: inline-flex; gap: 5px; flex-wrap: wrap; align-items: center; }
 .theah .sorc-tag { font-family: var(--thd-label); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-deep); border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); border-radius: 10px; padding: 2px 8px; white-space: nowrap; }
 .theah .sorc-tag.tier { color: var(--oxblood); border-color: color-mix(in srgb, var(--oxblood) 45%, transparent); }
-/* Sorcery-tab banner naming the Hero's national bloodline tradition (Hexenwerk,
+/* Sorcery-tab callout naming the Hero's national bloodline tradition (Hexenwerk,
    Glamour, …) so it's visible/memorable even before any effect items are added. */
 .theah .sorc-tradition { display: flex; align-items: flex-start; gap: 13px; padding: 12px 14px; margin-bottom: 14px; border: 1px solid var(--panel-edge); border-left: 3px solid var(--gold-deep); border-radius: 3px; background: color-mix(in srgb, var(--gold-leaf) 8%, transparent); }
 .theah .sorc-tradition .st-icon { color: var(--gold-deep); font-size: 22px; margin-top: 3px; flex: none; }
 .theah .sorc-tradition .st-label { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-deep); }
 .theah .sorc-tradition .st-name { font-family: var(--thd-display); font-size: 20px; color: var(--ink); line-height: 1.1; margin: 1px 0 4px; }
 .theah .sorc-tradition .st-desc { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+.theah .sorc-tradition.not-learned { opacity: .9; border-left-style: dashed; }
+.theah .sorc-tradition .st-hint { margin-top: 6px; font-family: var(--thd-label); font-size: 10px; letter-spacing: .04em; text-transform: uppercase; color: var(--oxblood); }
+.theah .sorc-tradition .st-hint i { margin-right: 4px; }
 /* Filtered Sorcery picker dialog — bloodline-only effect list with add buttons. */
 .theah.sorcery-picker { font-family: var(--thd-body); color: var(--ink); }
 .theah.sorcery-picker .sp-head { display: flex; align-items: center; gap: 8px; font-family: var(--thd-display); font-size: 18px; color: var(--ink); padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }

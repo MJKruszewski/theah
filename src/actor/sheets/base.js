@@ -168,24 +168,30 @@ export default class ActorSheetSS2e extends ActorSheet {
     // (and the base config) used `knight` for the same tradition — normalize so
     // the tradition key always matches the effect docs' sorctype.
     const NORM = { knight: 'glamour' };
-    const make = (raw) => {
+    const make = (raw, learned) => {
       const k = raw ? NORM[raw] || raw : raw;
       return k
         ? {
             key: k,
             label: game.i18n.localize(C.sorceryTypes?.[k] || k),
             desc: game.i18n.localize(C.sorceryDesc?.[k] || ''),
+            learned: !!learned, // has actually taken the Sorcery Advantage
           }
         : null;
     };
+    // Prefer the bloodline stamped on a Sorcery Advantage; otherwise show the
+    // hero's NATION bloodline regardless (an Eisen Hero should see Hexenwerk on
+    // the Sorcery tab even before buying the Advantage — `learned` flags whether
+    // they actually have it yet).
+    let flagged = null;
     let hasSorceryAdv = false;
     for (const it of actor.items) {
       if (it.type !== 'advantage') continue;
-      const flagged = foundry.utils.getProperty(it, 'flags.theah.sorctype');
-      if (flagged) return make(flagged);
+      if (!flagged) flagged = foundry.utils.getProperty(it, 'flags.theah.sorctype');
       if (/\bSorcery\b/i.test(it.name)) hasSorceryAdv = true;
     }
-    return hasSorceryAdv ? make(C.nationSorcery?.[actor.system?.nation]) : null;
+    if (flagged) return make(flagged, true);
+    return make(C.nationSorcery?.[actor.system?.nation], hasSorceryAdv);
   }
 
   /** Strip HTML tags for a short inline preview of the Story's Goal. */
