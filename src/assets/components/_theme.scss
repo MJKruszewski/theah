@@ -334,7 +334,11 @@
 .theah .prowess-card .pc-icon { color: var(--gold-deep); font-size: 14px; flex: none; }
 .theah .prowess-card.society .pc-icon { color: var(--teal); }
 .theah .prowess-card .pc-name { flex: 1; margin: 0; border: 0; font-family: var(--thd-display); font-size: 16px; color: var(--ink); }
-.theah .prowess-card .favor-tag { font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--teal); border: 1px solid color-mix(in srgb, var(--teal) 45%, transparent); border-radius: 10px; padding: 2px 8px; white-space: nowrap; }
+.theah .prowess-card .favor-ctl { display: inline-flex; align-items: center; gap: 6px; }
+.theah .prowess-card .favor-val { font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+.theah .prowess-card .favor-val b { font-family: var(--thd-display); font-size: 14px; color: var(--ink); margin-left: 3px; font-variant-numeric: tabular-nums; }
+.theah .prowess-card .favor-step { width: 20px; height: 20px; flex: none; display: grid; place-items: center; padding: 0; border: 1px solid color-mix(in srgb, var(--teal) 50%, transparent); border-radius: 50%; background: transparent; color: var(--teal); cursor: pointer; font-size: 14px; line-height: 1; transition: background .12s, color .12s; }
+.theah .prowess-card .favor-step:hover { background: var(--teal); color: #fff; }
 .theah .prowess-card .item-controls { display: flex; gap: 8px; opacity: 0; transition: opacity .15s; }
 .theah .prowess-card:hover .item-controls { opacity: 1; }
 .theah .prowess-card .item-controls a { color: var(--ink-soft); font-size: 12px; cursor: pointer; }

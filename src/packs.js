@@ -19,7 +19,8 @@
 
 // Bump when the shipped catalog changes OR to force-heal existing worlds.
 // v3: added Dueling Styles + Secret Societies compendia.
-export const PACK_SEED_VERSION = 3;
+// v4: Secret Society Favor is now numeric (0), not the "0" HTML string.
+export const PACK_SEED_VERSION = 4;
 
 const SEED_TARGETS = [
   { pack: 'theah.backgrounds', file: 'backgrounds' },

@@ -254,6 +254,9 @@ export default class ActorSheetSS2e extends ActorSheet {
     // 1d10 Fall-from-Grace check (Core p.203).
     html.find('.evil-act-roll').on('click', this._onEvilAct.bind(this));
 
+    // Secret Society Favor +/- stepper (Prowess tab).
+    html.find('.favor-step').on('click', this._onFavorStep.bind(this));
+
     html
       .find('.add-1-initiative')
       .on('click', this._onAddInitiative.bind(this));
@@ -352,6 +355,25 @@ export default class ActorSheetSS2e extends ActorSheet {
     event.preventDefault();
     const initiative = (this.actor.system.initiative || 0) - 1;
     updateInitiative(this.actor.id, initiative);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Step a Secret Society's Favor up or down (Prowess tab). Favor is a live
+   * numeric tally the player earns/spends during play; it never drops below 0.
+   * @param {Event} event   The originating click on a .favor-step button.
+   * @private
+   */
+  async _onFavorStep(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const li = event.currentTarget.closest('.item');
+    const item = this.actor.items.get(li?.dataset.itemId);
+    if (!item) return;
+    const delta = Number(event.currentTarget.dataset.favorDelta) || 0;
+    const next = Math.max(0, (Number(item.system.favor) || 0) + delta);
+    await item.update({ 'system.favor': next });
   }
 
   /* -------------------------------------------- */

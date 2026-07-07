@@ -147,8 +147,8 @@ if (existsSync(resolve(DATA, "arcana.json"))) {
       // earnfavor / callupon are authored as HTML lists; keep them verbatim.
       earnfavor: s.earnfavor ?? "",
       callupon: s.callupon ?? "",
-      // Favor is a live tracker on the actor; compendium templates start at 0.
-      favor: "0",
+      // Favor is a live numeric tracker on the actor; templates start at 0.
+      favor: 0,
     },
   }));
   writeFileSync(resolve(OUT, "secretsocieties.json"), JSON.stringify(docs, null, 2));
