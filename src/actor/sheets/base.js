@@ -96,6 +96,14 @@ export default class ActorSheetSS2e extends ActorSheet {
       });
     }
 
+    // Dramatic-Wound roll effects (Core p.166): 1+ DW grants +1 Bonus Die on
+    // every Risk (baked into the pool); 3+ DW makes 10s explode (auto-checked).
+    if (actor.type === ActorType.PLAYER) {
+      const dwv = actorData.dwounds?.value ?? 0;
+      sheetData.dwBonus = dwv >= 1 ? 1 : 0;
+      sheetData.autoExplode = dwv >= 3;
+    }
+
     // Gold talers: a 0–10 Wealth track where each taler's tooltip describes what
     // that many Wealth Points can buy, per the Core spending guidelines (p.164-165).
     if (actor.type === ActorType.PLAYER) {
@@ -406,6 +414,7 @@ export default class ActorSheetSS2e extends ActorSheet {
       roller.find('.rp-trait, .rp-skill').on('change', refresh);
       roller.find('.roll-pool').on('click', (event) => this._onPoolRoll(event));
       roller.find('.hp-step').on('click', (event) => this._onHeroPointStep(event));
+      roller.find('.bonus-step').on('click', (event) => this._onBonusStep(event));
       refresh();
     }
 
@@ -1575,8 +1584,10 @@ export default class ActorSheetSS2e extends ActorSheet {
   _updatePoolFormula(rollerEl) {
     const t = parseInt(rollerEl.querySelector('.rp-trait')?.value) || 0;
     const s = parseInt(rollerEl.querySelector('.rp-skill')?.value) || 0;
+    const bonus = parseInt(rollerEl.querySelector('.bonus-val')?.textContent) || 0;
+    const dw = parseInt(rollerEl.dataset.dwBonus) || 0;
     const el = rollerEl.querySelector('.pool-count');
-    if (el) el.textContent = t + s;
+    if (el) el.textContent = t + s + bonus + dw;
   }
 
   /* -------------------------------------------- */
@@ -1594,15 +1605,23 @@ export default class ActorSheetSS2e extends ActorSheet {
     const skillSel = rollerEl.querySelector('.rp-skill');
     const t = parseInt(traitSel?.value) || 0;
     const s = parseInt(skillSel?.value) || 0;
+    // Bonus Dice (Flair / Reputation / Advantages) + the automatic +1 for having
+    // any Dramatic Wounds (Core p.166) all add to the Risk pool before the roll.
+    const bonus = parseInt(rollerEl.querySelector('.bonus-val')?.textContent) || 0;
+    const dwBonus = parseInt(rollerEl.dataset.dwBonus) || 0;
+    const explode = !!rollerEl.querySelector('.rp-explode')?.checked;
+    const joie = !!rollerEl.querySelector('.rp-joie')?.checked;
     // Core p.172: a Raise is always a set of dice totalling 10 — no other target.
     const threshold = this.constructor.RAISE_TARGET;
-    const pool = t + s;
+    const pool = t + s + bonus + dwBonus;
 
     if (pool <= 0) {
       return ui.notifications.warn(game.i18n.localize('SVNSEA2E.PoolEmpty'));
     }
 
-    const r = new Roll(`${pool}d10`);
+    // Exploding 10s (Core p.166: at 3+ Dramatic Wounds a 10 rolls another d10,
+    // which may itself explode). Foundry's `x` modifier handles the recursion.
+    const r = new Roll(`${pool}d10${explode ? 'x' : ''}`);
     await r.evaluate();
     if (game.dice3d) {
       try {
@@ -1612,15 +1631,36 @@ export default class ActorSheetSS2e extends ActorSheet {
       }
     }
 
-    const dice = r.dice[0].results.map((d) => d.result).sort((a, b) => b - a);
+    const raw = r.dice[0].results
+      .filter((d) => d.active !== false)
+      .map((d) => d.result)
+      .sort((a, b) => b - a);
     const traitLabel = traitSel ? traitSel.options[traitSel.selectedIndex].text.split(' ')[0] : '';
     const skillLabel = skillSel ? skillSel.options[skillSel.selectedIndex].text.split(' ')[0] : '';
 
-    // Remember this roll so Wealth can be spent to reroll individual dice.
-    this._poolState = { dice, threshold, t, s, pool, traitLabel, skillLabel };
+    // Remember this roll so Wealth can be spent to reroll individual dice, and so
+    // the Joie de Vivre transform (dice ≤ Skill count as 10) can be re-applied.
+    this._poolState = {
+      raw,
+      threshold,
+      t, s, bonus, dwBonus, pool,
+      explode, joie, skillRank: s,
+      traitLabel, skillLabel,
+    };
 
     const { used, combosText } = this._renderPoolResult(rollerEl);
     await this._postPoolChat(r, used, combosText);
+  }
+
+  /**
+   * The pool's dice as they COUNT for Raises: raw faces, except Joie de Vivre
+   * (Core p.154) promotes every die at or under the Hero's Skill to a 10.
+   * @returns {number[]}
+   * @private
+   */
+  _effectiveDice() {
+    const st = this._poolState;
+    return st.raw.map((d) => (st.joie && d <= st.skillRank ? 10 : d));
   }
 
   /* -------------------------------------------- */
@@ -1635,22 +1675,29 @@ export default class ActorSheetSS2e extends ActorSheet {
    */
   _renderPoolResult(rollerEl) {
     const st = this._poolState;
-    const { raises, combos, used } = this.constructor.computeRaises(st.dice, st.threshold);
+    const eff = this._effectiveDice();
+    const { raises, combos, used } = this.constructor.computeRaises(eff, st.threshold);
     const wealth = Number(this.actor.system.wealth) || 0;
     const canReroll = wealth > 0;
 
-    // Dice tiles carry their index so a click can reroll exactly that die.
+    // Dice tiles carry their index so a click can reroll exactly that die. Each
+    // tile shows the value it COUNTS as (Joie-boosted dice show 10 with a marker).
     const usedCopy = [...used];
-    const diceHtml = st.dice
+    const diceHtml = st.raw
       .map((d, i) => {
-        let cls = 'die' + (d === 10 ? ' ten' : '');
-        const idx = usedCopy.indexOf(d);
+        const e = eff[i];
+        const boosted = e !== d;
+        let cls = 'die' + (e === 10 ? ' ten' : '') + (boosted ? ' joie' : '');
+        const idx = usedCopy.indexOf(e);
         if (idx > -1) {
           cls += ' used';
           usedCopy.splice(idx, 1);
         }
         if (canReroll) cls += ' rerollable';
-        return `<div class="${cls}" data-die-index="${i}">${d}</div>`;
+        const title = boosted
+          ? game.i18n.format('SVNSEA2E.JoieDieTitle', { d })
+          : '';
+        return `<div class="${cls}" data-die-index="${i}"${title ? ` title="${title}"` : ''}>${e}</div>`;
       })
       .join('');
     const combosText = combos.length
@@ -1688,15 +1735,30 @@ export default class ActorSheetSS2e extends ActorSheet {
    */
   async _postPoolChat(roll, used, combosText, note = '') {
     const st = this._poolState;
-    const { raises } = this.constructor.computeRaises(st.dice, st.threshold);
-    const diceHtml = this.constructor.renderDiceRow(st.dice, used);
+    const eff = this._effectiveDice();
+    const { raises } = this.constructor.computeRaises(eff, st.threshold);
+    const diceHtml = this.constructor.renderDiceRow(eff, used);
     const raisesLabel = game.i18n.localize('SVNSEA2E.RaisesLabel');
+    const L = (k) => game.i18n.localize(k);
+
+    // Build the pool breakdown (base + any Bonus Dice + the Dramatic-Wound die).
+    let poolParts = `${st.skillLabel} <b>${st.s}</b> + ${st.traitLabel} <b>${st.t}</b>`;
+    if (st.bonus) poolParts += ` + <b>${st.bonus}</b> ${L('SVNSEA2E.BonusDice')}`;
+    if (st.dwBonus) poolParts += ` + <b>${st.dwBonus}</b> ${L('SVNSEA2E.DramaticWound')}`;
+
+    // Modifiers that change how dice count, not the pool size.
+    const mods = [];
+    if (st.explode) mods.push(L('SVNSEA2E.ExplodingTens'));
+    if (st.joie) mods.push(L('SVNSEA2E.JoieDeVivre'));
+    const modLine = mods.length ? `<div class="pool-mods">${mods.join(' &middot; ')}</div>` : '';
+
     const content = `
       <div class="theah theah-pool">
-        <div class="pool-head">${st.skillLabel} <b>${st.s}</b> + ${st.traitLabel} <b>${st.t}</b> = <b>${st.pool}</b>d10 &middot; ${game.i18n.localize('SVNSEA2E.SetsOfTen')}</div>
+        <div class="pool-head">${poolParts} = <b>${st.pool}</b>d10 &middot; ${L('SVNSEA2E.SetsOfTen')}</div>
         <div class="pool-body">
           <div class="dice">${diceHtml}</div>
           <div class="raises"><span class="big">${raises}</span><div><div class="lab">${raisesLabel}</div><div class="combos">${combosText}</div></div></div>
+          ${modLine}
         </div>
         ${note ? `<div class="pool-reroll"><i class="fas fa-coins"></i> ${note}</div>` : ''}
       </div>`;
@@ -1730,9 +1792,9 @@ export default class ActorSheetSS2e extends ActorSheet {
     const dieEl = event.currentTarget;
     const rollerEl = dieEl.closest('.roller');
     const i = Number(dieEl.dataset.dieIndex);
-    if (!Number.isInteger(i) || i < 0 || i >= st.dice.length) return;
+    if (!Number.isInteger(i) || i < 0 || i >= st.raw.length) return;
 
-    const oldVal = st.dice[i];
+    const oldVal = st.raw[i];
     const r = new Roll('1d10');
     await r.evaluate();
     if (game.dice3d) {
@@ -1743,8 +1805,8 @@ export default class ActorSheetSS2e extends ActorSheet {
       }
     }
     const newVal = r.total;
-    st.dice[i] = newVal;
-    st.dice.sort((a, b) => b - a);
+    st.raw[i] = newVal;
+    st.raw.sort((a, b) => b - a);
 
     // Spend the Wealth silently (this card carries the spend) and skip the sheet
     // re-render so the inline result isn't wiped; sync the rail track by hand.
@@ -1824,6 +1886,24 @@ export default class ActorSheetSS2e extends ActorSheet {
     const next = Math.max(0, cur + delta);
     if (next === cur) return;
     await this.actor.update({ 'system.heropts': next });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Adjust the roller's transient Bonus Dice count (Flair, Reputation, Advantage
+   * dice). Purely a UI value — it lives in the roller until the pool is rolled.
+   * @param {Event} event   The originating click event.
+   * @private
+   */
+  _onBonusStep(event) {
+    event.preventDefault();
+    const delta = Number(event.currentTarget.dataset.bonusDelta) || 0;
+    const rollerEl = event.currentTarget.closest('.roller');
+    const el = rollerEl.querySelector('.bonus-val');
+    const next = Math.max(0, (parseInt(el.textContent) || 0) + delta);
+    el.textContent = next;
+    this._updatePoolFormula(rollerEl);
   }
 
   /* -------------------------------------------- */
