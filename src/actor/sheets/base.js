@@ -93,6 +93,9 @@ export default class ActorSheetSS2e extends ActorSheet {
       });
     }
 
+    // Which national Sorcery the Hero practices (for the Sorcery-tab banner).
+    sheetData.sorceryTradition = this._detectSorceryTradition(actor);
+
     // Prepare items.
     if (actor.type === ActorType.PLAYER) {
       this._prepareCharacterItems(data, sheetData);
@@ -147,6 +150,36 @@ export default class ActorSheetSS2e extends ActorSheet {
     view.rewardLabel = this._advRewardLabel(adv);
     view.goal = this._stripTags(foundry.utils.getProperty(s, 'system.endings') || '');
     return view;
+  }
+
+  /**
+   * Determine which national Sorcery tradition this Hero practices, so the
+   * Sorcery tab can name it even before any effect items are added. Prefers the
+   * `flags.theah.sorctype` the Hero Creator stamps on the "Sorcery" advantage;
+   * falls back to owning any "Sorcery" advantage + the nation's bloodline (so
+   * heroes built before that stamp existed still show their tradition).
+   * @param {Actor} actor
+   * @returns {{key:string,label:string,desc:string}|null}
+   * @private
+   */
+  _detectSorceryTradition(actor) {
+    const C = CONFIG.SVNSEA2E;
+    const make = (k) =>
+      k
+        ? {
+            key: k,
+            label: game.i18n.localize(C.sorceryTypes?.[k] || k),
+            desc: game.i18n.localize(C.sorceryDesc?.[k] || ''),
+          }
+        : null;
+    let hasSorceryAdv = false;
+    for (const it of actor.items) {
+      if (it.type !== 'advantage') continue;
+      const flagged = foundry.utils.getProperty(it, 'flags.theah.sorctype');
+      if (flagged) return make(flagged);
+      if (/\bSorcery\b/i.test(it.name)) hasSorceryAdv = true;
+    }
+    return hasSorceryAdv ? make(C.nationSorcery?.[actor.system?.nation]) : null;
   }
 
   /** Strip HTML tags for a short inline preview of the Story's Goal. */
