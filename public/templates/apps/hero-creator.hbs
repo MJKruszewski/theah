@@ -34,7 +34,7 @@
             {{#each nationCards}}
               <div class="wiz-nation {{#if selected}}selected{{/if}}" data-nation-pick="{{key}}">
                 <div class="nn">{{label}}{{#if selected}} <i class="fas fa-check"></i>{{/if}}</div>
-                <div class="nb">+1 {{bonus}}{{#if sorcery}} <span class="nsorc">&middot; {{sorcery}}</span>{{/if}}</div>
+                <div class="nb">+1 {{#each bonusList}}<span class="nb-trait" data-tooltip="{{tip}}">{{label}}</span>{{#unless @last}} / {{/unless}}{{/each}}{{anyTrait}}{{#if sorcery}} <span class="nsorc" data-tooltip="{{sorceryTip}}">&middot; {{sorcery}}</span>{{/if}}</div>
               </div>
             {{/each}}
           </div>
@@ -50,7 +50,7 @@
         <div class="wiz-traits">
           {{#each traits}}
             <div class="wiz-trait {{#if bonus}}has-bonus{{/if}}">
-              <div class="tname">{{label}}</div>
+              <div class="tname" data-tooltip="{{tip}}">{{localize label}}</div>
               <div class="tval">{{final}}</div>
               <div class="tctl">
                 <button type="button" data-trait-dec="{{key}}" aria-label="-1">&minus;</button>
@@ -92,7 +92,7 @@
         <div class="wiz-skills">
           {{#each skills}}
             <div class="wiz-skill">
-              <span class="sname">{{label}}</span>
+              <span class="sname" data-tooltip="{{tip}}">{{localize label}}</span>
               <span class="sbg" title="{{localize 'SVNSEA2E.WizFromBackgrounds'}}">{{bg}}</span>
               <button type="button" data-skill-dec="{{key}}" aria-label="-1">&minus;</button>
               <span class="sfinal">{{final}}</span>
@@ -195,8 +195,8 @@
       <div class="wiz-step wiz-review">
         <h3 class="rev-title">{{review.name}} <span class="rev-nation">{{review.nation}}</span></h3>
         <div class="rev-grid">
-          <div class="rev-card"><b>{{localize "SVNSEA2E.Traits"}}</b><ul>{{#each review.traits}}<li>{{label}} <span>{{value}}</span></li>{{/each}}</ul></div>
-          <div class="rev-card"><b>{{localize "SVNSEA2E.Skills"}}</b><ul>{{#each review.skills}}<li>{{label}} <span>{{value}}</span></li>{{/each}}</ul></div>
+          <div class="rev-card"><b>{{localize "SVNSEA2E.Traits"}}</b><ul>{{#each review.traits}}<li>{{localize label}} <span>{{value}}</span></li>{{/each}}</ul></div>
+          <div class="rev-card"><b>{{localize "SVNSEA2E.Skills"}}</b><ul>{{#each review.skills}}<li>{{localize label}} <span>{{value}}</span></li>{{/each}}</ul></div>
           <div class="rev-card"><b>{{localize "SVNSEA2E.Backgrounds"}}</b><ul>{{#each review.backgrounds}}<li>{{this}}</li>{{/each}}</ul></div>
           <div class="rev-card"><b>{{localize "SVNSEA2E.Advantages"}}</b><ul>{{#each review.freeAdvantages}}<li>{{this}} <em>{{localize "SVNSEA2E.WizFree"}}</em></li>{{/each}}{{#each review.purchased}}<li>{{this}}</li>{{/each}}</ul></div>
           <div class="rev-card"><b>{{localize "SVNSEA2E.Arcana"}}</b><ul><li>{{localize "SVNSEA2E.Virtue"}}: {{review.virtue}}</li><li>{{localize "SVNSEA2E.Hubris"}}: {{review.hubris}}</li></ul></div>

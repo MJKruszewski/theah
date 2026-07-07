@@ -78,6 +78,21 @@ export default class ActorSheetSS2e extends ActorSheet {
       redemption: actorData.redemption,
     };
 
+    // Dramatic-Wound seals: each carries a tooltip naming the death-spiral
+    // penalty it inflicts, so hovering a seal explains what that level does.
+    const dw = actorData.dwounds;
+    if (dw && dw.max) {
+      const dwTips = ['', 'SVNSEA2E.DwTip1', 'SVNSEA2E.DwTip2', 'SVNSEA2E.DwTip3', 'SVNSEA2E.DwTip4'];
+      sheetData.dwoundSeals = Array.from({ length: dw.max }, (_, i) => {
+        const level = i + 1;
+        return {
+          level,
+          filled: (dw.value ?? 0) >= level,
+          tip: game.i18n.localize(dwTips[Math.min(level, 4)] || ''),
+        };
+      });
+    }
+
     // Prepare items.
     if (actor.type === ActorType.PLAYER) {
       this._prepareCharacterItems(data, sheetData);
@@ -372,12 +387,43 @@ export default class ActorSheetSS2e extends ActorSheet {
   async _onFavorStep(event) {
     event.preventDefault();
     event.stopPropagation();
-    const li = event.currentTarget.closest('.item');
-    const item = this.actor.items.get(li?.dataset.itemId);
+    // Anchor on [data-item-id] (robust even if the card's class list changes).
+    const row = event.currentTarget.closest('[data-item-id]');
+    const item = this.actor.items.get(row?.dataset.itemId);
     if (!item) return;
     const delta = Number(event.currentTarget.dataset.favorDelta) || 0;
-    const next = Math.max(0, (Number(item.system.favor) || 0) + delta);
+    const prior = Number(item.system.favor) || 0;
+    const next = Math.max(0, prior + delta);
+    if (next === prior) return; // nothing to do (already at 0 and decrementing)
     await item.update({ 'system.favor': next });
+    this.constructor._postFavorChange(this.actor, item, prior, next);
+  }
+
+  /**
+   * Post a themed chat card when a Secret Society's Favor changes (earned or
+   * spent), so the whole table sees the shift in standing.
+   * @param {Actor} actor
+   * @param {Item}  item   The secret society item.
+   * @param {number} prior
+   * @param {number} next
+   * @private
+   */
+  static _postFavorChange(actor, item, prior, next) {
+    const L = (k) => game.i18n.localize(k);
+    const up = next > prior;
+    const headline = up ? L('SVNSEA2E.FavorEarned') : L('SVNSEA2E.FavorSpent');
+    const icon = up ? 'fa-hand-holding-heart' : 'fa-hand-holding-dollar';
+    const content = `
+      <div class="theah theah-item theah-favor ${up ? 'up' : 'down'}">
+        <div class="ti-head"><div class="ti-title">
+          <span class="ti-name"><i class="fas ${icon}"></i> ${item.name}</span>
+          <span class="ti-sub">${headline}</span>
+        </div></div>
+        <div class="ti-body-wrap"><div class="ti-sec"><div class="ti-body">
+          ${L('SVNSEA2E.Favor')}: <b>${prior}</b> &rarr; <b>${next}</b>
+        </div></div></div>
+      </div>`;
+    ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content });
   }
 
   /* -------------------------------------------- */

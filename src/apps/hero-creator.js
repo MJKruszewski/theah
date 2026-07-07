@@ -210,6 +210,27 @@ export class HeroCreator extends FormApplication {
     return CONFIG.SVNSEA2E.languages[this._wizard.nation] ? this._wizard.nation : null;
   }
 
+  /**
+   * The national bloodline Sorcery granted by the chosen Nation, if any
+   * (Eisen → Hexenwerk, Montaigne → Porté, …). Null for nations without a
+   * core sorcery.
+   * @returns {{key: string, label: string}|null}
+   */
+  _bloodlineSorcery() {
+    const C = CONFIG.SVNSEA2E;
+    const key = C.nationSorcery[this._wizard.nation];
+    if (!key) return null;
+    return { key, label: game.i18n.localize(C.sorceryTypes[key] || key) };
+  }
+
+  /** Display name for an advantage — the generic "Sorcery" advantage is labelled
+   *  with the hero's national bloodline so it reads e.g. "Sorcery (Hexenwerk)". */
+  _advDisplayName(name) {
+    if (name !== 'Sorcery') return name;
+    const b = this._bloodlineSorcery();
+    return b ? `${name} (${b.label})` : name;
+  }
+
   /* -------------------------------------------- */
   /*  Data                                        */
   /* -------------------------------------------- */
@@ -253,8 +274,11 @@ export class HeroCreator extends FormApplication {
         return {
           key,
           label: L(label),
-          bonus: bonusKeys.length ? bonusKeys.map((k) => L(C.traits[k])).join(' / ') : L('SVNSEA2E.WizAnyTrait'),
+          // Per-trait chips so hovering "Panache" shows Panache's blurb, etc.
+          bonusList: bonusKeys.map((k) => ({ label: L(C.traits[k]), tip: L(C.traitDesc[k] || '') })),
+          anyTrait: bonusKeys.length ? '' : L('SVNSEA2E.WizAnyTrait'),
           sorcery: sorcKey ? L(C.sorceryTypes[sorcKey] || sorcKey) : '',
+          sorceryTip: sorcKey ? L(C.sorceryDesc[sorcKey] || '') : '',
           selected: this._wizard.nation === key,
         };
       })
@@ -265,6 +289,7 @@ export class HeroCreator extends FormApplication {
     data.traits = ['brawn', 'finesse', 'resolve', 'wits', 'panache'].map((key) => ({
       key,
       label: C.traits[key],
+      tip: L(C.traitDesc[key] || ''),
       alloc: this._wizard.traitAlloc[key] || 0,
       bonus: this._wizard.nationBonusTrait === key,
       canBonus: bonusChoices.includes(key),
@@ -293,6 +318,7 @@ export class HeroCreator extends FormApplication {
     data.skills = Object.entries(skills).map(([key, v]) => ({
       key,
       label: v.label,
+      tip: L(C.skillDesc[key] || ''),
       bg: v.bg,
       alloc: v.alloc,
       final: v.final,
@@ -307,7 +333,7 @@ export class HeroCreator extends FormApplication {
     data.freeAdvantages = this._freeAdvantageNames();
     data.advantageList = this._catalog.advantages.map((a) => ({
       id: a._id,
-      name: a.name,
+      name: this._advDisplayName(a.name),
       cost: this._advantageCost(a),
       selected: this._wizard.advantages.includes(a._id),
       free: data.freeAdvantages.includes(a.name),
@@ -363,20 +389,20 @@ export class HeroCreator extends FormApplication {
     const purchased = this._wizard.advantages
       .map((id) => this._catalog.advantages.find((a) => a._id === id))
       .filter(Boolean)
-      .map((a) => a.name);
+      .map((a) => this._advDisplayName(a.name));
     const duelStyle = this._hasDuelistAcademy()
       ? (this._catalog.duelstyles || []).find((d) => d._id === this._wizard.duelStyleId)
       : null;
     const society = (this._catalog.secretsocieties || []).find((s) => s._id === this._wizard.societyId);
     return {
       name: this._wizard.name,
-      nation: C.nations[this._wizard.nation],
+      nation: game.i18n.localize(C.nations[this._wizard.nation] || ''),
       traits: ['brawn', 'finesse', 'resolve', 'wits', 'panache'].map((k) => ({ label: C.traits[k], value: this._traitFinal(k) })),
       skills: Object.entries(skills)
         .filter(([, v]) => v.final > 0)
         .map(([k, v]) => ({ label: v.label, value: v.final })),
       backgrounds: this._selectedBackgrounds().map((b) => b.name),
-      freeAdvantages: this._freeAdvantageNames(),
+      freeAdvantages: this._freeAdvantageNames().map((n) => this._advDisplayName(n)),
       purchased,
       virtue: virtue?.name,
       hubris: hubris?.name,
@@ -649,11 +675,22 @@ export class HeroCreator extends FormApplication {
 
     // Free advantages from Backgrounds + purchased advantages (deduped by name).
     const advByName = new Map(this._catalog.advantages.map((a) => [a.name, a]));
+    const blood = this._bloodlineSorcery();
     const grant = (adv) => {
       if (!adv || seenAdvNames.has(adv.name)) return;
       seenAdvNames.add(adv.name);
       const obj = foundry.utils.deepClone(adv);
       delete obj._id;
+      // Stamp the "Sorcery" advantage with the hero's national bloodline so the
+      // sheet shows which tradition they practice (e.g. Eisen → Hexenwerk).
+      if (adv.name === 'Sorcery' && blood) {
+        obj.name = `${adv.name} (${blood.label})`;
+        obj.system = obj.system || {};
+        obj.system.description =
+          `<p><em>${game.i18n.localize('SVNSEA2E.WizBloodline')}: ${blood.label}.</em></p>` +
+          (obj.system.description || '');
+        obj.flags = foundry.utils.mergeObject(obj.flags || {}, { theah: { sorctype: blood.key } });
+      }
       toCreate.push(obj);
     };
     for (const name of this._freeAdvantageNames()) grant(advByName.get(name));

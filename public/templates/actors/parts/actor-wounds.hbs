@@ -59,17 +59,11 @@
   {{#if isNotBrute}}
     <div class="lbl" style="margin-top:12px"><span>{{localize "SVNSEA2E.DramaticWounds"}}</span><span>{{dwounds.value}} · {{localize "SVNSEA2E.DeathSpiral"}}</span></div>
     <div class="spiral">
-      {{#for 1 dwounds.max 1}}
-        {{#iff dwounds.value '>=' @index}}
-          <div class="seal spent fillable wound dramatic" data-name="system.dwounds.value" data-value="{{@index}}" data-type="dwounds" title="{{localize 'SVNSEA2E.DramaticWounds'}} {{@index}}">
-            <svg viewBox="0 0 52 52"><circle class="wax" cx="26" cy="26" r="22"/><path class="sig" d="M18 30 L26 16 L34 30 M21 26 h10"/></svg>
-          </div>
-        {{else}}
-          <div class="seal fillable wound dramatic" data-name="system.dwounds.value" data-value="{{@index}}" data-type="dwounds" title="{{localize 'SVNSEA2E.DramaticWounds'}} {{@index}}">
-            <svg viewBox="0 0 52 52"><circle class="wax" cx="26" cy="26" r="22"/><path class="sig" d="M18 30 L26 16 L34 30 M21 26 h10"/></svg>
-          </div>
-        {{/iff}}
-      {{/for}}
+      {{#each dwoundSeals}}
+        <div class="seal {{#if filled}}spent {{/if}}fillable wound dramatic" data-name="system.dwounds.value" data-value="{{level}}" data-type="dwounds" data-tooltip="{{tip}}">
+          <svg viewBox="0 0 52 52"><circle class="wax" cx="26" cy="26" r="22"/><path class="sig" d="M18 30 L26 16 L34 30 M21 26 h10"/></svg>
+        </div>
+      {{/each}}
     </div>
   {{/if}}
 </div>

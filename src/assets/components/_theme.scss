@@ -492,6 +492,11 @@
 #chat .theah-item .ti-body p:last-child { margin-bottom: 0; }
 #chat .theah-item .ti-body ul { margin: 4px 0 0; padding-left: 18px; }
 #chat .theah-item .ti-body li { margin-bottom: 4px; }
+/* Favor change card — teal when earned, oxblood when spent. */
+#chat .theah-favor.up { border-left-color: var(--teal); }
+#chat .theah-favor.down { border-left-color: var(--oxblood); }
+#chat .theah-favor .ti-name i { color: var(--gold-leaf); }
+#chat .theah-favor .ti-body b { font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
 
 /* ========================= Hero Creator wizard ========================= */
 .theah.hero-creator .window-content { padding: 0; background: var(--panel); color: var(--ink); font-family: var(--thd-body); }
@@ -541,6 +546,12 @@
 .hero-creator-form .wiz-nation .nn .fa-check { color: var(--teal); font-size: 12px; }
 .hero-creator-form .wiz-nation .nb { font-size: 11px; color: var(--ink-soft); margin-top: 3px; }
 .hero-creator-form .wiz-nation .nsorc { color: var(--gold-deep); }
+/* Hoverable terms (trait / sorcery / skill) carry a data-tooltip — hint it with
+   a help cursor + faint dotted underline so players know to hover for the blurb. */
+.hero-creator-form .wiz-nation .nb-trait,
+.hero-creator-form .wiz-nation .nsorc { cursor: help; text-decoration: underline dotted color-mix(in srgb, currentColor 45%, transparent); text-underline-offset: 2px; }
+.hero-creator-form .wiz-trait .tname[data-tooltip],
+.hero-creator-form .wiz-skill .sname[data-tooltip] { cursor: help; }
 
 /* Traits */
 .hero-creator-form .wiz-traits { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }

@@ -110,6 +110,17 @@ SVNSEA2E.traits = {
   strength: 'SVNSEA2E.TraitStrength',
 };
 
+// Short, book-accurate blurbs surfaced as hover tooltips (Hero Creator, sheets).
+SVNSEA2E.traitDesc = {
+  brawn: 'SVNSEA2E.TraitDescBrawn',
+  finesse: 'SVNSEA2E.TraitDescFinesse',
+  resolve: 'SVNSEA2E.TraitDescResolve',
+  wits: 'SVNSEA2E.TraitDescWits',
+  panache: 'SVNSEA2E.TraitDescPanache',
+  influence: 'SVNSEA2E.TraitDescInfluence',
+  strength: 'SVNSEA2E.TraitDescStrength',
+};
+
 SVNSEA2E.skills = {
   aim: 'SVNSEA2E.SkillAim',
   athletics: 'SVNSEA2E.SkillAthletics',
@@ -127,6 +138,25 @@ SVNSEA2E.skills = {
   theft: 'SVNSEA2E.SkillTheft',
   warfare: 'SVNSEA2E.SkillWarfare',
   weaponry: 'SVNSEA2E.SkillWeaponry',
+};
+
+SVNSEA2E.skillDesc = {
+  aim: 'SVNSEA2E.SkillDescAim',
+  athletics: 'SVNSEA2E.SkillDescAthletics',
+  brawl: 'SVNSEA2E.SkillDescBrawl',
+  convince: 'SVNSEA2E.SkillDescConvince',
+  empathy: 'SVNSEA2E.SkillDescEmpathy',
+  hide: 'SVNSEA2E.SkillDescHide',
+  intimidate: 'SVNSEA2E.SkillDescIntimidate',
+  notice: 'SVNSEA2E.SkillDescNotice',
+  perform: 'SVNSEA2E.SkillDescPerform',
+  ride: 'SVNSEA2E.SkillDescRide',
+  sailing: 'SVNSEA2E.SkillDescSailing',
+  scholarship: 'SVNSEA2E.SkillDescScholarship',
+  tempt: 'SVNSEA2E.SkillDescTempt',
+  theft: 'SVNSEA2E.SkillDescTheft',
+  warfare: 'SVNSEA2E.SkillDescWarfare',
+  weaponry: 'SVNSEA2E.SkillDescWeaponry',
 };
 
 // --- Hero creation (Core Rulebook, "Making a Hero", pp.137-164) ---
@@ -224,6 +254,17 @@ SVNSEA2E.sorceryTypes = {
   heka: 'SVNSEA2E.SorceryHeka',
   melbur: 'SVNSEA2E.SorceryMelbur',
   redtouch: 'SVNSEA2E.SorceryRedTouch',
+};
+
+// Short blurbs for the national bloodline sorceries shown on the wizard nation cards.
+SVNSEA2E.sorceryDesc = {
+  hex: 'SVNSEA2E.SorceryDescHex',
+  glamour: 'SVNSEA2E.SorceryDescGlamour',
+  knight: 'SVNSEA2E.SorceryDescGlamour',
+  porte: 'SVNSEA2E.SorceryDescPorte',
+  sanderis: 'SVNSEA2E.SorceryDescSanderis',
+  sorte: 'SVNSEA2E.SorceryDescSorte',
+  darm: 'SVNSEA2E.SorceryDescDarm',
 };
 
 SVNSEA2E.durations = {
