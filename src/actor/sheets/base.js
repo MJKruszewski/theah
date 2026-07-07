@@ -164,14 +164,20 @@ export default class ActorSheetSS2e extends ActorSheet {
    */
   _detectSorceryTradition(actor) {
     const C = CONFIG.SVNSEA2E;
-    const make = (k) =>
-      k
+    // The Sorcery compendium tags Avalon/Highland magic as `glamour`; older data
+    // (and the base config) used `knight` for the same tradition — normalize so
+    // the tradition key always matches the effect docs' sorctype.
+    const NORM = { knight: 'glamour' };
+    const make = (raw) => {
+      const k = raw ? NORM[raw] || raw : raw;
+      return k
         ? {
             key: k,
             label: game.i18n.localize(C.sorceryTypes?.[k] || k),
             desc: game.i18n.localize(C.sorceryDesc?.[k] || ''),
           }
         : null;
+    };
     let hasSorceryAdv = false;
     for (const it of actor.items) {
       if (it.type !== 'advantage') continue;
@@ -321,6 +327,9 @@ export default class ActorSheetSS2e extends ActorSheet {
 
     // Open a compendium to pick/drag from (compendium-locked item types).
     html.find('.open-compendium').on('click', this._onOpenCompendium.bind(this));
+
+    // Filtered Sorcery picker — only the Hero's bloodline tradition.
+    html.find('.browse-sorcery').on('click', this._onBrowseSorcery.bind(this));
 
     // Launch the step-by-step Hero Creator.
     html.find('.create-hero-btn').on('click', (event) => {
@@ -848,6 +857,108 @@ export default class ActorSheetSS2e extends ActorSheet {
       return ui.notifications.warn(game.i18n.localize('SVNSEA2E.CompendiumMissing'));
     }
     collection.render(true);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Load all Sorcery effect docs as plain objects, preferring the world
+   * compendium but falling back to the shipped JSON if it is empty/blank (per
+   * the data-resilience rule — never fully trust the seeded pack).
+   * @returns {Promise<object[]>}
+   * @private
+   */
+  async _loadSorceryDocs() {
+    const pack = game.packs.get('theah.sorceries');
+    if (pack) {
+      const docs = (await pack.getDocuments()).map((d) => d.toObject());
+      const valid = docs.filter((d) => d.name && d.name.trim());
+      if (valid.length) return valid;
+    }
+    try {
+      const resp = await fetch('systems/theah/packs-data/sorceries.json');
+      if (resp.ok) return await resp.json();
+    } catch (e) {
+      /* fall through to empty */
+    }
+    return [];
+  }
+
+  /**
+   * Open a focused Sorcery picker filtered to the Hero's bloodline tradition
+   * (e.g. an Eisen Hero sees only Hexenwerk unguents, not all 116 effects).
+   * Each entry has an "Add" button that clones it onto the actor. Falls back to
+   * the full compendium window when no tradition can be determined.
+   * @param {Event} event   The originating click event.
+   * @private
+   */
+  async _onBrowseSorcery(event) {
+    event.preventDefault();
+    const C = CONFIG.SVNSEA2E;
+    const L = (k) => game.i18n.localize(k);
+    const trad = this._detectSorceryTradition(this.actor);
+
+    const all = await this._loadSorceryDocs();
+    if (!all.length) {
+      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.CompendiumMissing'));
+    }
+    const docs = trad ? all.filter((d) => d.system?.sorctype === trad.key) : all;
+    if (!docs.length) {
+      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.NoSorceryEffects'));
+    }
+
+    // Group by tier (Major → Minor → untiered), then alphabetical within a tier.
+    const order = { major: 0, minor: 1, none: 2 };
+    docs.sort(
+      (a, b) =>
+        (order[a.system?.sorcsubcat] ?? 9) - (order[b.system?.sorcsubcat] ?? 9) ||
+        a.name.localeCompare(b.name),
+    );
+
+    const rows = docs
+      .map((d) => {
+        const sc = d.system?.sorcsubcat;
+        const tier = sc && sc !== 'none' ? L(C.sorcerySubcats?.[sc] || '') : '';
+        return `<div class="sp-item">
+          <div class="sp-row">
+            <span class="sp-name">${d.name}</span>
+            ${tier ? `<span class="sorc-tag tier">${tier}</span>` : ''}
+            <button type="button" class="sp-add" data-add-id="${d._id}"><i class="fas fa-plus"></i> ${L('SVNSEA2E.Add')}</button>
+          </div>
+          ${d.system?.description ? `<div class="sp-desc">${d.system.description}</div>` : ''}
+        </div>`;
+      })
+      .join('');
+
+    const title = trad ? `${L('SVNSEA2E.BrowseSorcery')} — ${trad.label}` : L('SVNSEA2E.BrowseSorcery');
+    const content = `<div class="theah sorcery-picker">
+      <div class="sp-head"><i class="fas fa-hat-wizard"></i> <span class="sp-trad">${trad ? trad.label : L('SVNSEA2E.Sorcery')}</span> <span class="sp-count">${docs.length}</span></div>
+      <div class="sp-list">${rows}</div>
+    </div>`;
+
+    new Dialog(
+      {
+        title,
+        content,
+        buttons: { close: { icon: '<i class="fas fa-check"></i>', label: L('SVNSEA2E.Close') } },
+        default: 'close',
+        render: (html) => {
+          const $html = html.jquery ? html : $(html);
+          $html.on('click', '.sp-add', async (ev) => {
+            ev.preventDefault();
+            const btn = ev.currentTarget;
+            const doc = docs.find((x) => x._id === btn.dataset.addId);
+            if (!doc) return;
+            const obj = foundry.utils.deepClone(doc);
+            delete obj._id;
+            await this.actor.createEmbeddedDocuments('Item', [obj]);
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-check"></i> ${L('SVNSEA2E.Added')}`;
+          });
+        },
+      },
+      { classes: ['theah', 'dialog', 'sorcery-picker-dialog'], width: 560 },
+    ).render(true);
   }
 
   /* -------------------------------------------- */

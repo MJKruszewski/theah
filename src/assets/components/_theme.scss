@@ -351,6 +351,21 @@
 .theah .sorc-tradition .st-label { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-deep); }
 .theah .sorc-tradition .st-name { font-family: var(--thd-display); font-size: 20px; color: var(--ink); line-height: 1.1; margin: 1px 0 4px; }
 .theah .sorc-tradition .st-desc { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+/* Filtered Sorcery picker dialog — bloodline-only effect list with add buttons. */
+.theah.sorcery-picker { font-family: var(--thd-body); color: var(--ink); }
+.theah.sorcery-picker .sp-head { display: flex; align-items: center; gap: 8px; font-family: var(--thd-display); font-size: 18px; color: var(--ink); padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.theah.sorcery-picker .sp-head i { color: var(--gold-deep); }
+.theah.sorcery-picker .sp-count { margin-left: auto; font-family: var(--thd-label); font-size: 11px; letter-spacing: .08em; color: var(--ink-soft); background: color-mix(in srgb, var(--gold-leaf) 12%, transparent); border: 1px solid var(--line); border-radius: 10px; padding: 1px 9px; }
+.theah.sorcery-picker .sp-list { max-height: 56vh; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px; }
+.theah.sorcery-picker .sp-item { border: 1px solid var(--panel-edge); border-left: 3px solid var(--gold-deep); border-radius: 3px; background: color-mix(in srgb, var(--gold-leaf) 5%, transparent); padding: 8px 10px; }
+.theah.sorcery-picker .sp-row { display: flex; align-items: center; gap: 8px; }
+.theah.sorcery-picker .sp-name { flex: 1; font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
+.theah.sorcery-picker .sp-add { flex: none; font-family: var(--thd-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); border-radius: 3px; padding: 4px 9px; cursor: pointer; white-space: nowrap; }
+.theah.sorcery-picker .sp-add:hover { filter: brightness(1.06); }
+.theah.sorcery-picker .sp-add:disabled { background: none; color: var(--teal); border-color: color-mix(in srgb, var(--teal) 50%, transparent); cursor: default; filter: none; }
+.theah.sorcery-picker .sp-desc { margin-top: 6px; font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+.theah.sorcery-picker .sp-desc p { margin: 0 0 5px; }
+.theah.sorcery-picker .sp-desc p:last-child { margin-bottom: 0; }
 .theah .prowess-card .item-controls { display: flex; gap: 8px; opacity: 0; transition: opacity .15s; }
 .theah .prowess-card:hover .item-controls { opacity: 1; }
 .theah .prowess-card .item-controls a { color: var(--ink-soft); font-size: 12px; cursor: pointer; }

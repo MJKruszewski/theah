@@ -211,8 +211,8 @@ SVNSEA2E.nationBonus = {
 
 // National sorceries (which bloodline the "Sorcery" Advantage grants).
 SVNSEA2E.nationSorcery = {
-  avalon: 'knight',
-  highland: 'knight',
+  avalon: 'glamour',
+  highland: 'glamour',
   eisen: 'hex',
   montaigne: 'porte',
   sarmatia: 'sanderis',

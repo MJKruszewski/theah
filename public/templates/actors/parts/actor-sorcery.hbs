@@ -14,7 +14,11 @@
   {{!-- Sorcery — compendium-locked; browse & drag from the pack. --}}
   <div class="sec-title">
     <h3>{{localize "SVNSEA2E.Sorcery"}}</h3><span></span>
-    <a class="add-btn open-compendium" data-pack="theah.sorceries" title="{{localize 'SVNSEA2E.BrowseCompendium'}}"><i class="fas fa-book-open"></i></a>
+    {{#if sorceryTradition}}
+      <a class="add-btn browse-sorcery" title="{{localize 'SVNSEA2E.BrowseSorcery'}}"><i class="fas fa-book-open"></i></a>
+    {{else}}
+      <a class="add-btn open-compendium" data-pack="theah.sorceries" title="{{localize 'SVNSEA2E.BrowseCompendium'}}"><i class="fas fa-book-open"></i></a>
+    {{/if}}
   </div>
   <div class="prowess-list">
     {{#each sorcery as |item id|}}
