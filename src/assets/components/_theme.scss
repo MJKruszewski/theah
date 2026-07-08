@@ -669,7 +669,9 @@
 .risk-builder-form textarea, .risk-builder-form input[type="text"], .risk-builder-form input[type="number"] { font-family: var(--thd-body); font-size: 13px; color: var(--ink); background: color-mix(in srgb, var(--paper) 60%, #fff 6%); border: 1px solid var(--line-strong); border-radius: 3px; padding: 6px 8px; box-sizing: border-box; min-height: 32px; }
 .risk-builder-form textarea { resize: vertical; }
 .risk-builder-form .rb-section { border: 1px solid var(--panel-edge); border-radius: 4px; padding: 10px 11px; background: color-mix(in srgb, var(--gold-leaf) 4%, transparent); }
-.risk-builder-form .rb-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.risk-builder-form .rb-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.risk-builder-form .rb-head-ctl { display: inline-flex; align-items: center; gap: 10px; flex: none; }
+.risk-builder-form .rb-example-pick { max-width: 190px; min-height: 28px; box-sizing: border-box; font-size: 12px; color: var(--ink-soft); background: color-mix(in srgb, var(--paper) 60%, #fff 6%); border: 1px solid var(--line-strong); border-radius: 3px; padding: 3px 6px; }
 .risk-builder-form .rb-head h3 { margin: 0; border: 0; font-family: var(--thd-display); font-size: 15px; color: var(--ink); display: flex; align-items: center; gap: 7px; }
 .risk-builder-form .consequences .rb-head h3 > .fa-skull-crossbones, .risk-builder-form .rb-head h3 > .fa-skull-crossbones { color: var(--oxblood); }
 .risk-builder-form .rb-add { font-family: var(--thd-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-deep); cursor: pointer; white-space: nowrap; }

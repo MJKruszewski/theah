@@ -66,7 +66,13 @@
   <div class="rb-section">
     <div class="rb-head">
       <h3><i class="fas fa-skull-crossbones"></i> {{localize "SVNSEA2E.RiskConsequences"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.RiskConsequencesHint'}}"></i></h3>
-      <a class="rb-add" data-kind="consequence"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.AddConsequence"}}</a>
+      <span class="rb-head-ctl">
+        <select class="rb-example-pick" data-kind="consequence" data-tooltip="{{localize 'SVNSEA2E.RiskExamplesHint'}}">
+          <option value="">{{localize "SVNSEA2E.RiskInsertExample"}}</option>
+          {{#each exampleConsequences}}<optgroup label="{{group}}">{{#each items}}<option value="{{text}}">{{text}}</option>{{/each}}</optgroup>{{/each}}
+        </select>
+        <a class="rb-add" data-kind="consequence"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.AddConsequence"}}</a>
+      </span>
     </div>
     {{#each risk.consequences as |c i|}}
       <div class="rb-row" data-kind="consequence" data-i="{{i}}">
@@ -84,7 +90,13 @@
   <div class="rb-section">
     <div class="rb-head">
       <h3><i class="fas fa-hand-sparkles"></i> {{localize "SVNSEA2E.RiskOpportunities"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.RiskOpportunitiesHint'}}"></i></h3>
-      <a class="rb-add" data-kind="opportunity"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.AddOpportunity"}}</a>
+      <span class="rb-head-ctl">
+        <select class="rb-example-pick" data-kind="opportunity" data-tooltip="{{localize 'SVNSEA2E.RiskExamplesHint'}}">
+          <option value="">{{localize "SVNSEA2E.RiskInsertExample"}}</option>
+          {{#each exampleOpportunities}}<optgroup label="{{group}}">{{#each items}}<option value="{{text}}">{{text}}</option>{{/each}}</optgroup>{{/each}}
+        </select>
+        <a class="rb-add" data-kind="opportunity"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.AddOpportunity"}}</a>
+      </span>
     </div>
     {{#each risk.opportunities as |o i|}}
       <div class="rb-row" data-kind="opportunity" data-i="{{i}}">

@@ -220,6 +220,30 @@ SVNSEA2E.nationSorcery = {
   ussura: 'darm',
 };
 
+// Example Consequences & Opportunities the Risk Builder can insert. These are the
+// worked examples the Core Rulebook gives for common Actions (p.174) — the book
+// stresses that most Consequences/Opportunities should "emerge naturally from the
+// Scene," so this is a starter set to adapt, not an exhaustive table.
+SVNSEA2E.riskExamples = {
+  consequences: [
+    { group: 'SVNSEA2E.RiskExPickLock', text: 'Someone on the other side of the door hears you.' },
+    { group: 'SVNSEA2E.RiskExPickLock', text: 'A poison needle is hidden in the lock — you have to avoid it.' },
+    { group: 'SVNSEA2E.RiskExPickLock', text: 'The lock is old and rusted; you may break your tools.' },
+    { group: 'SVNSEA2E.RiskExRooftop', text: 'You break through the thin roof as you land on the far side.' },
+    { group: 'SVNSEA2E.RiskExRooftop', text: 'You have to dodge arrows or bullets fired at you.' },
+    { group: 'SVNSEA2E.RiskExRooftop', text: 'Guards in the nearby plaza notice you.' },
+    { group: 'SVNSEA2E.RiskExInjury', text: 'Take Wounds — a shared Consequence the group spends Raises to reduce; any left over hit every Hero.' },
+  ],
+  opportunities: [
+    { group: 'SVNSEA2E.RiskExPickLock', text: 'One of the guards inside is an old, trusted friend.' },
+    { group: 'SVNSEA2E.RiskExPickLock', text: 'Two pistols mounted on the wall could easily be stolen.' },
+    { group: 'SVNSEA2E.RiskExPickLock', text: 'The poison needle in the lock could be repurposed.' },
+    { group: 'SVNSEA2E.RiskExRooftop', text: 'A nearby window would hide you from some of the guards.' },
+    { group: 'SVNSEA2E.RiskExRooftop', text: "A guard's uniform on a clothesline could make a good disguise." },
+    { group: 'SVNSEA2E.RiskExRooftop', text: 'A guard drops his loaded pistol; it skitters across the roof.' },
+  ],
+};
+
 SVNSEA2E.storyStatuses = {
   none: 'SVNSEA2E.Empty',
   abandoned: 'SVNSEA2E.StatusAbandoned',

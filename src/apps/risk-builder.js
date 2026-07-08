@@ -90,10 +90,25 @@ export class RiskBuilder extends FormApplication {
         skills: skillChoices.map((s) => ({ ...s, selected: s.key === p.skill })),
       };
     });
+    // Book example Consequences/Opportunities (Core p.174), grouped by Action for
+    // <optgroup>s, so the GM can insert a starting row and edit it.
+    const C = CONFIG.SVNSEA2E;
+    const L = (k) => game.i18n.localize(k);
+    const groupBy = (arr) => {
+      const m = new Map();
+      for (const e of arr || []) {
+        const g = L(e.group);
+        if (!m.has(g)) m.set(g, []);
+        m.get(g).push({ text: e.text });
+      }
+      return [...m.entries()].map(([group, items]) => ({ group, items }));
+    };
     return {
       risk: this.risk,
       participants,
       hasActors: pcActors.length > 0,
+      exampleConsequences: groupBy(C.riskExamples?.consequences),
+      exampleOpportunities: groupBy(C.riskExamples?.opportunities),
       // Library entries (name only for the list; full data lives in the setting).
       savedRisks: this._savedRisks().map((r) => ({ id: r.id, name: r.name || game.i18n.localize('SVNSEA2E.RiskUntitled') })),
       hasSaved: this._savedRisks().length > 0,
@@ -121,6 +136,9 @@ export class RiskBuilder extends FormApplication {
     );
     el.querySelectorAll('.rb-delete').forEach((b) =>
       b.addEventListener('click', (ev) => this._onDeleteSaved(ev.currentTarget.dataset.id)),
+    );
+    el.querySelectorAll('.rb-example-pick').forEach((s) =>
+      s.addEventListener('change', (ev) => this._onInsertExample(ev)),
     );
     el.querySelector('.rb-add-participant')?.addEventListener('click', (ev) => this._onAddParticipant(ev));
     el.querySelectorAll('.rb-remove-participant').forEach((b) =>
@@ -180,6 +198,16 @@ export class RiskBuilder extends FormApplication {
     event.preventDefault();
     this._readForm(this.form);
     this.risk.participants.splice(Number(event.currentTarget.dataset.i), 1);
+    this.render(false);
+  }
+
+  /** Insert a book example (Core p.174) as a new Consequence/Opportunity row. */
+  _onInsertExample(event) {
+    const text = event.currentTarget.value;
+    if (!text) return;
+    this._readForm(this.form);
+    const list = event.currentTarget.dataset.kind === 'consequence' ? 'consequences' : 'opportunities';
+    this.risk[list].push({ desc: text, cost: 1, time: '' });
     this.render(false);
   }
 
