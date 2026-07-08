@@ -165,7 +165,7 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Spend a Hero Point to convince someone to cut you a deal, give you a reasonable discount, or assure someone who knows you that “you’re good for it.”</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Spend a Hero Point to convince someone to cut you a deal, give you a reasonable discount, or assure someone who knows you that “you’re good for it.”</p><p><em>Reduced cost for: Glamour Isles (1).</em></p>",
       "infosource": "Core Rulebook p.149",
       "cost": {
         "normal": 2,
@@ -173,6 +173,24 @@
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "avalon",
+            "cost": 1
+          },
+          {
+            "nation": "inismore",
+            "cost": 1
+          },
+          {
+            "nation": "highland",
+            "cost": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -245,7 +263,7 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Spend a Hero Point to reveal you have a distant cousin who lives nearby and can help you with materials, information, or shelter.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Spend a Hero Point to reveal you have a distant cousin who lives nearby and can help you with materials, information, or shelter.</p><p><em>Reduced cost for: Ussura (1).</em></p>",
       "infosource": "Core Rulebook p.149",
       "cost": {
         "normal": 2,
@@ -253,6 +271,16 @@
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "ussura",
+            "cost": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -357,7 +385,7 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Spend a Hero Point to inspire a group to action. The group must be able to hear you, but if they can and they are of neutral or better disposition, they will do whatever you command so long as it is reasonable— they are unlikely to all throw themselves off a bridge to certain death, for example.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Spend a Hero Point to inspire a group to action. The group must be able to hear you, but if they can and they are of neutral or better disposition, they will do whatever you command so long as it is reasonable— they are unlikely to all throw themselves off a bridge to certain death, for example.</p><p><em>Reduced cost for: Sarmatia (1).</em></p>",
       "infosource": "Core Rulebook p.149",
       "cost": {
         "normal": 2,
@@ -365,6 +393,16 @@
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "sarmatia",
+            "cost": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -405,7 +443,7 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Poison never affects you, aside from some potential mild discomfort. If the poison would ordinarily kill you, it might cause you only to vomit instead, but there are no additional effects.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Poison never affects you, aside from some potential mild discomfort. If the poison would ordinarily kill you, it might cause you only to vomit instead, but there are no additional effects.</p><p><em>Reduced cost for: Vodacce (1).</em></p>",
       "infosource": "Core Rulebook p.150",
       "cost": {
         "normal": 2,
@@ -413,6 +451,16 @@
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "vodacce",
+            "cost": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -517,7 +565,7 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Spend a Hero Point to intimidate a character into backing down from a threat, letting you into somewhere he shouldn’t, or otherwise getting out of your way.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Spend a Hero Point to intimidate a character into backing down from a threat, letting you into somewhere he shouldn’t, or otherwise getting out of your way.</p><p><em>Reduced cost for: Eisen (1).</em></p>",
       "infosource": "Core Rulebook p.150",
       "cost": {
         "normal": 2,
@@ -525,6 +573,16 @@
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "eisen",
+            "cost": 1
+          }
+        ]
+      }
     }
   },
   {
@@ -661,7 +719,7 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Whenever you spend a Hero Point to aid an ally, they gain four dice instead of three.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Whenever you spend a Hero Point to aid an ally, they gain four dice instead of three.</p><p><em>Reduced cost for: Montaigne (2).</em></p>",
       "infosource": "Core Rulebook p.151",
       "cost": {
         "normal": 3,
@@ -669,6 +727,16 @@
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "montaigne",
+            "cost": 2
+          }
+        ]
+      }
     }
   },
   {
@@ -741,7 +809,7 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Choose one type of item—weapons, armor, paintings, etc. When you create such an item, you may increase the time you work on it in order to create an item of greater quality. If you are using typical, mundane materials, this has no additional effect aside from cosmetic—the item is noticeably higher quality than similar items, and may even bear your mark, earn you notoriety for your fine work, draw a higher price if it is for sale, etc. If you use exotic materials—such as creating a sword using metal from a fallen star, for example—you can create a Signature Item for yourself or another Hero. The time required to create a Signature Item, and whether or not a material is “special” enough to qualify, is always a GM’s discretion.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Choose one type of item—weapons, armor, paintings, etc. When you create such an item, you may increase the time you work on it in order to create an item of greater quality. If you are using typical, mundane materials, this has no additional effect aside from cosmetic—the item is noticeably higher quality than similar items, and may even bear your mark, earn you notoriety for your fine work, draw a higher price if it is for sale, etc. If you use exotic materials—such as creating a sword using metal from a fallen star, for example—you can create a Signature Item for yourself or another Hero. The time required to create a Signature Item, and whether or not a material is “special” enough to qualify, is always a GM’s discretion.</p><p><em>Reduced cost for: Vesten (2).</em></p>",
       "infosource": "Core Rulebook p.151",
       "cost": {
         "normal": 3,
@@ -749,6 +817,16 @@
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "vesten",
+            "cost": 2
+          }
+        ]
+      }
     }
   },
   {
@@ -773,7 +851,7 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>You can expect refuge, a place to stay, and hot meals in any church. You also have access to many—but not all—of the Church’s libraries. Finally, you gain two dice for any social Risks against characters who are adherents to your faith.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>You can expect refuge, a place to stay, and hot meals in any church. You also have access to many—but not all—of the Church’s libraries. Finally, you gain two dice for any social Risks against characters who are adherents to your faith.</p><p><em>Reduced cost for: Castille (2).</em></p>",
       "infosource": "Core Rulebook p.152",
       "cost": {
         "normal": 3,
@@ -781,6 +859,16 @@
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "castille",
+            "cost": 2
+          }
+        ]
+      }
     }
   },
   {
@@ -1093,14 +1181,24 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Spend a Hero Point to ignore all negative effects from Dramatic Wounds for the round—the Villain does not gain Bonus Dice if you have 2 Dramatic Wounds, and you do not become Helpless at 4 Dramatic Wounds.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Spend a Hero Point to ignore all negative effects from Dramatic Wounds for the round—the Villain does not gain Bonus Dice if you have 2 Dramatic Wounds, and you do not become Helpless at 4 Dramatic Wounds.</p><p><em>Reduced cost for: Eisen (3).</em></p>",
       "infosource": "Core Rulebook p.154",
       "cost": {
         "normal": 5,
-        "reducecost": 4
+        "reducecost": 3
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "eisen",
+            "cost": 3
+          }
+        ]
+      }
     }
   },
   {
@@ -1109,14 +1207,24 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Spend a Hero Point to have all damage that you do this Round increased by the number of Dramatic Wounds you have.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Spend a Hero Point to have all damage that you do this Round increased by the number of Dramatic Wounds you have.</p><p><em>Reduced cost for: Vesten (3).</em></p>",
       "infosource": "Core Rulebook p.154",
       "cost": {
         "normal": 5,
-        "reducecost": 4
+        "reducecost": 3
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "vesten",
+            "cost": 3
+          }
+        ]
+      }
     }
   },
   {
@@ -1125,14 +1233,24 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Just before a confrontation with a Villain occurs, spend a Hero Point and make some sort of pithy or clever comment about how “When things look darkest, that’s when souls shine brightest.” Each Hero—that hears the speech—counts all dice that roll equal to or under his Skill on his next roll as 10s.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Just before a confrontation with a Villain occurs, spend a Hero Point and make some sort of pithy or clever comment about how “When things look darkest, that’s when souls shine brightest.” Each Hero—that hears the speech—counts all dice that roll equal to or under his Skill on his next roll as 10s.</p><p><em>Reduced cost for: Montaigne (3).</em></p>",
       "infosource": "Core Rulebook p.154",
       "cost": {
         "normal": 5,
-        "reducecost": 4
+        "reducecost": 3
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "montaigne",
+            "cost": 3
+          }
+        ]
+      }
     }
   },
   {
@@ -1141,14 +1259,24 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Choose a specific field of academic study (astronomy, mathematics, architecture, history, etc). When you make a Risk and call on your specialized field of study, spend a Hero Point to gain additional Raises equal to your Wits.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Choose a specific field of academic study (astronomy, mathematics, architecture, history, etc). When you make a Risk and call on your specialized field of study, spend a Hero Point to gain additional Raises equal to your Wits.</p><p><em>Reduced cost for: Castille (3).</em></p>",
       "infosource": "Core Rulebook p.154",
       "cost": {
         "normal": 5,
-        "reducecost": 4
+        "reducecost": 3
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "castille",
+            "cost": 3
+          }
+        ]
+      }
     }
   },
   {
@@ -1157,14 +1285,24 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>When you perform a feat of raw strength (lifting a castle portcullis, holding a door closed against a battering ram on the other side, etc.), spend a Hero Point to increase all of your individual dice for that Risk by your Brawn or your Resolve, whichever is greater. For example, if you are trying to keep a crumbling wall from collapsing so that your friends can escape, spend a Hero Point to increase the number on each of your individual dice by your Brawn score.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>When you perform a feat of raw strength (lifting a castle portcullis, holding a door closed against a battering ram on the other side, etc.), spend a Hero Point to increase all of your individual dice for that Risk by your Brawn or your Resolve, whichever is greater. For example, if you are trying to keep a crumbling wall from collapsing so that your friends can escape, spend a Hero Point to increase the number on each of your individual dice by your Brawn score.</p><p><em>Reduced cost for: Ussura (3).</em></p>",
       "infosource": "Core Rulebook p.155",
       "cost": {
         "normal": 5,
-        "reducecost": 4
+        "reducecost": 3
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "ussura",
+            "cost": 3
+          }
+        ]
+      }
     }
   },
   {
@@ -1173,14 +1311,32 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Spend a Hero Point after you take a Risk to Re-Roll any number of dice you wish. You must keep the new roll, unless you have a different effect that allows you to Re-Roll dice. You can only use this Advantage once per Scene.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Spend a Hero Point after you take a Risk to Re-Roll any number of dice you wish. You must keep the new roll, unless you have a different effect that allows you to Re-Roll dice. You can only use this Advantage once per Scene.</p><p><em>Reduced cost for: Glamour Isles (3).</em></p>",
       "infosource": "Core Rulebook p.155",
       "cost": {
         "normal": 5,
-        "reducecost": 4
+        "reducecost": 3
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "avalon",
+            "cost": 3
+          },
+          {
+            "nation": "inismore",
+            "cost": 3
+          },
+          {
+            "nation": "highland",
+            "cost": 3
+          }
+        ]
+      }
     }
   },
   {
@@ -1189,14 +1345,24 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Spend a Hero Point to give any number of your Raises to another Hero in the same scene, as long as they can see or hear you.</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Spend a Hero Point to give any number of your Raises to another Hero in the same scene, as long as they can see or hear you.</p><p><em>Reduced cost for: Sarmatia (3).</em></p>",
       "infosource": "Core Rulebook p.155",
       "cost": {
         "normal": 5,
-        "reducecost": 4
+        "reducecost": 3
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "sarmatia",
+            "cost": 3
+          }
+        ]
+      }
     }
   },
   {
@@ -1205,14 +1371,24 @@
     "type": "advantage",
     "img": "systems/theah/icons/item.svg",
     "system": {
-      "description": "<p>Spend a Hero Point to convince a Villain you are on her side. The Villain considers you a trusted ally. As soon as the Villain sees you perform a Heroic action or if you refuse to perform a Villainous action, the illusion is over. You can only use this Advantage on each Villain once. “Fool me once...”</p><p><em>Reduced cost for: [object Object].</em></p>",
+      "description": "<p>Spend a Hero Point to convince a Villain you are on her side. The Villain considers you a trusted ally. As soon as the Villain sees you perform a Heroic action or if you refuse to perform a Villainous action, the illusion is over. You can only use this Advantage on each Villain once. “Fool me once...”</p><p><em>Reduced cost for: Vodacce (3).</em></p>",
       "infosource": "Core Rulebook p.155",
       "cost": {
         "normal": 5,
-        "reducecost": 4
+        "reducecost": 3
       },
       "knack": false,
       "innate": false
+    },
+    "flags": {
+      "theah": {
+        "nationalDiscounts": [
+          {
+            "nation": "vodacce",
+            "cost": 3
+          }
+        ]
+      }
     }
   }
 ]

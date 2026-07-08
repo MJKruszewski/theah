@@ -22,7 +22,10 @@
 // v4: Secret Society Favor is now numeric (0), not the "0" HTML string.
 // v5: adds the Sorceries (Core) pack — 116 effects across the 5 core traditions.
 // v6: adds Ussura's Dar Matushki (Mother's Touch) — 8 Gifts + 5 Restrictions (129 total).
-export const PACK_SEED_VERSION = 6;
+// v7: advantages carry flags.theah.nationalDiscounts (resolved nation keys) so the
+//     Hero Creator charges the true per-nation discounted cost; the heal-update now
+//     propagates flags into existing worlds.
+export const PACK_SEED_VERSION = 7;
 
 const SEED_TARGETS = [
   { pack: 'theah.backgrounds', file: 'backgrounds' },
@@ -94,9 +97,15 @@ async function syncPack(pack, docs, heal) {
 
     if (heal) {
       // Rewrite every shipped doc that still exists back to canonical data.
+      // Include `flags` so doc-level data (e.g. advantages' nationalDiscounts,
+      // which the Hero Creator prices against) reaches already-seeded worlds.
       const toUpdate = docs
         .filter((d) => existing.has(d._id))
-        .map((d) => ({ _id: d._id, name: d.name, type: d.type, img: d.img, system: d.system }));
+        .map((d) => {
+          const u = { _id: d._id, name: d.name, type: d.type, img: d.img, system: d.system };
+          if (d.flags) u.flags = d.flags;
+          return u;
+        });
       if (toUpdate.length) {
         await cls.updateDocuments(toUpdate, { pack, diff: false, recursive: false });
         updated = toUpdate.length;

@@ -34,6 +34,8 @@ export class HeroCreator extends FormApplication {
       hubrisId: null,
       duelStyleId: null, // compendium id (chosen when Duelist Academy is bought)
       societyId: null, // compendium id (optional single Secret Society, or null)
+      replacementAdvantages: [], // ids picked to replace duplicate Background Advantages
+      extraLanguages: [], // language keys chosen beyond native + Old Théan (up to Wits)
     };
   }
 
@@ -156,13 +158,15 @@ export class HeroCreator extends FormApplication {
     return Object.values(this._wizard.skillAlloc).reduce((a, b) => a + (b || 0), 0);
   }
 
-  /** Advantage cost for the chosen Nation (applies the national discount if any). */
+  /** Advantage cost for the chosen Nation (applies the true national discount if
+   *  any). The pack builder stamps `flags.theah.nationalDiscounts` as an array of
+   *  `{nation, cost}` with resolved nation KEYS, so a Montaigne Hero pays the
+   *  book's 3 for Joie de Vivre, not the full 5. */
   _advantageCost(adv) {
     const cost = adv.system?.cost?.normal ?? 1;
     const discounts = adv.flags?.theah?.nationalDiscounts || [];
-    if (discounts.includes(this._wizard.nation)) {
-      return Math.max(1, adv.system?.cost?.reducecost || cost - 1);
-    }
+    const hit = discounts.find((d) => d.nation === this._wizard.nation);
+    if (hit) return Math.max(1, hit.cost ?? cost);
     return cost;
   }
 
@@ -173,13 +177,72 @@ export class HeroCreator extends FormApplication {
       .reduce((sum, a) => sum + this._advantageCost(a), 0);
   }
 
-  /** Free Advantage names granted by the chosen Backgrounds (deduplicated). */
+  /** The repeatable Advantages — those a Hero may hold more than once. Only
+   *  Sorcery qualifies in core (Core p.150 sidebar: "you may select Sorcery more
+   *  than once, gaining additional or stronger abilities"). */
+  _isRepeatable(name) {
+    return name === 'Sorcery';
+  }
+
+  /** Free Advantage names granted by the chosen Backgrounds (deduplicated —
+   *  for display and Duelist-Academy detection). */
   _freeAdvantageNames() {
     const names = new Set();
     for (const bg of this._selectedBackgrounds()) {
       for (const name of bg.system.advantages || []) names.add(name);
     }
     return [...names];
+  }
+
+  /** Free Advantage grants WITH multiplicity, honoring repeatable Sorcery
+   *  (a sorcery Background lists "Sorcery" twice → two grants) while collapsing
+   *  a non-repeatable Advantage that BOTH Backgrounds happen to grant (that
+   *  collision instead entitles the Hero to a same-cost replacement — see
+   *  `_duplicateFreeAdvantages`). */
+  _freeAdvantageGrants() {
+    const grants = [];
+    const seen = new Set();
+    for (const bg of this._selectedBackgrounds()) {
+      // A single Background may itself list Sorcery twice — keep both.
+      const local = new Set();
+      for (const name of bg.system.advantages || []) {
+        if (this._isRepeatable(name)) {
+          grants.push(name);
+        } else if (!seen.has(name)) {
+          grants.push(name);
+          local.add(name);
+        }
+      }
+      for (const n of local) seen.add(n);
+    }
+    return grants;
+  }
+
+  /** Non-repeatable Advantages granted by BOTH chosen Backgrounds. Each such
+   *  duplicate entitles the Hero to one replacement Advantage of the same point
+   *  cost (Core p.137: "If you have duplicate Advantages, take another Advantage
+   *  of the same point cost, your choice."). Returns [{name, cost}]. */
+  _duplicateFreeAdvantages() {
+    const bgs = this._selectedBackgrounds();
+    if (bgs.length < 2) return [];
+    const advByName = new Map(this._catalog.advantages.map((a) => [a.name, a]));
+    const counts = {};
+    for (const bg of bgs) {
+      // Count each name at most once per Background, so an overlap means the two
+      // Backgrounds share it (not one Background listing it twice).
+      for (const name of new Set(bg.system.advantages || [])) {
+        if (this._isRepeatable(name)) continue;
+        counts[name] = (counts[name] || 0) + 1;
+      }
+    }
+    const dups = [];
+    for (const [name, n] of Object.entries(counts)) {
+      if (n < 2) continue;
+      const adv = advByName.get(name);
+      // One replacement per extra copy (n-1).
+      for (let i = 0; i < n - 1; i++) dups.push({ name, cost: adv ? this._advantageCost(adv) : 1 });
+    }
+    return dups;
   }
 
   /**
@@ -189,12 +252,26 @@ export class HeroCreator extends FormApplication {
    * @returns {boolean}
    */
   _hasDuelistAcademy() {
-    const names = new Set(this._freeAdvantageNames());
+    return this._ownedAdvantageNames().has('Duelist Academy');
+  }
+
+  /** Every Advantage name the finished Hero will own: free (from Backgrounds),
+   *  purchased, and same-cost replacements for duplicates. */
+  _ownedAdvantageNames() {
+    const names = new Set(this._freeAdvantageGrants());
     for (const id of this._wizard.advantages) {
       const adv = this._catalog.advantages.find((a) => a._id === id);
       if (adv) names.add(adv.name);
     }
-    return names.has('Duelist Academy');
+    for (const a of this._replacementAdvantages()) names.add(a.name);
+    return names;
+  }
+
+  /** Starting Hero Points: 1 by default, 2 with the Valiant Spirit Advantage
+   *  (Core p.150: "You begin each game with 2 Hero Points instead of 1."). */
+  _startingHeroPoints() {
+    const base = CONFIG.SVNSEA2E.creation.startingHeroPoints;
+    return this._ownedAdvantageNames().has('Valiant Spirit') ? Math.max(base, 2) : base;
   }
 
   _traitFinal(key) {
@@ -208,6 +285,36 @@ export class HeroCreator extends FormApplication {
 
   _nativeLanguage() {
     return CONFIG.SVNSEA2E.languages[this._wizard.nation] ? this._wizard.nation : null;
+  }
+
+  /** Number of languages the Hero knows = final Wits (Core p.163). */
+  _languageAllowance() {
+    return this._traitFinal('wits');
+  }
+
+  /** Always-known languages: Old Théan + the Hero's native tongue. */
+  _baseLanguages() {
+    const native = this._nativeLanguage();
+    return [...new Set([CONFIG.SVNSEA2E.creation.baseLanguage, native].filter(Boolean))];
+  }
+
+  /** Full language list = base + chosen extras, capped at the Wits allowance. */
+  _finalLanguages() {
+    const base = this._baseLanguages();
+    const room = Math.max(0, this._languageAllowance() - base.length);
+    const extras = this._wizard.extraLanguages.filter((k) => !base.includes(k)).slice(0, room);
+    return [...new Set([...base, ...extras])];
+  }
+
+  /** Replacement Advantage objects chosen for duplicate Background grants,
+   *  bounded to the current number of duplicates (so picks don't leak when the
+   *  chosen Backgrounds change). */
+  _replacementAdvantages() {
+    const n = this._duplicateFreeAdvantages().length;
+    return this._wizard.replacementAdvantages
+      .slice(0, n)
+      .map((id) => this._catalog.advantages.find((a) => a._id === id))
+      .filter(Boolean);
   }
 
   /**
@@ -343,6 +450,23 @@ export class HeroCreator extends FormApplication {
     data.advPointsSpent = this._advantageSpent();
     data.advPointsLeft = C.creation.advantagePoints - this._advantageSpent();
 
+    // Duplicate-Background replacements (Core p.137): when both Backgrounds grant
+    // the same Advantage, the Hero picks a FREE replacement of the same cost.
+    const dups = this._duplicateFreeAdvantages();
+    data.hasDuplicates = dups.length > 0;
+    data.replacementSlots = dups.map((d, i) => ({
+      index: i,
+      dupName: this._advDisplayName(d.name),
+      cost: d.cost,
+      options: this._catalog.advantages
+        .filter((a) => this._advantageCost(a) === d.cost && a.name !== d.name)
+        .map((a) => ({
+          id: a._id,
+          name: this._advDisplayName(a.name),
+          selected: this._wizard.replacementAdvantages[i] === a._id,
+        })),
+    }));
+
     // Arcana — full pick lists with descriptions shown upfront (not after select)
     data.virtues = this._catalog.virtues.map((v) => ({
       id: v._id,
@@ -373,6 +497,22 @@ export class HeroCreator extends FormApplication {
       description: s.system.concern || s.system.description || '',
     }));
 
+    // Languages (Core p.163): the Hero knows a number of languages equal to Wits.
+    // Old Théan + the native tongue are free; the rest are chosen on the Review
+    // step, where the final Wits (after the Nation Bonus) is settled.
+    const baseLangs = this._baseLanguages();
+    const langRoom = Math.max(0, this._languageAllowance() - baseLangs.length);
+    data.languages = {
+      allowance: this._languageAllowance(),
+      room: langRoom,
+      chosenCount: this._finalLanguages().length,
+      base: baseLangs.map((k) => L(C.languages[k] || k)),
+      options: Object.entries(C.languages)
+        .filter(([k]) => !baseLangs.includes(k))
+        .map(([k, lbl]) => ({ key: k, label: L(lbl), selected: this._wizard.extraLanguages.includes(k) }))
+        .sort((a, b) => a.label.localeCompare(b.label)),
+    };
+
     // Review
     data.review = this._buildReview(skills);
     data.emptyCatalog = !this._catalog.backgrounds.length;
@@ -382,14 +522,23 @@ export class HeroCreator extends FormApplication {
 
   _buildReview(skills) {
     const C = CONFIG.SVNSEA2E;
-    const native = this._nativeLanguage();
-    const langs = [C.creation.baseLanguage, native].filter(Boolean).map((l) => C.languages[l] || l);
+    const L = (s) => game.i18n.localize(s);
+    const langs = this._finalLanguages().map((l) => L(C.languages[l] || l));
     const virtue = this._catalog.virtues.find((v) => v._id === this._wizard.virtueId);
     const hubris = this._catalog.hubris.find((h) => h._id === this._wizard.hubrisId);
     const purchased = this._wizard.advantages
       .map((id) => this._catalog.advantages.find((a) => a._id === id))
       .filter(Boolean)
       .map((a) => this._advDisplayName(a.name));
+    // Free Advantages with multiplicity (repeatable Sorcery shows ×N), plus any
+    // same-cost replacements the player chose for duplicate Background grants.
+    const freeCounts = {};
+    for (const n of this._freeAdvantageGrants()) freeCounts[n] = (freeCounts[n] || 0) + 1;
+    const freeAdvantages = Object.entries(freeCounts).map(([n, c]) => {
+      const disp = this._advDisplayName(n);
+      return c > 1 ? `${disp} ×${c}` : disp;
+    });
+    for (const a of this._replacementAdvantages()) freeAdvantages.push(this._advDisplayName(a.name));
     const duelStyle = this._hasDuelistAcademy()
       ? (this._catalog.duelstyles || []).find((d) => d._id === this._wizard.duelStyleId)
       : null;
@@ -402,14 +551,14 @@ export class HeroCreator extends FormApplication {
         .filter(([, v]) => v.final > 0)
         .map(([k, v]) => ({ label: v.label, value: v.final })),
       backgrounds: this._selectedBackgrounds().map((b) => b.name),
-      freeAdvantages: this._freeAdvantageNames().map((n) => this._advDisplayName(n)),
+      freeAdvantages,
       purchased,
       virtue: virtue?.name,
       hubris: hubris?.name,
       duelStyle: duelStyle?.name,
       society: society?.name,
       languages: langs,
-      heroPoints: C.creation.startingHeroPoints,
+      heroPoints: this._startingHeroPoints(),
     };
   }
 
@@ -498,6 +647,20 @@ export class HeroCreator extends FormApplication {
       }),
     );
 
+    // Duplicate-Background Advantage replacement picks (one <select> per slot).
+    root.querySelectorAll('[data-replacement-slot]').forEach((el) =>
+      el.addEventListener('change', (ev) => {
+        const i = Number(ev.currentTarget.dataset.replacementSlot);
+        this._wizard.replacementAdvantages[i] = ev.currentTarget.value || null;
+        this.render(false);
+      }),
+    );
+
+    // Language pick cards (Review step) — cap at the Wits allowance.
+    root.querySelectorAll('[data-language-toggle]').forEach((el) =>
+      el.addEventListener('click', (ev) => this._toggleLanguage(ev.currentTarget.dataset.languageToggle)),
+    );
+
     // Navigation.
     root.querySelector('[data-nav="back"]')?.addEventListener('click', () => this._nav(-1));
     root.querySelector('[data-nav="next"]')?.addEventListener('click', () => this._nav(+1));
@@ -572,6 +735,24 @@ export class HeroCreator extends FormApplication {
     this.render(false);
   }
 
+  _toggleLanguage(key) {
+    const base = this._baseLanguages();
+    if (base.includes(key)) return; // native / Old Théan are locked
+    const idx = this._wizard.extraLanguages.indexOf(key);
+    if (idx >= 0) {
+      this._wizard.extraLanguages.splice(idx, 1);
+    } else {
+      const room = Math.max(0, this._languageAllowance() - base.length);
+      if (this._wizard.extraLanguages.length >= room) {
+        return ui.notifications.warn(
+          game.i18n.format('SVNSEA2E.WizLanguageCap', { n: this._languageAllowance() }),
+        );
+      }
+      this._wizard.extraLanguages.push(key);
+    }
+    this.render(false);
+  }
+
   /* -------------------------------------------- */
   /*  Navigation + validation                     */
   /* -------------------------------------------- */
@@ -604,6 +785,15 @@ export class HeroCreator extends FormApplication {
       case 'skills':
         if (this._skillPointsSpent() !== C.skillPoints) return L('SVNSEA2E.WizSpendSkills');
         break;
+      case 'advantages': {
+        // If two Backgrounds granted the same Advantage, a same-cost replacement
+        // must be chosen for each (Core p.137).
+        const dups = this._duplicateFreeAdvantages();
+        for (let i = 0; i < dups.length; i++) {
+          if (!this._wizard.replacementAdvantages[i]) return L('SVNSEA2E.WizNeedReplacement');
+        }
+        break;
+      }
       case 'arcana':
         if (!this._wizard.virtueId || !this._wizard.hubrisId) return L('SVNSEA2E.WizNeedArcana');
         break;
@@ -645,8 +835,8 @@ export class HeroCreator extends FormApplication {
     const skillUpdate = {};
     for (const [k, v] of Object.entries(skills)) skillUpdate[`system.skills.${k}.value`] = Math.min(v.final, cr.rankCap);
 
-    const native = this._nativeLanguage();
-    const languages = [...new Set([cr.baseLanguage, native].filter(Boolean))];
+    // Languages known = final Wits (Core p.163): Old Théan + native + chosen extras.
+    const languages = this._finalLanguages();
 
     await this.actor.update({
       name: this._wizard.name.trim(),
@@ -655,7 +845,7 @@ export class HeroCreator extends FormApplication {
       'system.religion': this._wizard.religion?.trim() || '',
       'system.age': this._wizard.age?.trim() || '',
       'system.concept': this._wizard.concept || '',
-      'system.heropts': cr.startingHeroPoints,
+      'system.heropts': this._startingHeroPoints(),
       'system.wealth': 0,
       'system.reputation': '',
       'system.languages': languages,
@@ -676,8 +866,12 @@ export class HeroCreator extends FormApplication {
     // Free advantages from Backgrounds + purchased advantages (deduped by name).
     const advByName = new Map(this._catalog.advantages.map((a) => [a.name, a]));
     const blood = this._bloodlineSorcery();
+    // Sorcery is repeatable (Core p.150) — allow it through the name-dedup each
+    // time it is granted; every other Advantage is granted once.
     const grant = (adv) => {
-      if (!adv || seenAdvNames.has(adv.name)) return;
+      if (!adv) return;
+      const repeatable = this._isRepeatable(adv.name);
+      if (!repeatable && seenAdvNames.has(adv.name)) return;
       seenAdvNames.add(adv.name);
       const obj = foundry.utils.deepClone(adv);
       delete obj._id;
@@ -693,7 +887,11 @@ export class HeroCreator extends FormApplication {
       }
       toCreate.push(obj);
     };
-    for (const name of this._freeAdvantageNames()) grant(advByName.get(name));
+    // Free grants (with multiplicity for repeatable Sorcery), then the same-cost
+    // replacements owed for duplicate Background Advantages (Core p.137), then
+    // purchased Advantages.
+    for (const name of this._freeAdvantageGrants()) grant(advByName.get(name));
+    for (const adv of this._replacementAdvantages()) grant(adv);
     for (const id of this._wizard.advantages) grant(this._catalog.advantages.find((a) => a._id === id));
 
     const virtue = this._catalog.virtues.find((v) => v._id === this._wizard.virtueId);
@@ -715,6 +913,11 @@ export class HeroCreator extends FormApplication {
       if (!it) continue;
       const obj = foundry.utils.deepClone(it);
       delete obj._id;
+      // Joining a Secret Society at creation grants 2 Favor (Core p.164).
+      if (it === society) {
+        obj.system = obj.system || {};
+        obj.system.favor = 2;
+      }
       toCreate.push(obj);
     }
 

@@ -96,12 +96,28 @@ export default class ActorSheetSS2e extends ActorSheet {
       });
     }
 
-    // Dramatic-Wound roll effects (Core p.166): 1+ DW grants +1 Bonus Die on
+    // Dramatic-Wound roll effects (Core p.165): 1+ DW grants +1 Bonus Die on
     // every Risk (baked into the pool); 3+ DW makes 10s explode (auto-checked).
     if (actor.type === ActorType.PLAYER) {
       const dwv = actorData.dwounds?.value ?? 0;
       sheetData.dwBonus = dwv >= 1 ? 1 : 0;
       sheetData.autoExplode = dwv >= 3;
+      // The Death Spiral (Core p.165): the four escalating effects of Dramatic
+      // Wounds, shown on the sheet so the link between Wounds and the roller
+      // (especially exploding 10s at 3+ DW) is visible at a glance — each stage
+      // lights up as the Hero accrues Dramatic Wounds.
+      const spiral = [
+        { level: 1, icon: 'fa-plus', label: 'SVNSEA2E.SpiralBonus', tip: 'SVNSEA2E.DwTip1' },
+        { level: 2, icon: 'fa-skull', label: 'SVNSEA2E.SpiralVillain', tip: 'SVNSEA2E.DwTip2' },
+        { level: 3, icon: 'fa-burst', label: 'SVNSEA2E.SpiralExplode', tip: 'SVNSEA2E.DwTip3' },
+        { level: 4, icon: 'fa-ban', label: 'SVNSEA2E.SpiralHelpless', tip: 'SVNSEA2E.DwTip4' },
+      ];
+      sheetData.spiralEffects = spiral.map((e) => ({
+        ...e,
+        active: dwv >= e.level,
+        label: game.i18n.localize(e.label),
+        tip: game.i18n.localize(e.tip),
+      }));
       // Joie de Vivre is only usable if the Hero actually owns the Advantage
       // (Core p.154 — spend a Hero Point before a Villain confrontation).
       sheetData.hasJoie = actor.items.some(
@@ -324,7 +340,9 @@ export default class ActorSheetSS2e extends ActorSheet {
           ...trait,
           name: t,
           label: CONFIG.SVNSEA2E.traits[t],
-          desc: game.i18n.localize(`SVNSEA2E.TraitInfo_${t}`),
+          // Use the page-cited traitDesc map (same strings the wizard shows), so
+          // the sheet's Trait tooltip carries its (Core p.133) reference.
+          desc: game.i18n.localize(CONFIG.SVNSEA2E.traitDesc[t] || `SVNSEA2E.TraitInfo_${t}`),
         }))
       : [];
   }
@@ -1161,6 +1179,27 @@ export default class ActorSheetSS2e extends ActorSheet {
       return false;
     }
 
+    // A Hero may belong to only ONE Secret Society (Core p.258). Reject a second,
+    // differently-named Society for non-GMs — mirrors the Hero Creator's rule.
+    if (
+      !game.user.isGM &&
+      item.type === 'secretsociety' &&
+      this.actor.items.some((i) => i.type === 'secretsociety')
+    ) {
+      ui.notifications.warn(game.i18n.localize('SVNSEA2E.OneSocietyOnly'));
+      return false;
+    }
+
+    // A Dueling Style is learned via the Duelist Academy Advantage (Core p.236).
+    // Soft-warn a player who lacks it, but allow the drop (GM/table bookkeeping).
+    if (
+      !game.user.isGM &&
+      item.type === 'duelstyle' &&
+      !this.actor.items.some((i) => i.type === 'advantage' && /duelist academy/i.test(i.name))
+    ) {
+      ui.notifications.warn(game.i18n.localize('SVNSEA2E.DuelStyleNeedsAcademy'));
+    }
+
     // Non-sorcery items cannot have duplicate entries on the actor.
     const actorHasDrop = await this._doesActorHaveItem(item.type, item.name);
     if (item.type !== 'sorcery' && actorHasDrop) {
@@ -1614,7 +1653,7 @@ export default class ActorSheetSS2e extends ActorSheet {
     const t = parseInt(traitSel?.value) || 0;
     const s = parseInt(skillSel?.value) || 0;
     // Bonus Dice (Flair / Reputation / Advantages) + the automatic +1 for having
-    // any Dramatic Wounds (Core p.166) all add to the Risk pool before the roll.
+    // any Dramatic Wounds (Core p.165) all add to the Risk pool before the roll.
     const bonus = parseInt(rollerEl.querySelector('.bonus-val')?.textContent) || 0;
     const dwBonus = parseInt(rollerEl.dataset.dwBonus) || 0;
     const explode = !!rollerEl.querySelector('.rp-explode')?.checked;
@@ -1641,7 +1680,7 @@ export default class ActorSheetSS2e extends ActorSheet {
       return ui.notifications.warn(game.i18n.localize('SVNSEA2E.PoolEmpty'));
     }
 
-    // Exploding 10s (Core p.166: at 3+ Dramatic Wounds a 10 rolls another d10,
+    // Exploding 10s (Core p.165: at 3+ Dramatic Wounds a 10 rolls another d10,
     // which may itself explode). Foundry's `x` modifier handles the recursion.
     const r = new Roll(`${pool}d10${explode ? 'x' : ''}`);
     await r.evaluate();
@@ -1759,9 +1798,15 @@ export default class ActorSheetSS2e extends ActorSheet {
     resultEl.querySelector('.combos').textContent = combosText;
     const hintEl = resultEl.querySelector('.reroll-hint');
     if (hintEl) {
-      hintEl.textContent = canReroll
-        ? game.i18n.format('SVNSEA2E.WealthRerollHint', { n: wealth })
-        : '';
+      if (canReroll) {
+        // Wealth reroll is legal only in a money-influenced social Risk (Core
+        // p.164) — surface that so players don't reroll combat/athletics pools.
+        hintEl.innerHTML = `<i class="fas fa-circle-info"></i> ${game.i18n.format('SVNSEA2E.WealthRerollHint', { n: wealth })}`;
+        hintEl.setAttribute('data-tooltip', game.i18n.localize('SVNSEA2E.WealthRerollInfo'));
+      } else {
+        hintEl.textContent = '';
+        hintEl.removeAttribute('data-tooltip');
+      }
     }
     resultEl.classList.toggle('can-reroll', canReroll);
     resultEl.classList.add('show');

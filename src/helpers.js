@@ -4,7 +4,9 @@ export const skillsToSheetData = (actorData, CONFIG) =>
       ...skill,
       name: s,
       label: CONFIG.SVNSEA2E.skills[s],
-      desc: game.i18n.localize(`SVNSEA2E.SkillInfo_${s}`),
+      // Page-cited skillDesc map (same strings the wizard shows) so the sheet's
+      // Skill tooltip carries its (Core p.142) reference.
+      desc: game.i18n.localize(CONFIG.SVNSEA2E.skillDesc?.[s] || `SVNSEA2E.SkillInfo_${s}`),
     }))
     .sort((a, b) => a.label.localeCompare(b.label));
 

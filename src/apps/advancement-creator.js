@@ -51,7 +51,7 @@ export class AdvancementCreator extends FormApplication {
     ];
   }
 
-  /** The eight Reward types, in book order (Sorcery is gained as the Sorcery Advantage). */
+  /** The seven Reward types, in book order (Sorcery is gained as the Sorcery Advantage). */
   static get REWARDS() {
     return [
       { key: 'skillRaise', icon: 'fa-bullseye' },

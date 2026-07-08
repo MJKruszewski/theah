@@ -70,5 +70,15 @@
         </div>
       {{/each}}
     </div>
+
+    {{#if spiralEffects}}
+      <div class="spiral-effects">
+        {{#each spiralEffects}}
+          <span class="spiral-fx {{#if active}}on{{/if}}{{#iff level '==' 3}} explode{{/iff}}" data-tooltip="{{tip}}">
+            <i class="fas {{icon}}"></i> {{label}}
+          </span>
+        {{/each}}
+      </div>
+    {{/if}}
   {{/if}}
 </div>

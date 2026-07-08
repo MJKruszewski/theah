@@ -27,15 +27,30 @@ const written = [];
 /* ----------------------------- Advantages ----------------------------- */
 {
   const src = readJson("advantages.json");
+  // The book's discount labels are nation KEYS, except "glamour isles" — the
+  // Triple Kingdom (Avalon + Inismore + the Highland Marches). A Hero from any of
+  // the three gets the discount.
+  const NATION_KEYS = { "glamour isles": ["avalon", "inismore", "highland"] };
+  const resolveNationKeys = (label) => NATION_KEYS[label] || [label];
+  const titleCase = (s) => s.replace(/\b\w/g, (c) => c.toUpperCase());
   const docs = src.map((a) => {
     let desc = para(a.description);
+    // Resolve the per-nation discounts to {nation:<key>, cost} pairs the Hero
+    // Creator can charge against (it reads flags.theah.nationalDiscounts).
+    const discounts = [];
+    for (const d of a.nationalDiscounts || []) {
+      for (const key of resolveNationKeys(d.nation)) discounts.push({ nation: key, cost: d.cost });
+    }
     if (a.nationalDiscounts?.length) {
-      desc += `<p><em>Reduced cost for: ${a.nationalDiscounts.join(", ")}.</em></p>`;
+      const human = a.nationalDiscounts.map((d) => `${titleCase(d.nation)} (${d.cost})`).join(", ");
+      desc += `<p><em>Reduced cost for: ${human}.</em></p>`;
     }
     if (a.nationRestriction) {
       desc += `<p><em>Restricted to: ${a.nationRestriction}.</em></p>`;
     }
-    return {
+    // reducecost (a single display value on the item sheet) = the best discount.
+    const reducecost = discounts.length ? Math.min(...discounts.map((d) => d.cost)) : 0;
+    const doc = {
       _id: id16("advantage:" + a.name),
       name: a.name,
       type: "advantage",
@@ -43,11 +58,13 @@ const written = [];
       system: {
         description: desc,
         infosource: `Core Rulebook p.${a.page}`,
-        cost: { normal: a.cost ?? 1, reducecost: a.nationalDiscounts?.length ? Math.max(0, (a.cost ?? 1) - 1) : 0 },
+        cost: { normal: a.cost ?? 1, reducecost },
         knack: false,
         innate: false,
       },
     };
+    if (discounts.length) doc.flags = { theah: { nationalDiscounts: discounts } };
+    return doc;
   });
   writeFileSync(resolve(OUT, "advantages.json"), JSON.stringify(docs, null, 2));
   written.push(`advantages: ${docs.length}`);

@@ -111,6 +111,21 @@
         {{#if freeAdvantages.length}}
           <div class="wiz-free"><b>{{localize "SVNSEA2E.WizFreeFromBg"}}:</b> {{#each freeAdvantages}}<span class="tag">{{this}}</span>{{/each}}</div>
         {{/if}}
+        {{#if hasDuplicates}}
+          <div class="wiz-replacement">
+            <div class="wr-lbl"><i class="fas fa-arrows-rotate"></i> {{localize "SVNSEA2E.WizReplacementTitle"}}</div>
+            <p class="wr-hint">{{localize "SVNSEA2E.WizReplacementHint"}}</p>
+            {{#each replacementSlots}}
+              <label class="wr-slot">
+                <span class="wr-dup">{{dupName}} <em>({{localize "SVNSEA2E.Cost"}} {{cost}})</em></span>
+                <select data-replacement-slot="{{index}}">
+                  <option value="">{{localize "SVNSEA2E.WizChooseReplacement"}}</option>
+                  {{#each options}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}
+                </select>
+              </label>
+            {{/each}}
+          </div>
+        {{/if}}
         {{!-- Same .wiz-pick card component as Backgrounds — one consistent pattern. --}}
         <div class="wiz-pick-list">
           {{#each advantageList}}
@@ -204,6 +219,24 @@
           {{#if review.society}}<div class="rev-card"><b>{{localize "SVNSEA2E.SecretSociety"}}</b><ul><li>{{review.society}}</li></ul></div>{{/if}}
           <div class="rev-card"><b>{{localize "SVNSEA2E.Languages"}}</b><ul>{{#each review.languages}}<li>{{this}}</li>{{/each}}</ul></div>
         </div>
+
+        {{!-- Languages = Wits (Core p.163): native + Old Théan free, pick the rest. --}}
+        <div class="wiz-languages">
+          <div class="wl-lbl">
+            <span>{{localize "SVNSEA2E.Languages"}} <i class="fas fa-circle-info" data-tooltip="{{localize 'SVNSEA2E.WizLanguagesInfo'}}"></i></span>
+            <span class="wl-count {{#iff languages.chosenCount '<' languages.allowance}}under{{/iff}}">{{languages.chosenCount}} / {{languages.allowance}}</span>
+          </div>
+          <div class="wl-base">{{#each languages.base}}<span class="tag locked"><i class="fas fa-lock"></i> {{this}}</span>{{/each}}</div>
+          {{#if languages.room}}
+            <p class="wl-hint">{{localize "SVNSEA2E.WizLanguagesHint"}}</p>
+            <div class="wl-grid">
+              {{#each languages.options}}
+                <span class="wl-pick {{#if selected}}on{{/if}}" data-language-toggle="{{key}}">{{label}}{{#if selected}} <i class="fas fa-check"></i>{{/if}}</span>
+              {{/each}}
+            </div>
+          {{/if}}
+        </div>
+
         <p class="rev-foot">{{localize "SVNSEA2E.HeroPoints"}}: {{review.heroPoints}} &middot; {{localize "SVNSEA2E.WealthPts"}} 0 &middot; {{localize "SVNSEA2E.Reputation"}} —</p>
       </div>
     {{/iff}}
