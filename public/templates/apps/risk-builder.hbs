@@ -34,6 +34,39 @@
     <input type="text" name="approach" value="{{risk.approach}}" placeholder="{{localize 'SVNSEA2E.RiskApproachPlaceholder'}}" />
   </div>
 
+  {{!-- Scene — the Heroes involved + each one's Trait+Skill (Approach) --}}
+  <div class="rb-section rb-scene">
+    <div class="rb-head">
+      <h3><i class="fas fa-users"></i> {{localize "SVNSEA2E.RiskScene"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.RiskSceneHint'}}"></i></h3>
+      {{#if hasActors}}<a class="rb-add-participant"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.RiskAddHero"}}</a>{{/if}}
+    </div>
+    <p class="rb-scene-note">{{localize "SVNSEA2E.RiskSceneIntro"}}</p>
+    {{#if hasActors}}
+      {{#each participants as |p i|}}
+        <div class="rb-participant rb-row" data-i="{{i}}">
+          <select class="rb-p-actor" aria-label="{{localize 'SVNSEA2E.RiskHero'}}">
+            <option value="">{{localize "SVNSEA2E.RiskChooseHero"}}</option>
+            {{#each p.actors}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}
+          </select>
+          <select class="rb-p-trait" aria-label="{{localize 'SVNSEA2E.Trait'}}">
+            <option value="">{{localize "SVNSEA2E.Trait"}}</option>
+            {{#each p.traits}}<option value="{{key}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+          </select>
+          <select class="rb-p-skill" aria-label="{{localize 'SVNSEA2E.Skill'}}">
+            <option value="">{{localize "SVNSEA2E.Skill"}}</option>
+            {{#each p.skills}}<option value="{{key}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+          </select>
+          <span class="rb-p-pool" data-tooltip="{{localize 'SVNSEA2E.RiskPoolHint'}}">{{#if p.pool}}{{p.pool}}d10{{else}}—{{/if}}</span>
+          <a class="rb-remove-participant" data-i="{{i}}" title="{{localize 'SVNSEA2E.Remove'}}"><i class="fas fa-times"></i></a>
+        </div>
+      {{else}}
+        <p class="rb-empty">{{localize "SVNSEA2E.RiskNoHeroes"}}</p>
+      {{/each}}
+    {{else}}
+      <p class="rb-empty">{{localize "SVNSEA2E.RiskNoPcActors"}}</p>
+    {{/if}}
+  </div>
+
   {{!-- Consequences --}}
   <div class="rb-section">
     <div class="rb-head">

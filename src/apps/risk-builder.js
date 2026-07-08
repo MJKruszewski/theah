@@ -31,6 +31,10 @@ export class RiskBuilder extends FormApplication {
       name: '',
       situation: '',
       approach: '',
+      // Heroes in the scene + the Trait+Skill (Approach) each will roll. In an
+      // Action Sequence every Hero rolls their own pool against the shared Risk
+      // (Core p.179) — this list is who's in the scene.
+      participants: [],
       consequences: [{ desc: '', cost: 1, time: '' }],
       opportunities: [],
     };
@@ -54,10 +58,43 @@ export class RiskBuilder extends FormApplication {
     return super.render(force, options);
   }
 
+  /** Player-character actors, the Trait choices and the Skill choices used by the
+   *  scene participant selects. */
+  _sceneChoices() {
+    const C = CONFIG.SVNSEA2E;
+    const L = (k) => game.i18n.localize(k);
+    const pcActors = (game.actors?.contents || game.actors || [])
+      .filter((a) => a.type === 'playercharacter')
+      .map((a) => ({ id: a.id, name: a.name }));
+    const traitChoices = ['brawn', 'finesse', 'resolve', 'wits', 'panache'].map((k) => ({ key: k, label: L(C.traits[k]) }));
+    const skillChoices = Object.entries(C.skills)
+      .map(([k, l]) => ({ key: k, label: L(l) }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+    return { pcActors, traitChoices, skillChoices };
+  }
+
   /** @override */
   getData() {
+    const { pcActors, traitChoices, skillChoices } = this._sceneChoices();
+    // Decorate each scene participant with select-lists (marking the current
+    // choice) and the live pool size (Trait value + Skill value).
+    const participants = (this.risk.participants || []).map((p, i) => {
+      const actor = game.actors?.get(p.actorId);
+      const tv = actor?.system?.traits?.[p.trait]?.value ?? 0;
+      const sv = actor?.system?.skills?.[p.skill]?.value ?? 0;
+      const pool = actor && p.trait && p.skill ? tv + sv : null;
+      return {
+        index: i,
+        pool,
+        actors: pcActors.map((a) => ({ ...a, selected: a.id === p.actorId })),
+        traits: traitChoices.map((t) => ({ ...t, selected: t.key === p.trait })),
+        skills: skillChoices.map((s) => ({ ...s, selected: s.key === p.skill })),
+      };
+    });
     return {
       risk: this.risk,
+      participants,
+      hasActors: pcActors.length > 0,
       // Library entries (name only for the list; full data lives in the setting).
       savedRisks: this._savedRisks().map((r) => ({ id: r.id, name: r.name || game.i18n.localize('SVNSEA2E.RiskUntitled') })),
       hasSaved: this._savedRisks().length > 0,
@@ -86,6 +123,14 @@ export class RiskBuilder extends FormApplication {
     el.querySelectorAll('.rb-delete').forEach((b) =>
       b.addEventListener('click', (ev) => this._onDeleteSaved(ev.currentTarget.dataset.id)),
     );
+    el.querySelector('.rb-add-participant')?.addEventListener('click', (ev) => this._onAddParticipant(ev));
+    el.querySelectorAll('.rb-remove-participant').forEach((b) =>
+      b.addEventListener('click', (ev) => this._onRemoveParticipant(ev)),
+    );
+    // Re-render on a participant select change so the pool badge updates live.
+    el.querySelectorAll('.rb-participant select').forEach((s) =>
+      s.addEventListener('change', () => { this._readForm(this.form); this.render(false); }),
+    );
   }
 
   /**
@@ -98,6 +143,11 @@ export class RiskBuilder extends FormApplication {
     this.risk.name = root.querySelector('[name="name"]')?.value ?? '';
     this.risk.situation = root.querySelector('[name="situation"]')?.value ?? '';
     this.risk.approach = root.querySelector('[name="approach"]')?.value ?? '';
+    this.risk.participants = Array.from(root.querySelectorAll('.rb-participant')).map((row) => ({
+      actorId: row.querySelector('.rb-p-actor')?.value ?? '',
+      trait: row.querySelector('.rb-p-trait')?.value ?? '',
+      skill: row.querySelector('.rb-p-skill')?.value ?? '',
+    }));
     for (const kind of ['consequence', 'opportunity']) {
       const list = kind === 'consequence' ? 'consequences' : 'opportunities';
       this.risk[list] = Array.from(root.querySelectorAll(`.rb-row[data-kind="${kind}"]`)).map((row) => ({
@@ -114,6 +164,24 @@ export class RiskBuilder extends FormApplication {
     const kind = event.currentTarget.dataset.kind;
     const list = kind === 'consequence' ? 'consequences' : 'opportunities';
     this.risk[list].push({ desc: '', cost: 1, time: '' });
+    this.render(false);
+  }
+
+  _onAddParticipant(event) {
+    event.preventDefault();
+    this._readForm(this.form);
+    // Default the actor to the first PC not already in the scene, for convenience.
+    const { pcActors } = this._sceneChoices();
+    const taken = new Set(this.risk.participants.map((p) => p.actorId));
+    const next = pcActors.find((a) => !taken.has(a.id));
+    this.risk.participants.push({ actorId: next?.id || '', trait: '', skill: '' });
+    this.render(false);
+  }
+
+  _onRemoveParticipant(event) {
+    event.preventDefault();
+    this._readForm(this.form);
+    this.risk.participants.splice(Number(event.currentTarget.dataset.i), 1);
     this.render(false);
   }
 
@@ -175,6 +243,21 @@ export class RiskBuilder extends FormApplication {
         <ul>${opps.map(rowHtml).join('')}</ul>
       </div>`
       : '';
+    // Heroes in the scene: each rolls their own Trait+Skill pool against the Risk.
+    const C = CONFIG.SVNSEA2E;
+    const sceneRows = (r.participants || [])
+      .filter((p) => p.actorId && p.trait && p.skill)
+      .map((p) => {
+        const actor = game.actors?.get(p.actorId);
+        const tv = actor?.system?.traits?.[p.trait]?.value ?? 0;
+        const sv = actor?.system?.skills?.[p.skill]?.value ?? 0;
+        const appr = `${L(C.traits[p.trait] || p.trait)} + ${L(C.skills[p.skill] || p.skill)}`;
+        return `<li><span class="rs-hero">${esc(actor?.name ?? '—')}</span> <span class="rs-appr">${esc(appr)}</span> <span class="rs-pool" data-tooltip="${L('SVNSEA2E.RiskPoolHint')}">${tv + sv}d10</span></li>`;
+      })
+      .join('');
+    const sceneBlock = sceneRows
+      ? `<div class="risk-group scene"><div class="rg-title" data-tooltip="${L('SVNSEA2E.RiskSceneHint')}"><i class="fas fa-users"></i> ${L('SVNSEA2E.RiskScene')}</div><ul class="risk-scene">${sceneRows}</ul></div>`
+      : '';
     const nameBlock = r.name?.trim() ? `<div class="risk-name">${esc(r.name)}</div>` : '';
     const situationBlock = r.situation?.trim()
       ? `<div class="risk-situation">${esc(r.situation)}</div>`
@@ -190,6 +273,7 @@ export class RiskBuilder extends FormApplication {
           ${nameBlock}
           ${situationBlock}
           ${approachBlock}
+          ${sceneBlock}
           ${consBlock}
           ${oppsBlock}
           <div class="risk-example"><span class="rx-lbl">${L('SVNSEA2E.RiskExampleTitle')}</span> ${L('SVNSEA2E.RiskExample')}</div>

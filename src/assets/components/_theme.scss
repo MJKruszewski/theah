@@ -707,6 +707,23 @@
 /* The Risk card's optional name line */
 #chat .theah-risk .risk-name { padding: 7px 12px 0; font-family: var(--thd-display); font-size: 15px; color: var(--ink); font-variant: small-caps; letter-spacing: .03em; }
 
+/* Scene participants (Risk Builder) */
+.risk-builder-form .rb-scene-note { margin: 0 0 8px; font-size: 12px; line-height: 1.5; color: var(--ink-soft); font-style: italic; }
+.risk-builder-form .rb-participant { align-items: center; }
+.risk-builder-form .rb-participant select { flex: 1 1 0; min-width: 0; min-height: 30px; box-sizing: border-box; font-size: 12.5px; }
+.risk-builder-form .rb-participant .rb-p-actor { flex: 1.4 1 0; }
+.risk-builder-form .rb-p-pool { flex: none; min-width: 42px; text-align: center; font-family: var(--thd-label); font-size: 11px; font-weight: 600; color: var(--gold-deep); }
+.risk-builder-form .rb-remove-participant { flex: none; color: var(--ink-soft); cursor: pointer; padding: 4px; }
+.risk-builder-form .rb-remove-participant:hover { color: var(--oxblood); }
+
+/* Scene block on the posted Risk card */
+#chat .theah-risk .risk-group.scene .rg-title i { color: var(--teal); }
+#chat .theah-risk .risk-scene { list-style: none; margin: 0; padding: 0; }
+#chat .theah-risk .risk-scene li { display: flex; align-items: baseline; gap: 8px; padding: 2px 0; }
+#chat .theah-risk .risk-scene .rs-hero { font-weight: 600; color: var(--ink); }
+#chat .theah-risk .risk-scene .rs-appr { flex: 1 1 auto; font-size: 12px; color: var(--ink-soft); }
+#chat .theah-risk .risk-scene .rs-pool { flex: none; font-family: var(--thd-label); font-size: 11px; font-weight: 600; color: var(--gold-deep); }
+
 /* ========================= Hero Creator wizard ========================= */
 .theah.hero-creator .window-content { padding: 0; background: var(--panel); color: var(--ink); font-family: var(--thd-body); }
 .hero-creator-form { display: flex; flex-direction: column; height: 100%; }
