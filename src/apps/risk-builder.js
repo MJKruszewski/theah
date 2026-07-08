@@ -30,7 +30,6 @@ export class RiskBuilder extends FormApplication {
       id: null, // set when the working Risk was loaded from / saved to the library
       name: '',
       situation: '',
-      approach: '',
       // Heroes in the scene + the Trait+Skill (Approach) each will roll. In an
       // Action Sequence every Hero rolls their own pool against the shared Risk
       // (Core p.179) — this list is who's in the scene.
@@ -142,7 +141,6 @@ export class RiskBuilder extends FormApplication {
   _readForm(root) {
     this.risk.name = root.querySelector('[name="name"]')?.value ?? '';
     this.risk.situation = root.querySelector('[name="situation"]')?.value ?? '';
-    this.risk.approach = root.querySelector('[name="approach"]')?.value ?? '';
     this.risk.participants = Array.from(root.querySelectorAll('.rb-participant')).map((row) => ({
       actorId: row.querySelector('.rb-p-actor')?.value ?? '',
       trait: row.querySelector('.rb-p-trait')?.value ?? '',
@@ -198,7 +196,7 @@ export class RiskBuilder extends FormApplication {
   /**
    * Build the themed Risk chat-card HTML from a risk object, or return null with
    * a warning if it lacks the minimum content (a Situation or a Consequence).
-   * @param {object} r  A risk ({situation, approach, consequences, opportunities}).
+   * @param {object} r  A risk ({situation, participants, consequences, opportunities}).
    * @returns {string|null}
    * @private
    */
@@ -262,9 +260,6 @@ export class RiskBuilder extends FormApplication {
     const situationBlock = r.situation?.trim()
       ? `<div class="risk-situation">${esc(r.situation)}</div>`
       : '';
-    const approachBlock = r.approach?.trim()
-      ? `<div class="risk-approach"><span class="ra-lbl" data-tooltip="${L('SVNSEA2E.RiskApproachHint')}">${L('SVNSEA2E.RiskApproach')}:</span> ${esc(r.approach)}</div>`
-      : '';
 
     return `
       <div class="theah theah-risk">
@@ -272,7 +267,6 @@ export class RiskBuilder extends FormApplication {
         <div class="risk-body">
           ${nameBlock}
           ${situationBlock}
-          ${approachBlock}
           ${sceneBlock}
           ${consBlock}
           ${oppsBlock}
@@ -316,7 +310,7 @@ export class RiskBuilder extends FormApplication {
   /** Start a fresh, empty Risk (does not touch the library). */
   _onNew(event) {
     event.preventDefault();
-    this.risk = { id: null, name: '', situation: '', approach: '', consequences: [{ desc: '', cost: 1, time: '' }], opportunities: [] };
+    this.risk = { id: null, name: '', situation: '', participants: [], consequences: [{ desc: '', cost: 1, time: '' }], opportunities: [] };
     this.render(false);
   }
 
