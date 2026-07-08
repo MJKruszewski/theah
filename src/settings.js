@@ -38,6 +38,18 @@ export const registerSystemSettings = function () {
   });
 
   /**
+   * GM's saved Risks — a reusable library the Risk Builder writes to, so a GM can
+   * prep Risks ahead of time and post one at the right moment. World-scoped, not
+   * shown in Configure Settings (managed entirely from the Risk Builder).
+   */
+  game.settings.register('theah', 'savedRisks', {
+    scope: 'world',
+    config: false,
+    type: Array,
+    default: [],
+  });
+
+  /**
    * Sheet theme — per client. Paper (aged sea-chart) is the default; "Night at
    * Sea" is the dark variant. Foundry surfaces this in Configure Settings, and
    * the in-sheet toggle flips the same setting.

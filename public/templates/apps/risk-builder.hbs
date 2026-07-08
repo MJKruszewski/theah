@@ -1,6 +1,29 @@
 <form class="risk-builder-form" autocomplete="off">
   <p class="rb-intro">{{localize "SVNSEA2E.RiskBuilderIntro"}}</p>
 
+  {{#if hasSaved}}
+    <div class="rb-library">
+      <div class="rb-lib-head"><i class="fas fa-book-bookmark"></i> {{localize "SVNSEA2E.RiskLibrary"}}</div>
+      <ul class="rb-lib-list">
+        {{#each savedRisks}}
+          <li class="rb-lib-item">
+            <span class="rb-lib-name">{{name}}</span>
+            <span class="rb-lib-ctl">
+              <a class="rb-post-saved" data-id="{{id}}" data-tooltip="{{localize 'SVNSEA2E.RiskPostThis'}}"><i class="fas fa-comment"></i></a>
+              <a class="rb-load" data-id="{{id}}" data-tooltip="{{localize 'SVNSEA2E.RiskLoad'}}"><i class="fas fa-pen-to-square"></i></a>
+              <a class="rb-delete" data-id="{{id}}" data-tooltip="{{localize 'SVNSEA2E.Remove'}}"><i class="fas fa-trash"></i></a>
+            </span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  <div class="rb-field">
+    <label>{{localize "SVNSEA2E.RiskName"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.RiskNameHint'}}"></i></label>
+    <input type="text" name="name" value="{{risk.name}}" placeholder="{{localize 'SVNSEA2E.RiskNamePlaceholder'}}" />
+  </div>
+
   <div class="rb-field">
     <label>{{localize "SVNSEA2E.RiskSituation"}}<i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.RiskSituationHint'}}"></i></label>
     <textarea name="situation" rows="2" placeholder="{{localize 'SVNSEA2E.RiskSituationPlaceholder'}}">{{risk.situation}}</textarea>
@@ -52,6 +75,8 @@
   </div>
 
   <div class="rb-actions">
-    <button type="button" class="rb-post"><i class="fas fa-comment"></i> {{localize "SVNSEA2E.PostRisk"}}</button>
+    <button type="button" class="rb-new" data-tooltip="{{localize 'SVNSEA2E.RiskNewHint'}}"><i class="fas fa-file"></i> {{localize "SVNSEA2E.RiskNew"}}</button>
+    <button type="button" class="rb-save"><i class="fas fa-floppy-disk"></i> {{localize "SVNSEA2E.RiskSave"}}</button>
+    <button type="button" class="rb-post primary"><i class="fas fa-comment"></i> {{localize "SVNSEA2E.PostRisk"}}</button>
   </div>
 </form>

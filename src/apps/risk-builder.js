@@ -27,11 +27,22 @@ export class RiskBuilder extends FormApplication {
   constructor(options = {}) {
     super({}, options);
     this.risk = {
+      id: null, // set when the working Risk was loaded from / saved to the library
+      name: '',
       situation: '',
       approach: '',
       consequences: [{ desc: '', cost: 1, time: '' }],
       opportunities: [],
     };
+  }
+
+  /** The GM's saved-Risk library (world setting). */
+  _savedRisks() {
+    return game.settings.get('theah', 'savedRisks') || [];
+  }
+
+  async _setSavedRisks(list) {
+    await game.settings.set('theah', 'savedRisks', list);
   }
 
   /** @override */
@@ -45,7 +56,12 @@ export class RiskBuilder extends FormApplication {
 
   /** @override */
   getData() {
-    return { risk: this.risk };
+    return {
+      risk: this.risk,
+      // Library entries (name only for the list; full data lives in the setting).
+      savedRisks: this._savedRisks().map((r) => ({ id: r.id, name: r.name || game.i18n.localize('SVNSEA2E.RiskUntitled') })),
+      hasSaved: this._savedRisks().length > 0,
+    };
   }
 
   /** @override */
@@ -59,6 +75,17 @@ export class RiskBuilder extends FormApplication {
       b.addEventListener('click', (ev) => this._onRemoveRow(ev)),
     );
     el.querySelector('.rb-post')?.addEventListener('click', (ev) => this._onPost(ev));
+    el.querySelector('.rb-save')?.addEventListener('click', (ev) => this._onSave(ev));
+    el.querySelector('.rb-new')?.addEventListener('click', (ev) => this._onNew(ev));
+    el.querySelectorAll('.rb-load').forEach((b) =>
+      b.addEventListener('click', (ev) => this._onLoadSaved(ev.currentTarget.dataset.id)),
+    );
+    el.querySelectorAll('.rb-post-saved').forEach((b) =>
+      b.addEventListener('click', (ev) => this._onPostSaved(ev.currentTarget.dataset.id)),
+    );
+    el.querySelectorAll('.rb-delete').forEach((b) =>
+      b.addEventListener('click', (ev) => this._onDeleteSaved(ev.currentTarget.dataset.id)),
+    );
   }
 
   /**
@@ -68,6 +95,7 @@ export class RiskBuilder extends FormApplication {
    * @private
    */
   _readForm(root) {
+    this.risk.name = root.querySelector('[name="name"]')?.value ?? '';
     this.risk.situation = root.querySelector('[name="situation"]')?.value ?? '';
     this.risk.approach = root.querySelector('[name="approach"]')?.value ?? '';
     for (const kind of ['consequence', 'opportunity']) {
@@ -99,18 +127,24 @@ export class RiskBuilder extends FormApplication {
     this.render(false);
   }
 
-  async _onPost(event) {
-    event.preventDefault();
-    this._readForm(this.form);
-    const r = this.risk;
-    const cons = r.consequences.filter((c) => c.desc.trim());
-    const opps = r.opportunities.filter((o) => o.desc.trim());
+  /**
+   * Build the themed Risk chat-card HTML from a risk object, or return null with
+   * a warning if it lacks the minimum content (a Situation or a Consequence).
+   * @param {object} r  A risk ({situation, approach, consequences, opportunities}).
+   * @returns {string|null}
+   * @private
+   */
+  _buildCard(r) {
+    const cons = (r.consequences || []).filter((c) => c.desc?.trim());
+    const opps = (r.opportunities || []).filter((o) => o.desc?.trim());
 
-    if (!r.situation.trim() && !cons.length) {
-      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.RiskNeedsContent'));
+    if (!r.situation?.trim() && !cons.length) {
+      ui.notifications.warn(game.i18n.localize('SVNSEA2E.RiskNeedsContent'));
+      return null;
     }
     if (!cons.length) {
-      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.RiskNoConsequences'));
+      ui.notifications.warn(game.i18n.localize('SVNSEA2E.RiskNoConsequences'));
+      return null;
     }
 
     const esc = (s) =>
@@ -141,17 +175,19 @@ export class RiskBuilder extends FormApplication {
         <ul>${opps.map(rowHtml).join('')}</ul>
       </div>`
       : '';
-    const situationBlock = r.situation.trim()
+    const nameBlock = r.name?.trim() ? `<div class="risk-name">${esc(r.name)}</div>` : '';
+    const situationBlock = r.situation?.trim()
       ? `<div class="risk-situation">${esc(r.situation)}</div>`
       : '';
-    const approachBlock = r.approach.trim()
+    const approachBlock = r.approach?.trim()
       ? `<div class="risk-approach"><span class="ra-lbl" data-tooltip="${L('SVNSEA2E.RiskApproachHint')}">${L('SVNSEA2E.RiskApproach')}:</span> ${esc(r.approach)}</div>`
       : '';
 
-    const content = `
+    return `
       <div class="theah theah-risk">
         <div class="risk-head"><i class="fas fa-triangle-exclamation"></i> ${L('SVNSEA2E.RiskCardTitle')}</div>
         <div class="risk-body">
+          ${nameBlock}
           ${situationBlock}
           ${approachBlock}
           ${consBlock}
@@ -159,9 +195,80 @@ export class RiskBuilder extends FormApplication {
           <div class="risk-example"><span class="rx-lbl">${L('SVNSEA2E.RiskExampleTitle')}</span> ${L('SVNSEA2E.RiskExample')}</div>
         </div>
       </div>`;
+  }
 
+  async _onPost(event) {
+    event.preventDefault();
+    this._readForm(this.form);
+    const content = this._buildCard(this.risk);
+    if (!content) return;
     await postThemedChat({ content });
     ui.notifications.info(game.i18n.localize('SVNSEA2E.RiskPosted'));
+  }
+
+  /* -------------------------------------------- */
+  /*  Saved-Risk library                          */
+  /* -------------------------------------------- */
+
+  /** Save the working Risk to the library (create, or update if it was loaded). */
+  async _onSave(event) {
+    event.preventDefault();
+    this._readForm(this.form);
+    if (!this.risk.name?.trim()) {
+      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.RiskNeedsName'));
+    }
+    const list = this._savedRisks().slice();
+    const entry = foundry.utils.deepClone(this.risk);
+    if (!entry.id) entry.id = foundry.utils.randomID();
+    const idx = list.findIndex((r) => r.id === entry.id);
+    if (idx >= 0) list[idx] = entry;
+    else list.push(entry);
+    await this._setSavedRisks(list);
+    this.risk.id = entry.id; // keep editing the same entry
+    ui.notifications.info(game.i18n.format('SVNSEA2E.RiskSaved', { name: entry.name.trim() }));
+    this.render(false);
+  }
+
+  /** Start a fresh, empty Risk (does not touch the library). */
+  _onNew(event) {
+    event.preventDefault();
+    this.risk = { id: null, name: '', situation: '', approach: '', consequences: [{ desc: '', cost: 1, time: '' }], opportunities: [] };
+    this.render(false);
+  }
+
+  /** Load a saved Risk into the form for editing / posting. */
+  _onLoadSaved(id) {
+    const found = this._savedRisks().find((r) => r.id === id);
+    if (!found) return;
+    this.risk = foundry.utils.deepClone(found);
+    // Backfill fields older saves might lack.
+    this.risk.consequences ??= [];
+    this.risk.opportunities ??= [];
+    this.render(false);
+  }
+
+  /** Post a saved Risk straight to chat without loading it into the form. */
+  async _onPostSaved(id) {
+    const found = this._savedRisks().find((r) => r.id === id);
+    if (!found) return;
+    const content = this._buildCard(found);
+    if (!content) return;
+    await postThemedChat({ content });
+    ui.notifications.info(game.i18n.localize('SVNSEA2E.RiskPosted'));
+  }
+
+  /** Delete a saved Risk from the library (with confirmation). */
+  async _onDeleteSaved(id) {
+    const found = this._savedRisks().find((r) => r.id === id);
+    if (!found) return;
+    const ok = await Dialog.confirm({
+      title: game.i18n.localize('SVNSEA2E.RiskDelete'),
+      content: `<p>${game.i18n.format('SVNSEA2E.RiskDeleteConfirm', { name: found.name || '—' })}</p>`,
+    });
+    if (!ok) return;
+    await this._setSavedRisks(this._savedRisks().filter((r) => r.id !== id));
+    if (this.risk.id === id) this.risk.id = null; // it's now an unsaved draft
+    this.render(false);
   }
 
   /** @override */

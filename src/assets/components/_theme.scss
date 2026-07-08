@@ -683,9 +683,29 @@
 .risk-builder-form .rb-empty { margin: 2px 0; font-size: 12px; font-style: italic; color: var(--ink-soft); }
 .risk-builder-form .rb-example { padding: 10px 12px; border-left: 2px solid var(--gold-deep); background: color-mix(in srgb, var(--gold-leaf) 8%, transparent); font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
 .risk-builder-form .rb-example .rx-lbl { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); }
-.risk-builder-form .rb-actions { display: flex; justify-content: flex-end; }
-.risk-builder-form .rb-post { display: inline-flex; align-items: center; gap: 8px; width: auto; font-family: var(--thd-label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); border-radius: 3px; padding: 9px 16px; cursor: pointer; }
+.risk-builder-form .rb-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.risk-builder-form .rb-actions .rb-new { margin-right: auto; }
+.risk-builder-form .rb-post, .risk-builder-form .rb-save, .risk-builder-form .rb-new { display: inline-flex; align-items: center; gap: 8px; width: auto; font-family: var(--thd-label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; border-radius: 3px; padding: 9px 16px; cursor: pointer; }
+.risk-builder-form .rb-post { color: #2a1c10; background: linear-gradient(180deg,var(--gold-leaf),var(--gold)); border: 1px solid var(--gold-deep); }
 .risk-builder-form .rb-post:hover { filter: brightness(1.06); }
+.risk-builder-form .rb-save, .risk-builder-form .rb-new { color: var(--gold-deep); background: transparent; border: 1px solid var(--line-strong); }
+.risk-builder-form .rb-save:hover, .risk-builder-form .rb-new:hover { border-color: var(--gold-deep); color: var(--gold); }
+
+/* Saved-Risk library */
+.risk-builder-form .rb-library { border: 1px solid var(--panel-edge); border-radius: 4px; padding: 8px 11px; background: color-mix(in srgb, var(--navy) 6%, transparent); }
+.risk-builder-form .rb-lib-head { font-family: var(--thd-label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+.risk-builder-form .rb-lib-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+.risk-builder-form .rb-lib-item { display: flex; align-items: center; gap: 8px; padding: 4px 6px; border-radius: 3px; }
+.risk-builder-form .rb-lib-item:hover { background: color-mix(in srgb, var(--gold-leaf) 10%, transparent); }
+.risk-builder-form .rb-lib-name { flex: 1 1 auto; min-width: 0; font-size: 13px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.risk-builder-form .rb-lib-ctl { flex: none; display: inline-flex; gap: 10px; }
+.risk-builder-form .rb-lib-ctl a { cursor: pointer; color: var(--ink-soft); }
+.risk-builder-form .rb-lib-ctl .rb-post-saved:hover { color: var(--gold-deep); }
+.risk-builder-form .rb-lib-ctl .rb-load:hover { color: var(--teal); }
+.risk-builder-form .rb-lib-ctl .rb-delete:hover { color: var(--oxblood); }
+
+/* The Risk card's optional name line */
+#chat .theah-risk .risk-name { padding: 7px 12px 0; font-family: var(--thd-display); font-size: 15px; color: var(--ink); font-variant: small-caps; letter-spacing: .03em; }
 
 /* ========================= Hero Creator wizard ========================= */
 .theah.hero-creator .window-content { padding: 0; background: var(--panel); color: var(--ink); font-family: var(--thd-body); }
