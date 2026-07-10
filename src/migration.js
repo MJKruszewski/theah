@@ -146,12 +146,13 @@ export const migrateActorData = function (actor) {
     updateData['system.traits.influence.min'] = 0;
   }
 
-  if (
-    actor.type === ActorType.BRUTE &&
-    actor.system.traits.strength.max != 20
-  ) {
-    updateData['system.traits.strength.max'] = 20;
-  }
+  // NOTE: no Brute Squad Strength migration. A Brute Squad's Strength is now a
+  // book-accurate muster size (Core p.191: 5/8/10…, schema default 5), set per
+  // Squad via the sheet — NOT the fixed 1-20 trait scale the Villain/Monster
+  // block above uses. Because this migration runs on every GM load (the version
+  // gate in theah.mjs is disabled), any max-forcing rule here would clobber the
+  // GM's chosen size every reload. New/blank actors get `initial: 5` from the
+  // DataModel schema automatically, so no migration is needed.
 
   if (actor.type === ActorType.DANGERPOINTS && actor.system.points < 5) {
     updateData['system.points'] = 5;

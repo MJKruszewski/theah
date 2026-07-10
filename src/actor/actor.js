@@ -75,15 +75,12 @@ export class SvnSea2EActor extends Actor {
    * Prepare Brute type specific data
    */
   _prepareBruteData(actorData) {
-    actorData.traits.strength.value = this._validateMinMaxData(
-      actorData.traits.strength.value,
-      actorData.traits.strength.min,
-      actorData.traits.strength.max,
-    );
-    actorData.wounds.max = actorData.traits.strength.value;
-    if (parseInt(actorData.wounds.max) < parseInt(actorData.wounds.value)) {
-      actorData.wounds.value = actorData.wounds.max;
-    }
+    // Strength is the Squad's ONLY stat (Core p.191): current Strength clamps to
+    // [0, max]. 0 = the Squad is defeated. There is no separate Wound pool — the
+    // Wounds it deals equal its current Strength.
+    const s = actorData.traits.strength;
+    s.max = Math.max(0, s.max ?? 0);
+    s.value = Math.max(0, Math.min(s.value ?? 0, s.max));
   }
 
   /**
@@ -262,6 +259,13 @@ export class SvnSea2EActor extends Actor {
     if (morale !== undefined) {
       options.theahPriorMorale = this.system.crewstatus;
     }
+    // Brute Squad: stash prior Strength so _onUpdate can post a "cut down /
+    // reinforced / defeated" card (Strength is a stepper/figure field, not a form
+    // input, so it only appears in `changed` on a genuine change).
+    const str = foundry.utils.getProperty(changed, 'system.traits.strength.value');
+    if (str !== undefined && this.type === ActorType.BRUTE) {
+      options.theahPriorStrength = this.system.traits?.strength?.value ?? 0;
+    }
   }
 
   /** @override */
@@ -296,6 +300,10 @@ export class SvnSea2EActor extends Actor {
         if (options.theahPriorMorale !== undefined) {
           this._reactToMoraleChange(options.theahPriorMorale);
         }
+      }
+      // Brute Squad Strength card (cut down / reinforced / defeated).
+      if (options.theahPriorStrength !== undefined) {
+        this._reactToBruteStrengthChange(options.theahPriorStrength);
       }
     }
   }
@@ -638,5 +646,55 @@ export class SvnSea2EActor extends Actor {
         /* status effects are optional / permission-gated */
       }
     }
+  }
+
+  /**
+   * Post a themed card when a Brute Squad's Strength changes (Core p.191-192):
+   * Heroes cut it down (each Raise -1), it may be reinforced, or at 0 it is
+   * defeated. The Squad's threat = its current Strength (Wounds it deals), so the
+   * card names that. Fires from the document so it works for figure clicks,
+   * steppers and macros alike.
+   * @param {number} prior  The pre-update current Strength.
+   * @private
+   */
+  async _reactToBruteStrengthChange(prior) {
+    const s = this.system;
+    const now = s.traits?.strength?.value ?? 0;
+    const max = s.traits?.strength?.max ?? 0;
+    const delta = now - prior;
+    if (delta === 0) return;
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const name = this.name;
+    const defeated = now <= 0;
+    const cut = delta < 0;
+
+    let headline;
+    let icon;
+    if (defeated) {
+      headline = L('SVNSEA2E.BruteDefeated', { name });
+      icon = 'fa-flag';
+    } else if (cut) {
+      headline = L('SVNSEA2E.BruteCutDown', { name });
+      icon = 'fa-gavel';
+    } else {
+      headline = L('SVNSEA2E.BruteReinforced', { name });
+      icon = 'fa-users';
+    }
+
+    const note = defeated
+      ? L('SVNSEA2E.BruteDefeatedNote', { name })
+      : L('SVNSEA2E.BruteThreatNote', { n: now });
+
+    const content = `
+      <div class="theah theah-brute${defeated ? '' : cut ? ' severe' : ''}">
+        <div class="brute-head"><i class="fas ${icon}"></i> ${headline}</div>
+        <div class="brute-body">
+          <div class="brute-stat"><span class="from">${prior}</span><i class="fas fa-arrow-right-long"></i><span class="to">${now}</span> <span class="lab">${L('SVNSEA2E.TraitStrength')}${max ? ` / ${max}` : ''}</span></div>
+          <div class="brute-note">${note}</div>
+        </div>
+      </div>`;
+
+    await postThemedChat({ actor: this, content });
   }
 }

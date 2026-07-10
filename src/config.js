@@ -122,6 +122,29 @@ SVNSEA2E.traitDesc = {
   strength: 'SVNSEA2E.TraitDescStrength',
 };
 
+// Special Brute Squad types (Core p.192). A typed Squad has an Ability the GM
+// activates for a Round by spending a Danger Point; the Ability happens in
+// addition to the normal Wounds the Squad deals. '' = a plain, untyped Squad.
+SVNSEA2E.bruteTypes = {
+  '': 'SVNSEA2E.BruteTypeNone',
+  guards: 'SVNSEA2E.BruteTypeGuards',
+  assassins: 'SVNSEA2E.BruteTypeAssassins',
+  duelists: 'SVNSEA2E.BruteTypeDuelists',
+  pirates: 'SVNSEA2E.BruteTypePirates',
+  thieves: 'SVNSEA2E.BruteTypeThieves',
+  custom: 'SVNSEA2E.BruteTypeCustom',
+};
+
+// Per-type Ability: a flavour name + the book rules text (Core p.192). Every
+// typed Squad's Ability costs the GM 1 Danger Point to activate for a Round.
+SVNSEA2E.bruteAbilities = {
+  guards: { name: 'SVNSEA2E.BruteAbilGuardsName', desc: 'SVNSEA2E.BruteAbilGuards' },
+  assassins: { name: 'SVNSEA2E.BruteAbilAssassinsName', desc: 'SVNSEA2E.BruteAbilAssassins' },
+  duelists: { name: 'SVNSEA2E.BruteAbilDuelistsName', desc: 'SVNSEA2E.BruteAbilDuelists' },
+  pirates: { name: 'SVNSEA2E.BruteAbilPiratesName', desc: 'SVNSEA2E.BruteAbilPirates' },
+  thieves: { name: 'SVNSEA2E.BruteAbilThievesName', desc: 'SVNSEA2E.BruteAbilThieves' },
+};
+
 SVNSEA2E.skills = {
   aim: 'SVNSEA2E.SkillAim',
   athletics: 'SVNSEA2E.SkillAthletics',

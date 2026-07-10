@@ -48,6 +48,7 @@ export default class ActorSheetSS2e extends ActorSheet {
       isVillain: actor.type === ActorType.VILLAIN,
       isMonster: actor.type === ActorType.MONSTER,
       isNotBrute: actor.type !== ActorType.BRUTE,
+      isBrute: actor.type === ActorType.BRUTE,
       hasSkills: typeof actorData.skills !== 'undefined',
       hasLanguages: typeof actorData.languages !== 'undefined',
       config: CONFIG.SVNSEA2E,
@@ -157,7 +158,7 @@ export default class ActorSheetSS2e extends ActorSheet {
     } else if (actor.type === ActorType.DANGERPOINTS) {
       sheetData.points = actorData.points;
     } else if (actor.type === ActorType.BRUTE) {
-      sheetData.ability = actorData.ability;
+      this._prepareBruteSheet(actorData, sheetData);
     }
 
     // Enrich advancement Stories with step-tracker view data.
@@ -345,6 +346,58 @@ export default class ActorSheetSS2e extends ActorSheet {
           desc: game.i18n.localize(CONFIG.SVNSEA2E.traitDesc[t] || `SVNSEA2E.TraitInfo_${t}`),
         }))
       : [];
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Build the Brute Squad sheet view (Core p.191-192). Strength is the Squad's
+   * only stat — current (value) out of full (max) — rendered as a "muster" rank
+   * of figures. The Squad deals Wounds equal to its current Strength; at 0 it is
+   * defeated. A typed Squad (Guards/Assassins/…) shows its book Ability.
+   * @param {Object} actorData  actor.system
+   * @param {Object} sheetData  the view model being assembled
+   * @private
+   */
+  _prepareBruteSheet(actorData, sheetData) {
+    const cur = Math.max(0, actorData.traits?.strength?.value ?? 0);
+    const max = Math.max(0, actorData.traits?.strength?.max ?? 0);
+    sheetData.strengthCur = cur;
+    sheetData.strengthMax = max;
+    sheetData.dealsWounds = cur;
+    sheetData.defeated = cur <= 0;
+    // The muster rank: one figure per point of full Strength; the first `cur`
+    // are standing, the rest fallen. Clicking level L sets current Strength to L.
+    sheetData.figures = Array.from({ length: max }, (_, i) => ({
+      level: i + 1,
+      standing: i < cur,
+    }));
+
+    const type = actorData.squadtype || '';
+    const bruteTypes = CONFIG.SVNSEA2E.bruteTypes || {};
+    sheetData.squadtype = type;
+    sheetData.squadTypeClass = type || 'none';
+    sheetData.squadTypeLabel = game.i18n.localize(bruteTypes[type] || bruteTypes['']);
+    sheetData.bruteTypeChoices = bruteTypes;
+    sheetData.isTypedSquad = type && type !== 'custom';
+    sheetData.isCustomSquad = type === 'custom';
+
+    // Resolve the Ability shown: a known type → its book Ability; 'custom' → the
+    // editable custom Ability; '' (untyped) → no Ability card.
+    const abilities = CONFIG.SVNSEA2E.bruteAbilities || {};
+    if (abilities[type]) {
+      sheetData.abilityName = game.i18n.localize(abilities[type].name);
+      sheetData.abilityDesc = game.i18n.localize(abilities[type].desc);
+      sheetData.hasAbility = true;
+    } else if (type === 'custom') {
+      sheetData.abilityName = actorData.ability?.name || '';
+      sheetData.abilityDesc = actorData.ability?.description || '';
+      sheetData.hasAbility = true;
+    } else {
+      sheetData.hasAbility = false;
+    }
+    sheetData.ability = actorData.ability;
+    sheetData.abilityCost = game.i18n.localize('SVNSEA2E.BruteAbilityCost');
   }
 
   /* -------------------------------------------- */

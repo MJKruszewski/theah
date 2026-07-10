@@ -1101,6 +1101,100 @@
 /* Linked Brute-Squad squads: portrait + read-only Strength + open-sheet link. */
 .theah.ship .squad.linked { border-left: 3px solid var(--teal); }
 .theah.ship .squad.linked.missing { border-left-color: var(--oxblood); opacity: .8; }
+
+/* ============================================================
+   Brute Squad sheet (Core p.191-192). Strength = health + threat,
+   rendered as a "muster" rank of thug figures. Ported from
+   design/brute-squad-preview.html, re-pointed onto the Foundry DOM.
+   ============================================================ */
+.theah.brute .brute-portrait { width: 190px; height: auto; aspect-ratio: 1/1; }
+.theah.brute .brute-portrait .profile-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 2px; cursor: pointer; border: 0; }
+
+/* Squad-type pill (a select styled as the status pill). */
+.theah .type-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 14px 2px 2px; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #b9a877; }
+.theah .type-pill { flex: none; display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 999px; font-family: var(--thd-label); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; font-weight: 600; cursor: pointer; height: auto; line-height: 1.3;
+  color: #e7a79b; border: 1px solid rgba(181,69,58,.55); background: rgba(124,43,34,.3); }
+.theah .type-pill:focus { outline: none; border-color: var(--oxblood); }
+.theah .type-pill option { color: #1a1a1a; }
+.theah .type-pill.none, .theah .type-pill[value=""] { color: #c9bb95; border-color: rgba(217,178,98,.4); background: rgba(0,0,0,.18); }
+
+/* The Muster: current Strength as a rank of figures. */
+.theah .muster { margin: 18px 2px 0; }
+.theah .muster .lbl { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #b9a877; }
+.theah .muster .lbl .info { cursor: help; opacity: .8; }
+.theah .muster .lbl .info i { font-size: 10px; }
+.theah .muster .count { text-align: center; font-family: var(--thd-display); font-variant-numeric: tabular-nums; color: #f4ead0; line-height: 1; margin: 8px 0 2px; }
+.theah .muster .count .now { font-size: 50px; }
+.theah .muster .count .of { font-size: 20px; color: #b9a877; }
+.theah .muster .rank { display: flex; flex-wrap: wrap; gap: 6px 5px; justify-content: center; margin: 12px 0 2px; }
+.theah .muster .fig { width: 23px; height: 28px; cursor: pointer; display: grid; place-items: center; }
+.theah .muster .fig svg { width: 100%; height: 100%; fill: var(--oxblood); stroke: var(--oxblood-deep); stroke-width: .6; filter: drop-shadow(0 2px 3px var(--seal-shadow)); transition: transform .15s, fill .2s, opacity .2s; }
+.theah .muster .fig.down svg { fill: rgba(15,8,6,.32); stroke: rgba(217,178,98,.32); filter: none; opacity: .55; transform: translateY(2px) scaleY(.92); }
+.theah .muster .fig:hover svg { transform: scale(1.14); }
+.theah .muster .fig.down:hover svg { transform: translateY(2px) scaleY(.92) scale(1.12); opacity: .8; }
+.theah .muster-ctl { display: flex; gap: 8px; margin-top: 12px; }
+.theah .muster-ctl button { flex: 1; font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #f2e6c9; border-radius: 3px; padding: 8px 6px; cursor: pointer; transition: filter .15s; line-height: 1; }
+.theah .muster-ctl .raise { background: linear-gradient(180deg, rgba(124,43,34,.55), rgba(90,30,22,.78)); border: 1px solid rgba(181,69,58,.6); }
+.theah .muster-ctl .recruit { flex: 0 0 auto; background: rgba(0,0,0,.2); border: 1px solid rgba(217,178,98,.3); color: #d9c9a0; }
+.theah .muster-ctl .muster-btn { flex: 0 0 auto; background: rgba(0,0,0,.2); border: 1px solid rgba(217,178,98,.3); color: var(--gold-leaf); }
+.theah .muster-ctl button:hover { filter: brightness(1.14); }
+.theah .brute-size { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; padding: 6px 10px; border: 1px solid rgba(217,178,98,.22); border-radius: 2px; background: rgba(0,0,0,.12); }
+.theah .brute-size label { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: #b9a877; }
+.theah .brute-size input { width: 54px; text-align: center; background: transparent; border: 0; color: #f4ead0; font-family: var(--thd-display); font-size: 18px; height: auto; }
+.theah .brute-size input:focus { outline: none; }
+
+/* Threat: deals Wounds = current Strength. */
+.theah .threat { margin: 14px 2px 0; text-align: center; padding: 12px 10px 11px; border: 1px solid rgba(181,69,58,.45); border-radius: 3px; background: color-mix(in srgb, var(--oxblood) 22%, rgba(0,0,0,.15)); }
+.theah .threat .k { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: #e0b3aa; }
+.theah .threat .k .info { opacity: .7; cursor: help; }
+.theah .threat .v { font-family: var(--thd-display); font-size: 25px; color: #f4d9d2; margin-top: 3px; line-height: 1.1; }
+.theah .threat .v b { color: #ef9184; font-variant-numeric: tabular-nums; }
+.theah .threat .n { font-size: 11px; color: #c9a89f; margin-top: 4px; line-height: 1.4; }
+.theah .threat.defeated { border-color: rgba(217,178,98,.4); background: rgba(0,0,0,.24); }
+.theah .threat.defeated .v { color: #c9bb95; font-variant: small-caps; letter-spacing: .06em; }
+
+/* Special Ability card (oxblood accent) + activation. */
+.theah.brute .ability-card { border: 1px solid var(--panel-edge); border-left: 3px solid var(--oxblood); border-radius: 3px; background: color-mix(in srgb, var(--oxblood) 6%, transparent); padding: 13px 15px; position: relative; overflow: hidden; }
+.theah.brute .ability-card .rose { position: absolute; right: -26px; top: 50%; transform: translateY(-50%); width: 150px; height: 150px; opacity: .09; color: var(--oxblood); pointer-events: none; }
+.theah.brute .ability-card .ah { display: flex; align-items: center; gap: 10px; position: relative; z-index: 1; }
+.theah.brute .ability-card .ai { color: var(--oxblood); flex: none; font-size: 20px; }
+.theah.brute .ability-card .al { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--oxblood); }
+.theah.brute .ability-card .an { font-family: var(--thd-display); font-size: 19px; color: var(--ink); line-height: 1.1; margin: 0; border: 0; }
+.theah.brute .ability-card .custom-ability-name { width: 100%; background: color-mix(in srgb, var(--panel) 92%, #fff 8%); border: 1px solid var(--line); border-radius: 3px; color: var(--ink); font-family: var(--thd-display); font-size: 16px; padding: 4px 8px; }
+.theah.brute .ability-card .cost { margin-left: auto; flex: none; font-family: var(--thd-label); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: linear-gradient(180deg, var(--oxblood), var(--oxblood-deep)); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+.theah.brute .ability-card .abil-desc { font-size: 13px; line-height: 1.55; color: var(--ink-soft); margin-top: 9px; position: relative; z-index: 1; }
+.theah.brute .ability-card .abil-desc p { margin: 0 0 6px; }
+.theah.brute .ability-card .custom-ability-desc { width: 100%; margin-top: 9px; background: color-mix(in srgb, var(--panel) 92%, #fff 8%); border: 1px solid var(--line); border-radius: 3px; color: var(--ink); font-family: var(--thd-body); font-size: 13px; padding: 7px 10px; resize: vertical; }
+.theah.brute .ability-card .activate-ability { margin-top: 11px; font-family: var(--thd-label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #f2e6c9; background: linear-gradient(180deg, rgba(124,43,34,.7), rgba(90,30,22,.9)); border: 1px solid rgba(181,69,58,.6); border-radius: 3px; padding: 8px 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.theah.brute .ability-card .activate-ability:hover { filter: brightness(1.13); }
+.theah.brute .ability-empty { font-size: 13px; color: var(--ink-soft); line-height: 1.55; padding: 11px 14px; border: 1px dashed var(--line-strong); border-radius: 3px; }
+
+/* Reorganize note (reuses the roller-guide for engagement). */
+.theah.brute .reorg { font-size: 13px; line-height: 1.6; color: var(--ink-soft); padding: 11px 14px; border: 1px solid var(--line); border-left: 3px solid var(--gold-deep); border-radius: 3px; background: color-mix(in srgb, var(--gold-leaf) 6%, transparent); }
+.theah.brute .reorg b { color: var(--gold-deep); }
+.theah.brute .brute-guide { border: 1px solid var(--line); border-top: 1px solid var(--line); border-radius: 5px; background: color-mix(in srgb, var(--panel) 95%, #fff 5%); padding: 0 15px; }
+.theah.brute .brute-guide .ref { color: var(--gold-deep); font-family: var(--thd-label); font-size: 10px; letter-spacing: .04em; margin-left: 6px; }
+.theah.brute .brute-guide .rg-steps b { color: var(--oxblood); }
+.theah.brute .brute-guide .rg-live { border-left-color: var(--oxblood); background: color-mix(in srgb, var(--oxblood) 7%, transparent); }
+.theah.brute .brute-guide .rg-live-lbl { color: var(--oxblood); }
+
+/* Brute Squad chat card (Strength change + Ability activation). */
+#chat .theah-brute { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-radius: 4px; overflow: hidden; }
+#chat .theah-brute .brute-head { display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-family: var(--thd-display); font-variant: small-caps; letter-spacing: .04em; font-size: 15px; color: #f4ead0; background: linear-gradient(180deg, color-mix(in srgb,var(--navy) 90%,#000 10%), var(--navy-deep)); border-bottom: 2px solid var(--gold-deep); }
+#chat .theah-brute .brute-head i { color: var(--gold-leaf); font-size: 13px; }
+#chat .theah-brute.severe .brute-head { background: linear-gradient(180deg, var(--oxblood), var(--oxblood-deep)); border-bottom-color: #3f130e; }
+#chat .theah-brute.severe .brute-head i { color: #f0c9c2; }
+#chat .theah-brute .brute-body { padding: 11px 13px; }
+#chat .theah-brute .brute-stat { display: flex; align-items: center; gap: 9px; font-family: var(--thd-display); font-size: 21px; color: var(--ink); font-variant-numeric: tabular-nums; }
+#chat .theah-brute .brute-stat .to { color: var(--oxblood); }
+#chat .theah-brute .brute-stat i { color: var(--ink-soft); font-size: 13px; }
+#chat .theah-brute .brute-stat .lab { font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+#chat .theah-brute .brute-note { margin-top: 6px; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+#chat .theah-brute .brute-note b { color: var(--oxblood); }
+#chat .theah-brute .brute-ability-name { font-family: var(--thd-display); font-size: 16px; color: var(--ink); }
+#chat .theah-brute .brute-ability-desc { margin-top: 4px; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+#chat .theah-brute .brute-cost { margin-top: 7px; font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--oxblood); }
+#chat .theah-brute .brute-cost i { margin-right: 4px; }
 .theah.ship .squad .sq-portrait { width: 26px; height: 26px; flex: none; border-radius: 3px; object-fit: cover; border: 1px solid var(--panel-edge); }
 .theah.ship .squad .linked-name { flex: 1 1 auto; min-width: 0; font-family: var(--thd-display); font-size: 16px; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; cursor: help; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .theah.ship .squad .linked-name i { color: var(--teal); font-size: 12px; flex: none; }

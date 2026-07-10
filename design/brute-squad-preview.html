@@ -1,0 +1,394 @@
+<title>Théah — Brute Squad</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  /* ============================ Tokens (shared with the hero & ship sheets) ============================ */
+  :root {
+    --paper:#e7d8b6;--paper-deep:#d8c49a;--panel:#f1e7cc;--panel-edge:#cbb488;--ink:#3a2c1c;--ink-soft:#6b5a41;
+    --navy:#16323f;--navy-deep:#0e232c;--teal:#2b6b6b;--gold:#b0873f;--gold-leaf:#d9b262;--gold-deep:#8a642a;
+    --oxblood:#7c2b22;--oxblood-deep:#591c16;--line:rgba(58,44,28,.28);--line-strong:rgba(58,44,28,.5);
+    --seal-shadow:rgba(40,20,10,.35);--shadow:0 18px 44px -22px rgba(30,18,8,.65);--grain:.06;
+    --display:"Hoefler Text","Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --body:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --label:ui-sans-serif,"Gill Sans","Segoe UI",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#12262f;--paper-deep:#0e1f27;--panel:#173039;--panel-edge:#2b4a55;--ink:#e8dcc0;--ink-soft:#a9b9bb;
+      --navy:#0b1b22;--navy-deep:#060f14;--teal:#5fb0a6;--gold:#c9a24b;--gold-leaf:#e6c887;--gold-deep:#9c7a34;
+      --oxblood:#b5453a;--oxblood-deep:#7c2b22;--line:rgba(201,162,75,.22);--line-strong:rgba(201,162,75,.42);
+      --seal-shadow:rgba(0,0,0,.5);--shadow:0 20px 50px -22px rgba(0,0,0,.8);--grain:.05;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#e7d8b6;--paper-deep:#d8c49a;--panel:#f1e7cc;--panel-edge:#cbb488;--ink:#3a2c1c;--ink-soft:#6b5a41;
+    --navy:#16323f;--navy-deep:#0e232c;--teal:#2b6b6b;--gold:#b0873f;--gold-leaf:#d9b262;--gold-deep:#8a642a;
+    --oxblood:#7c2b22;--oxblood-deep:#591c16;--line:rgba(58,44,28,.28);--line-strong:rgba(58,44,28,.5);
+    --seal-shadow:rgba(40,20,10,.35);--shadow:0 18px 44px -22px rgba(30,18,8,.65);--grain:.06;
+  }
+  :root[data-theme="dark"] {
+    --paper:#12262f;--paper-deep:#0e1f27;--panel:#173039;--panel-edge:#2b4a55;--ink:#e8dcc0;--ink-soft:#a9b9bb;
+    --navy:#0b1b22;--navy-deep:#060f14;--teal:#5fb0a6;--gold:#c9a24b;--gold-leaf:#e6c887;--gold-deep:#9c7a34;
+    --oxblood:#b5453a;--oxblood-deep:#7c2b22;--line:rgba(201,162,75,.22);--line-strong:rgba(201,162,75,.42);
+    --seal-shadow:rgba(0,0,0,.5);--shadow:0 20px 50px -22px rgba(0,0,0,.8);--grain:.05;
+  }
+
+  * { box-sizing:border-box; }
+  html { color-scheme: light dark; }
+  body {
+    margin:0; font-family:var(--body); color:var(--ink); line-height:1.5; min-height:100vh; -webkit-font-smoothing:antialiased;
+    background: radial-gradient(120% 80% at 50% -10%, color-mix(in srgb,var(--paper) 88%, #fff 12%), transparent 60%), var(--paper-deep);
+  }
+  body::before {
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:var(--grain); mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-color-scheme: dark){ body::before{ mix-blend-mode:screen; } }
+  :root[data-theme="dark"] body::before{ mix-blend-mode:screen; }
+  :root[data-theme="light"] body::before{ mix-blend-mode:multiply; }
+
+  .wrap { position:relative; z-index:1; max-width:1120px; margin:0 auto; padding:clamp(16px,3vw,40px); }
+
+  /* ============================ Masthead ============================ */
+  .masthead { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px; flex-wrap:wrap; }
+  .brand { display:flex; align-items:center; gap:14px; }
+  .brand > svg { width:42px; height:42px; flex:none; color:var(--oxblood); filter:drop-shadow(0 1px 0 rgba(0,0,0,.15)); }
+  .brand h1 {
+    margin:0; font-family:var(--display); font-weight:600; letter-spacing:.30em; text-indent:.30em;
+    font-size:clamp(18px,2.4vw,26px); font-variant:small-caps;
+    background:linear-gradient(180deg,var(--gold-leaf),var(--gold) 55%,var(--gold-deep));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .brand .sub { font-family:var(--label); font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-soft); }
+  .theme-btn {
+    font-family:var(--label); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink);
+    background:transparent; border:1px solid var(--line-strong); border-radius:2px; padding:8px 12px; cursor:pointer; display:flex; align-items:center; gap:8px;
+  }
+  .theme-btn:hover { border-color:var(--gold); color:var(--gold-deep); }
+  .theme-btn:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+
+  .note-strip { margin:0 0 20px; font-size:13px; color:var(--ink-soft); line-height:1.55; max-width:74ch; }
+  .note-strip b { color:var(--oxblood); font-weight:600; }
+
+  /* ============================ Sheet spread ============================ */
+  .sheet { display:grid; grid-template-columns:320px 1fr; gap:0; background:var(--panel); border:1px solid var(--panel-edge); box-shadow:var(--shadow); border-radius:3px; overflow:hidden; }
+  @media (max-width:720px){ .sheet { grid-template-columns:1fr; } }
+
+  /* -------- Identity rail -------- */
+  .rail { background:linear-gradient(180deg, color-mix(in srgb,var(--navy) 92%, #000 8%), var(--navy-deep)); color:#f0e5c8; padding:22px 20px 26px; position:relative; }
+  .rail .edge { position:absolute; top:0; right:0; bottom:0; width:3px; background:linear-gradient(180deg,var(--gold-leaf),var(--gold-deep)); opacity:.85; }
+
+  .portrait { position:relative; width:190px; aspect-ratio:1/1; margin:2px auto 14px; }
+  .portrait .ph { position:absolute; inset:0; border-radius:2px; display:grid; place-items:center;
+    background:radial-gradient(88% 78% at 50% 24%, #3a2320, #241413 68%, #160b0a); overflow:hidden; }
+  .portrait .ph > svg { width:132px; height:132px; opacity:.92; color:var(--gold-leaf); }
+  .corner { position:absolute; width:26px; height:26px; stroke:var(--gold-leaf); fill:none; stroke-width:1.4; }
+  .corner.tl{top:-8px;left:-8px} .corner.tr{top:-8px;right:-8px;transform:scaleX(-1)}
+  .corner.bl{bottom:-8px;left:-8px;transform:scaleY(-1)} .corner.br{bottom:-8px;right:-8px;transform:scale(-1)}
+
+  .nameplate { text-align:center; margin-bottom:6px; }
+  .nameplate .name { font-family:var(--display); font-size:clamp(22px,2.6vw,27px); font-weight:600; line-height:1.05; color:#f4ead0; text-wrap:balance; margin:0; }
+  .nameplate .epithet { font-family:var(--display); font-style:italic; color:var(--gold-leaf); font-size:15px; margin-top:3px; }
+  .filet { display:flex; align-items:center; gap:8px; justify-content:center; margin:12px 4px; color:var(--gold-leaf); }
+  .filet::before,.filet::after { content:""; height:1px; flex:1; background:linear-gradient(90deg,transparent,currentColor); opacity:.55; }
+  .filet svg { width:30px; height:16px; }
+
+  /* Squad-type pill */
+  .type-row { display:flex; align-items:center; justify-content:space-between; margin:14px 2px 2px; font-family:var(--label); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:#b9a877; }
+  .type-pill { display:inline-flex; align-items:center; gap:6px; padding:4px 11px; border-radius:999px; font-weight:600; font-family:var(--label); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:#e7a79b; border:1px solid rgba(181,69,58,.55); background:rgba(124,43,34,.3); }
+  .type-pill svg { width:12px; height:12px; }
+  .type-pill.none { color:#c9bb95; border-color:rgba(217,178,98,.4); background:rgba(0,0,0,.18); }
+
+  /* -------- The Muster: Strength as a rank of figures (the signature) -------- */
+  .muster { margin:18px 2px 0; }
+  .muster .lbl { display:flex; justify-content:space-between; align-items:baseline; font-family:var(--label); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#b9a877; }
+  .muster .lbl .info { color:#8a7f70; cursor:help; }
+  .muster .count { text-align:center; font-family:var(--display); font-variant-numeric:tabular-nums; color:#f4ead0; line-height:1; margin:8px 0 2px; }
+  .muster .count .now { font-size:52px; }
+  .muster .count .of { font-size:20px; color:#b9a877; }
+  .muster .rank { display:flex; flex-wrap:wrap; gap:6px 5px; justify-content:center; margin:12px 0 2px; }
+  .fig { width:23px; height:28px; cursor:pointer; display:grid; place-items:center; }
+  .fig svg { width:100%; height:100%; fill:var(--oxblood); stroke:var(--oxblood-deep); stroke-width:.6; filter:drop-shadow(0 2px 3px var(--seal-shadow)); transition:transform .15s, fill .2s, opacity .2s; }
+  .fig.down svg { fill:rgba(15,8,6,.32); stroke:rgba(217,178,98,.32); filter:none; opacity:.55; transform:translateY(2px) scaleY(.92); }
+  .fig:hover svg { transform:scale(1.14); }
+  .fig.down:hover svg { transform:translateY(2px) scaleY(.92) scale(1.14); opacity:.8; }
+  .muster-ctl { display:flex; gap:8px; margin-top:12px; }
+  .muster-ctl button { flex:1; font-family:var(--label); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#f2e6c9; border-radius:3px; padding:8px 6px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px; transition:filter .15s, border-color .15s; }
+  .muster-ctl .raise { background:linear-gradient(180deg, rgba(124,43,34,.55), rgba(90,30,22,.78)); border:1px solid rgba(181,69,58,.6); }
+  .muster-ctl .recruit { background:rgba(0,0,0,.2); border:1px solid rgba(217,178,98,.3); color:#d9c9a0; }
+  .muster-ctl .muster-btn { flex:0 0 auto; background:rgba(0,0,0,.2); border:1px solid rgba(217,178,98,.3); color:var(--gold-leaf); }
+  .muster-ctl button:hover { filter:brightness(1.13); }
+
+  /* -------- Threat readout (deals Wounds = current Strength) -------- */
+  .threat { margin:14px 2px 0; text-align:center; padding:12px 10px 11px; border:1px solid rgba(181,69,58,.45); border-radius:3px; background:color-mix(in srgb,var(--oxblood) 22%, rgba(0,0,0,.15)); }
+  .threat .k { font-family:var(--label); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:#e0b3aa; }
+  .threat .k .info { opacity:.6; cursor:help; }
+  .threat .v { font-family:var(--display); font-size:25px; color:#f4d9d2; margin-top:3px; line-height:1.1; }
+  .threat .v b { color:#ef9184; font-variant-numeric:tabular-nums; }
+  .threat .n { font-size:11px; color:#c9a89f; margin-top:4px; line-height:1.4; }
+  .threat.defeated { border-color:rgba(217,178,98,.4); background:rgba(0,0,0,.24); }
+  .threat.defeated .v { color:#c9bb95; }
+
+  /* -------- Ledger main -------- */
+  .ledger { padding:22px 26px 28px; position:relative; min-width:0; }
+  .sec-title { display:flex; align-items:center; gap:12px; margin:4px 0 13px; }
+  .sec-title:not(:first-child) { margin-top:26px; }
+  .sec-title h2 { font-family:var(--display); font-variant:small-caps; letter-spacing:.08em; font-weight:600; font-size:18px; margin:0; color:var(--ink); }
+  .sec-title span { flex:1; height:1px; background:linear-gradient(90deg,var(--line-strong),transparent); }
+  .sec-title .pick { font-family:var(--label); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); border:1px solid var(--line-strong); border-radius:2px; padding:6px 9px; background:transparent; cursor:pointer; }
+  .sec-title .pick:hover { border-color:var(--gold); color:var(--gold-deep); }
+
+  /* Special Ability — the type-driven card (oxblood) + activate */
+  .ability-card { border:1px solid var(--panel-edge); border-left:3px solid var(--oxblood); border-radius:3px; background:color-mix(in srgb,var(--oxblood) 6%, transparent); padding:13px 15px; position:relative; overflow:hidden; }
+  .ability-card .rose { position:absolute; right:-26px; top:50%; transform:translateY(-50%); width:150px; height:150px; opacity:.09; color:var(--oxblood); pointer-events:none; }
+  .ability-card .ah { display:flex; align-items:center; gap:10px; position:relative; z-index:1; }
+  .ability-card .ai { color:var(--oxblood); flex:none; }
+  .ability-card .ai svg { width:22px; height:22px; }
+  .ability-card .al { font-family:var(--label); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--oxblood); }
+  .ability-card .an { font-family:var(--display); font-size:19px; color:var(--ink); line-height:1.1; margin:0; }
+  .ability-card .cost { margin-left:auto; font-family:var(--label); font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:linear-gradient(180deg,var(--oxblood),var(--oxblood-deep)); border-radius:999px; padding:4px 10px; white-space:nowrap; }
+  .ability-card .abil-desc { font-size:13px; line-height:1.55; color:var(--ink-soft); margin-top:9px; position:relative; z-index:1; }
+  .ability-card .activate { margin-top:11px; font-family:var(--label); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#f2e6c9; background:linear-gradient(180deg, rgba(124,43,34,.7), rgba(90,30,22,.9)); border:1px solid rgba(181,69,58,.6); border-radius:3px; padding:8px 14px; cursor:pointer; display:inline-flex; align-items:center; gap:7px; }
+  .ability-card .activate:hover { filter:brightness(1.13); }
+  .ability-card .activate svg { width:12px; height:12px; }
+
+  .ability-empty { font-size:13px; color:var(--ink-soft); line-height:1.55; padding:11px 14px; border:1px dashed var(--line-strong); border-radius:3px; }
+  .custom-ability { margin-top:12px; display:grid; gap:8px; }
+  .custom-ability input, .custom-ability textarea { width:100%; background:color-mix(in srgb,var(--panel) 92%, #fff 8%); border:1px solid var(--line); border-radius:3px; color:var(--ink); font-family:var(--body); font-size:13px; padding:7px 10px; resize:vertical; }
+  .custom-ability input { font-family:var(--display); font-size:15px; }
+  .custom-ability label { font-family:var(--label); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); }
+
+  /* Engagement guide (mirrors the hero roller-guide) */
+  .guide { border:1px solid var(--line); border-radius:5px; background:color-mix(in srgb,var(--panel) 95%, #fff 5%); overflow:hidden; }
+  .guide > summary { list-style:none; cursor:pointer; padding:12px 15px; font-family:var(--label); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-deep); display:flex; align-items:center; gap:9px; }
+  .guide > summary::-webkit-details-marker { display:none; }
+  .guide > summary .chev { margin-left:auto; transition:transform .2s; }
+  .guide[open] > summary .chev { transform:rotate(90deg); }
+  .guide > summary:hover { color:var(--gold); }
+  .guide .gbody { padding:2px 16px 15px; }
+  .guide ol { margin:6px 0 4px; padding-left:22px; display:flex; flex-direction:column; gap:8px; }
+  .guide ol li { font-size:13px; line-height:1.5; color:var(--ink); }
+  .guide ol li b { color:var(--oxblood); font-weight:600; }
+  .guide .step-name { font-family:var(--label); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold-deep); }
+  .guide .live { margin:12px 0 4px; padding:11px 13px; border-left:2px solid var(--oxblood); background:color-mix(in srgb,var(--oxblood) 7%, transparent); font-size:12.5px; line-height:1.55; color:var(--ink-soft); border-radius:0 3px 3px 0; }
+  .guide .live-lbl { font-family:var(--label); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--oxblood); margin-right:5px; }
+  .guide .ref { color:var(--gold-deep); font-family:var(--label); font-size:10px; letter-spacing:.04em; }
+
+  .reorg { font-size:13px; line-height:1.6; color:var(--ink-soft); padding:11px 14px; border:1px solid var(--line); border-left:3px solid var(--gold-deep); border-radius:3px; background:color-mix(in srgb,var(--gold-leaf) 6%, transparent); }
+  .reorg b { color:var(--gold-deep); }
+
+  /* ============================ Chat card showcase ============================ */
+  .showcase { margin-top:30px; }
+  .showcase h3 { font-family:var(--label); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 14px; display:flex; align-items:center; gap:12px; }
+  .showcase h3::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line-strong),transparent); }
+  .chat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+
+  .card-chat { border:1px solid var(--panel-edge); border-radius:4px; background:var(--panel); box-shadow:var(--shadow); overflow:hidden; }
+  .card-chat .ch-head { display:flex; align-items:center; gap:9px; padding:9px 13px; font-family:var(--display); font-variant:small-caps; letter-spacing:.05em; font-size:15px; color:#f4ead0;
+    background:linear-gradient(180deg, color-mix(in srgb,var(--navy) 92%, #000 8%), var(--navy-deep)); border-bottom:2px solid var(--gold-deep); }
+  .card-chat .ch-head svg { width:16px; height:16px; color:var(--gold-leaf); flex:none; }
+  .card-chat.oxblood .ch-head { background:linear-gradient(180deg,var(--oxblood),var(--oxblood-deep)); border-bottom-color:#3f130e; }
+  .card-chat.oxblood .ch-head svg { color:#f0c9c2; }
+  .card-chat .ch-body { padding:12px 14px; }
+  .card-chat .big-line { font-family:var(--display); font-size:16px; color:var(--ink); margin:0 0 5px; }
+  .card-chat .big-line b { color:var(--oxblood); font-variant-numeric:tabular-nums; }
+  .card-chat .sub-line { font-size:12.5px; line-height:1.5; color:var(--ink-soft); margin:0; }
+  .card-chat .strength-line { display:flex; align-items:center; gap:8px; margin:2px 0 7px; font-family:var(--display); font-size:20px; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .card-chat .strength-line .arrow { color:var(--ink-soft); font-size:14px; }
+  .card-chat .strength-line .to { color:var(--oxblood); }
+  .card-chat .pill { font-family:var(--label); font-size:8.5px; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:999px; border:1px solid var(--line-strong); color:var(--ink-soft); }
+
+  .foot { margin-top:26px; font-size:12px; color:var(--ink-soft); line-height:1.6; text-align:center; }
+</style>
+
+<div class="wrap">
+  <!-- hidden symbol library -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <!-- a burly brute figure: helmeted head, broad shoulders, a hint of a cudgel -->
+    <symbol id="brute-fig" viewBox="0 0 24 30">
+      <path d="M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z"/>
+    </symbol>
+    <symbol id="cutlass" viewBox="0 0 30 16">
+      <path d="M2 13 C 10 11, 22 8, 27 3 M27 3 l-3 .2 M27 3 l-.2 3 M6 13 l3 0 M4 11 l0 3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+
+  <header class="masthead">
+    <div class="brand">
+      <svg viewBox="0 0 24 30" aria-hidden="true"><use href="#brute-fig"/></svg>
+      <div>
+        <h1>Brute Squad</h1>
+        <div class="sub">Théah — 7th Sea 2e · GM sheet</div>
+      </div>
+    </div>
+    <button class="theme-btn" id="toggle" aria-label="Toggle theme">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span id="theme-name">Night at Sea</span>
+    </button>
+  </header>
+
+  <p class="note-strip">
+    A Brute Squad has <b>one statistic — Strength</b> (the number of thugs in it). Heroes spend Raises against it and
+    <b>each Raise cuts Strength by 1</b>; on the Squad's turn it deals <b>Wounds equal to its current Strength</b>. So the
+    Muster below is health <em>and</em> threat in one. Preview of the reskinned sheet — paper &amp; night-at-sea themes.
+  </p>
+
+  <div class="sheet">
+    <!-- ======================= IDENTITY RAIL ======================= -->
+    <aside class="rail">
+      <span class="edge"></span>
+
+      <div class="portrait">
+        <svg class="corner tl" viewBox="0 0 26 26"><path d="M2 12 V2 H12"/></svg>
+        <svg class="corner tr" viewBox="0 0 26 26"><path d="M2 12 V2 H12"/></svg>
+        <svg class="corner bl" viewBox="0 0 26 26"><path d="M2 12 V2 H12"/></svg>
+        <svg class="corner br" viewBox="0 0 26 26"><path d="M2 12 V2 H12"/></svg>
+        <div class="ph">
+          <svg viewBox="0 0 60 44" aria-hidden="true">
+            <g fill="currentColor">
+              <g transform="translate(6 6) scale(.9)"><use href="#brute-fig"/></g>
+              <g transform="translate(20 2) scale(1.05)"><use href="#brute-fig"/></g>
+              <g transform="translate(36 6) scale(.9)"><use href="#brute-fig"/></g>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="nameplate">
+        <div class="name">Rösti's Dockhands</div>
+        <div class="epithet">Vendel harbour toughs</div>
+      </div>
+
+      <div class="filet"><svg viewBox="0 0 30 16" aria-hidden="true"><use href="#cutlass"/></svg></div>
+
+      <div class="type-row">
+        <span>Squad Type</span>
+        <span class="type-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg> Guards</span>
+      </div>
+
+      <!-- ===== THE MUSTER: Strength as a rank of figures ===== -->
+      <section class="muster">
+        <div class="lbl"><span>Strength</span><span class="info" title="A Brute Squad's only stat — the number of thugs in it. Each Raise a Hero spends against the Squad reduces it by 1 (Core p.191).">the Squad's only stat &#9432;</span></div>
+        <div class="count"><span class="now">5</span><span class="of"> / 8</span></div>
+        <div class="rank" id="rank"></div>
+        <div class="muster-ctl">
+          <button class="raise" title="Heroes spend a Raise — the Squad loses a member">&minus;1 Raise</button>
+          <button class="recruit" title="Reinforce">&plus;1</button>
+          <button class="muster-btn" title="Muster back to full Strength">Muster</button>
+        </div>
+      </section>
+
+      <!-- ===== THREAT: deals Wounds = current Strength ===== -->
+      <section class="threat">
+        <div class="k">On its turn, the Squad deals <span class="info" title="A Brute Squad delivers Wounds equal to its CURRENT Strength, all to a single Hero (Core p.192).">&#9432;</span></div>
+        <div class="v"><b>5</b> Wounds</div>
+        <div class="n">All to a single Hero. Reduce its Strength first, or it hits harder.</div>
+      </section>
+    </aside>
+
+    <!-- ======================= LEDGER ======================= -->
+    <main class="ledger">
+
+      <div class="sec-title"><h2>Special Ability</h2><span></span><button class="pick">Change type…</button></div>
+      <div class="ability-card">
+        <svg class="rose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg>
+        <div class="ah">
+          <span class="ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg></span>
+          <div>
+            <div class="al">Guards · Special Brute Squad</div>
+            <h3 class="an">Shield the Master</h3>
+          </div>
+          <span class="cost">Spend 1 Danger Point</span>
+        </div>
+        <div class="abil-desc">Force an attack just made against a Villain to target the Guards instead, and reduce the Wounds dealt by 1. Their Ability happens <em>in addition</em> to the normal Wounds they deal.</div>
+        <button class="activate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg> Activate (spend a Danger Point)</button>
+      </div>
+
+      <div class="sec-title"><h2>Engaging the Squad</h2><span></span></div>
+      <details class="guide" open>
+        <summary>How a Brute Squad fights <span class="ref">Core p.191–192</span> <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></summary>
+        <div class="gbody">
+          <ol>
+            <li><span class="step-name">Step 1 · Approach</span><br>The Heroes announce their response — attack, run, hide, whatever they like.</li>
+            <li><span class="step-name">Step 2 · Gather Dice</span><br>You name each Hero's <b>Trait + Skill</b> for their Approach. The Consequence is always: <b>take Wounds equal to the Squad's Strength.</b></li>
+            <li><span class="step-name">Step 3 · Roll &amp; Raises</span><br>Players spend Raises against the Squad — <b>each Raise reduces its Strength by 1.</b></li>
+            <li><span class="step-name">Step 4 · Brutes' Turn</span><br>If it isn't at zero, the Squad deals <b>Wounds equal to its current Strength</b>, all to one Hero.</li>
+            <li><span class="step-name">Step 5 · Continue?</span><br>If Strength remains it presses on (or surrenders — a guy can hope). Loop to Step 1 until the Heroes fall or the Squad is defeated.</li>
+          </ol>
+          <div class="live"><span class="live-lbl">Example</span> A <b>Strength 8</b> Guard Squad. Miranda spends 3 Raises attacking — the Squad drops to <b>Strength 5</b>. On its turn it deals <b>5 Wounds</b> to her. Next Round she cuts it to 2; now it only deals 2.</div>
+        </div>
+      </details>
+
+      <div class="sec-title"><h2>Reorganize</h2><span></span></div>
+      <p class="reorg"><b>Squads come in packs.</b> Between Rounds, Brute Squads may merge or split: a Strength&nbsp;5 and a Strength&nbsp;3 Squad can combine into one Strength&nbsp;8, or a Strength&nbsp;10 Squad can break into two Strength&nbsp;5 Squads. Adjust the Muster and let a second sheet carry the other half. <span class="ref" style="color:var(--gold-deep)">Core p.192</span></p>
+
+    </main>
+  </div>
+
+  <!-- ======================= CHAT CARD SHOWCASE ======================= -->
+  <section class="showcase">
+    <h3>Chat cards it posts</h3>
+    <div class="chat-row">
+      <article class="card-chat oxblood">
+        <div class="ch-head"><svg viewBox="0 0 24 30"><use href="#brute-fig"/></svg> Rösti's Dockhands — cut down</div>
+        <div class="ch-body">
+          <div class="strength-line">Strength <span>8</span> <span class="arrow">&rarr;</span> <span class="to">5</span></div>
+          <p class="sub-line">Three thugs go down. On its turn the Squad now deals <b style="color:var(--oxblood)">5 Wounds</b> to a single Hero.</p>
+        </div>
+      </article>
+      <article class="card-chat oxblood">
+        <div class="ch-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg> Guards use their Ability</div>
+        <div class="ch-body">
+          <p class="big-line"><span class="pill">−1 Danger Point</span></p>
+          <p class="sub-line" style="margin-top:6px">The Guards throw themselves in the way — an attack aimed at the Villain hits <em>them</em> instead, and its Wounds are reduced by 1.</p>
+        </div>
+      </article>
+      <article class="card-chat">
+        <div class="ch-head"><svg viewBox="0 0 24 30"><use href="#brute-fig"/></svg> Rösti's Dockhands — defeated!</div>
+        <div class="ch-body">
+          <div class="strength-line">Strength <span>2</span> <span class="arrow">&rarr;</span> <span class="to" style="color:var(--ink-soft)">0</span></div>
+          <p class="sub-line">The last of the Squad breaks and scatters. It deals no more Wounds.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <p class="foot">Signature: the <b>Muster</b> — a rank of thugs that is the Squad's health <em>and</em> its threat. Click a figure to set current Strength.<br>
+  Toggle the theme to preview paper &amp; night-at-sea. Rules cited to the 7th Sea 2e Core Rulebook (pp.191–192).</p>
+</div>
+
+<script>
+  // Theme toggle (mirrors the sheet's paper/sea switch)
+  const root = document.documentElement, btn = document.getElementById('toggle'), tname = document.getElementById('theme-name');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let dark = prefersDark;
+  function apply(){ root.setAttribute('data-theme', dark ? 'dark' : 'light'); tname.textContent = dark ? 'Paper' : 'Night at Sea'; }
+  apply();
+  btn.addEventListener('click', () => { dark = !dark; apply(); });
+
+  // Interactive Muster: render Strength 5 / 8 as a rank; click a figure to set current Strength.
+  const MAX = 8; let cur = 5;
+  const rank = document.getElementById('rank');
+  const now = document.querySelector('.count .now');
+  const threatV = document.querySelector('.threat .v');
+  const threat = document.querySelector('.threat');
+  function fig(i){
+    const d = document.createElement('div');
+    d.className = 'fig' + (i < cur ? '' : ' down');
+    d.innerHTML = '<svg viewBox="0 0 24 30"><use href="#brute-fig"/></svg>';
+    d.title = i < cur ? ('Member ' + (i+1) + ' — standing (click to cut the Squad to ' + i + ')') : ('Fallen (click to restore to ' + (i+1) + ')');
+    d.addEventListener('click', () => { cur = (i + 1 === cur) ? i : i + 1; render(); });
+    return d;
+  }
+  function render(){
+    rank.innerHTML = '';
+    for (let i = 0; i < MAX; i++) rank.appendChild(fig(i));
+    now.textContent = cur;
+    if (cur <= 0){ threat.classList.add('defeated'); threatV.innerHTML = 'Defeated'; }
+    else { threat.classList.remove('defeated'); threatV.innerHTML = '<b>' + cur + '</b> Wounds'; }
+  }
+  render();
+  document.querySelector('.muster-ctl .raise').addEventListener('click', () => { cur = Math.max(0, cur - 1); render(); });
+  document.querySelector('.muster-ctl .recruit').addEventListener('click', () => { cur = Math.min(MAX, cur + 1); render(); });
+  document.querySelector('.muster-ctl .muster-btn').addEventListener('click', () => { cur = MAX; render(); });
+</script>

@@ -387,6 +387,7 @@ Hooks.on('preCreateActor', function (document, entity, options, userId) {
   const isPlayerSide = [ActorType.PLAYER, ActorType.HERO].includes(document.type);
   const isFoe = [ActorType.VILLAIN, ActorType.MONSTER, ActorType.BRUTE].includes(document.type);
   const isShip = document.type === ActorType.SHIP;
+  const isBrute = document.type === ActorType.BRUTE;
   const D = CONST.TOKEN_DISPLAY_MODES;
   const P = CONST.TOKEN_DISPOSITIONS;
 
@@ -400,8 +401,10 @@ Hooks.on('preCreateActor', function (document, entity, options, userId) {
       displayName: isPlayerSide ? D.OWNER_HOVER : D.HOVER,
       displayBars: isPlayerSide || isShip ? D.OWNER_HOVER : D.HOVER,
       disposition: isPlayerSide ? P.FRIENDLY : isFoe ? P.HOSTILE : P.NEUTRAL,
-      bar1: { attribute: isShip ? 'hits' : 'wounds' },
-      bar2: { attribute: isShip ? 'criticals' : 'dwounds' },
+      // Brute Squads track a single Strength stat (their health + threat), so
+      // their token bar shows traits.strength; Ships show Hits/Criticals.
+      bar1: { attribute: isShip ? 'hits' : isBrute ? 'traits.strength' : 'wounds' },
+      bar2: { attribute: isShip ? 'criticals' : isBrute ? '' : 'dwounds' },
     },
   };
 
