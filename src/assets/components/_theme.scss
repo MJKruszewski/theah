@@ -1012,13 +1012,23 @@
 .theah.ship .ship-origin .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,.3); }
 .theah.ship .ship-origin .unset { color: #b9a877; font-style: italic; opacity: .8; }
 .theah.ship .ship-res { grid-template-columns: repeat(3,1fr); }
-.theah.ship .rail-morale { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 14px 2px 2px; }
-.theah.ship .rail-morale .k { font-family: var(--thd-label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #b9a877; }
-.theah.ship .rail-morale .morale-select { flex: 0 1 150px; background: rgba(0,0,0,.2); border: 1px solid rgba(217,178,98,.3); border-radius: 999px; color: #efe4c7; font-family: var(--thd-label); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; height: auto; line-height: 1.3; text-align: center; }
-.theah.ship .rail-morale .morale-select:focus { border-color: var(--gold-leaf); outline: none; }
-.theah.ship .rail-morale .morale-select option { color: #1a1a1a; }
-.theah.ship .rail-morale .morale-select.happy { border-color: color-mix(in srgb, var(--teal) 60%, transparent); color: #bfe0c4; }
-.theah.ship .rail-morale .morale-select.mutinous { border-color: color-mix(in srgb, var(--oxblood) 65%, transparent); color: #e7a79b; }
+
+/* Rail: Home Port select (matches the dark rail chrome). */
+.theah.ship .home-port-select { width: 100%; max-width: 150px; margin-left: auto; background: rgba(0,0,0,.2); border: 1px solid rgba(217,178,98,.3); border-radius: 4px; color: #efe4c7; font-family: var(--thd-body); font-size: 12px; padding: 3px 8px; height: auto; min-height: 26px; line-height: 1.3; box-sizing: border-box; }
+.theah.ship .home-port-select:focus { outline: none; border-color: var(--gold-leaf); }
+.theah.ship .home-port-select option { color: #1a1a1a; }
+
+/* Rail: Crew Morale — a status pill (the <select> IS the pill, per the artifact). */
+.theah.ship .rail-morale { margin: 16px 2px 2px; }
+.theah.ship .status-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.theah.ship .status-row .k { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #b9a877; }
+.theah.ship .morale-pill-wrap { flex: 0 0 auto; }
+.theah.ship .morale-select.status-pill { -webkit-appearance: none; -moz-appearance: none; appearance: none; display: inline-flex; align-items: center; text-align: center; text-align-last: center; width: auto; height: auto; min-height: 0; line-height: 1.2; padding: 4px 16px; border-radius: 999px; font-family: var(--thd-label); font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; background: rgba(0,0,0,.2); border: 1px solid rgba(217,178,98,.4); color: #efe4c7; }
+.theah.ship .morale-select.status-pill:focus { outline: none; border-color: var(--gold-leaf); }
+.theah.ship .morale-select.status-pill option { color: #1a1a1a; text-transform: none; letter-spacing: normal; font-weight: 400; }
+.theah.ship .morale-select.happy { color: #bfe0c4; border-color: rgba(95,176,166,.5); background: rgba(43,107,107,.28); }
+.theah.ship .morale-select.dissatisfied { color: #e6c887; border-color: rgba(201,162,75,.5); background: rgba(176,135,63,.22); }
+.theah.ship .morale-select.mutinous { color: #e7a79b; border-color: rgba(181,69,58,.55); background: rgba(124,43,34,.3); }
 
 /* Rail: Hull — Hits track (10-col) + Critical-Hit seals + status. */
 .theah.ship .rail-hull { margin: 16px 2px 0; }
@@ -1045,26 +1055,52 @@
 .theah.ship .stepper button:hover { background: var(--gold-deep); color: #fff; }
 .theah.ship .stepper b { font-family: var(--thd-display); font-size: 22px; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 26px; text-align: center; }
 
-/* Crew tab. */
-.theah.ship .crew-strength { display: flex; align-items: center; gap: 14px; padding: 10px 14px; border: 1px solid var(--panel-edge); border-radius: 5px; background: color-mix(in srgb, var(--navy) 5%, transparent); margin-bottom: 16px; }
-.theah.ship .crew-strength .cs-k { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); }
+/* Crew tab — full complement + division presets + Squad pip cards. */
+.theah.ship .crew-strength { display: flex; align-items: baseline; gap: 14px; padding: 12px 16px; border: 1px solid var(--panel-edge); border-radius: 5px; background: color-mix(in srgb, var(--navy) 5%, transparent); margin-bottom: 8px; }
+.theah.ship .crew-strength .cs-k { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); cursor: help; }
+.theah.ship .crew-strength .cs-v { font-family: var(--thd-display); font-size: 30px; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
 .theah.ship .crew-strength .cs-hint { font-size: 12px; color: var(--ink-soft); font-style: italic; margin-left: auto; }
-.theah.ship .squads-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.theah.ship .squads-head .sq-title { font-family: var(--thd-label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
-.theah.ship .squad-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 6px; }
-.theah.ship .squad-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 5px; background: color-mix(in srgb, var(--panel) 94%, #fff 6%); }
-.theah.ship .squad-row .sq-name { flex: 1 1 auto; min-width: 0; background: transparent; border: 0; border-bottom: 1px solid var(--line); color: var(--ink); font-family: var(--thd-display); font-size: 15px; padding: 2px 2px; }
-.theah.ship .squad-row .sq-name:focus { outline: none; border-bottom-color: var(--gold); }
-.theah.ship .squad-row .sq-str { flex: none; display: inline-flex; align-items: center; gap: 6px; font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
-.theah.ship .squad-row .sq-str input { width: 46px; text-align: center; background: color-mix(in srgb, var(--paper) 60%, #fff 6%); border: 1px solid var(--line-strong); border-radius: 3px; color: var(--ink); font-family: var(--thd-display); font-size: 15px; padding: 3px; min-height: 28px; box-sizing: border-box; }
-.theah.ship .squad-row .sq-pool { flex: none; font-family: var(--thd-label); font-size: 11px; font-weight: 600; color: var(--gold-deep); min-width: 44px; text-align: center; }
-.theah.ship .squad-row .squad-remove { flex: none; color: var(--ink-soft); cursor: pointer; padding: 4px; }
-.theah.ship .squad-row .squad-remove:hover { color: var(--oxblood); }
+
+/* Derived-bonus notes — why a stat is what it is (Origin / Adventure). */
+.theah.ship .ship-bonuses { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.theah.ship .ship-bonuses.inline { margin: 0 2px 16px; }
+.theah.ship .ship-bonuses li { font-size: 11.5px; line-height: 1.4; color: var(--gold-deep); display: flex; align-items: baseline; gap: 7px; }
+.theah.ship .ship-bonuses li i { font-size: 8px; opacity: .8; flex: none; }
+.theah.ship .rail-hull .ship-bonuses { margin: 10px 0 0; }
+.theah.ship .rail-hull .ship-bonuses li { color: var(--gold-leaf); }
+
+/* Squad division presets (predefined splits + custom). */
+.theah.ship .squad-presets { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.theah.ship .squad-presets .sp-lbl { font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); cursor: help; margin-right: 2px; }
+.theah.ship .squad-preset, .theah.ship .squad-add.ghost { font-family: var(--thd-display); font-size: 14px; color: var(--ink); background: color-mix(in srgb, var(--gold-leaf) 6%, transparent); border: 1px solid var(--panel-edge); border-radius: 4px; padding: 4px 12px; cursor: pointer; transition: background .12s, border-color .12s; }
+.theah.ship .squad-preset:hover, .theah.ship .squad-add.ghost:hover { border-color: var(--gold); background: color-mix(in srgb, var(--gold-leaf) 16%, transparent); }
+.theah.ship .squad-add.ghost { font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-deep); background: transparent; display: inline-flex; align-items: center; gap: 5px; }
+
+.theah.ship .squads-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.theah.ship .squads-head .sq-title { font-family: var(--thd-label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); cursor: help; }
+.theah.ship .squads-head .sq-alloc { margin-left: auto; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .06em; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.theah.ship .squads-head .sq-alloc.over { color: var(--oxblood); }
+
+.theah.ship .squad-list { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.theah.ship .squad { flex: 1 1 200px; border: 1px solid var(--panel-edge); border-radius: 4px; padding: 10px 12px; background: color-mix(in srgb, var(--navy) 5%, transparent); }
+.theah.ship .squad .sq-head { display: flex; align-items: center; gap: 8px; }
+.theah.ship .squad .sq-name { flex: 1 1 auto; min-width: 0; background: transparent; border: 0; border-bottom: 1px solid transparent; color: var(--ink); font-family: var(--thd-display); font-size: 16px; padding: 1px 0; }
+.theah.ship .squad .sq-name:focus { outline: none; border-bottom-color: var(--gold); }
+.theah.ship .squad .squad-remove { flex: none; color: var(--ink-soft); cursor: pointer; padding: 2px; }
+.theah.ship .squad .squad-remove:hover { color: var(--oxblood); }
+.theah.ship .squad .sq-body { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+.theah.ship .squad .sq-step .sq-v { font-family: var(--thd-display); font-size: 24px; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 34px; text-align: center; }
+.theah.ship .squad .sq-step .sq-v small { font-size: 11px; color: var(--ink-soft); margin-left: 2px; }
+.theah.ship .squad .sq-pool { flex: none; margin-left: auto; font-family: var(--thd-label); font-size: 11px; font-weight: 600; color: var(--gold-deep); }
+.theah.ship .squad .pips { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 8px; }
+.theah.ship .squad .pips i { width: 12px; height: 12px; border-radius: 2px; background: linear-gradient(180deg, var(--teal), color-mix(in srgb, var(--teal) 60%, #000)); }
 
 /* Officer roster (drag PC/NPC actors onto a role). */
 .theah.ship .crew-roster { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
 .theah.ship .crew-roster .item-header { padding: 6px 12px; background: color-mix(in srgb, var(--navy) 8%, transparent); border-bottom: 1px solid var(--line); }
-.theah.ship .crew-roster .role-name { margin: 0; border: 0; font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); }
+.theah.ship .crew-roster .role-name { margin: 0; border: 0; font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); cursor: help; }
+.theah.ship .crew-roster .role-name .role-info { font-size: 9px; opacity: .45; margin-left: 5px; }
+.theah.ship .crew-roster .role-name:hover .role-info { opacity: 1; color: var(--gold-leaf); }
 .theah.ship .crew-roster .item { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--line); }
 .theah.ship .crew-roster .item:last-child { border-bottom: 0; }
 .theah.ship .crew-roster .item-image img { width: 26px; height: 26px; border-radius: 3px; object-fit: cover; border: 0; }

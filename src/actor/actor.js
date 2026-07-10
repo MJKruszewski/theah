@@ -89,7 +89,79 @@ export class SvnSea2EActor extends Actor {
   /**
    * Prepare Ship type specific data
    */
-  _prepareShipData(actorData) {}
+  /**
+   * Derive a Ship's mechanical stats from her Origin, Backgrounds and Adventures
+   * so those bonuses actually take effect (Core p.248-253). Runs each prep after
+   * items are ready. Records a human-readable breakdown (`shipBonuses`) so the
+   * sheet can show WHY a value is what it is. Only the derived maxima change here;
+   * current damage (hits/criticals .value) and squad allocation stay as stored.
+   */
+  _prepareShipData(actorData) {
+    const items = this.items;
+    const originNation = items.find((i) => i.type === 'shiporigin')?.system?.nation || '';
+    const hasBg = (re) => items.some((i) => i.type === 'shipbackground' && re.test(i.name || ''));
+    // Adventure bonuses apply only once the deed is ACCOMPLISHED (Core p.251) —
+    // an Adventure dragged on as a goal (system.earned = false) must NOT grant its
+    // reward yet. Origins/Backgrounds are inherent history and apply on presence.
+    const hasAdv = (re) => items.some((i) => i.type === 'shipadventure' && i.system?.earned && re.test(i.name || ''));
+
+    const notes = { hull: [], crew: [], cargo: [] };
+    const L = (k, d) => (d ? game.i18n.format(k, d) : game.i18n.localize(k));
+
+    // --- Hull: Hits per Critical Hit (5; Castille +1) × Critical Hits to Cripple
+    // (4; Prominent Battle +1). ---
+    let hitsPerCritical = 5;
+    if (originNation === 'castille') {
+      hitsPerCritical += 1;
+      notes.hull.push(L('SVNSEA2E.BonusCastilleHull'));
+    }
+    let critMax = 4;
+    if (hasBg(/prominent battle/i)) {
+      critMax += 1;
+      notes.hull.push(L('SVNSEA2E.BonusProminentBattle'));
+    }
+    actorData.hitsPerCritical = hitsPerCritical;
+    actorData.criticals.max = critMax;
+    actorData.hits.max = hitsPerCritical * critMax;
+    // Re-clamp current damage when a max shrinks (e.g. a Castille Origin removed
+    // after taking Hits) so value never exceeds max (mirrors _validateMinMaxData).
+    actorData.hits.value = Math.max(0, Math.min(actorData.hits.value ?? 0, actorData.hits.max));
+    actorData.criticals.value = Math.max(0, Math.min(actorData.criticals.value ?? 0, actorData.criticals.max));
+
+    // --- Crew: 10 complement, up to 2 Squads (Eisen 15 / up to 3); certain
+    // Adventures add Strength. ---
+    let crewMax = 10;
+    let squadMax = 2;
+    if (originNation === 'eisen') {
+      crewMax += 5;
+      squadMax = 3;
+      notes.crew.push(L('SVNSEA2E.BonusEisenCrew'));
+    }
+    if (hasAdv(/short and merry life/i)) {
+      crewMax += 5;
+      notes.crew.push(L('SVNSEA2E.BonusShortMerry'));
+    }
+    if (hasAdv(/saved from the deep/i)) {
+      crewMax += 1;
+      notes.crew.push(L('SVNSEA2E.BonusSavedDeep'));
+    }
+    actorData.crew.max = crewMax;
+    actorData.crew.squadmax = squadMax;
+
+    // --- Cargo: 2 capacity (Vodacce 3; "Gold Drives a Man to Dream" +1). ---
+    let cargoCap = 2;
+    if (originNation === 'vodacce') {
+      cargoCap += 1;
+      notes.cargo.push(L('SVNSEA2E.BonusVodacceCargo'));
+    }
+    if (hasAdv(/gold drives a man to dream/i)) {
+      cargoCap += 1;
+      notes.cargo.push(L('SVNSEA2E.BonusGoldDrives'));
+    }
+    actorData.cargocap = cargoCap;
+
+    actorData.shipBonuses = notes;
+  }
 
   /**
    * Remove a member from the crew
@@ -186,10 +258,6 @@ export class SvnSea2EActor extends Actor {
     if (cargo !== undefined) {
       options.theahPriorCargo = foundry.utils.deepClone(this.system.cargohold ?? []);
     }
-    const crewv = foundry.utils.getProperty(changed, 'system.crew.value');
-    if (crewv !== undefined) {
-      options.theahPriorCrew = this.system.crew?.value ?? 0;
-    }
     const morale = foundry.utils.getProperty(changed, 'system.crewstatus');
     if (morale !== undefined) {
       options.theahPriorMorale = this.system.crewstatus;
@@ -224,9 +292,6 @@ export class SvnSea2EActor extends Actor {
       if (this.type === ActorType.SHIP) {
         if (options.theahPriorCargo !== undefined) {
           this._reactToCargoChange(options.theahPriorCargo);
-        }
-        if (options.theahPriorCrew !== undefined) {
-          this._reactToCrewChange(options.theahPriorCrew);
         }
         if (options.theahPriorMorale !== undefined) {
           this._reactToMoraleChange(options.theahPriorMorale);
@@ -390,35 +455,6 @@ export class SvnSea2EActor extends Actor {
         <div class="wealth-body">
           <div class="wealth-stats"><span class="wl"><b>${cur.length} / ${cap}</b> ${L('SVNSEA2E.CargoHold')}</span></div>
           <div class="wealth-note">${manifest}</div>
-        </div>
-      </div>`;
-
-    await postThemedChat({ actor: this, content });
-  }
-
-  /**
-   * Post a themed public chat card when a Ship's total Crew Strength changes
-   * (recruiting or casualties). (Core p.253 — Crew Strength divides into Squads.)
-   * @param {number} prior  The pre-update Crew Strength.
-   * @private
-   */
-  async _reactToCrewChange(prior) {
-    const cur = this.system.crew?.value ?? 0;
-    const delta = cur - prior;
-    if (delta === 0) return;
-
-    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
-    const name = this.name;
-    const gained = delta > 0;
-    const headline = gained
-      ? L('SVNSEA2E.CrewGains', { name, n: delta })
-      : L('SVNSEA2E.CrewLoses', { name, n: -delta });
-
-    const content = `
-      <div class="theah theah-wealth theah-crew${gained ? '' : ' spend'}">
-        <div class="wealth-head"><i class="fas fa-users"></i> ${headline}</div>
-        <div class="wealth-body">
-          <div class="wealth-stats"><span class="wl"><b>${cur}</b> ${L('SVNSEA2E.CrewStrength')}</span></div>
         </div>
       </div>`;
 

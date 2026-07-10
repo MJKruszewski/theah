@@ -28,22 +28,26 @@
           {{#if originItem}}<span class="dot" style="background:{{originDot}}"></span>{{originItem.name}}{{else}}<span class="unset">{{localize "SVNSEA2E.OriginUnset"}}</span>{{/if}}
         </dd>
         <dt data-tooltip="{{localize 'SVNSEA2E.HomePortInfo'}}">{{localize "SVNSEA2E.HomePort"}}</dt>
-        <dd><input type="text" name="system.homeport" value="{{homeport}}" placeholder="&mdash;" /></dd>
+        <dd><select class="home-port-select" name="system.homeport">
+          {{selectOptions config.nations selected=homeport localize=true}}
+        </select></dd>
         <dt data-tooltip="{{localize 'SVNSEA2E.FlagInfo'}}">{{localize "SVNSEA2E.Flag"}}</dt>
         <dd><input type="text" name="system.flag" value="{{flag}}" placeholder="&mdash;" /></dd>
       </dl>
 
       <div class="res ship-res">
         <div class="cell" data-tooltip="{{localize 'SVNSEA2E.TreasuryInfo'}}"><div class="k">{{localize "SVNSEA2E.Treasury"}}</div><div class="v">{{wealth}}</div></div>
-        <div class="cell" data-tooltip="{{localize 'SVNSEA2E.CrewInfo'}}"><div class="k">{{localize "SVNSEA2E.Crew"}}</div><div class="v">{{crewData.value}}</div></div>
+        <div class="cell" data-tooltip="{{localize 'SVNSEA2E.CrewInfo'}}"><div class="k">{{localize "SVNSEA2E.Crew"}}</div><div class="v">{{crewMax}}</div></div>
         <div class="cell" data-tooltip="{{localize 'SVNSEA2E.CargoInfo'}}"><div class="k">{{localize "SVNSEA2E.CargoHold"}}</div><div class="v">{{cargocap}}</div></div>
       </div>
 
-      <div class="rail-morale">
+      <div class="rail-morale status-row">
         <span class="k" data-tooltip="{{localize 'SVNSEA2E.MoraleInfo'}}">{{localize "SVNSEA2E.CrewMorale"}}</span>
-        <select class="morale-select {{crewstatus}}" name="system.crewstatus">
-          {{selectOptions config.crewStatuses selected=crewstatus localize=true}}
-        </select>
+        <div class="morale-pill-wrap">
+          <select class="morale-select status-pill {{crewstatus}}" name="system.crewstatus">
+            {{selectOptions config.crewStatuses selected=crewstatus localize=true}}
+          </select>
+        </div>
       </div>
 
       <div class="rail-sep"></div>
@@ -74,6 +78,12 @@
           <span class="hs-label">{{hullStatus.label}}</span>
           <span class="hs-note">{{hullStatus.note}}</span>
         </div>
+
+        {{#if shipBonuses.hull.length}}
+          <ul class="ship-bonuses">
+            {{#each shipBonuses.hull}}<li><i class="fas fa-star-of-life"></i> {{this}}</li>{{/each}}
+          </ul>
+        {{/if}}
       </div>
     </aside>
 
@@ -143,31 +153,54 @@
         {{!-- ===== Crew ===== --}}
         <div class="tab crew" data-group="primary" data-tab="crew">
           <div class="sec-title"><h3>{{localize "SVNSEA2E.CrewAndSquads"}} <i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.CrewInfo'}}"></i></h3><span></span></div>
-          <p class="section-note">{{localize "SVNSEA2E.CrewIntro"}}</p>
+          <p class="section-note">{{localize "SVNSEA2E.CrewExplain"}}</p>
 
+          {{!-- Full complement (derived) + why --}}
           <div class="crew-strength">
             <span class="cs-k" data-tooltip="{{localize 'SVNSEA2E.CrewStrengthInfo'}}">{{localize "SVNSEA2E.CrewStrength"}}</span>
-            <span class="stepper">
-              <button type="button" class="crew-step" data-delta="-1" aria-label="-1">&minus;</button>
-              <b class="cs-v">{{crewData.value}}</b>
-              <button type="button" class="crew-step" data-delta="1" aria-label="+1">+</button>
-            </span>
-            <span class="cs-hint">{{localize "SVNSEA2E.SquadsUpTo"}} {{crewData.squadmax}}</span>
+            <b class="cs-v">{{crewMax}}</b>
+            <span class="cs-hint">{{localize "SVNSEA2E.SquadsMaxHint" n=squadMax}}</span>
+          </div>
+          {{#if shipBonuses.crew.length}}
+            <ul class="ship-bonuses inline">
+              {{#each shipBonuses.crew}}<li><i class="fas fa-star-of-life"></i> {{this}}</li>{{/each}}
+            </ul>
+          {{/if}}
+
+          {{!-- Quick-division presets (predefined splits) --}}
+          <div class="squad-presets">
+            <span class="sp-lbl" data-tooltip="{{localize 'SVNSEA2E.SquadPresetInfo'}}">{{localize "SVNSEA2E.DivideCrew"}}</span>
+            {{#each squadPresets}}
+              <button type="button" class="squad-preset" data-split="{{splitStr}}">{{label}}</button>
+            {{/each}}
+            {{#if canAddSquad}}<button type="button" class="squad-add ghost" title="{{localize 'SVNSEA2E.AddSquad'}}"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.CustomSquad"}}</button>{{/if}}
           </div>
 
+          {{!-- Squad cards (artifact-style pips) with strength steppers --}}
           <div class="squads-head">
             <span class="sq-title" data-tooltip="{{localize 'SVNSEA2E.SquadsInfo'}}">{{localize "SVNSEA2E.Squads"}}</span>
-            {{#if canAddSquad}}<a class="add-btn squad-add" title="{{localize 'SVNSEA2E.AddSquad'}}"><i class="fas fa-plus"></i></a>{{/if}}
+            <span class="sq-alloc {{#if squadOverAllocated}}over{{/if}}">{{localize "SVNSEA2E.Allocated"}} {{squadAllocated}} / {{crewMax}}</span>
           </div>
           <div class="squad-list">
             {{#each squads as |sq id|}}
-              <div class="squad-row">
-                <input type="text" class="sq-name" name="system.squads.{{sq.index}}.name" value="{{sq.name}}" placeholder="{{localize 'SVNSEA2E.SquadName'}}" />
-                <label class="sq-str">{{localize "SVNSEA2E.Strength"}}
-                  <input type="number" min="0" step="1" name="system.squads.{{sq.index}}.strength" value="{{sq.strength}}" />
-                </label>
-                <span class="sq-pool" data-tooltip="{{localize 'SVNSEA2E.SquadPoolHint'}}">{{sq.strength}}d10</span>
-                <a class="squad-remove" data-index="{{sq.index}}" title="{{localize 'SVNSEA2E.RemoveSquad'}}"><i class="fas fa-trash"></i></a>
+              <div class="squad" data-item-index="{{sq.index}}">
+                {{!-- Strength is edited via the stepper (full-array write), but it MUST be
+                      submitted alongside the name input, or a name edit re-cleans the
+                      ArrayField element and resets strength to 0. --}}
+                <input type="hidden" name="system.squads.{{sq.index}}.strength" value="{{sq.strength}}" />
+                <div class="sq-head">
+                  <input type="text" class="sq-name" name="system.squads.{{sq.index}}.name" value="{{sq.name}}" placeholder="{{localize 'SVNSEA2E.SquadName'}}" />
+                  <a class="squad-remove" data-index="{{sq.index}}" title="{{localize 'SVNSEA2E.RemoveSquad'}}"><i class="fas fa-trash"></i></a>
+                </div>
+                <div class="sq-body">
+                  <span class="stepper sq-step">
+                    <button type="button" class="squad-str-step" data-index="{{sq.index}}" data-delta="-1" aria-label="-1">&minus;</button>
+                    <b class="sq-v">{{sq.strength}}<small>{{localize "SVNSEA2E.StrAbbr"}}</small></b>
+                    <button type="button" class="squad-str-step" data-index="{{sq.index}}" data-delta="1" aria-label="+1">+</button>
+                  </span>
+                  <span class="sq-pool" data-tooltip="{{localize 'SVNSEA2E.SquadPoolHint'}}">{{sq.strength}}d10</span>
+                </div>
+                <span class="pips" data-tooltip="{{localize 'SVNSEA2E.SquadPoolHint'}}">{{#each sq.pips}}<i></i>{{/each}}</span>
               </div>
             {{else}}
               <p class="empty-note">{{localize "SVNSEA2E.NoSquads"}}</p>
@@ -179,7 +212,7 @@
           <ol class="items-list crew-roster">
             {{#each crew as |role|}}
               <li class="flexrow item-header {{role.cssClass}}" {{#each role.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>
-                <h3 class="role-name flexrow" {{#each role.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>{{role.label}}</h3>
+                <h3 class="role-name flexrow" {{#if role.tip}}data-tooltip="{{role.tip}}"{{/if}} {{#each role.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>{{role.label}}{{#if role.tip}} <i class="fas fa-circle-info role-info"></i>{{/if}}</h3>
               </li>
               {{#each role.actors as |actor a|}}
                 <li class="item flexrow draggable {{role.cssClass}}" data-actor-id="{{actor.id}}">
@@ -237,12 +270,13 @@
           <div class="cargo-capline">
             <span class="section-note">{{localize "SVNSEA2E.CargoHoldIntro"}} <b>{{cargoUsed}} / {{cargocap}}</b> {{localize "SVNSEA2E.InHold"}}.</span>
             <span class="hc-k" data-tooltip="{{localize 'SVNSEA2E.CargoCapacityInfo'}}"><i class="fas fa-box-open"></i> {{localize "SVNSEA2E.CargoCapacity"}}</span>
-            <span class="stepper">
-              <button type="button" class="cargocap-step" data-delta="-1" aria-label="-1">&minus;</button>
-              <b class="hc-v">{{cargocap}}</b>
-              <button type="button" class="cargocap-step" data-delta="1" aria-label="+1">+</button>
-            </span>
+            <b class="hc-v">{{cargocap}}</b>
           </div>
+          {{#if shipBonuses.cargo.length}}
+            <ul class="ship-bonuses inline">
+              {{#each shipBonuses.cargo}}<li><i class="fas fa-star-of-life"></i> {{this}}</li>{{/each}}
+            </ul>
+          {{/if}}
 
           <div class="hold-grid">
             {{#each cargoSlots}}

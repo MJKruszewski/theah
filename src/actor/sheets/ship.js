@@ -54,9 +54,10 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     sheetData.origin = sys.origin;              // legacy free-text fallback
     sheetData.crewstatus = sys.crewstatus || 'happy';
     sheetData.cargo = sys.cargo;
-    sheetData.cargocap = sys.cargocap;
+    sheetData.cargocap = sys.cargocap;          // derived (Vodacce / Gold Drives…)
     sheetData.wealth = sys.wealth;
-    sheetData.crewData = sys.crew;              // { value, squadmax }
+    sheetData.crewData = sys.crew;              // { value, max, squadmax } (max/squadmax derived)
+    sheetData.shipBonuses = sys.shipBonuses || { hull: [], crew: [], cargo: [] };
 
     // Cargo Hold — crate slots up to capacity (Core p.253). Filled slots carry a
     // named lot + note (destination / worth); the rest render as empty crates.
@@ -109,13 +110,42 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
       sheetData.hullStatus = { key: 'seaworthy', label: L('SVNSEA2E.HullStateSeaworthy'), note: L('SVNSEA2E.HullHitsNote', { per: sheetData.hitsPerCritical }) };
     }
 
-    // Crew Squads — each rolls dice = its Strength (Core p.253).
-    sheetData.squads = (sys.squads || []).map((sq, i) => ({
+    // Crew — the full complement (derived: 10 base, Eisen 15, +Adventures) divides
+    // into up to squadmax Squads; each Squad rolls dice = its Strength (Core p.253).
+    // Squads are the tracked crew state (Wounds reduce a Squad's Strength).
+    const crewMax = sys.crew?.max ?? 10;
+    const squadMax = sys.crew?.squadmax ?? 2;
+    const squads = sys.squads || [];
+    sheetData.crewMax = crewMax;
+    sheetData.squadMax = squadMax;
+    sheetData.squads = squads.map((sq, i) => ({
       index: i,
       name: sq.name,
       strength: sq.strength,
+      pips: Array.from({ length: Math.max(0, sq.strength | 0) }, () => 1),
     }));
-    sheetData.canAddSquad = (sys.squads || []).length < (sys.crew?.squadmax ?? 2);
+    sheetData.squadAllocated = squads.reduce((n, sq) => n + (sq.strength | 0), 0);
+    sheetData.squadUnallocated = Math.max(0, crewMax - sheetData.squadAllocated);
+    sheetData.squadOverAllocated = sheetData.squadAllocated > crewMax;
+    sheetData.canAddSquad = squads.length < squadMax;
+
+    // Quick-division presets: the book's enumerated splits of a 10-Crew Ship, plus
+    // an even split for any complement. Applying one replaces the Squad list.
+    const presets = [{ key: 'single', label: `${crewMax}`, split: [crewMax] }];
+    if (squadMax >= 2) {
+      const hi = Math.ceil(crewMax / 2);
+      presets.push({ key: 'even2', label: `${hi} / ${crewMax - hi}`, split: [hi, crewMax - hi] });
+    }
+    if (crewMax === 10 && squadMax === 2) {
+      presets.push({ key: 's82', label: '8 / 2', split: [8, 2] });
+      presets.push({ key: 's73', label: '7 / 3', split: [7, 3] });
+      presets.push({ key: 's64', label: '6 / 4', split: [6, 4] });
+    }
+    if (squadMax >= 3) {
+      const t = Math.floor(crewMax / 3);
+      presets.push({ key: 'even3', label: `${crewMax - 2 * t} / ${t} / ${t}`, split: [crewMax - 2 * t, t, t] });
+    }
+    sheetData.squadPresets = presets.map((p) => ({ ...p, splitStr: p.split.join(',') }));
   }
 
   /**
@@ -331,6 +361,12 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     crew.shipsmaster.actors = shipsmaster;
     crew.surgeon.actors = surgeon;
 
+    // Book-accurate duty tooltip for each officer role header (Core pp.244-246).
+    const duties = CONFIG.SVNSEA2E.officerDuties || {};
+    for (const [key, role] of Object.entries(crew)) {
+      role.tip = duties[key] ? game.i18n.localize(duties[key]) : '';
+    }
+
     sheetData.crew = Object.values(crew);
   }
 
@@ -372,15 +408,48 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
   }
 
   /**
-   * ±1 stepper for total Crew Strength.
+   * ±1 stepper for a single Squad's Strength, clamped so the Crew's total
+   * allocation never exceeds the full complement (crew.max).
    * @param {Event} event
    * @private
    */
-  _onCrewStep(event) {
+  _onSquadStrengthStep(event) {
     event.preventDefault();
+    const i = Number(event.currentTarget.dataset.index);
     const delta = Number(event.currentTarget.dataset.delta) || 0;
-    const cur = Number(this.actor.system.crew?.value) || 0;
-    this.actor.update({ 'system.crew.value': Math.max(0, cur + delta) });
+    const squads = foundry.utils.duplicate(this.actor.system.squads || []);
+    if (i < 0 || i >= squads.length) return;
+    const crewMax = this.actor.system.crew?.max ?? 10;
+    const others = squads.reduce((n, sq, idx) => (idx === i ? n : n + (Number(sq.strength) || 0)), 0);
+    const cap = Math.max(0, crewMax - others); // this Squad may take at most the unallocated remainder
+    const cur = Number(squads[i].strength) || 0;
+    // "+" only fills the unallocated remainder and never reduces the Squad (so it's
+    // a no-op when the Crew is already over-allocated); "−" always decrements.
+    const next = delta > 0 ? Math.min(cur + delta, Math.max(cur, cap)) : Math.max(0, cur + delta);
+    if (next === cur) return;
+    squads[i].strength = next;
+    this.actor.update({ 'system.squads': squads });
+  }
+
+  /**
+   * Apply a quick-division preset: replace the Squad list with the chosen split
+   * of the full complement (Core p.253). Preserves existing Squad names by index.
+   * @param {Event} event
+   * @private
+   */
+  _onApplySquadPreset(event) {
+    event.preventDefault();
+    const split = String(event.currentTarget.dataset.split || '')
+      .split(',')
+      .map((n) => Math.max(0, parseInt(n, 10) || 0))
+      .filter((n) => n > 0);
+    if (!split.length) return;
+    const existing = this.actor.system.squads || [];
+    const squads = split.map((strength, idx) => ({
+      name: existing[idx]?.name || game.i18n.format('SVNSEA2E.SquadN', { n: idx + 1 }),
+      strength,
+    }));
+    this.actor.update({ 'system.squads': squads });
   }
 
   /**
@@ -393,18 +462,6 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     const delta = Number(event.currentTarget.dataset.delta) || 0;
     const cur = Number(this.actor.system.wealth) || 0;
     this.actor.update({ 'system.wealth': Math.max(0, cur + delta) });
-  }
-
-  /**
-   * ±1 stepper for Cargo capacity.
-   * @param {Event} event
-   * @private
-   */
-  _onCargoCapStep(event) {
-    event.preventDefault();
-    const delta = Number(event.currentTarget.dataset.delta) || 0;
-    const cur = Number(this.actor.system.cargocap) || 0;
-    this.actor.update({ 'system.cargocap': Math.max(0, cur + delta) });
   }
 
   /**
@@ -497,10 +554,10 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     // Hull — clicking a Hit pip or a Critical-Hit seal (mirrors the hero wound track).
     html.find('.rail-hull .track i').on('click', (ev) => this._processHull(ev));
     html.find('.rail-hull .spiral .seal').on('click', (ev) => this._processHull(ev));
-    // Crew Strength, Treasury and Squad steppers.
-    html.find('.crew-step').on('click', (ev) => this._onCrewStep(ev));
+    // Treasury stepper; Squad strength steppers + division presets + add/remove.
     html.find('.treasury-step').on('click', (ev) => this._onTreasuryStep(ev));
-    html.find('.cargocap-step').on('click', (ev) => this._onCargoCapStep(ev));
+    html.find('.squad-str-step').on('click', (ev) => this._onSquadStrengthStep(ev));
+    html.find('.squad-preset').on('click', (ev) => this._onApplySquadPreset(ev));
     html.find('.squad-add').on('click', (ev) => this._onSquadAdd(ev));
     html.find('.squad-remove').on('click', (ev) => this._onSquadRemove(ev));
 

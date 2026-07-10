@@ -362,6 +362,26 @@ SVNSEA2E.crewStatuses = {
   mutinous: 'SVNSEA2E.Mutinous',
 };
 
+// Book-accurate duty of each shipboard officer role, for the Crew-roster tooltips
+// (Core pp.244-246). Keyed by the role keys built in the ship sheet's _processFlags.
+SVNSEA2E.officerDuties = {
+  captain: 'SVNSEA2E.OfficerDutyCaptain',
+  firstmate: 'SVNSEA2E.OfficerDutyFirstMate',
+  shipsmaster: 'SVNSEA2E.OfficerDutyShipsMaster',
+  quartermaster: 'SVNSEA2E.OfficerDutyQuarterMaster',
+  accountant: 'SVNSEA2E.OfficerDutyPurser',
+  boatswain: 'SVNSEA2E.OfficerDutyBoatswain',
+  captaintops: 'SVNSEA2E.OfficerDutyMasterTops',
+  surgeon: 'SVNSEA2E.OfficerDutySurgeon',
+  cook: 'SVNSEA2E.OfficerDutyCook',
+  mastergunner: 'SVNSEA2E.OfficerDutyMasterGunner',
+  mastermariner: 'SVNSEA2E.OfficerDutyMasterMariner',
+  midshipmen: 'SVNSEA2E.OfficerDutyMidshipmen',
+  powdermonkey: 'SVNSEA2E.OfficerDutyPowderMonkey',
+  ableseaman: 'SVNSEA2E.OfficerDutyAbleSeaman',
+  seaman: 'SVNSEA2E.OfficerDutySeaman',
+};
+
 SVNSEA2E.artifactTypes = {
   deathtoken: 'SVNSEA2E.DeathToken',
   syrneth: 'SVNSEA2E.Syrneth',

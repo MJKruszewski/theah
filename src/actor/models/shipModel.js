@@ -38,8 +38,13 @@ const shipSchema = {
   // up to 2 Squads (Eisen: +5 Crew, up to 3 Squads). Each Squad rolls dice = its
   // Strength. `squads` is an optional explicit division; when empty the Crew acts
   // as one Squad of `crew.value` Strength.
+  // Crew.value = the current full complement; crew.max = the derived complement
+  // from Origin/Adventures (10 base, Eisen 15, +5/+1 from certain Adventures);
+  // squadmax = how many Squads the Crew may divide into (2 base, Eisen 3). max +
+  // squadmax are recomputed each prep in _prepareShipData (Core p.253, p.248).
   crew: new SchemaField({
     value: new NumberField({ required: true, integer: true, min: 0, initial: 10 }),
+    max: new NumberField({ required: true, integer: true, min: 0, initial: 10 }),
     squadmax: new NumberField({ required: true, integer: true, min: 1, initial: 2 }),
   }),
   squads: new ArrayField(new SchemaField({
