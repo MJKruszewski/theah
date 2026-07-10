@@ -409,6 +409,11 @@
 .theah.sorcery-picker .sp-desc { margin-top: 6px; font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
 .theah.sorcery-picker .sp-desc p { margin: 0 0 5px; }
 .theah.sorcery-picker .sp-desc p:last-child { margin-bottom: 0; }
+/* Labelled sub-blocks in a picker row (Adventure trigger/reward, Origin/Background Bonus). */
+.theah.sorcery-picker .sp-sub { margin-top: 6px; font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+.theah.sorcery-picker .sp-sub p { margin: 0 0 5px; }
+.theah.sorcery-picker .sp-sub p:last-child { margin-bottom: 0; }
+.theah.sorcery-picker .sp-lbl { display: block; font-family: var(--thd-label); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 2px; }
 .theah .prowess-card .item-controls { display: flex; gap: 8px; opacity: 0; transition: opacity .15s; }
 .theah .prowess-card:hover .item-controls { opacity: 1; }
 .theah .prowess-card .item-controls a { color: var(--ink-soft); font-size: 12px; cursor: pointer; }
@@ -1074,6 +1079,41 @@
 .theah.ship .hold-ctl { flex: 1 1 200px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border: 1px solid var(--panel-edge); border-radius: 5px; background: color-mix(in srgb, var(--gold-leaf) 5%, transparent); }
 .theah.ship .hold-ctl .hc-k { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); display: inline-flex; align-items: center; gap: 7px; }
 .theah.ship .hold-ctl .hc-k i { font-size: 13px; }
+
+/* Adventures — Story-style earned trackers (binary earned/not, not step-pips). */
+.theah.ship .prowess-card.adventure .pc-icon { color: var(--teal); }
+.theah.ship .prowess-card.adventure.is-earned { border-color: var(--gold); border-left-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 25%, transparent); background: color-mix(in srgb, var(--gold-leaf) 9%, transparent); }
+.theah.ship .prowess-card.adventure.is-earned .pc-icon { color: var(--gold-deep); }
+.theah.ship .prowess-card.adventure .earned-badge { flex: none; font-family: var(--thd-label); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-deep); display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.theah.ship .adventure-earn { margin-top: 10px; font-family: var(--thd-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); background: transparent; border: 1px solid var(--line-strong); border-radius: 3px; padding: 5px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: background .12s, color .12s, border-color .12s; }
+.theah.ship .adventure-earn:hover { border-color: var(--gold); color: var(--gold-deep); }
+.theah.ship .adventure-earn.on { color: #2a1c10; background: linear-gradient(180deg, var(--gold-leaf), var(--gold)); border-color: var(--gold-deep); }
+.theah.ship .adventure-earn.on:hover { filter: brightness(1.05); }
+
+/* Cargo Hold — capacity line, crate grid, treasury line (matches the design artifact). */
+.theah.ship .cargo-capline { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+.theah.ship .cargo-capline .section-note { flex: 1 1 200px; margin: 0; }
+.theah.ship .cargo-capline .hc-k { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); display: inline-flex; align-items: center; gap: 7px; }
+.theah.ship .hc-v { font-family: var(--thd-display); font-size: 22px; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 26px; text-align: center; }
+.theah.ship .hold-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.theah.ship .crate { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border: 1px dashed var(--line-strong); border-radius: 5px; background: color-mix(in srgb, var(--paper) 22%, transparent); }
+.theah.ship .crate.filled { border-style: solid; border-color: var(--panel-edge); background: color-mix(in srgb, var(--gold-leaf) 7%, transparent); }
+.theah.ship .crate .crate-icon { flex: none; font-size: 22px; color: var(--gold-deep); opacity: .85; }
+.theah.ship .crate.empty .crate-icon { color: var(--ink-soft); opacity: .5; }
+.theah.ship .crate .crate-body { flex: 1 1 auto; min-width: 0; }
+.theah.ship .crate .cargo-n { display: block; width: 100%; background: transparent; border: 0; border-bottom: 1px solid transparent; font-family: var(--thd-display); font-size: 15px; color: var(--ink); padding: 1px 0; }
+.theah.ship .crate .cargo-s { display: block; width: 100%; background: transparent; border: 0; border-bottom: 1px solid transparent; font-size: 12px; color: var(--ink-soft); padding: 1px 0; margin-top: 2px; }
+.theah.ship .crate input.cargo-n:focus, .theah.ship .crate input.cargo-s:focus { outline: none; border-bottom-color: var(--gold); }
+.theah.ship .crate.empty .cargo-n { color: var(--ink-soft); font-style: italic; }
+.theah.ship .crate .cargo-remove { flex: none; color: var(--ink-soft); cursor: pointer; padding: 4px; align-self: flex-start; }
+.theah.ship .crate .cargo-remove:hover { color: var(--oxblood); }
+.theah.ship .hold-sep { margin: 18px 0; }
+.theah.ship .treasury-line { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border: 1px solid var(--panel-edge); border-radius: 5px; background: color-mix(in srgb, var(--gold-leaf) 6%, transparent); }
+.theah.ship .treasury-line .tl-coin { flex: none; font-size: 24px; color: var(--gold-deep); }
+.theah.ship .treasury-line .tl-body { flex: 1 1 auto; }
+.theah.ship .treasury-line .tl-head { display: flex; align-items: center; gap: 14px; }
+.theah.ship .treasury-line .tl-k { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); }
+.theah.ship .treasury-line .tl-note { margin-top: 4px; font-size: 12px; line-height: 1.45; color: var(--ink-soft); font-style: italic; }
 
 /* Ship Hull chat card (Hits / Critical Hits / Crippled). */
 #chat .theah-hull { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }

@@ -58,6 +58,20 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     sheetData.wealth = sys.wealth;
     sheetData.crewData = sys.crew;              // { value, squadmax }
 
+    // Cargo Hold — crate slots up to capacity (Core p.253). Filled slots carry a
+    // named lot + note (destination / worth); the rest render as empty crates.
+    const hold = sys.cargohold || [];
+    const cap = sys.cargocap ?? 0;
+    const slotCount = Math.max(cap, hold.length);
+    sheetData.cargoSlots = Array.from({ length: slotCount }, (_, i) => {
+      const c = hold[i];
+      return c
+        ? { index: i, filled: true, name: c.name, note: c.note }
+        : { index: i, filled: false };
+    });
+    sheetData.cargoUsed = hold.length;
+    sheetData.canAddCargo = hold.length < cap;
+
     // Origin flag-dot color.
     if (sheetData.originItem) {
       const n = sheetData.originItem.system?.nation;
@@ -394,6 +408,51 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
   }
 
   /**
+   * Add a new empty Cargo lot to the Hold (up to capacity).
+   * @param {Event} event
+   * @private
+   */
+  _onAddCargo(event) {
+    event.preventDefault();
+    const hold = foundry.utils.duplicate(this.actor.system.cargohold || []);
+    const cap = this.actor.system.cargocap ?? 0;
+    if (hold.length >= cap) {
+      return ui.notifications.warn(game.i18n.format('SVNSEA2E.CargoFull', { n: cap }));
+    }
+    hold.push({ name: '', note: '' });
+    this.actor.update({ 'system.cargohold': hold });
+  }
+
+  /**
+   * Remove a Cargo lot from the Hold by index.
+   * @param {Event} event
+   * @private
+   */
+  _onRemoveCargo(event) {
+    event.preventDefault();
+    const i = Number(event.currentTarget.dataset.index);
+    const hold = foundry.utils.duplicate(this.actor.system.cargohold || []);
+    if (i < 0 || i >= hold.length) return;
+    hold.splice(i, 1);
+    this.actor.update({ 'system.cargohold': hold });
+  }
+
+  /**
+   * Toggle whether a Ship Adventure has been earned (Core p.250). Adventures are
+   * binary (earned once, in play), so the tracker is a single toggle rather than
+   * the hero Story's step-pips — a conceptual adaptation.
+   * @param {Event} event
+   * @private
+   */
+  _onToggleAdventureEarned(event) {
+    event.preventDefault();
+    const id = event.currentTarget.dataset.itemId;
+    const item = this.actor.items.get(id);
+    if (!item) return;
+    item.update({ 'system.earned': !item.system.earned });
+  }
+
+  /**
    * Add a new Crew Squad (up to squadmax).
    * @param {Event} event
    * @private
@@ -444,6 +503,13 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     html.find('.cargocap-step').on('click', (ev) => this._onCargoCapStep(ev));
     html.find('.squad-add').on('click', (ev) => this._onSquadAdd(ev));
     html.find('.squad-remove').on('click', (ev) => this._onSquadRemove(ev));
+
+    // Ship compendium pickers (Origins / Backgrounds / Adventures — sorcery-style window).
+    html.find('.browse-ship-pack').on('click', (ev) => this._onBrowseShipPack(ev));
+    // Cargo Hold crates + Adventure earned toggle.
+    html.find('.cargo-add').on('click', (ev) => this._onAddCargo(ev));
+    html.find('.cargo-remove').on('click', (ev) => this._onRemoveCargo(ev));
+    html.find('.adventure-earn').on('click', (ev) => this._onToggleAdventureEarned(ev));
 
     html.find('.crew-roster .item-delete').click(this._onRemoveFromCrew.bind(this));
 

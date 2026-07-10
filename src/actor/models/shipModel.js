@@ -48,8 +48,15 @@ const shipSchema = {
   })),
 
   // Cargo & Treasury (Core p.253). Capacity 2 (Vodacce 3); Treasury = Wealth,
-  // halved each session or the Crew turns Mutinous.
+  // halved each session or the Crew turns Mutinous. The Hold is a list of Cargo
+  // crates (each a named lot + note, e.g. destination / worth), rendered as crate
+  // slots up to `cargocap`. `cargo` (legacy free-text manifest) is kept for
+  // backward-compat but no longer surfaced on the sheet.
   cargocap: new NumberField({ required: true, integer: true, min: 0, initial: 2 }),
+  cargohold: new ArrayField(new SchemaField({
+    name: new StringField(),
+    note: new StringField(),
+  })),
   cargo: new HTMLField(),
   wealth: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
 }

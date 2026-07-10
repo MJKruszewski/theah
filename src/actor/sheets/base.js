@@ -960,6 +960,119 @@ export default class ActorSheetSS2e extends ActorSheet {
   }
 
   /**
+   * Generic version of {@link _loadSorceryDocs}: load a compendium's docs as
+   * plain objects, preferring the world pack but falling back to the shipped
+   * JSON when it is empty/blank (data-resilience rule — never fully trust the
+   * seeded pack). Used by the ship-item pickers (Origins/Backgrounds/Adventures).
+   * @param {string} packId  e.g. 'theah.shipadventures'
+   * @param {string} file    shipped JSON basename, e.g. 'shipadventures'
+   * @returns {Promise<object[]>}
+   * @private
+   */
+  async _loadPackDocs(packId, file) {
+    const pack = game.packs.get(packId);
+    if (pack) {
+      const docs = (await pack.getDocuments()).map((d) => d.toObject());
+      const valid = docs.filter((d) => d.name && d.name.trim());
+      if (valid.length) return valid;
+    }
+    try {
+      const resp = await fetch(`systems/theah/packs-data/${file}.json`);
+      if (resp.ok) return await resp.json();
+    } catch (e) {
+      /* fall through to empty */
+    }
+    return [];
+  }
+
+  /**
+   * Open a themed picker window (the same UX as the Sorcery picker) for a Ship
+   * compendium — Origins, Backgrounds or Adventures. Each entry shows its rules
+   * text upfront with an "Add" button that clones it onto the Ship. Enforces the
+   * single-Origin rule and skips duplicates by name (the picker bypasses
+   * `_onDropItem`, so those guards are re-checked here).
+   * @param {Event} event  Click on a `.browse-ship-pack` button carrying
+   *                        `data-pack`, `data-file`, `data-ptype`, `data-label`.
+   * @private
+   */
+  async _onBrowseShipPack(event) {
+    event.preventDefault();
+    const L = (k) => game.i18n.localize(k);
+    const el = event.currentTarget;
+    const { pack, file, ptype } = el.dataset;
+    const heading = el.dataset.label ? L(el.dataset.label) : L('SVNSEA2E.BrowseCompendium');
+
+    const docs = await this._loadPackDocs(pack, file);
+    if (!docs.length) {
+      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.CompendiumMissing'));
+    }
+    docs.sort((a, b) => a.name.localeCompare(b.name));
+
+    const isAdv = ptype === 'shipadventure';
+    const rows = docs
+      .map((d) => {
+        const sys = d.system || {};
+        const owned = this.actor.items.some((i) => i.type === ptype && i.name === d.name);
+        // Per-type rules text: adventures show how they're earned + the reward;
+        // origins/backgrounds show the flavor + the mechanical Bonus.
+        let body = '';
+        if (isAdv) {
+          if (sys.trigger) body += `<div class="sp-sub"><span class="sp-lbl">${L('SVNSEA2E.ShipAdvTrigger')}</span>${sys.trigger}</div>`;
+          if (sys.reward) body += `<div class="sp-sub"><span class="sp-lbl">${L('SVNSEA2E.Reward')}</span>${sys.reward}</div>`;
+        } else {
+          if (sys.description) body += `<div class="sp-desc">${sys.description}</div>`;
+          if (sys.bonus) body += `<div class="sp-sub"><span class="sp-lbl">${L('SVNSEA2E.Bonus')}</span>${sys.bonus}</div>`;
+        }
+        const btn = owned
+          ? `<button type="button" class="sp-add" disabled><i class="fas fa-check"></i> ${L('SVNSEA2E.Added')}</button>`
+          : `<button type="button" class="sp-add" data-add-id="${d._id}"><i class="fas fa-plus"></i> ${L('SVNSEA2E.Add')}</button>`;
+        return `<div class="sp-item">
+          <div class="sp-row"><span class="sp-name">${d.name}</span>${btn}</div>
+          ${body}</div>`;
+      })
+      .join('');
+
+    const icon = isAdv ? 'fa-compass' : ptype === 'shiporigin' ? 'fa-anchor' : 'fa-scroll';
+    const content = `<div class="theah sorcery-picker">
+      <div class="sp-head"><i class="fas ${icon}"></i> <span class="sp-trad">${heading}</span> <span class="sp-count">${docs.length}</span></div>
+      <div class="sp-list">${rows}</div>
+    </div>`;
+
+    new Dialog(
+      {
+        title: heading,
+        content,
+        buttons: { close: { icon: '<i class="fas fa-check"></i>', label: L('SVNSEA2E.Close') } },
+        default: 'close',
+        render: (html) => {
+          const $html = html.jquery ? html : $(html);
+          $html.on('click', '.sp-add', async (ev) => {
+            ev.preventDefault();
+            const btn = ev.currentTarget;
+            const doc = docs.find((x) => x._id === btn.dataset.addId);
+            if (!doc) return;
+            // Re-check the drop guards the picker bypasses.
+            if (ptype === 'shiporigin' && this.actor.items.some((i) => i.type === 'shiporigin')) {
+              return ui.notifications.warn(game.i18n.localize('SVNSEA2E.OneOriginOnly'));
+            }
+            if (this.actor.items.some((i) => i.type === ptype && i.name === doc.name)) {
+              btn.disabled = true;
+              btn.innerHTML = `<i class="fas fa-check"></i> ${L('SVNSEA2E.Added')}`;
+              return;
+            }
+            const obj = foundry.utils.deepClone(doc);
+            delete obj._id;
+            await this.actor.createEmbeddedDocuments('Item', [obj]);
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-check"></i> ${L('SVNSEA2E.Added')}`;
+          });
+        },
+      },
+      { classes: ['theah', 'dialog', 'sorcery-picker-dialog'], width: 580 },
+    ).render(true);
+  }
+
+  /**
    * Open a focused Sorcery picker filtered to the Hero's bloodline tradition
    * (e.g. an Eisen Hero sees only Hexenwerk unguents, not all 116 effects).
    * Each entry has an "Add" button that clones it onto the actor. Falls back to
