@@ -6,7 +6,7 @@
   <div class="roll-body">
     <div class="flexrow flex-group flex-left" style="align-items:baseline; gap:10px;">
       <span class="raise-count">{{ raises }}</span>
-      <span class="raise-label">{{ raisetxt }}</span>
+      <span class="raise-label" data-tooltip="{{localize 'SVNSEA2E.RaisesInfo'}}">{{ raisetxt }} <i class="fas fa-circle-info"></i></span>
       <span style="margin-left:auto; color:var(--ink-soft); font-size:12px;">{{ unusedDice }} {{ unusedDiceTxt }}</span>
     </div>
 

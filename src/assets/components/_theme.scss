@@ -551,7 +551,9 @@
 #chat .theah-pool .die.ten { background: linear-gradient(180deg,var(--gold-leaf),var(--gold-deep)); color: #2a1c10; border-color: var(--gold-deep); }
 #chat .theah-pool .raises { display: flex; align-items: center; gap: 12px; font-family: var(--thd-display); }
 #chat .theah-pool .raises .big { font-size: 30px; color: var(--oxblood); }
-#chat .theah-pool .raises .lab { font-family: var(--thd-label); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
+#chat .theah-pool .raises .lab { font-family: var(--thd-label); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); cursor: help; }
+#chat .theah-pool .raises .lab i, #chat .theah-roll .raise-label i { font-size: 9px; opacity: .55; margin-left: 3px; }
+#chat .theah-pool .raises .lab:hover i, #chat .theah-roll .raise-label:hover i { opacity: 1; color: var(--gold-deep); }
 #chat .theah-pool .combos { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
 #chat .theah-pool .pool-mods { margin-top: 9px; display: flex; gap: 8px; flex-wrap: wrap; }
 #chat .theah-pool .pool-mods::before { content: ""; }
@@ -567,7 +569,7 @@
 #chat .theah-roll .roll-body { padding: 12px; }
 #chat .theah-roll .raise-count { font-family: var(--thd-display); font-size: 30px; color: var(--oxblood); font-variant-numeric: tabular-nums; line-height: 1; }
 :root[data-theah-theme="sea"] #chat .theah-roll .raise-count { color: var(--gold-leaf); }
-#chat .theah-roll .raise-label { font-family: var(--thd-label); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); }
+#chat .theah-roll .raise-label { font-family: var(--thd-label); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); cursor: help; }
 #chat .theah-roll .dice { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
 #chat .theah-roll .die { width: 30px; height: 30px; border-radius: 5px; display: grid; place-items: center; font-family: var(--thd-display); font-size: 15px; border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink); }
 #chat .theah-roll .die.ten { background: linear-gradient(180deg,var(--gold-leaf),var(--gold-deep)); color: #2a1c10; border-color: var(--gold-deep); }

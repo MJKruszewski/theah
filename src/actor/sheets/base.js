@@ -1833,6 +1833,7 @@ export default class ActorSheetSS2e extends ActorSheet {
     const { raises } = this.constructor.computeRaises(eff, st.threshold);
     const diceHtml = this.constructor.renderDiceRow(eff, used);
     const raisesLabel = game.i18n.localize('SVNSEA2E.RaisesLabel');
+    const raisesInfo = game.i18n.localize('SVNSEA2E.RaisesInfo');
     const L = (k) => game.i18n.localize(k);
     const F = (k, d) => game.i18n.format(k, d);
 
@@ -1855,7 +1856,7 @@ export default class ActorSheetSS2e extends ActorSheet {
         <div class="pool-head">${poolParts} = <b>${st.pool}</b>d10 &middot; ${L('SVNSEA2E.SetsOfTen')}</div>
         <div class="pool-body">
           <div class="dice">${diceHtml}</div>
-          <div class="raises"><span class="big">${raises}</span><div><div class="lab">${raisesLabel}</div><div class="combos">${combosText}</div></div></div>
+          <div class="raises"><span class="big">${raises}</span><div><div class="lab" data-tooltip="${raisesInfo}">${raisesLabel} <i class="fas fa-circle-info"></i></div><div class="combos">${combosText}</div></div></div>
           ${modLine}
         </div>
         ${note ? `<div class="pool-reroll"><i class="fas fa-coins"></i> ${note}</div>` : ''}
