@@ -144,24 +144,39 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     sheetData.squadUnallocated = Math.max(0, crewMax - sheetData.squadAllocated);
     sheetData.squadOverAllocated = sheetData.squadAllocated > crewMax;
     sheetData.canAddSquad = squads.length < squadMax;
+  }
 
-    // Quick-division presets: the book's enumerated splits of a 10-Crew Ship, plus
-    // an even split for any complement. Applying one replaces the Squad list.
-    const presets = [{ key: 'single', label: `${crewMax}`, split: [crewMax] }];
-    if (squadMax >= 2) {
-      const hi = Math.ceil(crewMax / 2);
-      presets.push({ key: 'even2', label: `${hi} / ${crewMax - hi}`, split: [hi, crewMax - hi] });
-    }
-    if (crewMax === 10 && squadMax === 2) {
-      presets.push({ key: 's82', label: '8 / 2', split: [8, 2] });
-      presets.push({ key: 's73', label: '7 / 3', split: [7, 3] });
-      presets.push({ key: 's64', label: '6 / 4', split: [6, 4] });
-    }
-    if (squadMax >= 3) {
-      const t = Math.floor(crewMax / 3);
-      presets.push({ key: 'even3', label: `${crewMax - 2 * t} / ${t} / ${t}`, split: [crewMax - 2 * t, t, t] });
-    }
-    sheetData.squadPresets = presets.map((p) => ({ ...p, splitStr: p.split.join(',') }));
+  /* -------------------------------------------- */
+
+  /**
+   * The live Strength of one Squad — a linked Brute Squad reads from its actor
+   * (stored strength is 0), an inline Squad uses its stored strength.
+   * @param {{actorId?:string, strength?:number}} sq
+   * @returns {number}
+   * @private
+   */
+  _squadStrengthOf(sq) {
+    if (!sq) return 0;
+    if (!sq.actorId) return Number(sq.strength) || 0;
+    const a = game.actors?.get(sq.actorId);
+    return a ? Number(a.system?.traits?.strength?.value) || 0 : 0;
+  }
+
+  /**
+   * The free Crew not yet allocated to Squads (Core p.253) — the real budget cap.
+   * `exceptIndex` excludes one Squad (the one being edited) from the running total.
+   * @param {number} [exceptIndex=-1]
+   * @returns {number}
+   * @private
+   */
+  _crewRemaining(exceptIndex = -1) {
+    const crewMax = this.actor.system.crew?.max ?? 0;
+    const squads = this.actor.system.squads || [];
+    const used = squads.reduce(
+      (n, sq, i) => (i === exceptIndex ? n : n + this._squadStrengthOf(sq)),
+      0,
+    );
+    return Math.max(0, crewMax - used);
   }
 
   /**
@@ -437,21 +452,22 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     if (i < 0 || i >= squads.length) return;
     // Linked Brute-Squad squads take their Strength from the actor — not editable here.
     if (squads[i].actorId) return;
-    const crewMax = this.actor.system.crew?.max ?? 10;
-    // Other squads' Strength counts against the budget — including linked Brute
-    // Squads, whose Strength is live on their actor (stored strength is 0).
-    const strengthOf = (sq) => {
-      if (!sq.actorId) return Number(sq.strength) || 0;
-      const a = game.actors?.get(sq.actorId);
-      return a ? Number(a.system?.traits?.strength?.value) || 0 : 0;
-    };
-    const others = squads.reduce((n, sq, idx) => (idx === i ? n : n + strengthOf(sq)), 0);
-    const cap = Math.max(0, crewMax - others); // this Squad may take at most the unallocated remainder
+    // REAL Crew-budget enforcement (Core p.253): a Squad may take at most the free
+    // Crew (crew.max minus every OTHER Squad's Strength, linked Brute Squads
+    // included). "+" fills only that remainder (and never reduces the Squad, so it
+    // is a no-op — with a clear notice — when the Crew is already full); "−" always
+    // decrements. Total allocation therefore can never exceed the Crew.
+    const cap = this._crewRemaining(i);
     const cur = Number(squads[i].strength) || 0;
-    // "+" only fills the unallocated remainder and never reduces the Squad (so it's
-    // a no-op when the Crew is already over-allocated); "−" always decrements.
     const next = delta > 0 ? Math.min(cur + delta, Math.max(cur, cap)) : Math.max(0, cur + delta);
-    if (next === cur) return;
+    if (next === cur) {
+      if (delta > 0) {
+        ui.notifications.info(
+          game.i18n.format('SVNSEA2E.CrewFullyAllocated', { n: this.actor.system.crew?.max ?? 0 }),
+        );
+      }
+      return;
+    }
     squads[i].strength = next;
     this.actor.update({ 'system.squads': squads });
   }
@@ -527,34 +543,6 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
   }
 
   /**
-   * Apply a quick-division preset: divide the Crew complement into inline Squads
-   * (Core p.253). Linked Brute-Squad squads are attached units, NOT part of the
-   * complement being divided, so they are preserved untouched; the preset only
-   * rebuilds the inline squads, filling the slots that remain under squadmax.
-   * @param {Event} event
-   * @private
-   */
-  _onApplySquadPreset(event) {
-    event.preventDefault();
-    const split = String(event.currentTarget.dataset.split || '')
-      .split(',')
-      .map((n) => Math.max(0, parseInt(n, 10) || 0))
-      .filter((n) => n > 0);
-    if (!split.length) return;
-    const existing = this.actor.system.squads || [];
-    const linked = existing.filter((sq) => sq.actorId);               // keep linked Brute Squads
-    const inlineExisting = existing.filter((sq) => !sq.actorId);      // reuse their names by index
-    const squadMax = this.actor.system.crew?.squadmax ?? 2;
-    const room = Math.max(0, squadMax - linked.length);
-    const inline = split.slice(0, room).map((strength, idx) => ({
-      name: inlineExisting[idx]?.name || game.i18n.format('SVNSEA2E.SquadN', { n: linked.length + idx + 1 }),
-      strength,
-      actorId: '',
-    }));
-    this.actor.update({ 'system.squads': [...linked, ...inline] });
-  }
-
-  /**
    * ±1 stepper for the Ship's Treasury (Wealth).
    * @param {Event} event
    * @private
@@ -620,10 +608,18 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     event.preventDefault();
     const squads = foundry.utils.duplicate(this.actor.system.squads || []);
     const max = this.actor.system.crew?.squadmax ?? 2;
+    // REAL enforcement (Core p.253): never exceed the Squad count...
     if (squads.length >= max) {
       return ui.notifications.warn(game.i18n.format('SVNSEA2E.SquadMax', { n: max }));
     }
-    squads.push({ name: game.i18n.format('SVNSEA2E.SquadN', { n: squads.length + 1 }), strength: 0 });
+    // ...and a new Squad takes only the FREE Crew (the unallocated remainder), so
+    // adding one can never push the total over the Crew.
+    const strength = this._crewRemaining();
+    squads.push({
+      name: game.i18n.format('SVNSEA2E.SquadN', { n: squads.length + 1 }),
+      strength,
+      actorId: '',
+    });
     this.actor.update({ 'system.squads': squads });
   }
 
@@ -656,10 +652,9 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     // Hull — clicking a Hit pip or a Critical-Hit seal (mirrors the hero wound track).
     html.find('.rail-hull .track i').on('click', (ev) => this._processHull(ev));
     html.find('.rail-hull .spiral .seal').on('click', (ev) => this._processHull(ev));
-    // Treasury stepper; Squad strength steppers + division presets + add/remove.
+    // Treasury stepper; Squad strength steppers + add/remove (Crew-budget enforced).
     html.find('.treasury-step').on('click', (ev) => this._onTreasuryStep(ev));
     html.find('.squad-str-step').on('click', (ev) => this._onSquadStrengthStep(ev));
-    html.find('.squad-preset').on('click', (ev) => this._onApplySquadPreset(ev));
     html.find('.squad-add').on('click', (ev) => this._onSquadAdd(ev));
     html.find('.squad-remove').on('click', (ev) => this._onSquadRemove(ev));
     html.find('.squad-roll').on('click', (ev) => this._onSquadRoll(ev));

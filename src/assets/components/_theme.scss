@@ -1055,7 +1055,7 @@
 .theah.ship .stepper button:hover { background: var(--gold-deep); color: #fff; }
 .theah.ship .stepper b { font-family: var(--thd-display); font-size: 22px; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 26px; text-align: center; }
 
-/* Crew tab — full complement + division presets + Squad pip cards. */
+/* Crew tab — full complement + manual Squad division + Squad pip cards. */
 .theah.ship .crew-strength { display: flex; align-items: baseline; gap: 14px; padding: 12px 16px; border: 1px solid var(--panel-edge); border-radius: 5px; background: color-mix(in srgb, var(--navy) 5%, transparent); margin-bottom: 8px; }
 .theah.ship .crew-strength .cs-k { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); cursor: help; }
 .theah.ship .crew-strength .cs-v { font-family: var(--thd-display); font-size: 30px; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
@@ -1069,14 +1069,13 @@
 .theah.ship .rail-hull .ship-bonuses { margin: 10px 0 0; }
 .theah.ship .rail-hull .ship-bonuses li { color: var(--gold-leaf); }
 
-/* Squad division presets (predefined splits + custom). */
-.theah.ship .squad-presets { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-.theah.ship .squad-presets .sp-lbl { font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); cursor: help; margin-right: 2px; }
-.theah.ship .squad-preset, .theah.ship .squad-add.ghost { font-family: var(--thd-display); font-size: 14px; color: var(--ink); background: color-mix(in srgb, var(--gold-leaf) 6%, transparent); border: 1px solid var(--panel-edge); border-radius: 4px; padding: 4px 12px; cursor: pointer; transition: background .12s, border-color .12s; }
-.theah.ship .squad-preset:hover, .theah.ship .squad-add.ghost:hover { border-color: var(--gold); background: color-mix(in srgb, var(--gold-leaf) 16%, transparent); }
-.theah.ship .squad-add.ghost { font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-deep); background: transparent; display: inline-flex; align-items: center; gap: 5px; }
+/* Manual Squad division (no presets): a clean "Add a Squad" action + how-to note. */
+.theah.ship .squad-add { font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-deep); background: transparent; border: 1px solid var(--panel-edge); border-radius: 4px; padding: 4px 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: background .12s, border-color .12s; }
+.theah.ship .squad-add:hover { border-color: var(--gold); background: color-mix(in srgb, var(--gold-leaf) 14%, transparent); color: var(--gold); }
+.theah.ship .squad-howto { margin: 0 0 14px; padding: 9px 12px; border-left: 3px solid var(--gold-deep); border-radius: 0 3px 3px 0; background: color-mix(in srgb, var(--gold-leaf) 7%, transparent); font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+.theah.ship .squad-howto b { color: var(--gold-deep); }
 
-.theah.ship .squads-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.theah.ship .squads-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 .theah.ship .squads-head .sq-title { font-family: var(--thd-label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); cursor: help; }
 .theah.ship .squads-head .sq-alloc { margin-left: auto; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .06em; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .theah.ship .squads-head .sq-alloc.over { color: var(--oxblood); }

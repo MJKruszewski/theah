@@ -177,23 +177,19 @@
             </ul>
           {{/if}}
 
-          {{!-- Quick-division presets (predefined splits) --}}
-          <div class="squad-presets">
-            <span class="sp-lbl" data-tooltip="{{localize 'SVNSEA2E.SquadPresetInfo'}}">{{localize "SVNSEA2E.DivideCrew"}}</span>
-            {{#each squadPresets}}
-              <button type="button" class="squad-preset" data-split="{{splitStr}}">{{label}}</button>
-            {{/each}}
-            {{#if canAddSquad}}<button type="button" class="squad-add ghost" title="{{localize 'SVNSEA2E.AddSquad'}}"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.CustomSquad"}}</button>{{/if}}
-          </div>
-
           {{!-- Squad cards: inline division (name + strength stepper) OR a linked
                Brute Squad actor (live Strength, own sheet). Squads are NOT form
                inputs — names write via a change handler — so the ArrayField never
-               round-trips through a submit (no stale/zeroing element re-clean). --}}
+               round-trips through a submit (no stale/zeroing element re-clean).
+               The Crew budget is enforced in code: adding a Squad grabs only the
+               free Crew, and a Squad's Strength stepper stops at the remainder, so
+               the total can never exceed the Crew (Core p.253). --}}
           <div class="squads-head">
             <span class="sq-title" data-tooltip="{{localize 'SVNSEA2E.SquadsInfo'}}">{{localize "SVNSEA2E.Squads"}}</span>
-            <span class="sq-alloc {{#if squadOverAllocated}}over{{/if}}">{{localize "SVNSEA2E.Allocated"}} {{squadAllocated}} / {{crewMax}}</span>
+            <span class="sq-alloc {{#if squadOverAllocated}}over{{/if}}" data-tooltip="{{localize 'SVNSEA2E.AllocatedInfo'}}">{{localize "SVNSEA2E.Allocated"}} {{squadAllocated}} / {{crewMax}}</span>
+            {{#if canAddSquad}}<button type="button" class="squad-add" data-tooltip="{{localize 'SVNSEA2E.AddSquadInfo'}}"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.AddSquad"}}</button>{{/if}}
           </div>
+          <p class="section-note squad-howto">{{{localize "SVNSEA2E.SquadHowTo"}}}</p>
           <div class="squad-list">
             {{#each squads as |sq id|}}
               <div class="squad {{#if sq.linked}}linked{{/if}} {{#if sq.missing}}missing{{/if}}" data-item-index="{{sq.index}}">
