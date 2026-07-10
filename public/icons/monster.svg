@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <radialGradient id="pbg" cx="50%" cy="34%" r="72%">
+      <stop offset="0%" stop-color="#3c4a52"/>
+      <stop offset="62%" stop-color="#243139"/>
+      <stop offset="100%" stop-color="#16242c"/>
+    </radialGradient>
+  </defs>
+  <rect width="300" height="400" fill="url(#pbg)"/>
+  <!-- Monster: a slit-pupil eye over kraken tentacles — a beast of the deep, sea-green. -->
+  <circle cx="150" cy="150" r="60" fill="none" stroke="#6fa88c" stroke-width="7" opacity="0.7"/>
+  <ellipse cx="150" cy="150" rx="18" ry="30" fill="#6fa88c" opacity="0.85"/>
+  <g fill="none" stroke="#6fa88c" stroke-width="12" stroke-linecap="round" opacity="0.6">
+    <path d="M112 244 C100 285 132 300 120 346"/>
+    <path d="M150 250 C150 292 150 300 150 352"/>
+    <path d="M188 244 C200 285 168 300 180 346"/>
+  </g>
+</svg>

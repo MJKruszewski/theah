@@ -371,6 +371,18 @@ Hooks.on('preCreateItem', function (document, options, userId) {
 /**
  * Set the default image for an actor type instead of the mystery man
  **/
+// Per-type default portrait so the sidebar/token tells a Hero from a Villain,
+// Monster, Brute Squad, Ship or Danger Points tracker at a glance.
+const ACTOR_ICONS = {
+  [ActorType.PLAYER]: 'portrait',
+  [ActorType.HERO]: 'hero',
+  [ActorType.VILLAIN]: 'villain',
+  [ActorType.MONSTER]: 'monster',
+  [ActorType.BRUTE]: 'brute',
+  [ActorType.SHIP]: 'ship',
+  [ActorType.DANGERPOINTS]: 'dangerpts',
+};
+
 Hooks.on('preCreateActor', function (document, entity, options, userId) {
   const isPlayerSide = [ActorType.PLAYER, ActorType.HERO].includes(document.type);
   const isFoe = [ActorType.VILLAIN, ActorType.MONSTER, ActorType.BRUTE].includes(document.type);
@@ -378,8 +390,9 @@ Hooks.on('preCreateActor', function (document, entity, options, userId) {
   const D = CONST.TOKEN_DISPLAY_MODES;
   const P = CONST.TOKEN_DISPOSITIONS;
 
-  document.updateSource({
-    img: 'systems/theah/icons/portrait.svg',
+  const iconPath = `systems/theah/icons/${ACTOR_ICONS[document.type] || 'portrait'}.svg`;
+
+  const update = {
     // Automatic token wiring: Wounds + Dramatic Wounds bars (Hits + Critical Hits
     // for Ships), sensible display and linkage so sheet and token stay in sync.
     prototypeToken: {
@@ -390,7 +403,17 @@ Hooks.on('preCreateActor', function (document, entity, options, userId) {
       bar1: { attribute: isShip ? 'hits' : 'wounds' },
       bar2: { attribute: isShip ? 'criticals' : 'dwounds' },
     },
-  });
+  };
+
+  // Only stamp our themed default when the actor has no portrait of its own, so
+  // a duplicated or imported actor keeps its custom art. Set the token texture to
+  // match so the sidebar portrait and the token icon agree.
+  if (!document.img || document.img.includes('mystery-man')) {
+    update.img = iconPath;
+    update.prototypeToken.texture = { src: iconPath };
+  }
+
+  document.updateSource(update);
 });
 
 Hooks.on('renderActorDirectory', (app, html, data) => {

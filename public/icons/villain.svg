@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <radialGradient id="pbg" cx="50%" cy="34%" r="72%">
+      <stop offset="0%" stop-color="#3c4a52"/>
+      <stop offset="62%" stop-color="#243139"/>
+      <stop offset="100%" stop-color="#16242c"/>
+    </radialGradient>
+  </defs>
+  <rect width="300" height="400" fill="url(#pbg)"/>
+  <!-- Villain: a masquerade domino mask in oxblood — instantly reads as the antagonist. -->
+  <path fill="#b5453a" fill-opacity="0.78"
+        d="M56 194 Q56 158 150 158 Q244 158 244 194 Q244 236 198 240 Q172 266 150 260 Q128 266 102 240 Q56 236 56 194 Z"/>
+  <g fill="#243139">
+    <ellipse cx="112" cy="198" rx="26" ry="16"/>
+    <ellipse cx="188" cy="198" rx="26" ry="16"/>
+  </g>
+  <!-- brow flicks for a menacing arch -->
+  <g fill="none" stroke="#b5453a" stroke-width="6" stroke-linecap="round" opacity="0.8">
+    <path d="M60 168 q26 -18 48 -12"/>
+    <path d="M240 168 q-26 -18 -48 -12"/>
+  </g>
+</svg>

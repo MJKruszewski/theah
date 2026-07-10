@@ -1,0 +1,56 @@
+<title>Théah — Actor Type Icons</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root { --paper:#e7d8b6; --paper-deep:#d8c49a; --panel:#f1e7cc; --edge:#cbb488; --ink:#3a2c1c; --ink-soft:#6b5a41; --gold:#b0873f; --gold-leaf:#d9b262; --gold-deep:#8a642a;
+    --display:"Hoefler Text","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; --label:ui-sans-serif,"Gill Sans","Segoe UI",system-ui,sans-serif; }
+  @media (prefers-color-scheme: dark){ :root { --paper:#12262f; --paper-deep:#0e1f27; --panel:#173039; --edge:#2b4a55; --ink:#e8dcc0; --ink-soft:#a9b9bb; --gold:#c9a24b; --gold-leaf:#e6c887; --gold-deep:#9c7a34; } }
+  :root[data-theme="dark"]{ --paper:#12262f; --paper-deep:#0e1f27; --panel:#173039; --edge:#2b4a55; --ink:#e8dcc0; --ink-soft:#a9b9bb; --gold:#c9a24b; --gold-leaf:#e6c887; --gold-deep:#9c7a34; }
+  :root[data-theme="light"]{ --paper:#e7d8b6; --paper-deep:#d8c49a; --panel:#f1e7cc; --edge:#cbb488; --ink:#3a2c1c; --ink-soft:#6b5a41; --gold:#b0873f; --gold-leaf:#d9b262; --gold-deep:#8a642a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--label); color: var(--ink); background: var(--paper-deep); padding: clamp(20px,4vw,48px); }
+  h1 { font-family: var(--display); font-variant: small-caps; letter-spacing: .12em; font-weight: 600; font-size: clamp(22px,3vw,30px); margin: 0 0 4px;
+       background: linear-gradient(180deg,var(--gold-leaf),var(--gold) 55%,var(--gold-deep)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--ink-soft); font-size: 13px; margin: 0 0 26px; max-width: 60ch; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px; max-width: 900px; }
+  .card { background: var(--panel); border: 1px solid var(--edge); border-radius: 6px; overflow: hidden; box-shadow: 0 10px 26px -18px rgba(20,12,4,.6); }
+  .art { display: block; }
+  .art svg { display: block; width: 100%; height: auto; }
+  .meta { padding: 9px 12px 11px; }
+  .type { font-family: var(--display); font-size: 16px; color: var(--ink); }
+  .key { font-family: var(--label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); }
+  .note { font-size: 11.5px; color: var(--ink-soft); margin-top: 3px; line-height: 1.4; }
+</style>
+
+<h1>Théah — Actor Type Icons</h1>
+<p class="sub">A distinct default portrait per actor type, so a Villain, Monster, Brute Squad, Ship or Danger Points tracker reads at a glance in the sidebar and on tokens. Same navy field for family; a different glyph and accent colour each. Duplicated/imported actors keep their own art.</p>
+
+<div class="grid">
+  <div class="card">
+    <div class="art"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><radialGradient id="g1" cx="50%" cy="34%" r="72%"><stop offset="0%" stop-color="#3c4a52"/><stop offset="62%" stop-color="#243139"/><stop offset="100%" stop-color="#16242c"/></radialGradient></defs><rect width="300" height="400" fill="url(#g1)"/><g fill="none" stroke="#d9b262" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"><circle cx="150" cy="158" r="52"/><path d="M70 320a80 80 0 0 1 160 0"/></g></svg></div>
+    <div class="meta"><div class="type">Hero <span class="key">· player</span></div><div class="note">The player's own Hero — a gold bust.</div></div>
+  </div>
+  <div class="card">
+    <div class="art"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><radialGradient id="g2" cx="50%" cy="34%" r="72%"><stop offset="0%" stop-color="#3c4a52"/><stop offset="62%" stop-color="#243139"/><stop offset="100%" stop-color="#16242c"/></radialGradient></defs><rect width="300" height="400" fill="url(#g2)"/><g fill="none" stroke="#6bb0a6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"><circle cx="150" cy="168" r="50"/><path d="M70 330a80 80 0 0 1 160 0"/></g><g stroke="#6bb0a6" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"><path d="M104 132 q46 -26 92 0 q-46 16 -92 0 z" fill="#6bb0a6" fill-opacity="0.35" stroke-width="5"/><path d="M150 118 q30 -18 46 -2" fill="none" stroke-width="4"/></g></svg></div>
+    <div class="meta"><div class="type">Hero (NPC) <span class="key">· hero</span></div><div class="note">Allied NPC hero — a teal, plumed-hat bust.</div></div>
+  </div>
+  <div class="card">
+    <div class="art"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><radialGradient id="g3" cx="50%" cy="34%" r="72%"><stop offset="0%" stop-color="#3c4a52"/><stop offset="62%" stop-color="#243139"/><stop offset="100%" stop-color="#16242c"/></radialGradient></defs><rect width="300" height="400" fill="url(#g3)"/><path fill="#b5453a" fill-opacity="0.78" d="M56 194 Q56 158 150 158 Q244 158 244 194 Q244 236 198 240 Q172 266 150 260 Q128 266 102 240 Q56 236 56 194 Z"/><g fill="#243139"><ellipse cx="112" cy="198" rx="26" ry="16"/><ellipse cx="188" cy="198" rx="26" ry="16"/></g><g fill="none" stroke="#b5453a" stroke-width="6" stroke-linecap="round" opacity="0.8"><path d="M60 168 q26 -18 48 -12"/><path d="M240 168 q-26 -18 -48 -12"/></g></svg></div>
+    <div class="meta"><div class="type">Villain <span class="key">· villain</span></div><div class="note">A masquerade domino mask in oxblood.</div></div>
+  </div>
+  <div class="card">
+    <div class="art"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><radialGradient id="g4" cx="50%" cy="34%" r="72%"><stop offset="0%" stop-color="#3c4a52"/><stop offset="62%" stop-color="#243139"/><stop offset="100%" stop-color="#16242c"/></radialGradient></defs><rect width="300" height="400" fill="url(#g4)"/><circle cx="150" cy="150" r="60" fill="none" stroke="#6fa88c" stroke-width="7" opacity="0.7"/><ellipse cx="150" cy="150" rx="18" ry="30" fill="#6fa88c" opacity="0.85"/><g fill="none" stroke="#6fa88c" stroke-width="12" stroke-linecap="round" opacity="0.6"><path d="M112 244 C100 285 132 300 120 346"/><path d="M150 250 C150 292 150 300 150 352"/><path d="M188 244 C200 285 168 300 180 346"/></g></svg></div>
+    <div class="meta"><div class="type">Monster <span class="key">· monster</span></div><div class="note">A slit-pupil eye over kraken tentacles.</div></div>
+  </div>
+  <div class="card">
+    <div class="art"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><radialGradient id="g5" cx="50%" cy="34%" r="72%"><stop offset="0%" stop-color="#3c4a52"/><stop offset="62%" stop-color="#243139"/><stop offset="100%" stop-color="#16242c"/></radialGradient></defs><rect width="300" height="400" fill="url(#g5)"/><g fill="none" stroke="#c69a5a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"><circle cx="100" cy="172" r="32"/><path d="M58 300a42 42 0 0 1 84 0"/><circle cx="200" cy="172" r="32"/><path d="M158 300a42 42 0 0 1 84 0"/></g><g fill="#243139" stroke="#c69a5a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><circle cx="150" cy="190" r="42"/><path d="M88 336a62 62 0 0 1 124 0z"/></g></svg></div>
+    <div class="meta"><div class="type">Brute Squad <span class="key">· brute</span></div><div class="note">Three overlapping figures — a mob, in bronze.</div></div>
+  </div>
+  <div class="card">
+    <div class="art"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><radialGradient id="g6" cx="50%" cy="34%" r="72%"><stop offset="0%" stop-color="#3c4a52"/><stop offset="62%" stop-color="#243139"/><stop offset="100%" stop-color="#16242c"/></radialGradient></defs><rect width="300" height="400" fill="url(#g6)"/><g fill="none" stroke="#d9b262" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.62"><path d="M76 250 h148 l-22 40 a8 8 0 0 1 -7 4 h-90 a8 8 0 0 1 -7 -4 z"/><path d="M150 250 v-140"/><path d="M150 108 v-22 l22 8 -22 8"/><path d="M110 116 q40 24 80 0 v52 q-40 20 -80 0 z"/><path d="M96 176 q54 28 108 0 v50 q-54 22 -108 0 z"/><path d="M58 312 q20 -12 40 0 t40 0 t40 0 t40 0"/></g></svg></div>
+    <div class="meta"><div class="type">Ship <span class="key">· ship</span></div><div class="note">A masted ship on the waves, in nautical gold.</div></div>
+  </div>
+  <div class="card">
+    <div class="art"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><radialGradient id="g7" cx="50%" cy="34%" r="72%"><stop offset="0%" stop-color="#3c4a52"/><stop offset="62%" stop-color="#243139"/><stop offset="100%" stop-color="#16242c"/></radialGradient></defs><rect width="300" height="400" fill="url(#g7)"/><g fill="none" stroke="#b5453a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.72"><path d="M102 116 h96 M102 296 h96"/><path d="M112 124 h76 l-38 46 z"/><path d="M112 288 h76 l-38 -46 z"/></g><g fill="#b5453a" opacity="0.6"><path d="M126 138 h48 l-24 28 z"/><path d="M138 280 h24 l-12 -22 z"/></g><path d="M150 170 v52" stroke="#b5453a" stroke-width="3" stroke-linecap="round" opacity="0.7"/></svg></div>
+    <div class="meta"><div class="type">Danger Points <span class="key">· dangerpts</span></div><div class="note">An hourglass — mounting danger, in oxblood.</div></div>
+  </div>
+</div>

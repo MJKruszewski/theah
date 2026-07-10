@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <radialGradient id="pbg" cx="50%" cy="34%" r="72%">
+      <stop offset="0%" stop-color="#3c4a52"/>
+      <stop offset="62%" stop-color="#243139"/>
+      <stop offset="100%" stop-color="#16242c"/>
+    </radialGradient>
+  </defs>
+  <rect width="300" height="400" fill="url(#pbg)"/>
+  <!-- Allied Hero (NPC): a teal bust with a plumed hat to read distinctly from the player's own gold Hero. -->
+  <g fill="none" stroke="#6bb0a6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
+    <circle cx="150" cy="168" r="50"/>
+    <path d="M70 330a80 80 0 0 1 160 0"/>
+  </g>
+  <g stroke="#6bb0a6" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+    <path d="M104 132 q46 -26 92 0 q-46 16 -92 0 z" fill="#6bb0a6" fill-opacity="0.35" stroke-width="5"/>
+    <path d="M150 118 q30 -18 46 -2" fill="none" stroke-width="4"/>
+  </g>
+</svg>

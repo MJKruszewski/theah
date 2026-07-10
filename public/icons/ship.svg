@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <radialGradient id="pbg" cx="50%" cy="34%" r="72%">
+      <stop offset="0%" stop-color="#3c4a52"/>
+      <stop offset="62%" stop-color="#243139"/>
+      <stop offset="100%" stop-color="#16242c"/>
+    </radialGradient>
+  </defs>
+  <rect width="300" height="400" fill="url(#pbg)"/>
+  <!-- Ship: hull, mast, two billowing sails, a pennant and a wave line, in nautical gold. -->
+  <g fill="none" stroke="#d9b262" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.62">
+    <path d="M76 250 h148 l-22 40 a8 8 0 0 1 -7 4 h-90 a8 8 0 0 1 -7 -4 z"/>
+    <path d="M150 250 v-140"/>
+    <path d="M150 108 v-22 l22 8 -22 8"/>
+    <path d="M110 116 q40 24 80 0 v52 q-40 20 -80 0 z"/>
+    <path d="M96 176 q54 28 108 0 v50 q-54 22 -108 0 z"/>
+    <path d="M58 312 q20 -12 40 0 t40 0 t40 0 t40 0"/>
+  </g>
+</svg>
