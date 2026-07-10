@@ -1094,6 +1094,14 @@
 .theah.ship .squad .sq-pool { flex: none; margin-left: auto; font-family: var(--thd-label); font-size: 11px; font-weight: 600; color: var(--gold-deep); }
 .theah.ship .squad .pips { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 8px; }
 .theah.ship .squad .pips i { width: 12px; height: 12px; border-radius: 2px; background: linear-gradient(180deg, var(--teal), color-mix(in srgb, var(--teal) 60%, #000)); }
+.theah.ship .squad .squad-roll { flex: none; margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-family: var(--thd-label); font-size: 11px; font-weight: 600; letter-spacing: .04em; color: #2a1c10; background: linear-gradient(180deg, var(--gold-leaf), var(--gold)); border: 1px solid var(--gold-deep); border-radius: 4px; padding: 4px 12px; cursor: pointer; transition: filter .12s; }
+.theah.ship .squad .squad-roll:hover { filter: brightness(1.06); }
+.theah.ship .squad .squad-roll i { font-size: 12px; }
+
+/* Squad Risk-pool chat card — reuses .theah-pool with a teal (crew) accent. */
+#chat .theah-pool.theah-squad { border-left-color: var(--teal); }
+#chat .theah-pool.theah-squad .pool-head i { color: var(--teal); }
+#chat .theah-pool.theah-squad .squad-note i { color: var(--teal); }
 
 /* Officer roster (drag PC/NPC actors onto a role). */
 .theah.ship .crew-roster { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }

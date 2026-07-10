@@ -148,6 +148,16 @@
               <p class="empty-note">{{localize "SVNSEA2E.NoShipBackgrounds"}}</p>
             {{/each}}
           </div>
+
+          <details class="roller-guide">
+            <summary><i class="fas fa-circle-question"></i> {{localize "SVNSEA2E.HullGuideTitle"}}</summary>
+            <ol class="rg-steps">
+              <li>{{{localize "SVNSEA2E.HullGuide1"}}}</li>
+              <li>{{{localize "SVNSEA2E.HullGuide2"}}}</li>
+              <li>{{{localize "SVNSEA2E.HullGuide3"}}}</li>
+            </ol>
+            <div class="rg-live"><span class="rg-live-lbl">{{localize "SVNSEA2E.Example"}}</span> {{{localize "SVNSEA2E.HullGuideLive"}}}</div>
+          </details>
         </div>
 
         {{!-- ===== Crew ===== --}}
@@ -198,7 +208,7 @@
                     <b class="sq-v">{{sq.strength}}<small>{{localize "SVNSEA2E.StrAbbr"}}</small></b>
                     <button type="button" class="squad-str-step" data-index="{{sq.index}}" data-delta="1" aria-label="+1">+</button>
                   </span>
-                  <span class="sq-pool" data-tooltip="{{localize 'SVNSEA2E.SquadPoolHint'}}">{{sq.strength}}d10</span>
+                  <button type="button" class="squad-roll" data-index="{{sq.index}}" data-tooltip="{{localize 'SVNSEA2E.RollSquadInfo'}}" title="{{localize 'SVNSEA2E.RollSquad'}}"><i class="fas fa-dice-d20"></i> {{sq.strength}}d10</button>
                 </div>
                 <span class="pips" data-tooltip="{{localize 'SVNSEA2E.SquadPoolHint'}}">{{#each sq.pips}}<i></i>{{/each}}</span>
               </div>
@@ -212,7 +222,7 @@
           <ol class="items-list crew-roster">
             {{#each crew as |role|}}
               <li class="flexrow item-header {{role.cssClass}}" {{#each role.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>
-                <h3 class="role-name flexrow" {{#if role.tip}}data-tooltip="{{role.tip}}"{{/if}} {{#each role.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>{{role.label}}{{#if role.tip}} <i class="fas fa-circle-info role-info"></i>{{/if}}</h3>
+                <h3 class="role-name" {{#if role.tip}}data-tooltip="{{role.tip}}"{{/if}} {{#each role.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>{{role.label}}{{#if role.tip}} <i class="fas fa-circle-info role-info"></i>{{/if}}</h3>
               </li>
               {{#each role.actors as |actor a|}}
                 <li class="item flexrow draggable {{role.cssClass}}" data-actor-id="{{actor.id}}">
@@ -225,6 +235,17 @@
               {{/each}}
             {{/each}}
           </ol>
+
+          <details class="roller-guide">
+            <summary><i class="fas fa-circle-question"></i> {{localize "SVNSEA2E.CrewGuideTitle"}}</summary>
+            <ol class="rg-steps">
+              <li>{{{localize "SVNSEA2E.CrewGuide1"}}}</li>
+              <li>{{{localize "SVNSEA2E.CrewGuide2"}}}</li>
+              <li>{{{localize "SVNSEA2E.CrewGuide3"}}}</li>
+              <li>{{{localize "SVNSEA2E.CrewGuide4"}}}</li>
+            </ol>
+            <div class="rg-live"><span class="rg-live-lbl">{{localize "SVNSEA2E.Example"}}</span> {{{localize "SVNSEA2E.CrewGuideLive"}}}</div>
+          </details>
         </div>
 
         {{!-- ===== Adventures — Story-style earned trackers ===== --}}

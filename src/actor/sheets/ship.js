@@ -1,5 +1,5 @@
 import ActorSheetSS2e from './base.js';
-import { getItems } from '../../helpers.js';
+import { getItems, postThemedChat } from '../../helpers.js';
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -432,6 +432,55 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
   }
 
   /**
+   * Roll a Crew Squad's dice pool (Core p.253): a Squad rolls dice equal to its
+   * Strength, makes Raises (sets of 10) and spends them all on one action. Reuses
+   * the shared Raises math + dice-row renderer and posts a themed `.theah-pool` card.
+   * @param {Event} event
+   * @private
+   */
+  async _onSquadRoll(event) {
+    event.preventDefault();
+    const i = Number(event.currentTarget.dataset.index);
+    const sq = (this.actor.system.squads || [])[i];
+    if (!sq) return;
+    const strength = Number(sq.strength) || 0;
+    if (strength <= 0) {
+      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.SquadNoDice'));
+    }
+
+    const roll = new Roll(`${strength}d10`);
+    await roll.evaluate();
+    if (game.dice3d) {
+      try {
+        await game.dice3d.showForRoll(roll, game.user, true);
+      } catch (e) {
+        /* Dice So Nice is optional */
+      }
+    }
+
+    const dice = roll.dice[0].results.map((r) => r.result);
+    const target = this.constructor.RAISE_TARGET;
+    const { raises, combos, used } = this.constructor.computeRaises(dice, target);
+    const diceHtml = this.constructor.renderDiceRow(dice, used);
+    const L = (k) => game.i18n.localize(k);
+    const combosText = combos.length ? combos.join('   ·   ') : L('SVNSEA2E.NoRaises');
+    const name = sq.name || game.i18n.format('SVNSEA2E.SquadN', { n: i + 1 });
+    const raisesInfo = L('SVNSEA2E.RaisesInfo');
+
+    const content = `
+      <div class="theah theah-pool theah-squad">
+        <div class="pool-head"><i class="fas fa-users"></i> ${game.i18n.format('SVNSEA2E.SquadRolls', { name, n: strength })} &middot; ${L('SVNSEA2E.SetsOfTen')}</div>
+        <div class="pool-body">
+          <div class="dice">${diceHtml}</div>
+          <div class="raises"><span class="big">${raises}</span><div><div class="lab" data-tooltip="${raisesInfo}">${L('SVNSEA2E.RaisesLabel')} <i class="fas fa-circle-info"></i></div><div class="combos">${combosText}</div></div></div>
+        </div>
+        <div class="pool-reroll squad-note"><i class="fas fa-anchor"></i> ${L('SVNSEA2E.SquadRollNote')}</div>
+      </div>`;
+
+    await postThemedChat({ actor: this.actor, content, rolls: [roll], sound: CONFIG.sounds.dice });
+  }
+
+  /**
    * Apply a quick-division preset: replace the Squad list with the chosen split
    * of the full complement (Core p.253). Preserves existing Squad names by index.
    * @param {Event} event
@@ -560,6 +609,7 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     html.find('.squad-preset').on('click', (ev) => this._onApplySquadPreset(ev));
     html.find('.squad-add').on('click', (ev) => this._onSquadAdd(ev));
     html.find('.squad-remove').on('click', (ev) => this._onSquadRemove(ev));
+    html.find('.squad-roll').on('click', (ev) => this._onSquadRoll(ev));
 
     // Ship compendium pickers (Origins / Backgrounds / Adventures — sorcery-style window).
     html.find('.browse-ship-pack').on('click', (ev) => this._onBrowseShipPack(ev));
