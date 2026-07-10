@@ -20,6 +20,7 @@ SVNSEA2E.itemTypes = {
   secretsociety: 'SVNSEA2E.SecretSociety',
   shipadventure: 'SVNSEA2E.ShipAdventure',
   shipbackground: 'SVNSEA2E.ShipBackground',
+  shiporigin: 'SVNSEA2E.ShipOrigin',
   sorcery: 'SVNSEA2E.Sorcery',
   story: 'SVNSEA2E.Story',
   hubris: 'SVNSEA2E.Hubris',

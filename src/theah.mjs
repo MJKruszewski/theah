@@ -25,6 +25,7 @@ import { MonsterQualityModel } from './item/models/monsterQualityModel';
 import { SchemeModel } from './item/models/schemeModel';
 import { ShipAdventureModel } from './item/models/shipAdventureModel';
 import { ShipBackgroundModel } from './item/models/shipBackgroundModel';
+import { ShipOriginModel } from './item/models/shipOriginModel';
 import { VirtueModel } from './item/models/virtueModel';
 import { HubrisModel } from './item/models/hubrisModel';
 import { SecretSocietyModel } from './item/models/secretSocietyModel';
@@ -50,6 +51,7 @@ import { ItemSheetSS2eScheme } from './item/sheets/scheme.js';
 import { ItemSheetSS2eSecretSociety } from './item/sheets/secretsociety.js';
 import { ItemSheetSS2eShipAdventure } from './item/sheets/shipadventure.js';
 import { ItemSheetSS2eShipBackground } from './item/sheets/shipbackground.js';
+import { ItemSheetSS2eShipOrigin } from './item/sheets/shiporigin.js';
 import { ItemSheetSS2eSorcery } from './item/sheets/sorcery.js';
 import { ItemSheetSS2eStory } from './item/sheets/story.js';
 
@@ -110,6 +112,7 @@ Hooks.once('init', async function () {
   CONFIG.Item.dataModels[ItemTypes.SECRET_SOCIETY] = SecretSocietyModel;
   CONFIG.Item.dataModels[ItemTypes.SHIP_ADVENTURE] = ShipAdventureModel;
   CONFIG.Item.dataModels[ItemTypes.SHIP_BACKGROUND] = ShipBackgroundModel;
+  CONFIG.Item.dataModels[ItemTypes.SHIP_ORIGIN] = ShipOriginModel;
   CONFIG.Item.dataModels[ItemTypes.VIRTUE] = VirtueModel;
   CONFIG.Item.dataModels[ItemTypes.HUBRIS] = HubrisModel;
   CONFIG.Item.dataModels[ItemTypes.SORCERY] = SorceryModel;
@@ -188,6 +191,10 @@ Hooks.once('init', async function () {
   });
   Items.registerSheet('theah', ItemSheetSS2eShipBackground, {
     types: [ItemTypes.SHIP_BACKGROUND],
+    makeDefault: true,
+  });
+  Items.registerSheet('theah', ItemSheetSS2eShipOrigin, {
+    types: [ItemTypes.SHIP_ORIGIN],
     makeDefault: true,
   });
   Items.registerSheet('theah', ItemSheetSS2eSorcery, {
@@ -367,20 +374,21 @@ Hooks.on('preCreateItem', function (document, options, userId) {
 Hooks.on('preCreateActor', function (document, entity, options, userId) {
   const isPlayerSide = [ActorType.PLAYER, ActorType.HERO].includes(document.type);
   const isFoe = [ActorType.VILLAIN, ActorType.MONSTER, ActorType.BRUTE].includes(document.type);
+  const isShip = document.type === ActorType.SHIP;
   const D = CONST.TOKEN_DISPLAY_MODES;
   const P = CONST.TOKEN_DISPOSITIONS;
 
   document.updateSource({
     img: 'systems/theah/icons/portrait.svg',
-    // Automatic token wiring: Wounds + Dramatic Wounds bars, sensible display
-    // and linkage so a Hero's sheet and token always stay in sync.
+    // Automatic token wiring: Wounds + Dramatic Wounds bars (Hits + Critical Hits
+    // for Ships), sensible display and linkage so sheet and token stay in sync.
     prototypeToken: {
-      actorLink: isPlayerSide,
+      actorLink: isPlayerSide || isShip,
       displayName: isPlayerSide ? D.OWNER_HOVER : D.HOVER,
-      displayBars: isPlayerSide ? D.OWNER_HOVER : D.HOVER,
+      displayBars: isPlayerSide || isShip ? D.OWNER_HOVER : D.HOVER,
       disposition: isPlayerSide ? P.FRIENDLY : isFoe ? P.HOSTILE : P.NEUTRAL,
-      bar1: { attribute: 'wounds' },
-      bar2: { attribute: 'dwounds' },
+      bar1: { attribute: isShip ? 'hits' : 'wounds' },
+      bar2: { attribute: isShip ? 'criticals' : 'dwounds' },
     },
   });
 });

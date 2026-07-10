@@ -1,0 +1,101 @@
+[
+  {
+    "_id": "35b3f3872e3c80e6",
+    "name": "Beyond the Horizon",
+    "type": "shipbackground",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship has sailed to the far reaches of the world, and docked in the colorful and distant ports of the New World, Ifri or Cathay.</p>",
+      "infosource": "Core Rulebook p.249",
+      "bonus": "<p>You can spend a <b>Raise or a Hero Point</b> when speaking about the cultures, customs and people of far-away lands. Whoever you are speaking to, they believe you.</p>"
+    }
+  },
+  {
+    "_id": "57efcee191f59d85",
+    "name": "Broke the Mirror",
+    "type": "shipbackground",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship sailed the frozen waters of the Mirror, something that only the bravest and most heroic Vesten have managed before, and so has earned the honorable title of <em>isabrot</em>, \"Icebreaker.\"</p>",
+      "infosource": "Core Rulebook p.249",
+      "bonus": "<p>You can spend a <b>Raise or a Hero Point</b> when encountering an NPC from Vesten. They respect you, your Ship and her Crew.</p>"
+    }
+  },
+  {
+    "_id": "344a0915406b1f30",
+    "name": "Captured by Pirates",
+    "type": "shipbackground",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship was captured by pirates and probably sold to another pirate at one of the Brotherhood's friendly ports. Your Ship is equipped with smuggling compartments used to hide valuable Cargo (or Crew).</p>",
+      "infosource": "Core Rulebook p.249",
+      "bonus": "<p>When you hide something in your smuggling compartments during a Scene, it cannot be found during that Scene unless the searcher knows exactly where to look. You can hide a <b>single Cargo</b> this way (it protects what you carry; it does not add capacity).</p>"
+    }
+  },
+  {
+    "_id": "5127b132428dcd3a",
+    "name": "Friend of Iskandar",
+    "type": "shipbackground",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship has visited the docks of Iskandar, and is a respected and trusted friend of the city, earning the title of \"Sadiq Iskandar.\"</p>",
+      "infosource": "Core Rulebook p.249",
+      "bonus": "<p>You can spend a <b>Raise or a Hero Point</b> when encountering an NPC from the Crescent Empire. They are friendly, until you give them a reason not to be.</p>"
+    }
+  },
+  {
+    "_id": "ca56ace3f486f0ac",
+    "name": "Heroic Captain",
+    "type": "shipbackground",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>One of your Ship's Captains had a stellar reputation all across Théah. That reputation passes on to your Crew.</p>",
+      "infosource": "Core Rulebook p.249",
+      "bonus": "<p>You can spend a <b>Raise or a Hero Point</b> when you encounter an NPC sailor, old sea dog, retired naval Captain or similar individual. That NPC had a favorable run-in with your Ship's Captain, and looks favorably upon your Ship and her Crew.</p>"
+    }
+  },
+  {
+    "_id": "370b9aaba164c671",
+    "name": "Pirate Hunter",
+    "type": "shipbackground",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship was once used to hunt pirates.</p>",
+      "infosource": "Core Rulebook p.249",
+      "bonus": "<p>When your Crew rolls dice against pirates, their <b>10s Explode</b>.</p>"
+    }
+  },
+  {
+    "_id": "ca427bbaedfbf714",
+    "name": "Prominent Battle",
+    "type": "shipbackground",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship survived a horrible battle and has gained a reputation for being able to survive.</p>",
+      "infosource": "Core Rulebook p.249",
+      "bonus": "<p>Your Ship can take <b>5 Critical Hits</b> before becoming Crippled, instead of 4.</p>"
+    }
+  },
+  {
+    "_id": "af529505a7b0fffc",
+    "name": "Round the Horn",
+    "type": "shipbackground",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship has a small and strange mascot from the Land of Ifri — a small monkey, parrot, runic totem, a custom wheel carved from a special wood, or another kind of lucky charm. The Ship has Good Fortune.</p>",
+      "infosource": "Core Rulebook p.249",
+      "bonus": "<p>Once per game, one Hero on the Ship can spend a <b>Hero Point</b> to use the Ship's Good Fortune to re-roll any number of dice in a Risk they just made, so long as they are aboard the Ship.</p>"
+    }
+  },
+  {
+    "_id": "040361c5e32795c4",
+    "name": "Swallowed by the Triangle",
+    "type": "shipbackground",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship has explored the far waters of the Triangle and the shores of the strange land of Kammerra. For a time, your Ship may have been thought lost.</p>",
+      "infosource": "Core Rulebook p.249",
+      "bonus": "<p>You can spend a <b>Raise</b> when you encounter a strange magic, artifact or creature (a sea monster, a giant bird, a Kammerran shaman) to ask the GM a yes-or-no question about it, and he must answer you honestly.</p>"
+    }
+  }
+]

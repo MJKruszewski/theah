@@ -1,0 +1,110 @@
+[
+  {
+    "_id": "800fc6f945ca31d8",
+    "name": "Avalon",
+    "type": "shiporigin",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Ships made in Avalon tend to be smaller and built for speed. If your Ship is from Avalon, it is most likely a brig, brigantine, or schooner.</p>",
+      "infosource": "Core Rulebook p.248",
+      "bonus": "<p>Gain <b>two Bonus Dice</b> for any Risk involving speed and maneuverability — such as trying to flat outrun another Ship.</p>",
+      "nation": "avalon"
+    }
+  },
+  {
+    "_id": "0853364defff8737",
+    "name": "Castille",
+    "type": "shiporigin",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Most Castillian Ships are large and square-rigged with three decks and three masts. Difficult to take down, but very slow, requiring tons of canvas to move. Your Ship is probably a galleon or a man-of-war.</p>",
+      "infosource": "Core Rulebook p.248",
+      "bonus": "<p>Your Ship can take <b>one additional Hit</b> before it takes each Critical Hit (6 Hits per Critical, instead of 5).</p>",
+      "nation": "castille"
+    }
+  },
+  {
+    "_id": "2fff5bcdce578fe8",
+    "name": "Eisen",
+    "type": "shiporigin",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>While Eisen Ships are otherwise unnotable, they do have the most dangerous marines in all of Théah.</p>",
+      "infosource": "Core Rulebook p.248",
+      "bonus": "<p>Your Ship has <b>5 additional Crew</b>, and your Crew can now divide into up to <b>3 Squads</b>.</p>",
+      "nation": "eisen"
+    }
+  },
+  {
+    "_id": "049aba8781f75939",
+    "name": "Montaigne",
+    "type": "shiporigin",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Montaigne Ships have one thing in common: they are all beautiful. They're also usually well armed to protect all that beauty. Your Ship is probably a frigate or a schooner.</p>",
+      "infosource": "Core Rulebook p.248",
+      "bonus": "<p>When making a social Risk (such as negotiating with other Ships), you gain <b>two Bonus Dice</b>.</p>",
+      "nation": "montaigne"
+    }
+  },
+  {
+    "_id": "88396c3cf9c6c289",
+    "name": "The Sarmatian Commonwealth",
+    "type": "shiporigin",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Sarmatia has a very small fleet, and frankly, most of their Ships were \"acquired\" from other Nations.</p>",
+      "infosource": "Core Rulebook p.248",
+      "bonus": "<p>Gain <b>one bonus Ship Background</b>.</p>",
+      "nation": "sarmatia"
+    }
+  },
+  {
+    "_id": "b8f3c2af51d89fa9",
+    "name": "Ussura",
+    "type": "shiporigin",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Ussura's Ships are designed to be sailed in northern, icy waters and as such they tend to be hardy and strong.</p>",
+      "infosource": "Core Rulebook p.248",
+      "bonus": "<p>In extremely choppy waters, during a storm, while sailing in dangerous waters (an icy ocean, reef-infested waters), or when otherwise under threat by the environment, gain <b>two Bonus Dice</b>.</p>",
+      "nation": "ussura"
+    }
+  },
+  {
+    "_id": "332a320e352c963b",
+    "name": "Vodacce",
+    "type": "shiporigin",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Vodacce Ships are built for the long haul: four masts, a huge hull. They are merchant vessels designed for sailing to distant lands.</p>",
+      "infosource": "Core Rulebook p.248",
+      "bonus": "<p>Vodacce Ships can carry <b>3 Cargo</b> (rather than 2).</p>",
+      "nation": "vodacce"
+    }
+  },
+  {
+    "_id": "0e2e00b7592e4101",
+    "name": "Vestenmennavenjar",
+    "type": "shiporigin",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Almost all Vesten Ships are fluyts, designed for long travel, but with more sophisticated sails, reducing the number of Crew needed.</p>",
+      "infosource": "Core Rulebook p.248",
+      "bonus": "<p>When a Vesten Ship raids another vessel for Wealth, it gains <b>all</b> of the other Ship's Wealth rather than half.</p>",
+      "nation": "vesten"
+    }
+  },
+  {
+    "_id": "e71ed2f1a0a3f483",
+    "name": "Exotic",
+    "type": "shiporigin",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship was designed and built outside of Théah, such as the Crescent Empire, Ifri or Cathay.</p>",
+      "infosource": "Core Rulebook p.248",
+      "bonus": "<p>An Exotic Ship always earns <b>one more Wealth</b> whenever it sells foreign goods in Théah, or whenever it sells Théan goods in a foreign port.</p>",
+      "nation": "exotic"
+    }
+  }
+]

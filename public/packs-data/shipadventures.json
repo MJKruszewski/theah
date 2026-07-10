@@ -1,0 +1,206 @@
+[
+  {
+    "_id": "c80cea81ef215669",
+    "name": "A Jenny in Every Port",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Make port in every Nation in Théah.</p>",
+      "infosource": "Core Rulebook p.250",
+      "trigger": "<p>Make port in every Nation in Théah.</p>",
+      "reward": "<p>When you make port in a Théan city, any Hero can spend a <b>Raise or a Hero Point</b>: whatever authority exists in the port (a harbor master, customs officer, admiral) knows your Ship and treats you relatively well until you give them a reason not to. They won't let you break the law, but they might let you bend it.</p>"
+    }
+  },
+  {
+    "_id": "0cb067614b9065b2",
+    "name": "A Short and Merry Life",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Convince a hostile ship's Crew to join you, through negotiation, coercion or intimidation.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Convince a hostile ship's Crew to join you, through negotiation, coercion or intimidation.</p>",
+      "reward": "<p>Your Crew gains <b>5 Strength</b>.</p>"
+    }
+  },
+  {
+    "_id": "9afa277ecfaffe72",
+    "name": "Adventurer",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Accomplish 5 Adventures.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Accomplish 5 Adventures.</p>",
+      "reward": "<p>Each Hero gains one of the following Advantages of their choice: <b>Able Drinker</b>, <b>Cast-Iron Stomach</b> or <b>Sea Legs</b>.</p>"
+    }
+  },
+  {
+    "_id": "733d33ac9db5b022",
+    "name": "Drag Them to Their Doom!",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Perform a successful boarding action.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Perform a successful boarding action.</p>",
+      "reward": "<p>The first time each round any of your Crew Squads inflicts Wounds on an enemy while at sea, that enemy takes <b>one additional Wound</b>.</p>"
+    }
+  },
+  {
+    "_id": "94d46de67cbc6847",
+    "name": "Feed the Sea with Ghosts",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Defeat 5 Ships in naval combat.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Defeat 5 Ships in naval combat.</p>",
+      "reward": "<p>The first time each round your Ship fires her cannons at an enemy, that enemy Ship takes <b>an additional Hit</b>.</p>"
+    }
+  },
+  {
+    "_id": "848e51f74a097bda",
+    "name": "Gold Drives a Man to Dream",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Earn 10 Wealth from selling Cargo in one Voyage.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Earn 10 Wealth from selling Cargo in one Voyage.</p>",
+      "reward": "<p>You may carry <b>one additional Cargo</b> on your Ship.</p>"
+    }
+  },
+  {
+    "_id": "3f18df188ce778b3",
+    "name": "Hot Pursuit",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Escape a city with the authorities on your heels.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Escape a city with the authorities on your heels.</p>",
+      "reward": "<p>Your Ship's Crew learns how to leave port in a hurry. Your Ship can return to full complement after only <b>12 hours</b> in port, rather than 24.</p>"
+    }
+  },
+  {
+    "_id": "b77a212ad6e78322",
+    "name": "How Long Can You Hold Your Breath?",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Dive a shipwreck, a reef or an underwater cave and retrieve something valuable.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Dive a shipwreck, a reef or an underwater cave and retrieve something valuable.</p>",
+      "reward": "<p>Gain <b>1 Bonus Die</b> for any Risks involving swimming, navigating underwater or holding your breath.</p>"
+    }
+  },
+  {
+    "_id": "e921ea8a382fe199",
+    "name": "Off the Map",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Make port in a city outside of Théah.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Make port in a city outside of Théah.</p>",
+      "reward": "<p>Gain <b>1 Bonus Die</b> in any social Risk against an NPC whose native language is one from outside of Théah.</p>"
+    }
+  },
+  {
+    "_id": "292a82f7d633f6f8",
+    "name": "Saved from the Deep",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Rescue a marooned NPC (lost at sea, on a deserted island, etc.).</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Rescue a marooned NPC (lost at sea, on a deserted island, etc.).</p>",
+      "reward": "<p>Add <b>one Strength</b> to your Ship's total Crew.</p>"
+    }
+  },
+  {
+    "_id": "7b999d15a3db73fa",
+    "name": "Shore Leave",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Lead your Crew in the singing of a sea shanty during shore leave at a seedy port tavern.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Lead your Crew in the singing of a sea shanty during shore leave at a seedy port tavern.</p>",
+      "reward": "<p>Any Hero can spend a <b>Hero Point</b> to return one of your Crew Squads back to full Strength. Only one Hero can activate this benefit per game session.</p>"
+    }
+  },
+  {
+    "_id": "1adb4799f8a2ad13",
+    "name": "Tempting Fate",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Transport an NPC Fate Witch from one port to another.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Transport an NPC Fate Witch from one port to another.</p>",
+      "reward": "<p>At the beginning of each game session, each Hero rolls one die. Whichever Hero rolls highest begins play with <b>an additional Hero Point</b>. A tie for highest grants no Hero the extra point.</p>"
+    }
+  },
+  {
+    "_id": "79060fcb9f0c4016",
+    "name": "Thanks for the Backup",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Save the crew of a sinking ship, when things look their bleakest (fierce storm, sea monster attack, etc.).</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Save the crew of a sinking ship, when things look their bleakest (fierce storm, sea monster attack, etc.).</p>",
+      "reward": "<p>The Captain and Crew of that Ship are now allies and can be relied upon for friendly assistance, earning all Heroes the <b>Connections</b> Advantage with that ship and her Crew.</p>"
+    }
+  },
+  {
+    "_id": "03957a452ff99988",
+    "name": "The Only Good Pirate…",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>You rendered a Pirate ship Crippled.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>You rendered a Pirate ship Crippled.</p>",
+      "reward": "<p>The first time each round you spend a Raise to reduce the Strength of a Pirate Brute Squad, you reduce their Strength by <b>1 more</b> than you would have normally.</p>"
+    }
+  },
+  {
+    "_id": "358073e8a62d8057",
+    "name": "Well, Excuse Me, Princess",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Transport a member of Théan royalty from one port to another.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Transport a member of Théan royalty from one port to another.</p>",
+      "reward": "<p>Any NPC with noble blood treats you a little better. Gain <b>one Bonus Die</b> for any social Risks involving noble characters.</p>"
+    }
+  },
+  {
+    "_id": "7ec9011deb4ecf85",
+    "name": "X Marks the Spot",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Find a buried treasure.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Find a buried treasure.</p>",
+      "reward": "<p>Add <b>10 additional Wealth</b> to your Ship's Treasury.</p>"
+    }
+  },
+  {
+    "_id": "4714fa289917b4dc",
+    "name": "Your Gold or Your Life!",
+    "type": "shipadventure",
+    "img": "systems/theah/icons/item.svg",
+    "system": {
+      "description": "<p>Your Ship was Crippled, you surrendered or you were successfully robbed by pirates.</p>",
+      "infosource": "Core Rulebook p.251",
+      "trigger": "<p>Your Ship was Crippled, you surrendered or you were successfully robbed by pirates.</p>",
+      "reward": "<p>The first time any Hero rolls a Risk versus a Pirate in a game session, <b>all Heroes gain a Hero Point</b>.</p>"
+    }
+  }
+]

@@ -2,14 +2,15 @@ const {
   StringField, HTMLField
 } = foundry.data.fields;
 
-const shipBackgroundSchema = {
+const shipOriginSchema = {
   description: new HTMLField(),
   bonus: new HTMLField(),
+  nation: new StringField(),
   infosource: new StringField(),
 };
 
-export class ShipBackgroundModel extends foundry.abstract.TypeDataModel {
+export class ShipOriginModel extends foundry.abstract.TypeDataModel {
   static defineSchema() {
-    return shipBackgroundSchema;
+    return shipOriginSchema;
   }
 }

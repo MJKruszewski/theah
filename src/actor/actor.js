@@ -168,6 +168,16 @@ export class SvnSea2EActor extends Actor {
     if (wl !== undefined) {
       options.theahPriorWealth = this.system.wealth ?? 0;
     }
+    // Stash the prior Hull state (Ship Hits / Critical Hits) so _onUpdate can post
+    // a "takes a Hit / Critical Hit / Crippled" card.
+    const h = foundry.utils.getProperty(changed, 'system.hits.value');
+    const cr = foundry.utils.getProperty(changed, 'system.criticals.value');
+    if (h !== undefined || cr !== undefined) {
+      options.theahPriorHull = {
+        h: this.system.hits?.value ?? 0,
+        c: this.system.criticals?.value ?? 0,
+      };
+    }
   }
 
   /** @override */
@@ -183,7 +193,16 @@ export class SvnSea2EActor extends Actor {
         this._reactToCorruptionChange(options.theahPriorCorruption);
       }
       if (options.theahPriorWealth !== undefined) {
-        this._reactToWealthChange(options.theahPriorWealth);
+        // Wealth is a shared field: Heroes get the personal-spending card, Ships
+        // get the Treasury card (the Hero affordances are meaningless for a Ship).
+        if (this.type === ActorType.SHIP) {
+          this._reactToTreasuryChange(options.theahPriorWealth);
+        } else if (this.type === ActorType.PLAYER) {
+          this._reactToWealthChange(options.theahPriorWealth);
+        }
+      }
+      if (options.theahPriorHull) {
+        this._reactToHullChange(options.theahPriorHull);
       }
     }
   }
@@ -264,6 +283,38 @@ export class SvnSea2EActor extends Actor {
   }
 
   /**
+   * Post a themed public chat card describing a Ship's Treasury change. Ships
+   * reuse system.wealth as their Treasury, but the Hero affordance guidance is
+   * meaningless for a Ship — this card carries the Treasury / Mutiny rule instead
+   * (Core p.253: halve the Treasury each session to pay the Crew, or they mutiny).
+   * @param {number} prior  The pre-update Treasury (Wealth) value.
+   * @private
+   */
+  async _reactToTreasuryChange(prior) {
+    const newW = this.system.wealth ?? 0;
+    const delta = newW - prior;
+    if (delta === 0) return;
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const name = this.name;
+    const gained = delta > 0;
+    const headline = gained
+      ? L('SVNSEA2E.TreasuryGains', { name, n: delta })
+      : L('SVNSEA2E.TreasurySpends', { name, n: -delta });
+
+    const content = `
+      <div class="theah theah-wealth${gained ? '' : ' spend'}">
+        <div class="wealth-head"><i class="fas fa-coins"></i> ${headline}</div>
+        <div class="wealth-body">
+          <div class="wealth-stats"><span class="wl"><b>${newW}</b> ${L('SVNSEA2E.Treasury')}</span></div>
+          <div class="wealth-note">${L('SVNSEA2E.TreasuryNote')}</div>
+        </div>
+      </div>`;
+
+    await postThemedChat({ actor: this, content });
+  }
+
+  /**
    * Post a themed public chat card describing the Wound / Dramatic Wound change
    * and keep the token's "Helpless" status in sync with the death spiral.
    * @param {{w:number, d:number}} prior  The pre-update values.
@@ -337,6 +388,78 @@ export class SvnSea2EActor extends Actor {
     if (dD !== 0 && typeof this.toggleStatusEffect === 'function') {
       try {
         await this.toggleStatusEffect('unconscious', { active: newD >= dMax });
+      } catch (e) {
+        /* status effects are optional / permission-gated */
+      }
+    }
+  }
+
+  /**
+   * Post a themed public chat card describing a Ship's Hull change (Hits /
+   * Critical Hits) and keep the token's "wrecked" status in sync with Crippled.
+   * The Hull mirrors the hero death spiral: 5 Hits per Critical Hit, 4 Critical
+   * Hits = Crippled, and a Crippled Ship that takes a Hit is Sunk (Core p.252).
+   * @param {{h:number, c:number}} prior  The pre-update Hits / Criticals values.
+   * @private
+   */
+  async _reactToHullChange(prior) {
+    const s = this.system;
+    const hMax = s.hits?.max ?? 0;
+    const cMax = s.criticals?.max ?? 0;
+    const newH = s.hits?.value ?? 0;
+    const newC = s.criticals?.value ?? 0;
+    const dH = newH - prior.h;
+    const dC = newC - prior.c;
+    if (dH === 0 && dC === 0) return;
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const name = this.name;
+
+    let headline;
+    let severe = false;
+    let icon = 'fa-bullseye';
+    if (dC > 0) {
+      severe = true;
+      icon = 'fa-burst';
+      headline =
+        newC >= cMax
+          ? L('SVNSEA2E.HullCrippled', { name })
+          : L('SVNSEA2E.HullCriticalHit', { name });
+    } else if (dC < 0) {
+      icon = 'fa-hammer';
+      headline = L('SVNSEA2E.HullCritHeals', { name });
+    } else if (dH > 0) {
+      headline = L('SVNSEA2E.HullTakesHit', { name, n: dH, s: dH === 1 ? '' : 's' });
+    } else {
+      icon = 'fa-hammer';
+      headline = L('SVNSEA2E.HullRepaired', { name });
+    }
+
+    const crippled = newC >= cMax && cMax > 0;
+    const effect = crippled
+      ? L('SVNSEA2E.HullCrippledEffect')
+      : newC > 0
+        ? L('SVNSEA2E.HullCritNote', { n: newC, max: cMax })
+        : '';
+
+    const content = `
+      <div class="theah theah-hull${severe ? ' severe' : ''}">
+        <div class="hull-head"><i class="fas ${icon}"></i> ${headline}</div>
+        <div class="hull-body">
+          <div class="hull-stats">
+            <span class="hs"><b>${newH}</b>/${hMax} ${L('SVNSEA2E.Hits')}</span>
+            <span class="hs crit"><b>${newC}</b>/${cMax} ${L('SVNSEA2E.CriticalHits')}</span>
+          </div>
+          ${effect ? `<div class="hull-effect">${effect}</div>` : ''}
+        </div>
+      </div>`;
+
+    await postThemedChat({ actor: this, content });
+
+    // Keep the "wrecked" token status in sync only when the Critical count changed.
+    if (dC !== 0 && typeof this.toggleStatusEffect === 'function') {
+      try {
+        await this.toggleStatusEffect('unconscious', { active: crippled });
       } catch (e) {
         /* status effects are optional / permission-gated */
       }

@@ -201,5 +201,62 @@ if (existsSync(resolve(DATA, "arcana.json"))) {
   written.push(`sorceries: ${docs.length}`);
 }
 
+/* ----------------------------- Ship Origins --------------------------- */
+{
+  const src = readJson("shiporigins.json");
+  const docs = src.map((o) => ({
+    _id: id16("shiporigin:" + o.name),
+    name: o.name,
+    type: "shiporigin",
+    img: "systems/theah/icons/item.svg",
+    system: {
+      description: para(o.description),
+      infosource: `Core Rulebook p.${o.page}`,
+      bonus: para(o.bonus),
+      nation: o.nation ?? "",
+    },
+  }));
+  writeFileSync(resolve(OUT, "shiporigins.json"), JSON.stringify(docs, null, 2));
+  written.push(`shiporigins: ${docs.length}`);
+}
+
+/* --------------------------- Ship Backgrounds ------------------------- */
+{
+  const src = readJson("shipbackgrounds.json");
+  const docs = src.map((b) => ({
+    _id: id16("shipbackground:" + b.name),
+    name: b.name,
+    type: "shipbackground",
+    img: "systems/theah/icons/item.svg",
+    system: {
+      description: para(b.description),
+      infosource: `Core Rulebook p.${b.page}`,
+      bonus: para(b.bonus),
+    },
+  }));
+  writeFileSync(resolve(OUT, "shipbackgrounds.json"), JSON.stringify(docs, null, 2));
+  written.push(`shipbackgrounds: ${docs.length}`);
+}
+
+/* --------------------------- Ship Adventures -------------------------- */
+{
+  const src = readJson("shipadventures.json");
+  const docs = src.map((a) => ({
+    _id: id16("shipadventure:" + a.name),
+    name: a.name,
+    type: "shipadventure",
+    img: "systems/theah/icons/item.svg",
+    system: {
+      // description doubles as the deed so a plain view still reads well.
+      description: para(a.trigger),
+      infosource: `Core Rulebook p.${a.page}`,
+      trigger: para(a.trigger),
+      reward: para(a.reward),
+    },
+  }));
+  writeFileSync(resolve(OUT, "shipadventures.json"), JSON.stringify(docs, null, 2));
+  written.push(`shipadventures: ${docs.length}`);
+}
+
 console.log("packs-data →", OUT);
 for (const w of written) console.log("  " + w);

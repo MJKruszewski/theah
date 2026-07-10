@@ -125,10 +125,12 @@
   .seal .sig { fill:none; stroke:rgba(247,234,208,.85); stroke-width:1.5; opacity:0; transition:opacity .25s; }
   .seal.spent .wax { fill:var(--oxblood); filter:drop-shadow(0 3px 5px var(--seal-shadow)); }
   .seal.spent .sig { opacity:.9; }
-  .spiral-fx { display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; }
-  .fx { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border:1px solid rgba(217,178,98,.28); border-radius:999px; font-family:var(--label); font-size:9px; letter-spacing:.05em; text-transform:uppercase; color:#9aa89a; opacity:.5; }
-  .fx.on { opacity:1; color:#e7a79b; border-color:rgba(181,69,58,.5); background:rgba(124,43,34,.28); }
-  .fx.on.crippled { color:#f4ead0; background:rgba(124,43,34,.55); border-color:var(--oxblood); }
+  .hull-status { margin-top:12px; padding:8px 10px; border:1px solid rgba(217,178,98,.22); border-left-width:3px; border-radius:2px; background:rgba(0,0,0,.14); }
+  .hull-status.seaworthy { border-left-color:var(--teal); }
+  .hull-status.battered { border-left-color:var(--gold-leaf); }
+  .hull-status.crippled { border-left-color:var(--oxblood); background:color-mix(in srgb, var(--oxblood) 22%, rgba(0,0,0,.14)); }
+  .hull-status .hs-label { display:block; font-family:var(--display); font-size:15px; color:#f4ead0; }
+  .hull-status .hs-note { display:block; margin-top:3px; font-size:11.5px; line-height:1.4; color:#c9bb95; }
 
   /* -------- Ledger main -------- */
   .ledger { padding:20px 24px 26px; position:relative; min-width:0; }
@@ -284,11 +286,9 @@
         <div class="crit-lbl"><span>Critical Hits</span><span>1 · Crippled at 4</span></div>
         <div class="spiral" id="crits"></div>
 
-        <div class="spiral-fx">
-          <span class="fx on">Taking Water</span>
-          <span class="fx">Listing</span>
-          <span class="fx">Foundering</span>
-          <span class="fx crippled">Crippled → Sunk</span>
+        <div class="hull-status battered">
+          <span class="hs-label">Battered</span>
+          <span class="hs-note">1 of 4 Critical Hits — Crippled at 4, then Sunk if she takes another Hit.</span>
         </div>
       </div>
     </aside>

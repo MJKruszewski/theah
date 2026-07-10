@@ -66,6 +66,12 @@ export class ItemSheetSS2e extends ItemSheet {
       sheetData.innate = itemData.innate;
     } else if (item.type === 'duelstyle') {
       sheetData.bonus = itemData.bonus;
+    } else if (item.type === 'shiporigin' || item.type === 'shipbackground') {
+      sheetData.bonus = itemData.bonus;
+      sheetData.nation = itemData.nation;
+    } else if (item.type === 'shipadventure') {
+      sheetData.trigger = itemData.trigger;
+      sheetData.reward = itemData.reward;
     } else if (item.type === 'scheme') {
       sheetData.influence = itemData.influence;
     } else if (item.type === 'secretsociety') {

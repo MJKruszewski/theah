@@ -11,15 +11,24 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['theah', 'sheet', 'actor', 'ship'],
       template: 'systems/theah/templates/actors/ship.hbs',
+      width: 900,
+      height: 760,
       tabs: [
         {
           navSelector: '.sheet-tabs',
           contentSelector: '.sheet-body',
-          initial: 'roster',
+          initial: 'history',
         },
       ],
     });
   }
+
+  // Nation → flag-dot color for the Origin card / rail.
+  static ORIGIN_DOT = {
+    avalon: '#b23b3b', castille: '#c9a24b', eisen: '#7a7f86', montaigne: '#3f6fb0',
+    sarmatia: '#8a5cb0', ussura: '#5c9bb0', vodacce: '#3f8f6a', vesten: '#4a6f8f',
+    exotic: '#b07a3f',
+  };
 
   /**
    * Organize and classify Items for Character sheets.
@@ -29,13 +38,70 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
    * @return {undefined}
    */
   _prepareShipItems(data, sheetData) {
-    const actorData = data.document.system;
-    sheetData.adventures = getItems(data, 'shipadventure');
+    const sys = data.document.system;
+    const L = (k, d) => (d ? game.i18n.format(k, d) : game.i18n.localize(k));
+
+    // Compendium-driven history & adventures.
+    sheetData.origins = getItems(data, 'shiporigin');
+    sheetData.originItem = sheetData.origins[0] || null;
     sheetData.backgrounds = getItems(data, 'shipbackground');
-    sheetData.origin = actorData.origin;
-    sheetData.class = actorData.class;
-    sheetData.crewstatus = actorData.crewstatus;
-    sheetData.cargo = actorData.cargo;
+    sheetData.adventures = getItems(data, 'shipadventure');
+
+    // Identity.
+    sheetData.shipClass = sys.class;
+    sheetData.homeport = sys.homeport;
+    sheetData.flag = sys.flag;
+    sheetData.origin = sys.origin;              // legacy free-text fallback
+    sheetData.crewstatus = sys.crewstatus || 'happy';
+    sheetData.cargo = sys.cargo;
+    sheetData.cargocap = sys.cargocap;
+    sheetData.wealth = sys.wealth;
+    sheetData.crewData = sys.crew;              // { value, squadmax }
+
+    // Origin flag-dot color.
+    if (sheetData.originItem) {
+      const n = sheetData.originItem.system?.nation;
+      sheetData.originDot = this.constructor.ORIGIN_DOT[n] || 'var(--gold)';
+    }
+
+    // Hull — Hits track (5 per Critical) + Critical-Hit seals (Crippled at max).
+    const hits = sys.hits;
+    const crit = sys.criticals;
+    sheetData.hits = hits;
+    sheetData.criticals = crit;
+    sheetData.hitsPerCritical = Math.ceil(hits.max / crit.max);
+    sheetData.hitPips = Array.from({ length: hits.max }, (_, i) => {
+      const n = i + 1;
+      return {
+        n,
+        filled: (hits.value ?? 0) >= n,
+        band5: n % sheetData.hitsPerCritical === 0 && n < hits.max,
+      };
+    });
+    sheetData.critSeals = Array.from({ length: crit.max }, (_, i) => {
+      const level = i + 1;
+      return { level, filled: (crit.value ?? 0) >= level };
+    });
+
+    // Book-accurate Hull status (no invented intermediate names): Seaworthy →
+    // Battered (N Critical Hits) → Crippled (Sunk if she takes another Hit).
+    const cv = crit.value ?? 0;
+    if (cv >= crit.max) {
+      sheetData.crippled = true;
+      sheetData.hullStatus = { key: 'crippled', label: L('SVNSEA2E.HullStateCrippled'), note: L('SVNSEA2E.HullCrippledEffect') };
+    } else if (cv > 0) {
+      sheetData.hullStatus = { key: 'battered', label: L('SVNSEA2E.HullStateBattered'), note: L('SVNSEA2E.HullCritNote', { n: cv, max: crit.max }) };
+    } else {
+      sheetData.hullStatus = { key: 'seaworthy', label: L('SVNSEA2E.HullStateSeaworthy'), note: L('SVNSEA2E.HullHitsNote', { per: sheetData.hitsPerCritical }) };
+    }
+
+    // Crew Squads — each rolls dice = its Strength (Core p.253).
+    sheetData.squads = (sys.squads || []).map((sq, i) => ({
+      index: i,
+      name: sq.name,
+      strength: sq.strength,
+    }));
+    sheetData.canAddSquad = (sys.squads || []).length < (sys.crew?.squadmax ?? 2);
   }
 
   /**
@@ -254,6 +320,111 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     sheetData.crew = Object.values(crew);
   }
 
+  /* -------------------------------------------- */
+
+  /**
+   * Handle a click on a Hull Hit pip or Critical-Hit seal. Mirrors the hero
+   * death-spiral logic (_processWounds): 5 Hits per Critical Hit, so clicking a
+   * Hit pip that crosses a band auto-adds a Critical Hit, and clicking a seal
+   * sets the Critical count while clamping Hits into the resulting band.
+   * @param {Event} event
+   * @private
+   */
+  _processHull(event) {
+    const actor = this.document;
+    const sys = actor.system;
+    const edata = event.target.dataset;
+    const eValue = +edata.value;
+    const step = Math.ceil(sys.hits.max / sys.criticals.max); // 5 per Critical Hit
+    let hits = sys.hits.value;
+    let crit = sys.criticals.value;
+
+    if (edata.type === 'hits') {
+      hits = eValue;
+      const estimate = Math.trunc(hits / step);
+      if (estimate > sys.criticals.value) crit = estimate;
+      if (eValue === 1 && sys.hits.value === 1) hits = 0;
+    } else {
+      if (eValue > sys.criticals.value) crit = eValue;
+      else if (eValue === sys.criticals.value) crit = sys.criticals.value - 1;
+      else crit = eValue;
+      // Keep Hits inside the resulting Critical-Hit band so the derived seal
+      // count stays consistent (mirrors the wound death-spiral clamp).
+      const cap = (crit + 1) * step - 1;
+      if (hits > cap) hits = cap;
+    }
+
+    actor.update({ 'system.hits.value': hits, 'system.criticals.value': crit });
+  }
+
+  /**
+   * ±1 stepper for total Crew Strength.
+   * @param {Event} event
+   * @private
+   */
+  _onCrewStep(event) {
+    event.preventDefault();
+    const delta = Number(event.currentTarget.dataset.delta) || 0;
+    const cur = Number(this.actor.system.crew?.value) || 0;
+    this.actor.update({ 'system.crew.value': Math.max(0, cur + delta) });
+  }
+
+  /**
+   * ±1 stepper for the Ship's Treasury (Wealth).
+   * @param {Event} event
+   * @private
+   */
+  _onTreasuryStep(event) {
+    event.preventDefault();
+    const delta = Number(event.currentTarget.dataset.delta) || 0;
+    const cur = Number(this.actor.system.wealth) || 0;
+    this.actor.update({ 'system.wealth': Math.max(0, cur + delta) });
+  }
+
+  /**
+   * ±1 stepper for Cargo capacity.
+   * @param {Event} event
+   * @private
+   */
+  _onCargoCapStep(event) {
+    event.preventDefault();
+    const delta = Number(event.currentTarget.dataset.delta) || 0;
+    const cur = Number(this.actor.system.cargocap) || 0;
+    this.actor.update({ 'system.cargocap': Math.max(0, cur + delta) });
+  }
+
+  /**
+   * Add a new Crew Squad (up to squadmax).
+   * @param {Event} event
+   * @private
+   */
+  _onSquadAdd(event) {
+    event.preventDefault();
+    const squads = foundry.utils.duplicate(this.actor.system.squads || []);
+    const max = this.actor.system.crew?.squadmax ?? 2;
+    if (squads.length >= max) {
+      return ui.notifications.warn(game.i18n.format('SVNSEA2E.SquadMax', { n: max }));
+    }
+    squads.push({ name: game.i18n.format('SVNSEA2E.SquadN', { n: squads.length + 1 }), strength: 0 });
+    this.actor.update({ 'system.squads': squads });
+  }
+
+  /**
+   * Remove a Crew Squad by index.
+   * @param {Event} event
+   * @private
+   */
+  _onSquadRemove(event) {
+    event.preventDefault();
+    const i = Number(event.currentTarget.dataset.index);
+    const squads = foundry.utils.duplicate(this.actor.system.squads || []);
+    if (i < 0 || i >= squads.length) return;
+    squads.splice(i, 1);
+    this.actor.update({ 'system.squads': squads });
+  }
+
+  /* -------------------------------------------- */
+
   /**
    * Activate event listeners using the prepared sheet HTML
    *
@@ -264,19 +435,31 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
 
     if (!this.options.editable) return;
 
-    html.find('.roster .item-delete').click(this._onRemoveFromCrew.bind(this));
+    // Hull — clicking a Hit pip or a Critical-Hit seal (mirrors the hero wound track).
+    html.find('.rail-hull .track i').on('click', (ev) => this._processHull(ev));
+    html.find('.rail-hull .spiral .seal').on('click', (ev) => this._processHull(ev));
+    // Crew Strength, Treasury and Squad steppers.
+    html.find('.crew-step').on('click', (ev) => this._onCrewStep(ev));
+    html.find('.treasury-step').on('click', (ev) => this._onTreasuryStep(ev));
+    html.find('.cargocap-step').on('click', (ev) => this._onCargoCapStep(ev));
+    html.find('.squad-add').on('click', (ev) => this._onSquadAdd(ev));
+    html.find('.squad-remove').on('click', (ev) => this._onSquadRemove(ev));
+
+    html.find('.crew-roster .item-delete').click(this._onRemoveFromCrew.bind(this));
 
     const crewhandler = (ev) => this._onDragCrewStart(ev);
-    html.find('.roster li.item').each((i, li) => {
+    html.find('.crew-roster li.item').each((i, li) => {
       li.setAttribute('draggable', true);
       li.addEventListener('dragstart', crewhandler, false);
     });
 
-    html.find('.roster .items-list').each((i, li) => {
+    // The <ol class="items-list crew-roster"> IS the drop-target list (there is
+    // no descendant .items-list), so bind dragover on the container itself.
+    html.find('ol.crew-roster').each((i, li) => {
       li.addEventListener('dragover', this._onCrewDragOver.bind(this), false);
     });
 
-    html.find('.roster li.item-header').each((i, li) => {
+    html.find('.crew-roster li.item-header').each((i, li) => {
       li.addEventListener('dragenter', this._onCrewDragEnter, false);
       li.addEventListener('dragleave', this._onCrewDragLeave, false);
     });

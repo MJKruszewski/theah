@@ -25,7 +25,8 @@
 // v7: advantages carry flags.theah.nationalDiscounts (resolved nation keys) so the
 //     Hero Creator charges the true per-nation discounted cost; the heal-update now
 //     propagates flags into existing worlds.
-export const PACK_SEED_VERSION = 7;
+// v8: adds the Ship compendia — Origins (9), Backgrounds (9), Adventures (17).
+export const PACK_SEED_VERSION = 8;
 
 const SEED_TARGETS = [
   { pack: 'theah.backgrounds', file: 'backgrounds' },
@@ -34,6 +35,9 @@ const SEED_TARGETS = [
   { pack: 'theah.duelstyles', file: 'duelstyles' },
   { pack: 'theah.secretsocieties', file: 'secretsocieties' },
   { pack: 'theah.sorceries', file: 'sorceries' },
+  { pack: 'theah.shiporigins', file: 'shiporigins' },
+  { pack: 'theah.shipbackgrounds', file: 'shipbackgrounds' },
+  { pack: 'theah.shipadventures', file: 'shipadventures' },
 ];
 
 /**

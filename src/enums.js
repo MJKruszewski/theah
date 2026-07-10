@@ -18,6 +18,7 @@ export const ItemTypes = {
   SECRET_SOCIETY: 'secretsociety',
   SHIP_ADVENTURE: 'shipadventure',
   SHIP_BACKGROUND: 'shipbackground',
+  SHIP_ORIGIN: 'shiporigin',
   SORCERY: 'sorcery',
   STORY: 'story',
   VIRTUE: 'virtue',

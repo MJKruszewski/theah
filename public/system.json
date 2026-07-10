@@ -3,7 +3,7 @@
   "type": "system",
   "title": "Théah — 7th Sea 2e (Unofficial)",
   "description": "Théah: an unofficial 7th Sea Second Edition system for Foundry VTT — swashbuckling heroes, the Raises dice pool, and data-rich compendiums.",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "compatibility": {
     "minimum": "13",
     "verified": "14"
@@ -39,8 +39,9 @@
       "monsterquality": { "htmlFields": ["description"] },
       "scheme": { "htmlFields": ["description"] },
       "secretsociety": { "htmlFields": ["description", "concern", "earnfavor", "callupon"] },
-      "shipadventure": { "htmlFields": ["description"] },
-      "shipbackground": { "htmlFields": ["description"] },
+      "shipadventure": { "htmlFields": ["description", "trigger", "reward"] },
+      "shipbackground": { "htmlFields": ["description", "bonus"] },
+      "shiporigin": { "htmlFields": ["description", "bonus"] },
       "sorcery": { "htmlFields": ["description"] },
       "story": { "htmlFields": ["description"] },
       "virtue": { "htmlFields": ["description"] },
@@ -95,6 +96,30 @@
       "type": "Item",
       "system": "theah",
       "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
+    },
+    {
+      "name": "shiporigins",
+      "label": "Ship Origins (Core)",
+      "path": "packs/shiporigins",
+      "type": "Item",
+      "system": "theah",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
+    },
+    {
+      "name": "shipbackgrounds",
+      "label": "Ship Backgrounds (Core)",
+      "path": "packs/shipbackgrounds",
+      "type": "Item",
+      "system": "theah",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
+    },
+    {
+      "name": "shipadventures",
+      "label": "Ship Adventures (Core)",
+      "path": "packs/shipadventures",
+      "type": "Item",
+      "system": "theah",
+      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER", "GAMEMASTER": "OWNER" }
     }
   ],
   "packFolders": [
@@ -102,6 +127,11 @@
       "name": "Théah — Core",
       "sorting": "m",
       "packs": ["backgrounds", "advantages", "arcana", "duelstyles", "secretsocieties", "sorceries"]
+    },
+    {
+      "name": "Théah — Ships",
+      "sorting": "m",
+      "packs": ["shiporigins", "shipbackgrounds", "shipadventures"]
     }
   ],
   "grid": {

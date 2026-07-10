@@ -994,3 +994,95 @@
   .theah .lower { grid-template-columns: 1fr; }
   .theah .skills { grid-template-columns: 1fr; }
 }
+
+/* ============================================================= *
+ *  Ship's Papers sheet (reuses the identity-rail + prowess-card  *
+ *  system; adds Hull, Crew Squads, and the Hold).                *
+ * ============================================================= */
+
+/* Rail: Origin flag-dot, three resource cells, crew morale. */
+.theah.ship .ship-origin { display: flex; align-items: center; gap: 7px; }
+.theah.ship .ship-origin .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 1px rgba(0,0,0,.3); }
+.theah.ship .ship-origin .unset { color: #b9a877; font-style: italic; opacity: .8; }
+.theah.ship .ship-res { grid-template-columns: repeat(3,1fr); }
+.theah.ship .rail-morale { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 14px 2px 2px; }
+.theah.ship .rail-morale .k { font-family: var(--thd-label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #b9a877; }
+.theah.ship .rail-morale .morale-select { flex: 0 1 150px; background: rgba(0,0,0,.2); border: 1px solid rgba(217,178,98,.3); border-radius: 999px; color: #efe4c7; font-family: var(--thd-label); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; height: auto; line-height: 1.3; text-align: center; }
+.theah.ship .rail-morale .morale-select:focus { border-color: var(--gold-leaf); outline: none; }
+.theah.ship .rail-morale .morale-select option { color: #1a1a1a; }
+.theah.ship .rail-morale .morale-select.happy { border-color: color-mix(in srgb, var(--teal) 60%, transparent); color: #bfe0c4; }
+.theah.ship .rail-morale .morale-select.mutinous { border-color: color-mix(in srgb, var(--oxblood) 65%, transparent); color: #e7a79b; }
+
+/* Rail: Hull — Hits track (10-col) + Critical-Hit seals + status. */
+.theah.ship .rail-hull { margin: 16px 2px 0; }
+.theah.ship .rail-hull .lbl,
+.theah.ship .rail-hull .crit-lbl { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #b9a877; }
+.theah.ship .rail-hull .crit-lbl { margin-top: 14px; }
+.theah.ship .rail-hull .lbl .info-dot { color: #b9a877; opacity: .55; margin-left: 4px; font-size: 10px; cursor: help; }
+.theah.ship .rail-hull .lbl .info-dot:hover { opacity: 1; color: var(--gold-leaf); }
+.theah.ship .rail-hull .hull-count { font-variant-numeric: tabular-nums; }
+.theah.ship .rail-hull .hull-track { grid-template-columns: repeat(10,1fr); }
+.theah.ship .rail-hull .hull-track i.band5 { box-shadow: 3px 0 0 -1px rgba(217,178,98,.55); }
+.theah.ship .rail-hull .hull-status { margin-top: 12px; padding: 8px 10px; border: 1px solid rgba(217,178,98,.22); border-left-width: 3px; border-radius: 2px; background: rgba(0,0,0,.14); }
+.theah.ship .rail-hull .hull-status.seaworthy { border-left-color: var(--teal); }
+.theah.ship .rail-hull .hull-status.battered { border-left-color: var(--gold-leaf); }
+.theah.ship .rail-hull .hull-status.crippled { border-left-color: var(--oxblood); background: color-mix(in srgb, var(--oxblood) 22%, rgba(0,0,0,.14)); }
+.theah.ship .rail-hull .hs-label { display: block; font-family: var(--thd-display); font-size: 15px; color: #f4ead0; }
+.theah.ship .rail-hull .hull-status.crippled .hs-label { color: #f2c4bd; }
+.theah.ship .rail-hull .hs-note { display: block; margin-top: 3px; font-size: 11.5px; line-height: 1.4; color: #c9bb95; }
+
+/* Ledger: shared bits. */
+.theah.ship .section-note { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); margin: 0 0 12px; }
+.theah.ship .stepper { display: inline-flex; align-items: center; gap: 8px; }
+.theah.ship .stepper button { width: 24px; height: 24px; flex: none; display: grid; place-items: center; padding: 0; border: 1px solid var(--line-strong); border-radius: 50%; background: transparent; color: var(--gold-deep); cursor: pointer; font-size: 15px; line-height: 1; transition: background .12s, color .12s; }
+.theah.ship .stepper button:hover { background: var(--gold-deep); color: #fff; }
+.theah.ship .stepper b { font-family: var(--thd-display); font-size: 22px; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 26px; text-align: center; }
+
+/* Crew tab. */
+.theah.ship .crew-strength { display: flex; align-items: center; gap: 14px; padding: 10px 14px; border: 1px solid var(--panel-edge); border-radius: 5px; background: color-mix(in srgb, var(--navy) 5%, transparent); margin-bottom: 16px; }
+.theah.ship .crew-strength .cs-k { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); }
+.theah.ship .crew-strength .cs-hint { font-size: 12px; color: var(--ink-soft); font-style: italic; margin-left: auto; }
+.theah.ship .squads-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.theah.ship .squads-head .sq-title { font-family: var(--thd-label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.theah.ship .squad-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 6px; }
+.theah.ship .squad-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 5px; background: color-mix(in srgb, var(--panel) 94%, #fff 6%); }
+.theah.ship .squad-row .sq-name { flex: 1 1 auto; min-width: 0; background: transparent; border: 0; border-bottom: 1px solid var(--line); color: var(--ink); font-family: var(--thd-display); font-size: 15px; padding: 2px 2px; }
+.theah.ship .squad-row .sq-name:focus { outline: none; border-bottom-color: var(--gold); }
+.theah.ship .squad-row .sq-str { flex: none; display: inline-flex; align-items: center; gap: 6px; font-family: var(--thd-label); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.theah.ship .squad-row .sq-str input { width: 46px; text-align: center; background: color-mix(in srgb, var(--paper) 60%, #fff 6%); border: 1px solid var(--line-strong); border-radius: 3px; color: var(--ink); font-family: var(--thd-display); font-size: 15px; padding: 3px; min-height: 28px; box-sizing: border-box; }
+.theah.ship .squad-row .sq-pool { flex: none; font-family: var(--thd-label); font-size: 11px; font-weight: 600; color: var(--gold-deep); min-width: 44px; text-align: center; }
+.theah.ship .squad-row .squad-remove { flex: none; color: var(--ink-soft); cursor: pointer; padding: 4px; }
+.theah.ship .squad-row .squad-remove:hover { color: var(--oxblood); }
+
+/* Officer roster (drag PC/NPC actors onto a role). */
+.theah.ship .crew-roster { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
+.theah.ship .crew-roster .item-header { padding: 6px 12px; background: color-mix(in srgb, var(--navy) 8%, transparent); border-bottom: 1px solid var(--line); }
+.theah.ship .crew-roster .role-name { margin: 0; border: 0; font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); }
+.theah.ship .crew-roster .item { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--line); }
+.theah.ship .crew-roster .item:last-child { border-bottom: 0; }
+.theah.ship .crew-roster .item-image img { width: 26px; height: 26px; border-radius: 3px; object-fit: cover; border: 0; }
+.theah.ship .crew-roster .crew-member-name { flex: 1; margin: 0; font-family: var(--thd-display); font-size: 14px; color: var(--ink); }
+.theah.ship .crew-roster .item-controls a { color: var(--ink-soft); cursor: pointer; }
+.theah.ship .crew-roster .item-controls a:hover { color: var(--oxblood); }
+
+/* Origin card gets a gold anchor accent already via .prowess-card; Adventures
+   reuse the teal (.society) rail. */
+.theah.ship .prowess-card.origin { border-left-color: var(--gold-deep); background: color-mix(in srgb, var(--gold-leaf) 8%, transparent); }
+
+/* Hold tab. */
+.theah.ship .hold-ctls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
+.theah.ship .hold-ctl { flex: 1 1 200px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border: 1px solid var(--panel-edge); border-radius: 5px; background: color-mix(in srgb, var(--gold-leaf) 5%, transparent); }
+.theah.ship .hold-ctl .hc-k { font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); display: inline-flex; align-items: center; gap: 7px; }
+.theah.ship .hold-ctl .hc-k i { font-size: 13px; }
+
+/* Ship Hull chat card (Hits / Critical Hits / Crippled). */
+#chat .theah-hull { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }
+#chat .theah-hull.severe { border-left-color: var(--oxblood); }
+#chat .theah-hull .hull-head { display: flex; align-items: center; gap: 9px; padding: 9px 12px; font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
+#chat .theah-hull.severe .hull-head { color: var(--oxblood); }
+#chat .theah-hull .hull-head i { font-size: 14px; }
+#chat .theah-hull .hull-body { padding: 0 12px 11px; }
+#chat .theah-hull .hull-stats { display: flex; gap: 14px; font-family: var(--thd-label); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+#chat .theah-hull .hull-stats b { font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
+#chat .theah-hull .hull-stats .crit b { color: var(--oxblood); }
+#chat .theah-hull .hull-effect { margin-top: 7px; font-size: 12.5px; font-style: italic; color: var(--ink-soft); }

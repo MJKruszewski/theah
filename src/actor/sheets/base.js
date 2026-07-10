@@ -577,6 +577,9 @@ export default class ActorSheetSS2e extends ActorSheet {
       sorcery: 'fa-hat-wizard',
       artifact: 'fa-gem',
       story: 'fa-book-open',
+      shiporigin: 'fa-anchor',
+      shipbackground: 'fa-scroll',
+      shipadventure: 'fa-compass',
     };
     const icon = ICONS[item.type] || 'fa-scroll';
     let sub = '';
@@ -610,6 +613,21 @@ export default class ActorSheetSS2e extends ActorSheet {
       case 'hubris':
         sub = L('SVNSEA2E.Hubris');
         add(L('SVNSEA2E.Description'), s.description);
+        break;
+      case 'shiporigin':
+        sub = L('SVNSEA2E.ShipOrigin');
+        add(L('SVNSEA2E.Description'), s.description);
+        add(L('SVNSEA2E.Bonus'), s.bonus);
+        break;
+      case 'shipbackground':
+        sub = L('SVNSEA2E.ShipBackground');
+        add(L('SVNSEA2E.Description'), s.description);
+        add(L('SVNSEA2E.Bonus'), s.bonus);
+        break;
+      case 'shipadventure':
+        sub = L('SVNSEA2E.ShipAdventure');
+        add(L('SVNSEA2E.ShipAdvTrigger'), s.trigger);
+        add(L('SVNSEA2E.Reward'), s.reward);
         break;
       case 'sorcery': {
         const C = CONFIG.SVNSEA2E;
@@ -898,7 +916,7 @@ export default class ActorSheetSS2e extends ActorSheet {
    * @type {string[]}
    */
   static get COMPENDIUM_LOCKED_TYPES() {
-    return ['advantage', 'background', 'virtue', 'hubris', 'duelstyle', 'secretsociety', 'sorcery'];
+    return ['advantage', 'background', 'virtue', 'hubris', 'duelstyle', 'secretsociety', 'sorcery', 'shiporigin', 'shipbackground', 'shipadventure'];
   }
 
   /**
@@ -1187,6 +1205,17 @@ export default class ActorSheetSS2e extends ActorSheet {
       this.actor.items.some((i) => i.type === 'secretsociety')
     ) {
       ui.notifications.warn(game.i18n.localize('SVNSEA2E.OneSocietyOnly'));
+      return false;
+    }
+
+    // A Ship has exactly ONE Origin (Core p.248). Reject a second, differently-
+    // named Origin for non-GMs (same-named duplicates are caught below).
+    if (
+      !game.user.isGM &&
+      item.type === 'shiporigin' &&
+      this.actor.items.some((i) => i.type === 'shiporigin')
+    ) {
+      ui.notifications.warn(game.i18n.localize('SVNSEA2E.OneOriginOnly'));
       return false;
     }
 
