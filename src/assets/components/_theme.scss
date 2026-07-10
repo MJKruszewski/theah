@@ -614,6 +614,8 @@
 /* Wealth earn / spend card. */
 #chat .theah-wealth { font-family: var(--thd-body); color: var(--ink); background: var(--panel); border: 1px solid var(--panel-edge); border-left: 4px solid var(--gold-deep); border-radius: 4px; overflow: hidden; }
 #chat .theah-wealth.spend { border-left-color: var(--teal); }
+#chat .theah-wealth.severe { border-left-color: var(--oxblood); }
+#chat .theah-wealth.severe .wealth-head, #chat .theah-wealth.severe .wealth-head i { color: var(--oxblood); }
 #chat .theah-wealth .wealth-head { display: flex; align-items: center; gap: 9px; padding: 9px 12px; font-family: var(--thd-display); font-size: 15px; color: var(--ink); }
 #chat .theah-wealth .wealth-head i { color: var(--gold-deep); font-size: 14px; }
 #chat .theah-wealth.spend .wealth-head i { color: var(--teal); }

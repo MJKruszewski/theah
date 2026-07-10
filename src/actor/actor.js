@@ -178,6 +178,22 @@ export class SvnSea2EActor extends Actor {
         c: this.system.criticals?.value ?? 0,
       };
     }
+    // Ship: stash prior Cargo hold, Crew Strength and Crew Morale so _onUpdate can
+    // post load/unload, recruit/casualty and morale cards. (crewstatus/cargohold are
+    // form fields present on every ship submit — the react methods early-return when
+    // nothing meaningful changed, so a name/note edit posts nothing.)
+    const cargo = foundry.utils.getProperty(changed, 'system.cargohold');
+    if (cargo !== undefined) {
+      options.theahPriorCargo = foundry.utils.deepClone(this.system.cargohold ?? []);
+    }
+    const crewv = foundry.utils.getProperty(changed, 'system.crew.value');
+    if (crewv !== undefined) {
+      options.theahPriorCrew = this.system.crew?.value ?? 0;
+    }
+    const morale = foundry.utils.getProperty(changed, 'system.crewstatus');
+    if (morale !== undefined) {
+      options.theahPriorMorale = this.system.crewstatus;
+    }
   }
 
   /** @override */
@@ -203,6 +219,18 @@ export class SvnSea2EActor extends Actor {
       }
       if (options.theahPriorHull) {
         this._reactToHullChange(options.theahPriorHull);
+      }
+      // Ship resource cards: Cargo load/unload, Crew Strength, Crew Morale.
+      if (this.type === ActorType.SHIP) {
+        if (options.theahPriorCargo !== undefined) {
+          this._reactToCargoChange(options.theahPriorCargo);
+        }
+        if (options.theahPriorCrew !== undefined) {
+          this._reactToCrewChange(options.theahPriorCrew);
+        }
+        if (options.theahPriorMorale !== undefined) {
+          this._reactToMoraleChange(options.theahPriorMorale);
+        }
       }
     }
   }
@@ -309,6 +337,116 @@ export class SvnSea2EActor extends Actor {
           <div class="wealth-stats"><span class="wl"><b>${newW}</b> ${L('SVNSEA2E.Treasury')}</span></div>
           <div class="wealth-note">${L('SVNSEA2E.TreasuryNote')}</div>
         </div>
+      </div>`;
+
+    await postThemedChat({ actor: this, content });
+  }
+
+  /**
+   * Post a themed public chat card when a Ship's Cargo hold changes. Fires only
+   * on a meaningful load/unload — a lot's NAME appearing or disappearing — so
+   * adding an empty crate or editing a note posts nothing. Reuses the Treasury/
+   * Wealth card grammar with a crate icon.
+   * @param {Array<{name:string,note:string}>} prior  The pre-update cargo hold.
+   * @private
+   */
+  async _reactToCargoChange(prior) {
+    const cur = this.system.cargohold ?? [];
+    const priorNames = (prior || []).map((c) => (c.name || '').trim()).filter(Boolean);
+    const curNames = cur.map((c) => (c.name || '').trim()).filter(Boolean);
+    // Multiset diff by name: which named lots were added / removed.
+    const added = [...curNames];
+    const removed = [];
+    for (const nm of priorNames) {
+      const i = added.indexOf(nm);
+      if (i >= 0) added.splice(i, 1);
+      else removed.push(nm);
+    }
+    if (!added.length && !removed.length) return; // empty add/remove or note-only edit
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const name = this.name;
+    const cap = this.system.cargocap ?? 0;
+
+    let headline;
+    let icon;
+    let spend = '';
+    if (added.length && !removed.length) {
+      headline = L('SVNSEA2E.CargoLoads', { name, what: added.join(', ') });
+      icon = 'fa-box';
+    } else if (removed.length && !added.length) {
+      headline = L('SVNSEA2E.CargoUnloads', { name, what: removed.join(', ') });
+      icon = 'fa-box-open';
+      spend = ' spend';
+    } else {
+      headline = L('SVNSEA2E.CargoManifestChanges', { name });
+      icon = 'fa-boxes-stacked';
+    }
+
+    const manifest = curNames.length ? curNames.join(', ') : L('SVNSEA2E.EmptyHold');
+    const content = `
+      <div class="theah theah-wealth theah-cargo${spend}">
+        <div class="wealth-head"><i class="fas ${icon}"></i> ${headline}</div>
+        <div class="wealth-body">
+          <div class="wealth-stats"><span class="wl"><b>${cur.length} / ${cap}</b> ${L('SVNSEA2E.CargoHold')}</span></div>
+          <div class="wealth-note">${manifest}</div>
+        </div>
+      </div>`;
+
+    await postThemedChat({ actor: this, content });
+  }
+
+  /**
+   * Post a themed public chat card when a Ship's total Crew Strength changes
+   * (recruiting or casualties). (Core p.253 — Crew Strength divides into Squads.)
+   * @param {number} prior  The pre-update Crew Strength.
+   * @private
+   */
+  async _reactToCrewChange(prior) {
+    const cur = this.system.crew?.value ?? 0;
+    const delta = cur - prior;
+    if (delta === 0) return;
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const name = this.name;
+    const gained = delta > 0;
+    const headline = gained
+      ? L('SVNSEA2E.CrewGains', { name, n: delta })
+      : L('SVNSEA2E.CrewLoses', { name, n: -delta });
+
+    const content = `
+      <div class="theah theah-wealth theah-crew${gained ? '' : ' spend'}">
+        <div class="wealth-head"><i class="fas fa-users"></i> ${headline}</div>
+        <div class="wealth-body">
+          <div class="wealth-stats"><span class="wl"><b>${cur}</b> ${L('SVNSEA2E.CrewStrength')}</span></div>
+        </div>
+      </div>`;
+
+    await postThemedChat({ actor: this, content });
+  }
+
+  /**
+   * Post a themed public chat card when a Ship's Crew Morale changes. A Mutinous
+   * Crew is the dangerous state, so it carries the warning note (Core p.253).
+   * @param {string} prior  The pre-update crewstatus key.
+   * @private
+   */
+  async _reactToMoraleChange(prior) {
+    const cur = this.system.crewstatus;
+    if (cur === prior) return;
+
+    const L = (k, data) => (data ? game.i18n.format(k, data) : game.i18n.localize(k));
+    const statusKey = CONFIG.SVNSEA2E?.crewStatuses?.[cur] || cur;
+    const label = game.i18n.localize(statusKey);
+    // "none" (the blank dropdown option) localizes to an empty label — skip it
+    // rather than posting "…'s Crew is now ." with a dangling status.
+    if (!label || !label.trim()) return;
+    const severe = cur === 'mutinous';
+
+    const content = `
+      <div class="theah theah-wealth theah-morale${severe ? ' severe' : ''}">
+        <div class="wealth-head"><i class="fas fa-flag"></i> ${L('SVNSEA2E.MoraleNow', { name: this.name, status: label })}</div>
+        ${severe ? `<div class="wealth-body"><div class="wealth-note">${L('SVNSEA2E.MoraleMutinousNote')}</div></div>` : ''}
       </div>`;
 
     await postThemedChat({ actor: this, content });
