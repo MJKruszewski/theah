@@ -1098,6 +1098,20 @@
 .theah.ship .squad .squad-roll:hover { filter: brightness(1.06); }
 .theah.ship .squad .squad-roll i { font-size: 12px; }
 
+/* Linked Brute-Squad squads: portrait + read-only Strength + open-sheet link. */
+.theah.ship .squad.linked { border-left: 3px solid var(--teal); }
+.theah.ship .squad.linked.missing { border-left-color: var(--oxblood); opacity: .8; }
+.theah.ship .squad .sq-portrait { width: 26px; height: 26px; flex: none; border-radius: 3px; object-fit: cover; border: 1px solid var(--panel-edge); }
+.theah.ship .squad .linked-name { flex: 1 1 auto; min-width: 0; font-family: var(--thd-display); font-size: 16px; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; cursor: help; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.theah.ship .squad .linked-name i { color: var(--teal); font-size: 12px; flex: none; }
+.theah.ship .squad .sq-missing { font-style: italic; color: var(--oxblood); font-size: 11px; }
+.theah.ship .squad .squad-open { flex: none; color: var(--ink-soft); cursor: pointer; padding: 2px; }
+.theah.ship .squad .squad-open:hover { color: var(--teal); }
+.theah.ship .squad .sq-str-static .sq-v { font-family: var(--thd-display); font-size: 24px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.theah.ship .squad .sq-str-static .sq-v small { font-size: 11px; color: var(--ink-soft); margin-left: 2px; }
+.theah.ship .squad-drop-hint { margin: 0 0 16px; font-size: 11.5px; font-style: italic; color: var(--ink-soft); display: flex; align-items: center; gap: 7px; }
+.theah.ship .squad-drop-hint i { color: var(--gold-deep); opacity: .7; }
+
 /* Squad Risk-pool chat card — reuses .theah-pool with a teal (crew) accent. */
 #chat .theah-pool.theah-squad { border-left-color: var(--teal); }
 #chat .theah-pool.theah-squad .pool-head i { color: var(--teal); }

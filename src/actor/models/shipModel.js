@@ -47,9 +47,14 @@ const shipSchema = {
     max: new NumberField({ required: true, integer: true, min: 0, initial: 10 }),
     squadmax: new NumberField({ required: true, integer: true, min: 1, initial: 2 }),
   }),
+  // A Squad is either an inline division of the Crew ({name, strength}) OR a
+  // linked Brute Squad actor (actorId set) — a reusable, fully-statted unit whose
+  // Strength is read live from the actor (Core p.253: a Squad "acts like a Brute
+  // Squad"). actorId empty = inline squad.
   squads: new ArrayField(new SchemaField({
     name: new StringField(),
     strength: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
+    actorId: new StringField(),
   })),
 
   // Cargo & Treasury (Core p.253). Capacity 2 (Vodacce 3); Treasury = Wealth,

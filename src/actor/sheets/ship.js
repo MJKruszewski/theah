@@ -118,13 +118,29 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     const squads = sys.squads || [];
     sheetData.crewMax = crewMax;
     sheetData.squadMax = squadMax;
-    sheetData.squads = squads.map((sq, i) => ({
-      index: i,
-      name: sq.name,
-      strength: sq.strength,
-      pips: Array.from({ length: Math.max(0, sq.strength | 0) }, () => 1),
-    }));
-    sheetData.squadAllocated = squads.reduce((n, sq) => n + (sq.strength | 0), 0);
+    // A squad is inline ({name,strength}) or a linked Brute Squad actor (actorId);
+    // for a linked squad the Strength/name/portrait come live from that actor.
+    const squadStrength = (sq) => {
+      if (!sq.actorId) return sq.strength | 0;
+      const a = game.actors?.get(sq.actorId);
+      return a ? (a.system?.traits?.strength?.value | 0) : 0;
+    };
+    sheetData.squads = squads.map((sq, i) => {
+      const linked = sq.actorId ? game.actors?.get(sq.actorId) : null;
+      const missing = !!sq.actorId && !linked;
+      const strength = squadStrength(sq);
+      return {
+        index: i,
+        linked: !!sq.actorId,
+        missing,
+        actorId: sq.actorId,
+        img: linked?.img,
+        name: linked ? linked.name : sq.name,
+        strength,
+        pips: Array.from({ length: Math.max(0, strength) }, () => 1),
+      };
+    });
+    sheetData.squadAllocated = squads.reduce((n, sq) => n + squadStrength(sq), 0);
     sheetData.squadUnallocated = Math.max(0, crewMax - sheetData.squadAllocated);
     sheetData.squadOverAllocated = sheetData.squadAllocated > crewMax;
     sheetData.canAddSquad = squads.length < squadMax;
@@ -419,8 +435,17 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     const delta = Number(event.currentTarget.dataset.delta) || 0;
     const squads = foundry.utils.duplicate(this.actor.system.squads || []);
     if (i < 0 || i >= squads.length) return;
+    // Linked Brute-Squad squads take their Strength from the actor — not editable here.
+    if (squads[i].actorId) return;
     const crewMax = this.actor.system.crew?.max ?? 10;
-    const others = squads.reduce((n, sq, idx) => (idx === i ? n : n + (Number(sq.strength) || 0)), 0);
+    // Other squads' Strength counts against the budget — including linked Brute
+    // Squads, whose Strength is live on their actor (stored strength is 0).
+    const strengthOf = (sq) => {
+      if (!sq.actorId) return Number(sq.strength) || 0;
+      const a = game.actors?.get(sq.actorId);
+      return a ? Number(a.system?.traits?.strength?.value) || 0 : 0;
+    };
+    const others = squads.reduce((n, sq, idx) => (idx === i ? n : n + strengthOf(sq)), 0);
     const cap = Math.max(0, crewMax - others); // this Squad may take at most the unallocated remainder
     const cur = Number(squads[i].strength) || 0;
     // "+" only fills the unallocated remainder and never reduces the Squad (so it's
@@ -428,6 +453,22 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     const next = delta > 0 ? Math.min(cur + delta, Math.max(cur, cap)) : Math.max(0, cur + delta);
     if (next === cur) return;
     squads[i].strength = next;
+    this.actor.update({ 'system.squads': squads });
+  }
+
+  /**
+   * Rename an inline Squad. Squad names are NOT form inputs (so the ArrayField
+   * never round-trips through a submit), so a change handler writes the full array.
+   * @param {Event} event
+   * @private
+   */
+  _onSquadRename(event) {
+    const i = Number(event.currentTarget.dataset.index);
+    const squads = foundry.utils.duplicate(this.actor.system.squads || []);
+    if (i < 0 || i >= squads.length || squads[i].actorId) return;
+    const name = event.currentTarget.value;
+    if (name === (squads[i].name || '')) return;
+    squads[i].name = name;
     this.actor.update({ 'system.squads': squads });
   }
 
@@ -443,7 +484,12 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     const i = Number(event.currentTarget.dataset.index);
     const sq = (this.actor.system.squads || [])[i];
     if (!sq) return;
-    const strength = Number(sq.strength) || 0;
+    // Resolve Strength/name — from the linked Brute Squad actor, or the inline value.
+    const linked = sq.actorId ? game.actors?.get(sq.actorId) : null;
+    const strength = sq.actorId
+      ? (linked ? Number(linked.system?.traits?.strength?.value) || 0 : 0)
+      : Number(sq.strength) || 0;
+    const sqName = (linked ? linked.name : sq.name) || game.i18n.format('SVNSEA2E.SquadN', { n: i + 1 });
     if (strength <= 0) {
       return ui.notifications.warn(game.i18n.localize('SVNSEA2E.SquadNoDice'));
     }
@@ -464,7 +510,7 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     const diceHtml = this.constructor.renderDiceRow(dice, used);
     const L = (k) => game.i18n.localize(k);
     const combosText = combos.length ? combos.join('   ·   ') : L('SVNSEA2E.NoRaises');
-    const name = sq.name || game.i18n.format('SVNSEA2E.SquadN', { n: i + 1 });
+    const name = sqName;
     const raisesInfo = L('SVNSEA2E.RaisesInfo');
 
     const content = `
@@ -481,8 +527,10 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
   }
 
   /**
-   * Apply a quick-division preset: replace the Squad list with the chosen split
-   * of the full complement (Core p.253). Preserves existing Squad names by index.
+   * Apply a quick-division preset: divide the Crew complement into inline Squads
+   * (Core p.253). Linked Brute-Squad squads are attached units, NOT part of the
+   * complement being divided, so they are preserved untouched; the preset only
+   * rebuilds the inline squads, filling the slots that remain under squadmax.
    * @param {Event} event
    * @private
    */
@@ -494,11 +542,16 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
       .filter((n) => n > 0);
     if (!split.length) return;
     const existing = this.actor.system.squads || [];
-    const squads = split.map((strength, idx) => ({
-      name: existing[idx]?.name || game.i18n.format('SVNSEA2E.SquadN', { n: idx + 1 }),
+    const linked = existing.filter((sq) => sq.actorId);               // keep linked Brute Squads
+    const inlineExisting = existing.filter((sq) => !sq.actorId);      // reuse their names by index
+    const squadMax = this.actor.system.crew?.squadmax ?? 2;
+    const room = Math.max(0, squadMax - linked.length);
+    const inline = split.slice(0, room).map((strength, idx) => ({
+      name: inlineExisting[idx]?.name || game.i18n.format('SVNSEA2E.SquadN', { n: linked.length + idx + 1 }),
       strength,
+      actorId: '',
     }));
-    this.actor.update({ 'system.squads': squads });
+    this.actor.update({ 'system.squads': [...linked, ...inline] });
   }
 
   /**
@@ -610,6 +663,8 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
     html.find('.squad-add').on('click', (ev) => this._onSquadAdd(ev));
     html.find('.squad-remove').on('click', (ev) => this._onSquadRemove(ev));
     html.find('.squad-roll').on('click', (ev) => this._onSquadRoll(ev));
+    html.find('.squad-open').on('click', (ev) => this._onOpenSquadActor(ev));
+    html.find('.sq-name').on('change', (ev) => this._onSquadRename(ev));
 
     // Ship compendium pickers (Origins / Backgrounds / Adventures — sorcery-style window).
     html.find('.browse-ship-pack').on('click', (ev) => this._onBrowseShipPack(ev));
@@ -656,10 +711,45 @@ export class ActorSheetSS2eShip extends ActorSheetSS2e {
       return this._onDropItem(event, data);
     }
 
-    // Case 2 - Dropped Actor
+    // Case 2 - Dropped Actor: a Brute Squad fills a Crew Squad (Core p.253 — a
+    // Squad "acts like a Brute Squad"); any other actor joins the officer roster.
     if (data.type === 'Actor') {
+      const dropped = await Actor.implementation.fromDropData(data);
+      if (dropped?.type === 'brute') {
+        return this._onSquadDrop(dropped);
+      }
       return this._onCrewDrop(event, data);
     }
+  }
+
+  /**
+   * Attach a dropped Brute Squad actor as a linked Crew Squad (up to squadmax).
+   * Its Strength is read live from the actor; the ship stores only its id.
+   * @param {Actor} actor  The dropped Brute Squad.
+   * @private
+   */
+  async _onSquadDrop(actor) {
+    const squads = foundry.utils.duplicate(this.actor.system.squads || []);
+    const max = this.actor.system.crew?.squadmax ?? 2;
+    if (squads.length >= max) {
+      return ui.notifications.warn(game.i18n.format('SVNSEA2E.SquadMax', { n: max }));
+    }
+    if (squads.some((s) => s.actorId === actor.id)) {
+      return ui.notifications.warn(game.i18n.localize('SVNSEA2E.SquadAlreadyAttached'));
+    }
+    squads.push({ actorId: actor.id, name: actor.name, strength: 0 });
+    await this.actor.update({ 'system.squads': squads });
+  }
+
+  /**
+   * Open a linked Brute Squad's own sheet.
+   * @param {Event} event
+   * @private
+   */
+  _onOpenSquadActor(event) {
+    event.preventDefault();
+    const id = event.currentTarget.dataset.actorId;
+    game.actors?.get(id)?.sheet?.render(true);
   }
 
   /**

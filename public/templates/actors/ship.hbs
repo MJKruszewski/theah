@@ -186,28 +186,37 @@
             {{#if canAddSquad}}<button type="button" class="squad-add ghost" title="{{localize 'SVNSEA2E.AddSquad'}}"><i class="fas fa-plus"></i> {{localize "SVNSEA2E.CustomSquad"}}</button>{{/if}}
           </div>
 
-          {{!-- Squad cards (artifact-style pips) with strength steppers --}}
+          {{!-- Squad cards: inline division (name + strength stepper) OR a linked
+               Brute Squad actor (live Strength, own sheet). Squads are NOT form
+               inputs — names write via a change handler — so the ArrayField never
+               round-trips through a submit (no stale/zeroing element re-clean). --}}
           <div class="squads-head">
             <span class="sq-title" data-tooltip="{{localize 'SVNSEA2E.SquadsInfo'}}">{{localize "SVNSEA2E.Squads"}}</span>
             <span class="sq-alloc {{#if squadOverAllocated}}over{{/if}}">{{localize "SVNSEA2E.Allocated"}} {{squadAllocated}} / {{crewMax}}</span>
           </div>
           <div class="squad-list">
             {{#each squads as |sq id|}}
-              <div class="squad" data-item-index="{{sq.index}}">
-                {{!-- Strength is edited via the stepper (full-array write), but it MUST be
-                      submitted alongside the name input, or a name edit re-cleans the
-                      ArrayField element and resets strength to 0. --}}
-                <input type="hidden" name="system.squads.{{sq.index}}.strength" value="{{sq.strength}}" />
+              <div class="squad {{#if sq.linked}}linked{{/if}} {{#if sq.missing}}missing{{/if}}" data-item-index="{{sq.index}}">
                 <div class="sq-head">
-                  <input type="text" class="sq-name" name="system.squads.{{sq.index}}.name" value="{{sq.name}}" placeholder="{{localize 'SVNSEA2E.SquadName'}}" />
+                  {{#if sq.linked}}
+                    {{#if sq.img}}<img class="sq-portrait" src="{{sq.img}}" alt="{{sq.name}}" />{{/if}}
+                    <span class="sq-name linked-name" data-tooltip="{{localize 'SVNSEA2E.SquadLinkedHint'}}"><i class="fas fa-people-group"></i> {{sq.name}}{{#if sq.missing}} <em class="sq-missing">({{localize 'SVNSEA2E.SquadMissing'}})</em>{{/if}}</span>
+                    {{#unless sq.missing}}<a class="squad-open" data-actor-id="{{sq.actorId}}" title="{{localize 'SVNSEA2E.OpenSquadSheet'}}"><i class="fas fa-arrow-up-right-from-square"></i></a>{{/unless}}
+                  {{else}}
+                    <input type="text" class="sq-name" data-index="{{sq.index}}" value="{{sq.name}}" placeholder="{{localize 'SVNSEA2E.SquadName'}}" />
+                  {{/if}}
                   <a class="squad-remove" data-index="{{sq.index}}" title="{{localize 'SVNSEA2E.RemoveSquad'}}"><i class="fas fa-trash"></i></a>
                 </div>
                 <div class="sq-body">
-                  <span class="stepper sq-step">
-                    <button type="button" class="squad-str-step" data-index="{{sq.index}}" data-delta="-1" aria-label="-1">&minus;</button>
-                    <b class="sq-v">{{sq.strength}}<small>{{localize "SVNSEA2E.StrAbbr"}}</small></b>
-                    <button type="button" class="squad-str-step" data-index="{{sq.index}}" data-delta="1" aria-label="+1">+</button>
-                  </span>
+                  {{#if sq.linked}}
+                    <span class="sq-str-static" data-tooltip="{{localize 'SVNSEA2E.SquadLinkedHint'}}"><b class="sq-v">{{sq.strength}}<small>{{localize "SVNSEA2E.StrAbbr"}}</small></b></span>
+                  {{else}}
+                    <span class="stepper sq-step">
+                      <button type="button" class="squad-str-step" data-index="{{sq.index}}" data-delta="-1" aria-label="-1">&minus;</button>
+                      <b class="sq-v">{{sq.strength}}<small>{{localize "SVNSEA2E.StrAbbr"}}</small></b>
+                      <button type="button" class="squad-str-step" data-index="{{sq.index}}" data-delta="1" aria-label="+1">+</button>
+                    </span>
+                  {{/if}}
                   <button type="button" class="squad-roll" data-index="{{sq.index}}" data-tooltip="{{localize 'SVNSEA2E.RollSquadInfo'}}" title="{{localize 'SVNSEA2E.RollSquad'}}"><i class="fas fa-dice-d20"></i> {{sq.strength}}d10</button>
                 </div>
                 <span class="pips" data-tooltip="{{localize 'SVNSEA2E.SquadPoolHint'}}">{{#each sq.pips}}<i></i>{{/each}}</span>
@@ -216,6 +225,7 @@
               <p class="empty-note">{{localize "SVNSEA2E.NoSquads"}}</p>
             {{/each}}
           </div>
+          <p class="squad-drop-hint"><i class="fas fa-anchor"></i> {{localize "SVNSEA2E.DragBruteHint"}}</p>
 
           <div class="sec-title" style="margin-top:22px"><h3>{{localize "SVNSEA2E.Officers"}} <i class="fas fa-circle-info info-dot" data-tooltip="{{localize 'SVNSEA2E.OfficersInfo'}}"></i></h3><span></span></div>
           <p class="section-note">{{localize "SVNSEA2E.OfficersHint"}}</p>
