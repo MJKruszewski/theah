@@ -1,0 +1,7396 @@
+<title>Théah — Brute Squad sheet render (real compiled CSS)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>@charset "UTF-8";
+/* ==========================================================================
+   Théah palette — aged sea-chart (parchment · ink · antique gold · oxblood)
+   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Typography — engraved serif display + readable serif body.
+   System-font stacks (no CDN dependency; works offline in Foundry).
+   TODO: bundle an OFL display face (e.g. Cinzel) under public/fonts/ for full
+   cross-platform fidelity, then swap $f-display's first family.
+   -------------------------------------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* -------------------------------------------- */
+/* Global styles */
+.window-app .window-content {
+  color: #3a2c1c;
+}
+.window-app .window-header .window-title,
+.window-app .window-header a {
+  color: #f0e5c8;
+}
+.window-app .window-header .window-title {
+  padding-left: 0.25rem;
+}
+.window-app .window-header {
+  border-bottom: 0.0625rem solid #cbb488;
+}
+
+.rollable:focus, .rollable:hover {
+  text-shadow: 0 0 0.625rem #f1e7cc;
+  cursor: pointer;
+  background-image: url("/systems/theah/icons/d10.svg");
+  background-size: 20px;
+  background-repeat: no-repeat;
+}
+
+.grid,
+.grid-2col {
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem;
+  margin: 0.25rem 0;
+  padding: 0;
+}
+
+.grid-3col {
+  grid-column: span 3/span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4col {
+  grid-column: span 4/span 4;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-5col {
+  grid-column: span 5/span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-6col {
+  grid-column: span 5/span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-7col {
+  grid-column: span 7/span 7;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-8col {
+  grid-column: span 8/span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-9col {
+  grid-column: span 9/span 9;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.grid-10col {
+  grid-column: span 10/span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.grid-11col {
+  grid-column: span 11/span 11;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.grid-12col {
+  grid-column: span 12/span 12;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.flex-group-center,
+.flex-group-left,
+.flex-group-right {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.125rem;
+  border: 0 solid transparent;
+}
+
+.flex-group-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.flex-group-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.dialog .dialog-button .d10 {
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 0;
+}
+.dialog .dialog-button.roll {
+  display: flex;
+}
+.dialog .roll-dialog input[type=number] {
+  max-width: 3rem;
+  text-align: center;
+}
+
+#chat #chat-controls div.roll-type-select select,
+#chat #chat-form textarea,
+#chat #chat-log .message {
+  background: #f1e7cc;
+}
+#chat #chat-log .chat-card.skill-roll .card-header {
+  padding-bottom: 0.125rem;
+  background: url(/systems/theah/imgs/paint_border.png);
+  background-repeat: no-repeat;
+  background-size: 100% 0.375rem;
+  background-position: left bottom;
+}
+#chat #chat-log .chat-card.skill-roll .card-content .raises {
+  font-weight: bold;
+}
+#chat #chat-log .message {
+  font-size: 1em;
+  color: #3a2c1c;
+  padding: 0;
+}
+#chat #chat-log .message .message-header {
+  color: #f0e5c8;
+  background: #16323f;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+#chat #chat-log .message .message-header .message-sender {
+  padding-bottom: 0.125rem;
+  font-weight: bold;
+  text-indent: 0.4em;
+  line-height: 1.3em;
+  flex: 4;
+}
+#chat #chat-log .message .message-header h4 {
+  color: #f0e5c8;
+}
+#chat #chat-log .message .message-content {
+  padding: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+#chat #chat-log .message .message-content h3,
+#chat #chat-log .message .message-content h4,
+#chat #chat-log .message .message-content h5,
+#chat #chat-log .message .message-content h6 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+#chat #chat-log .message .message-content .raise-combos-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+#chat #chat-log .message .message-content .raise-combos-list .combo {
+  padding: 0.25rem;
+  margin: 0.125rem;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Styles limited to theah sheets */
+.theah form .form-group,
+.theah form .form-group-stacked,
+.theah form .wounds {
+  margin: 0.25rem;
+}
+.theah form .form-group > label {
+  flex: 3;
+}
+.theah form .form-group > label.icon-label {
+  flex: 1;
+}
+.theah .item-form {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+.theah .sheet-tabs {
+  flex: 0;
+}
+.theah .sheet-body,
+.theah .sheet-body .tab,
+.theah .sheet-body .tab .editor {
+  height: 95%;
+}
+.theah .tox .tox-editor-container {
+  background: #f1e7cc;
+}
+.theah .tox .tox-edit-area {
+  padding: 0 0.5rem;
+}
+.theah .tabs {
+  border-bottom: 0.125rem solid #8a642a;
+}
+.theah .tabs h2 {
+  border: 0 solid transparent;
+  font-size: 1.1em;
+  margin: 0;
+}
+.theah .tabs .item {
+  flex: 1;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-top: 0.125rem solid #8a642a;
+  border-left: 0.125rem solid #8a642a;
+  border-right: 0.125rem solid #8a642a;
+  border-bottom: 0;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  padding: 0.25rem;
+  margin: 0.25rem 0.125rem 0 0.125rem;
+  background: #16323f;
+  flex: 1;
+}
+.theah .tabs .item h2 {
+  color: #f0e5c8;
+  background: none;
+}
+.theah .tabs .item.active {
+  background: #f1e7cc;
+  text-shadow: none;
+}
+.theah .tabs .item.active h2 {
+  color: #3a2c1c;
+}
+
+.sheet img {
+  border: 0 solid transparent;
+}
+.sheet h1.charname,
+.sheet h3 {
+  padding-bottom: 0.125rem;
+  background: url(/systems/theah/imgs/paint_border.png);
+  background-repeat: no-repeat;
+  background-size: 100% 0.375rem;
+  background-position: left bottom;
+}
+.sheet input[type=text] {
+  min-width: 1.875rem;
+  text-align: left;
+  border: 0 solid transparent;
+}
+.sheet nav.sheet-tabs {
+  height: auto;
+  display: flex;
+  border-top: 0px;
+}
+.sheet .sheet-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+}
+.sheet .sheet-header .villanyrank {
+  margin-left: 0.5rem;
+}
+.sheet .sheet-header .profile-img {
+  margin-right: 0.25rem;
+}
+.sheet .sheet-header .header-fields {
+  flex: 1;
+}
+.sheet .sheet-header .flex-group-center,
+.sheet .sheet-header .flex-group-left {
+  padding: 0;
+}
+.sheet .sheet-header .grid .relrep,
+.sheet .sheet-header .grid .resources {
+  border-top: 0.0625rem solid #8a642a;
+}
+.sheet .sheet-header h1.charname {
+  height: 3.125rem;
+  margin: 0.25rem;
+  text-indent: 0;
+}
+.sheet .sheet-header h1.charname input {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: none;
+  text-indent: 1rem;
+  font-family: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+}
+.sheet .sheet-header .herospts,
+.sheet .sheet-header .wealth {
+  max-width: 1.875rem;
+  margin-right: 0.625rem;
+}
+.sheet .corruption {
+  min-width: 22em;
+}
+.sheet .tag {
+  display: inline-block;
+  margin: 0 0.125rem 0.125rem 0;
+  padding: 0.25rem;
+  font-size: 1em;
+  background: rgba(0, 0, 0, 0.1);
+}
+.sheet .secretsociety .tag {
+  flex-grow: 0.25;
+  flex-shrink: 0.25;
+  flex-basis: 0.625rem;
+}
+.sheet .flexrow .tag-list {
+  flex: 0 0 95%;
+}
+.sheet .flexrow .skill-selector,
+.sheet .flexrow .advantage-selector .language-selector {
+  flex: 0 0 2%;
+}
+.sheet .details-list,
+.sheet .tag-list {
+  line-height: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sheet .arcana {
+  width: 85%;
+}
+.sheet .items-list {
+  list-style: none;
+  margin: 0.5rem 0;
+  padding: 0;
+  overflow-y: auto;
+  line-height: 1.875rem;
+}
+.sheet .items-list .item-header {
+  font-weight: bold;
+}
+.sheet .items-list .item {
+  line-height: 1.5rem;
+  padding: 0.25rem 0;
+  border-bottom: 0.0625rem solid #cbb488;
+}
+.sheet .items-list .item .item-image {
+  flex: 0 0 1.5rem;
+  margin-right: 0.25rem;
+}
+.sheet .items-list .item img {
+  display: block;
+}
+.sheet .items-list .item:last-child {
+  border-bottom: none;
+}
+.sheet .items-list .item .item-weight {
+  flex: 0 0 3.75rem;
+  border-left: 0.0625rem solid #cbb488;
+  border-right: 0.0625rem solid #cbb488;
+}
+.sheet .items-list .item .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sheet .items-list .item .item-controls {
+  flex: 0 0 2.75rem;
+  justify-content: flex-end;
+}
+.sheet .items-list .item .item-controls a {
+  flex: 0 0 1.375rem;
+  text-align: center;
+  color: #3a2c1c;
+}
+.sheet .items-list .item .item-summary {
+  flex: 0 0 100%;
+  font-size: 1em;
+  line-height: 1.2em;
+  padding: 0.5rem;
+  border-top: 0.25rem solid #cbb488;
+}
+.sheet .items-list .item-name {
+  margin: 0;
+}
+.sheet .items-list .item-controls {
+  flex: 0 0 5.375rem;
+  text-align: right;
+}
+.sheet .favor-label,
+.sheet .skill-name,
+.sheet .trait-name {
+  font-weight: 600;
+  padding-left: 1.5rem;
+}
+.sheet .wound-title {
+  font-weight: 600;
+  margin-bottom: 0.625rem;
+}
+.sheet .brute h2.ability-title {
+  text-shadow: none;
+}
+.sheet .skills {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 8em;
+  gap: 0.2em;
+}
+.sheet .skill {
+  height: 1em;
+}
+.sheet .twodigit input[type=text] {
+  max-width: 1.875rem;
+  text-align: right;
+}
+
+.actor header.sheet-header {
+  flex: 0 0 9.375rem;
+  flex-direction: row;
+}
+.actor header.sheet-header .header-data > .flex-group {
+  gap: 0.2rem;
+}
+.actor header.sheet-header .header-data > .flex-group > * {
+  flex: auto;
+}
+.actor header.sheet-header .header-data input {
+  text-align: center;
+  font-size: 0.9rem;
+}
+.actor header.sheet-header .profile-img {
+  flex: 0 0 9.375rem;
+  height: 9.375rem;
+  width: 9.375rem;
+  border: 0.25rem solid #8a642a;
+  border-radius: 9.375rem;
+}
+.actor header.sheet-header .wounds .pts {
+  padding-left: 0.625rem;
+}
+.actor header.sheet-header .wounds .pts.bigger {
+  padding-left: 2.375rem;
+}
+.actor header.sheet-header .raise-tracking {
+  min-width: 10em;
+}
+.actor header.sheet-header .raise-tracking label {
+  margin-right: 0.4em;
+}
+.actor header.sheet-header .raise-tracking button {
+  width: 1.8rem;
+  font-size: 0.8rem;
+  height: 1.8rem;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  border-radius: 1rem;
+  border: 0px;
+  box-shadow: 1px 1px 4px #771213;
+}
+.actor header.sheet-header .raise-tracking input {
+  text-align: center;
+}
+.actor .danger-points input[type=text] {
+  font-size: 6em;
+  height: 8rem;
+  width: 8rem;
+  border: 0.25rem solid #8a642a;
+  border-radius: 2em;
+  text-align: center;
+}
+.actor .danger-points button {
+  margin-top: 3em;
+  width: auto;
+}
+.actor .sheet-header.dangerpts {
+  flex-direction: row;
+  margin: 0px;
+  gap: 0.5rem;
+}
+.actor .sheet-header.dangerpts .profile-img {
+  flex: 0 0 3.125rem;
+  height: 3.125rem;
+  width: 3.125rem;
+  border: 0.0625rem solid #8a642a;
+  border-radius: 3.125rem;
+}
+.actor .red {
+  color: red;
+}
+
+.item .sheet-header {
+  flex: 0 0 9.375rem;
+}
+.item .sheet-header .profile-img {
+  flex: 0 0 7.8125rem;
+  height: 7.8125rem;
+  width: 7.8125rem;
+  border: 0.25rem solid #8a642a;
+  border-radius: 7.8125rem;
+}
+.item .sheet-header .item-subtitle {
+  font-size: 0.8em;
+  opacity: 0.5;
+}
+
+/* =====================================================================
+   Théah reskin — faithful 1:1 port of design/character-sheet-preview.html
+   The preview is the gold standard. This file reproduces its CSS verbatim,
+   re-pointed onto the Foundry sheet DOM (scoped under `.theah`). Do NOT
+   re-derive these rules — edit the preview and re-port if the look changes.
+   ===================================================================== */
+/* ----------------------------- Tokens ----------------------------- */
+:root {
+  --paper: #e7d8b6;
+  --paper-deep: #d8c49a;
+  --panel: #f1e7cc;
+  --panel-edge: #cbb488;
+  --ink: #3a2c1c;
+  --ink-soft: #6b5a41;
+  --navy: #16323f;
+  --navy-deep: #0e232c;
+  --teal: #2b6b6b;
+  --gold: #b0873f;
+  --gold-leaf: #d9b262;
+  --gold-deep: #8a642a;
+  --oxblood: #7c2b22;
+  --oxblood-deep: #591c16;
+  --line: rgba(58,44,28,.28);
+  --line-strong: rgba(58,44,28,.5);
+  --seal-shadow: rgba(40,20,10,.35);
+  --shadow: 0 18px 44px -22px rgba(30,18,8,.65);
+  --grain: .06;
+  --thd-display: "Hoefler Text","Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --thd-body: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --thd-label: ui-sans-serif,"Gill Sans","Segoe UI",system-ui,sans-serif;
+}
+
+/* Paper (parchment) is the DEFAULT — the `:root` tokens above. The "night at
+   sea" theme is opt-in, driven by the client setting (theah.theme) which stamps
+   `data-theah-theme` on <html>. No `prefers-color-scheme` auto-switch, so the
+   sheet always opens on paper until the reader chooses otherwise. */
+:root[data-theah-theme=sea] {
+  --paper:#12262f;
+  --paper-deep:#0e1f27;
+  --panel:#173039;
+  --panel-edge:#2b4a55;
+  --ink:#e8dcc0;
+  --ink-soft:#a9b9bb;
+  --navy:#0b1b22;
+  --navy-deep:#060f14;
+  --teal:#5fb0a6;
+  --gold:#c9a24b;
+  --gold-leaf:#e6c887;
+  --gold-deep:#9c7a34;
+  --oxblood:#b5453a;
+  --oxblood-deep:#7c2b22;
+  --line:rgba(201,162,75,.22);
+  --line-strong:rgba(201,162,75,.42);
+  --seal-shadow:rgba(0,0,0,.5);
+  --shadow:0 20px 50px -22px rgba(0,0,0,.8);
+  --grain:.05;
+}
+
+:root[data-theah-theme=paper] {
+  --paper:#e7d8b6;
+  --paper-deep:#d8c49a;
+  --panel:#f1e7cc;
+  --panel-edge:#cbb488;
+  --ink:#3a2c1c;
+  --ink-soft:#6b5a41;
+  --navy:#16323f;
+  --navy-deep:#0e232c;
+  --teal:#2b6b6b;
+  --gold:#b0873f;
+  --gold-leaf:#d9b262;
+  --gold-deep:#8a642a;
+  --oxblood:#7c2b22;
+  --oxblood-deep:#591c16;
+  --line:rgba(58,44,28,.28);
+  --line-strong:rgba(58,44,28,.5);
+  --seal-shadow:rgba(40,20,10,.35);
+  --shadow:0 18px 44px -22px rgba(30,18,8,.65);
+  --grain:.06;
+}
+
+/* ======================= Sheet window shell ======================= */
+.theah.sheet .window-content {
+  padding: 0;
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--thd-body);
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+.theah .window-content > form,
+.theah form.editable,
+.theah form.locked {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.theah * {
+  box-sizing: border-box;
+}
+
+/* Two-panel spread: identity rail + ledger */
+.theah .theah-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  grid-template-rows: minmax(0, 1fr);
+  min-height: 0;
+  background: var(--panel);
+}
+
+/* Header layout for the non-rail sheets (hero / villain / monster): a navy
+   band so the shared wound track keeps its gold-on-navy palette. */
+.theah .sheet-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--navy) 92%, #000 8%), var(--navy-deep));
+  color: #f0e5c8;
+}
+
+.theah .sheet-header .profile-img {
+  flex: none;
+  width: 92px;
+  height: 92px;
+  border: 1px solid rgba(217, 178, 98, 0.35);
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.theah .sheet-header .header-fields {
+  flex: 1;
+  min-width: 0;
+}
+
+.theah .charname {
+  margin: 0 0 8px;
+  border: 0;
+}
+
+.theah .charname input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(217, 178, 98, 0.3);
+  color: #f4ead0;
+  font-family: var(--thd-display);
+  font-size: 24px;
+  font-weight: 600;
+  padding: 2px 0;
+}
+
+.theah .charname input:focus {
+  outline: none;
+  border-bottom-color: var(--gold-leaf);
+}
+
+.theah .sheet-header .wounds {
+  margin-top: 8px;
+}
+
+.theah .sheet-header + .sheet-tabs {
+  margin: 16px 18px 18px;
+}
+
+.theah .sheet-body {
+  padding: 0 18px 20px;
+}
+
+.theah.pc .sheet-body {
+  padding: 0;
+}
+
+/* ------------------------- Identity rail ------------------------- */
+.theah .identity-rail {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--navy) 92%, #000 8%), var(--navy-deep));
+  color: #f0e5c8;
+  padding: 22px 20px 26px;
+  position: relative;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.theah .identity-rail .edge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold-deep));
+  opacity: 0.85;
+}
+
+.theah .portrait {
+  position: relative;
+  width: 170px;
+  height: 226px;
+  margin: 2px auto 14px;
+}
+
+.theah .portrait img,
+.theah .portrait .ph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  background: radial-gradient(80% 60% at 50% 30%, #6f7d86, #3c4a52 70%, #22303a);
+  display: grid;
+  place-items: center;
+  border: 0;
+  cursor: pointer;
+}
+
+.theah .portrait .ph svg {
+  width: 64px;
+  height: 64px;
+  opacity: 0.5;
+}
+
+.theah .corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  stroke: var(--gold-leaf);
+  fill: none;
+  stroke-width: 1.4;
+  pointer-events: none;
+}
+
+.theah .corner.tl {
+  top: -8px;
+  left: -8px;
+}
+
+.theah .corner.tr {
+  top: -8px;
+  right: -8px;
+  transform: scaleX(-1);
+}
+
+.theah .corner.bl {
+  bottom: -8px;
+  left: -8px;
+  transform: scaleY(-1);
+}
+
+.theah .corner.br {
+  bottom: -8px;
+  right: -8px;
+  transform: scale(-1);
+}
+
+.theah .nameplate {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.theah .nameplate .name {
+  font-family: var(--thd-display);
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.05;
+  color: #f4ead0;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid transparent;
+}
+
+.theah .nameplate .name:hover,
+.theah .nameplate .name:focus {
+  border-bottom-color: rgba(217, 178, 98, 0.5);
+  outline: none;
+}
+
+.theah .nameplate .name::placeholder {
+  color: rgba(217, 178, 98, 0.45);
+}
+
+.theah .nameplate .epithet {
+  font-family: var(--thd-display);
+  font-style: italic;
+  color: var(--gold-leaf);
+  font-size: 15px;
+  margin-top: 2px;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  width: 100%;
+}
+
+.theah .nameplate .epithet::placeholder {
+  color: rgba(217, 178, 98, 0.4);
+}
+
+.theah .filet {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin: 12px 4px;
+  color: var(--gold-leaf);
+}
+
+.theah .filet::before,
+.theah .filet::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, currentColor);
+  opacity: 0.55;
+}
+
+.theah .filet svg {
+  width: 20px;
+  height: 12px;
+}
+
+.theah .meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 12px;
+  font-size: 14px;
+  margin: 4px 6px 6px;
+  align-items: center;
+}
+
+.theah .meta dt {
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b9a877;
+  align-self: center;
+}
+
+.theah .meta dd {
+  margin: 0;
+  color: #efe4c7;
+}
+
+/* Identity fields set at creation — shown read-only, not editable on the sheet. */
+.theah .meta dd.ro-field {
+  font-family: var(--thd-body);
+  font-size: 13.5px;
+  line-height: 1.35;
+  padding: 3px 2px;
+  color: #efe4c7;
+}
+
+.theah .meta dd input,
+.theah .meta dd select {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(217, 178, 98, 0.2);
+  border-radius: 2px;
+  color: #efe4c7;
+  font-family: var(--thd-body);
+  font-size: 13.5px;
+  padding: 3px 6px;
+  height: auto;
+  line-height: 1.3;
+}
+
+.theah .meta dd input:focus,
+.theah .meta dd select:focus {
+  border-color: var(--gold-leaf);
+  box-shadow: none;
+  outline: none;
+}
+
+.theah .meta dd select option {
+  color: #1a1a1a;
+}
+
+.theah .meta dd.rail-langs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.theah .meta dd.rail-langs .tag-list {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.theah .meta dd.rail-langs .language-selector {
+  color: var(--gold-leaf);
+  font-size: 12px;
+}
+
+/* Resources */
+.theah .res {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 16px 2px 4px;
+}
+
+.theah .res .k .info-dot {
+  color: #b9a877;
+  opacity: 0.5;
+  margin-left: 4px;
+  font-size: 9px;
+}
+
+.theah .res .k .info-dot:hover {
+  opacity: 1;
+  color: var(--gold-leaf);
+}
+
+.theah .res .cell {
+  text-align: center;
+  border: 1px solid rgba(217, 178, 98, 0.28);
+  border-radius: 2px;
+  padding: 9px 4px 7px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.theah .res .k {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+
+.theah .res .v {
+  font-family: var(--thd-display);
+  font-size: 23px;
+  color: #f4ead0;
+  font-variant-numeric: tabular-nums;
+  margin-top: 1px;
+}
+
+.theah .res .v input {
+  width: 100%;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  color: #f4ead0;
+  font-family: var(--thd-display);
+  font-size: 23px;
+  padding: 0;
+  height: auto;
+  line-height: 1.1;
+}
+
+.theah .res .v input:focus {
+  outline: none;
+}
+
+.theah .pips-inline {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.theah .pips-inline i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-leaf);
+  cursor: pointer;
+}
+
+.theah .pips-inline i.on {
+  background: radial-gradient(var(--gold-leaf), var(--gold-deep));
+  box-shadow: 0 0 4px rgba(217, 178, 98, 0.5);
+}
+
+/* Slim initiative row */
+.theah .init-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 2px 0;
+  padding: 6px 10px;
+  border: 1px solid rgba(217, 178, 98, 0.22);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.theah .init-row .k {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+
+.theah .init-ctl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theah .init-ctl button {
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(217, 178, 98, 0.35);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--gold-leaf);
+  border-radius: 2px;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 13px;
+  padding: 0;
+}
+
+.theah .init-ctl button:hover {
+  border-color: var(--gold-leaf);
+  color: #f4ead0;
+}
+
+.theah .init-ctl input {
+  width: 34px;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  color: #f4ead0;
+  font-family: var(--thd-display);
+  font-size: 16px;
+}
+
+/* Corruption pips (villainy) */
+.theah .rail-corruption {
+  margin: 14px 2px 0;
+}
+
+.theah .rail-corruption .lbl {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+
+.theah .rail-corruption .lbl .info-dot {
+  color: #b9a877;
+  opacity: 0.55;
+  margin-left: 4px;
+  font-size: 10px;
+}
+
+.theah .rail-corruption .lbl .info-dot:hover {
+  opacity: 1;
+  color: var(--gold-leaf);
+}
+
+.theah .corruption-pips {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.theah .corruption-pips i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(181, 69, 58, 0.6);
+  cursor: pointer;
+}
+
+.theah .corruption-pips i.on {
+  background: radial-gradient(var(--oxblood), var(--oxblood-deep));
+  border-color: var(--oxblood);
+}
+
+/* GM-only Evil Act button: applies escalating Corruption + rolls Fall from Grace. */
+.theah .rail-corruption .evil-act-roll {
+  margin-top: 9px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #f2e6c9;
+  background: linear-gradient(180deg, rgba(124, 43, 34, 0.5), rgba(90, 30, 22, 0.72));
+  border: 1px solid rgba(181, 69, 58, 0.55);
+  border-radius: 3px;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: filter 0.15s, border-color 0.15s;
+}
+
+.theah .rail-corruption .evil-act-roll:hover {
+  filter: brightness(1.14);
+  border-color: var(--oxblood);
+}
+
+.theah .rail-corruption .evil-act-roll i {
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+/* Wealth — a 0–10 track of clickable gold talers; each has a book tooltip. */
+.theah .rail-wealth {
+  margin: 14px 2px 0;
+}
+
+.theah .rail-wealth .lbl {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.theah .rail-wealth .lbl .info-dot {
+  color: var(--gold-deep);
+  opacity: 0.55;
+  margin-left: 4px;
+  font-size: 10px;
+}
+
+.theah .rail-wealth .lbl .info-dot:hover {
+  opacity: 1;
+  color: var(--gold);
+}
+
+.theah .rail-wealth .lbl span:last-child {
+  font-family: var(--thd-display);
+  letter-spacing: 0;
+  font-size: 14px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.theah .rail-wealth .lbl span:last-child i {
+  color: var(--gold-deep);
+  font-size: 11px;
+  margin-right: 3px;
+}
+
+.theah .wealth-talers {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.theah .wealth-talers i {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-deep);
+  cursor: pointer;
+  background: transparent;
+  transition: transform 0.1s;
+}
+
+.theah .wealth-talers i.on {
+  background: radial-gradient(circle at 38% 32%, var(--gold-leaf), var(--gold) 62%, var(--gold-deep));
+  border-color: var(--gold-deep);
+  box-shadow: 0 0 4px rgba(176, 135, 63, 0.5), inset 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+.theah .wealth-talers i:hover {
+  transform: scale(1.18);
+}
+
+/* Engraved hairline separating the Corruption block from the Wound tracks. */
+.theah .rail-sep {
+  height: 1px;
+  margin: 20px 2px 6px;
+  background: linear-gradient(90deg, transparent, rgba(217, 178, 98, 0.36) 18%, rgba(217, 178, 98, 0.36) 82%, transparent);
+}
+
+/* Wounds + death spiral */
+.theah .wounds {
+  margin: 18px 2px 0;
+}
+
+.theah .wounds .lbl {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+
+/* 16-wound track = 8 × 2, book Death Spiral (4 Wounds per Dramatic Wound). */
+.theah .track {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  margin: 8px 0 4px;
+}
+
+.theah .track i {
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(217, 178, 98, 0.4);
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.theah .track i.on {
+  background: linear-gradient(180deg, var(--oxblood), var(--oxblood-deep));
+  border-color: var(--oxblood);
+  box-shadow: 0 0 6px rgba(124, 43, 34, 0.5);
+}
+
+.theah .spiral {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+.theah .seal {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  flex: 1;
+  cursor: pointer;
+}
+
+.theah .seal svg {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.theah .seal .wax {
+  fill: rgba(60, 30, 20, 0.35);
+  stroke: rgba(217, 178, 98, 0.35);
+  stroke-width: 1;
+  transition: fill 0.25s;
+}
+
+.theah .seal .sig {
+  fill: none;
+  stroke: rgba(247, 234, 208, 0.85);
+  stroke-width: 1.4;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.theah .seal.spent .wax {
+  fill: var(--oxblood);
+  filter: drop-shadow(0 3px 5px var(--seal-shadow));
+}
+
+.theah .seal.spent .sig {
+  opacity: 0.9;
+}
+
+/* Death Spiral effect ladder — the four escalating Dramatic-Wound effects
+   (Core p.165). Each stage lights up as the Hero accrues DW, so the tie between
+   Wounds and the roller (notably exploding 10s at 3+ DW) is visible on the sheet. */
+.theah .spiral-effects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.theah .spiral-fx {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border: 1px solid var(--panel-edge);
+  border-radius: 999px;
+  font-family: var(--thd-label);
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: 0.45;
+  cursor: help;
+  transition: all 0.2s;
+}
+
+.theah .spiral-fx i {
+  font-size: 9px;
+}
+
+.theah .spiral-fx.on {
+  opacity: 1;
+  color: var(--oxblood);
+  border-color: color-mix(in srgb, var(--oxblood) 45%, transparent);
+  background: color-mix(in srgb, var(--oxblood) 10%, transparent);
+}
+
+.theah .spiral-fx.explode.on {
+  color: var(--gold-deep);
+  border-color: color-mix(in srgb, var(--gold-deep) 50%, transparent);
+  background: color-mix(in srgb, var(--gold-leaf) 12%, transparent);
+  animation: theah-fx-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes theah-fx-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold-deep) 30%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 5px 1px color-mix(in srgb, var(--gold-deep) 30%, transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theah .spiral-fx.explode.on {
+    animation: none;
+  }
+}
+/* --------------------------- Ledger main --------------------------- */
+.theah .sheet-main {
+  padding: 20px 24px 26px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+.theah .sheet-main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--grain);
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+:root[data-theah-theme=sea] .theah .sheet-main::before {
+  mix-blend-mode: screen;
+}
+
+.theah .sheet-main > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tabs */
+.theah .sheet-tabs {
+  display: flex;
+  gap: 2px;
+  border-bottom: 2px solid var(--line-strong);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.theah .sheet-tabs .item {
+  font-family: var(--thd-label);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  padding: 9px 14px 11px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 2px 2px 0 0;
+  flex: none;
+  line-height: 1;
+}
+
+/* The base `_tabs.scss` forces `.tabs .item h2 { color: <light> }`, which is
+   invisible on the paper theme. Force the label to inherit the themed `.item`
+   color and drop Foundry's default red hover text-shadow. */
+.theah .sheet-tabs .item h2,
+.theah .sheet-tabs .item h3 {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  text-shadow: none;
+}
+
+.theah .sheet-tabs .item {
+  text-shadow: none;
+}
+
+.theah .sheet-tabs .item:hover,
+.theah .sheet-tabs .item:hover h2 {
+  color: var(--gold-deep);
+  text-shadow: none;
+}
+
+.theah .sheet-tabs .item.active,
+.theah .sheet-tabs .item.active h2 {
+  color: var(--ink);
+  text-shadow: none;
+}
+
+.theah .sheet-tabs .item.active::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -2px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-leaf), var(--gold-deep));
+}
+
+/* Compact icon-only theme switch, pinned to the right of the tab strip. */
+.theah .sheet-tabs .theme-toggle {
+  margin-left: auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.theah .sheet-tabs .theme-toggle:hover {
+  color: var(--gold-deep);
+  border-color: var(--gold);
+  background: color-mix(in srgb, var(--gold-leaf) 12%, transparent);
+}
+
+.theah .sheet-tabs .theme-toggle i {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Section rule */
+.theah .sec-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0 14px;
+}
+
+.theah .sec-title h3 {
+  font-family: var(--thd-display);
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  font-size: 19px;
+  margin: 0;
+  color: var(--ink);
+  border: 0;
+}
+
+.theah .sec-title > span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line-strong), transparent);
+}
+
+.theah .sec-title .add-btn {
+  flex: none;
+  color: var(--gold-deep);
+  text-decoration: none;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.theah .sec-title .add-btn:hover {
+  opacity: 1;
+}
+
+/* Traits: compass rose behind medallions */
+.theah .traits {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 6px 4px;
+  margin-bottom: 26px;
+}
+
+.theah .compass-bg {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  opacity: 0.14;
+}
+
+.theah .compass-bg svg {
+  width: 230px;
+  height: 230px;
+  color: var(--gold-deep);
+}
+
+.theah .trait {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.theah .medallion {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: radial-gradient(70% 70% at 50% 35%, var(--panel), color-mix(in srgb, var(--paper-deep) 80%, #000 6%));
+  border: 1px solid var(--line-strong);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 0 0 4px color-mix(in srgb, var(--panel) 70%, transparent), 0 4px 10px -6px rgba(30, 18, 8, 0.6);
+}
+
+.theah .medallion::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px dashed var(--line);
+}
+
+.theah .medallion .num {
+  font-family: var(--thd-display);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.theah .trait:hover .medallion {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 4px color-mix(in srgb, var(--gold-leaf) 22%, transparent), 0 6px 16px -8px rgba(30, 18, 8, 0.7);
+}
+
+.theah .trait .tname {
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.theah .trait:hover .tname {
+  color: var(--gold-deep);
+}
+
+/* Trait pips (click to set) — kept in DOM for editing, hidden by default */
+/* Trait rating pips: always visible + in normal flow (below the medallion) so
+   Traits are directly editable, not hidden behind a hover. */
+.theah .trait .pips {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.theah .trait .pips i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1.2px solid var(--gold-deep);
+  background: transparent;
+  cursor: pointer;
+}
+
+.theah .trait .pips i.on {
+  background: radial-gradient(var(--gold-leaf), var(--gold));
+}
+
+/* Skills ledger */
+.theah .skills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 30px;
+}
+
+.theah .skill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 3px;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  width: 100%;
+  border-bottom: 1px dotted var(--line);
+}
+
+.theah .skill:hover {
+  background: color-mix(in srgb, var(--gold-leaf) 14%, transparent);
+}
+
+.theah .skill .sname {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.theah .skill .sname:hover {
+  color: var(--gold-deep);
+}
+
+.theah .skill .val {
+  font-family: var(--thd-display);
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  color: var(--ink-soft);
+  width: 14px;
+  text-align: center;
+  flex: none;
+}
+
+.theah .pips {
+  display: flex;
+  gap: 4px;
+}
+
+.theah .skill .pips {
+  flex: none;
+}
+
+.theah .skill .pips i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.2px solid var(--gold-deep);
+  background: transparent;
+  cursor: pointer;
+}
+
+.theah .skill .pips i.on {
+  background: radial-gradient(var(--gold-leaf), var(--gold));
+  box-shadow: 0 0 4px rgba(176, 135, 63, 0.45);
+}
+
+/* Info affordance (Skills / Traits) — native Foundry tooltip via data-tooltip. */
+.theah .info-dot {
+  font-size: 10px;
+  color: var(--ink-soft);
+  opacity: 0.4;
+  cursor: help;
+  transition: opacity 0.12s, color 0.12s;
+}
+
+.theah .info-dot:hover {
+  opacity: 1;
+  color: var(--gold-deep);
+}
+
+.theah .skill .info-dot {
+  margin-left: 1px;
+  flex: none;
+}
+
+.theah .trait .tname .info-dot {
+  margin-left: 3px;
+  vertical-align: middle;
+}
+
+/* Two-up lower panels */
+.theah .lower {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  margin-top: 26px;
+}
+
+/* Arcana cards */
+.theah .arcana {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.theah .card {
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  padding: 13px 13px 15px;
+  position: relative;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 92%, #fff 8%), var(--panel));
+}
+
+.theah .card .kind {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.theah .card.virtue .kind {
+  color: var(--teal);
+}
+
+.theah .card.hubris .kind {
+  color: var(--oxblood);
+}
+
+.theah .card .cname {
+  font-family: var(--thd-display);
+  font-size: 17px;
+  font-weight: 600;
+  margin: 2px 0 6px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.theah .card .ctext,
+.theah .card .ctext p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.theah .card .corner-mark {
+  position: absolute;
+  top: 9px;
+  right: 11px;
+  font-family: var(--thd-display);
+  font-size: 18px;
+  opacity: 0.5;
+}
+
+.theah .card.virtue {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--teal) 20%, transparent);
+}
+
+.theah .card.hubris {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--oxblood) 20%, transparent);
+}
+
+.theah .card .card-controls {
+  position: absolute;
+  top: 8px;
+  right: 26px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.theah .card:hover .card-controls {
+  opacity: 1;
+}
+
+.theah .card .card-controls a {
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.theah .card .card-controls a:hover {
+  color: var(--gold-deep);
+}
+
+.theah .arcana-empty {
+  grid-column: 1/-1;
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 13px;
+  padding: 4px 2px;
+}
+
+/* Advantages list */
+.theah .perk-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.theah .perk-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 2px;
+  border-bottom: 1px dotted var(--line);
+  flex-wrap: wrap;
+}
+
+.theah .perk-row .cost {
+  font-family: var(--thd-display);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  color: #fff;
+  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+  align-self: center;
+}
+
+.theah .perk-row .cost.cost-plain {
+  background: transparent;
+  color: var(--gold-deep);
+  box-shadow: none;
+  border: 1px solid var(--line-strong);
+}
+
+.theah .perk-row .an {
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--ink);
+  flex: 1;
+  cursor: pointer;
+  margin: 0;
+  border: 0;
+}
+
+.theah .perk-row .an:hover {
+  color: var(--gold-deep);
+}
+
+.theah .perk-row .an .badge {
+  font-size: 11px;
+  color: var(--gold-deep);
+}
+
+.theah .perk-row .favor-tag {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.theah .perk-row .item-controls {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  align-self: center;
+}
+
+.theah .perk-row:hover .item-controls {
+  opacity: 1;
+}
+
+.theah .perk-row .item-controls a {
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.theah .perk-row .item-controls a:hover {
+  color: var(--gold-deep);
+}
+
+.theah .item-summary {
+  flex-basis: 100%;
+  margin: 6px 0 2px;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  border-left: 2px solid var(--gold-deep);
+  background: color-mix(in srgb, var(--gold-leaf) 8%, transparent);
+}
+
+/* Prowess tab — Dueling Style / Secret Society cards (content shown upfront). */
+.theah .prowess-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.theah .prowess-card {
+  border: 1px solid var(--panel-edge);
+  border-left: 3px solid var(--gold-deep);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--gold-leaf) 5%, transparent);
+  padding: 10px 12px;
+}
+
+.theah .prowess-card.society {
+  border-left-color: var(--teal);
+}
+
+.theah .prowess-card .pc-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.theah .prowess-card .pc-icon {
+  color: var(--gold-deep);
+  font-size: 14px;
+  flex: none;
+}
+
+.theah .prowess-card.society .pc-icon {
+  color: var(--teal);
+}
+
+.theah .prowess-card .pc-name {
+  flex: 1;
+  margin: 0;
+  border: 0;
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.theah .prowess-card .favor-ctl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theah .prowess-card .favor-val {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--teal);
+  white-space: nowrap;
+}
+
+.theah .prowess-card .favor-val b {
+  font-family: var(--thd-display);
+  font-size: 14px;
+  color: var(--ink);
+  margin-left: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.theah .prowess-card .favor-step {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--teal) 50%, transparent);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--teal);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: background 0.12s, color 0.12s;
+}
+
+.theah .prowess-card .favor-step:hover {
+  background: var(--teal);
+  color: #fff;
+}
+
+/* Sorcery cards reuse the .prowess-card shell (gold accent + hat-wizard icon); the
+   tradition + tier show as small tags. Themed tokens so both paper/sea work. */
+.theah .sorc-tags {
+  display: inline-flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.theah .sorc-tag {
+  font-family: var(--thd-label);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  border-radius: 10px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.theah .sorc-tag.tier {
+  color: var(--oxblood);
+  border-color: color-mix(in srgb, var(--oxblood) 45%, transparent);
+}
+
+/* Sorcery-tab callout naming the Hero's national bloodline tradition (Hexenwerk,
+   Glamour, …) so it's visible/memorable even before any effect items are added. */
+.theah .sorc-tradition {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border: 1px solid var(--panel-edge);
+  border-left: 3px solid var(--gold-deep);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--gold-leaf) 8%, transparent);
+}
+
+.theah .sorc-tradition .st-icon {
+  color: var(--gold-deep);
+  font-size: 22px;
+  margin-top: 3px;
+  flex: none;
+}
+
+.theah .sorc-tradition .st-label {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.theah .sorc-tradition .st-name {
+  font-family: var(--thd-display);
+  font-size: 20px;
+  color: var(--ink);
+  line-height: 1.1;
+  margin: 1px 0 4px;
+}
+
+.theah .sorc-tradition .st-desc {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.theah .sorc-tradition.not-learned {
+  opacity: 0.9;
+  border-left-style: dashed;
+}
+
+.theah .sorc-tradition .st-hint {
+  margin-top: 6px;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+
+.theah .sorc-tradition .st-hint i {
+  margin-right: 4px;
+}
+
+/* Collapsible "when may a Hero learn a sorcery?" explainer (mirrors .roller-guide). */
+.theah .sorc-guide {
+  border: 1px solid var(--panel-edge);
+  border-radius: 3px;
+  margin-bottom: 14px;
+  padding: 0 14px;
+  background: color-mix(in srgb, var(--panel) 60%, transparent);
+}
+
+.theah .sorc-guide > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 0;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theah .sorc-guide > summary::-webkit-details-marker {
+  display: none;
+}
+
+.theah .sorc-guide > summary:hover {
+  color: var(--gold);
+}
+
+.theah .sorc-guide[open] > summary {
+  border-bottom: 1px dotted var(--line);
+}
+
+.theah .sorc-guide .sg-general {
+  margin: 10px 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.theah .sorc-guide .sg-general strong {
+  color: var(--gold-deep);
+  font-weight: 600;
+}
+
+.theah .sorc-guide .sg-yours {
+  margin: 6px 0 12px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--gold-deep);
+  background: color-mix(in srgb, var(--gold-leaf) 8%, transparent);
+}
+
+.theah .sorc-guide .sg-lbl {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.theah .sorc-guide .sg-cond {
+  margin-top: 5px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.theah .sorc-guide .sg-cond strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.theah .sorc-guide .sg-cond em {
+  font-style: italic;
+}
+
+/* Filtered Sorcery picker dialog — bloodline-only effect list with add buttons. */
+.theah.sorcery-picker {
+  font-family: var(--thd-body);
+  color: var(--ink);
+}
+
+.theah.sorcery-picker .sp-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--thd-display);
+  font-size: 18px;
+  color: var(--ink);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.theah.sorcery-picker .sp-head i {
+  color: var(--gold-deep);
+}
+
+.theah.sorcery-picker .sp-count {
+  margin-left: auto;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--gold-leaf) 12%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1px 9px;
+}
+
+.theah.sorcery-picker .sp-list {
+  max-height: 56vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 4px;
+}
+
+.theah.sorcery-picker .sp-item {
+  border: 1px solid var(--panel-edge);
+  border-left: 3px solid var(--gold-deep);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--gold-leaf) 5%, transparent);
+  padding: 8px 10px;
+}
+
+.theah.sorcery-picker .sp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theah.sorcery-picker .sp-name {
+  flex: 1;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* flex:0 0 auto + width:auto so it sizes to its label — Foundry core forces
+   width:100% on dialog buttons, which would otherwise stretch it full-width. */
+.theah.sorcery-picker .sp-add {
+  flex: 0 0 auto;
+  width: auto;
+  align-self: center;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border: 1px solid var(--gold-deep);
+  border-radius: 3px;
+  padding: 4px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.theah.sorcery-picker .sp-add:hover {
+  filter: brightness(1.06);
+}
+
+.theah.sorcery-picker .sp-add:disabled {
+  background: none;
+  color: var(--teal);
+  border-color: color-mix(in srgb, var(--teal) 50%, transparent);
+  cursor: default;
+  filter: none;
+}
+
+.theah.sorcery-picker .sp-desc {
+  margin-top: 6px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.theah.sorcery-picker .sp-desc p {
+  margin: 0 0 5px;
+}
+
+.theah.sorcery-picker .sp-desc p:last-child {
+  margin-bottom: 0;
+}
+
+/* Labelled sub-blocks in a picker row (Adventure trigger/reward, Origin/Background Bonus). */
+.theah.sorcery-picker .sp-sub {
+  margin-top: 6px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.theah.sorcery-picker .sp-sub p {
+  margin: 0 0 5px;
+}
+
+.theah.sorcery-picker .sp-sub p:last-child {
+  margin-bottom: 0;
+}
+
+.theah.sorcery-picker .sp-lbl {
+  display: block;
+  font-family: var(--thd-label);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 2px;
+}
+
+.theah .prowess-card .item-controls {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.theah .prowess-card:hover .item-controls {
+  opacity: 1;
+}
+
+.theah .prowess-card .item-controls a {
+  color: var(--ink-soft);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.theah .prowess-card .item-controls a:hover {
+  color: var(--gold-deep);
+}
+
+.theah .prowess-card .pc-desc {
+  margin-top: 7px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.theah .prowess-card .pc-desc p {
+  margin: 0 0 6px;
+}
+
+.theah .prowess-card .pc-mech, .theah .prowess-card .pc-concern, .theah .prowess-card .pc-favor-block {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.theah .prowess-card .pc-mech {
+  padding: 8px 10px;
+  border-left: 2px solid var(--gold-deep);
+  background: color-mix(in srgb, var(--gold-leaf) 8%, transparent);
+}
+
+.theah .prowess-card .pc-mech p, .theah .prowess-card .pc-concern p {
+  margin: 0;
+}
+
+.theah .prowess-card .pc-lbl {
+  display: block;
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 3px;
+}
+
+.theah .prowess-card.society .pc-lbl {
+  color: var(--teal);
+}
+
+.theah .prowess-card .pc-favor-block ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.theah .prowess-card .pc-favor-block li {
+  margin-bottom: 5px;
+}
+
+.theah .prowess-card .pc-mech ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+.theah .prowess-card .pc-mech li {
+  margin-bottom: 5px;
+}
+
+/* Backgrounds tags */
+.theah .bg-tags {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.theah .tag {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 9px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theah .tag .item-name {
+  cursor: pointer;
+}
+
+.theah .tag .item-name:hover {
+  color: var(--gold-deep);
+}
+
+.theah .tag .item-control {
+  color: var(--ink-soft);
+  opacity: 0;
+}
+
+.theah .tag:hover .item-control {
+  opacity: 0.8;
+}
+
+.theah .tag .item-control:hover {
+  color: var(--oxblood);
+  opacity: 1;
+}
+
+.theah .bg-empty {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+/* ------------------------- Raises roller ------------------------- */
+.theah .roller {
+  margin-top: 26px;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.theah .roller .top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--navy) 90%, #000 10%), var(--navy-deep));
+  color: #efe4c7;
+  flex-wrap: wrap;
+}
+
+.theah .roller .formula {
+  font-family: var(--thd-display);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.theah .roller .formula b {
+  color: var(--gold-leaf);
+}
+
+.theah .roller .roller-info {
+  color: var(--gold-leaf);
+  opacity: 0.75;
+  cursor: help;
+  font-size: 13px;
+  margin-right: 2px;
+}
+
+.theah .roller .roller-info:hover {
+  opacity: 1;
+}
+
+.theah .roller .sets-hint {
+  cursor: help;
+  opacity: 0.85;
+  border-bottom: 1px dotted rgba(217, 178, 98, 0.5);
+}
+
+.theah .roller .formula select {
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(217, 178, 98, 0.35);
+  border-radius: 3px;
+  color: #f4ead0;
+  font-family: var(--thd-display);
+  font-size: 14px;
+  padding: 4px 6px;
+  height: auto;
+}
+
+.theah .roller .formula select option {
+  color: #1a1a1a;
+}
+
+/* Hero Points on the roller — how many you have, and how many to SPEND for dice
+   this roll (each = +1 die, Core p.177); deducted from the sheet when you roll. */
+.theah .roller .hp-ctl {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theah .roller .hp-avail {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #efe4c7;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.theah .roller .hp-avail i {
+  color: var(--gold-leaf);
+  font-size: 11px;
+}
+
+.theah .roller .hp-avail b {
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: var(--gold-leaf);
+  font-variant-numeric: tabular-nums;
+}
+
+.theah .roller .hp-spend-lbl {
+  font-family: var(--thd-label);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #cdbd93;
+  margin-left: 4px;
+}
+
+.theah .roller .hpd-val {
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: var(--gold-leaf);
+  font-variant-numeric: tabular-nums;
+  min-width: 12px;
+  text-align: center;
+}
+
+.theah .roller .hpd-step {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(217, 178, 98, 0.5);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.22);
+  color: var(--gold-leaf);
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  transition: background 0.12s, color 0.12s;
+}
+
+.theah .roller .hpd-step:hover {
+  background: var(--gold-leaf);
+  color: #2a1c10;
+}
+
+.theah .roller .mod-cost {
+  color: var(--gold-leaf);
+  font-family: var(--thd-body);
+}
+
+.theah .roller .mod-cost i {
+  font-size: 9px;
+}
+
+.theah .roller .mod-check.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.theah .roller .mod-req {
+  color: #cdbd93;
+}
+
+.theah .roller .mod-req i {
+  font-size: 9px;
+}
+
+.theah .roll-btn {
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--thd-label);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border: 0;
+  border-radius: 3px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.6);
+}
+
+.theah .roll-btn:hover {
+  filter: brightness(1.06);
+}
+
+/* Modifiers strip: Bonus Dice, the auto Dramatic-Wound die, exploding 10s, Joie. */
+.theah .roller .mods {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 9px 16px;
+  background: color-mix(in srgb, var(--navy-deep) 55%, #000 6%);
+  border-top: 1px solid rgba(217, 178, 98, 0.18);
+  color: #e4d7b6;
+}
+
+.theah .roller .bonus-ctl {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theah .roller .mod-lbl {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #cdbd93;
+  cursor: help;
+}
+
+.theah .roller .bonus-val {
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: var(--gold-leaf);
+  font-variant-numeric: tabular-nums;
+  min-width: 12px;
+  text-align: center;
+}
+
+.theah .roller .bonus-step {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(217, 178, 98, 0.5);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.22);
+  color: var(--gold-leaf);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: background 0.12s, color 0.12s;
+}
+
+.theah .roller .bonus-step:hover {
+  background: var(--gold-leaf);
+  color: #2a1c10;
+}
+
+.theah .roller .mod-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #e9b7ac;
+  border: 1px solid color-mix(in srgb, var(--oxblood) 55%, transparent);
+  border-radius: 10px;
+  padding: 2px 9px;
+  cursor: help;
+}
+
+.theah .roller .mod-chip i {
+  font-size: 10px;
+}
+
+.theah .roller .mod-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #cdbd93;
+  cursor: pointer;
+}
+
+.theah .roller .mod-check input {
+  accent-color: var(--gold-deep);
+  cursor: pointer;
+}
+
+.theah .roller .mod-check .fa-lock {
+  font-size: 9px;
+  opacity: 0.7;
+}
+
+/* Flash the roller when a Skill click loads it, so the connection is obvious. */
+.theah .roller.flash {
+  animation: theah-roller-flash 1s ease;
+}
+
+@keyframes theah-roller-flash {
+  0%, 100% {
+    box-shadow: none;
+  }
+  12% {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold-leaf) 75%, transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theah .roller.flash {
+    animation: none;
+  }
+}
+.theah .roller .result {
+  padding: 16px;
+  display: none;
+}
+
+.theah .roller .result.show {
+  display: block;
+  animation: theah-fade 0.35s ease;
+}
+
+@keyframes theah-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theah .roller .result.show {
+    animation: none;
+  }
+}
+.theah .dice {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.theah .die {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-family: var(--thd-display);
+  font-variant-numeric: tabular-nums;
+  font-size: 17px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink);
+  position: relative;
+}
+
+.theah .die.used {
+  background: linear-gradient(180deg, var(--teal), color-mix(in srgb, var(--teal) 70%, #000));
+  color: #fff;
+  border-color: var(--teal);
+}
+
+.theah .die.ten {
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold-deep));
+  color: #2a1c10;
+  border-color: var(--gold-deep);
+}
+
+/* A die promoted to 10 by Joie de Vivre — marked so it's clearly not a natural 10. */
+.theah .die.joie {
+  box-shadow: inset 0 0 0 2px var(--teal);
+}
+
+.theah .die.joie::before {
+  content: "\f005";
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  font-size: 8px;
+  width: 14px;
+  height: 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+}
+
+/* A die you can spend Wealth to reroll (money-driven social Risk). */
+.theah .die.rerollable {
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.12s;
+}
+
+.theah .die.rerollable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.5);
+}
+
+.theah .die.rerollable::after {
+  content: "\f021";
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  font-size: 9px;
+  width: 15px;
+  height: 15px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold-deep));
+  color: #2a1c10;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.theah .die.rerollable:hover::after {
+  opacity: 1;
+}
+
+.theah .roller .reroll-hint {
+  margin-top: 12px;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--gold-deep);
+}
+
+.theah .roller .reroll-hint:empty {
+  display: none;
+}
+
+/* Collapsible "how rolling works" guide + live scenario under the roller. */
+.theah .roller-guide {
+  border-top: 1px solid var(--line);
+  padding: 0 16px;
+}
+
+.theah .roller-guide > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 0;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theah .roller-guide > summary::-webkit-details-marker {
+  display: none;
+}
+
+.theah .roller-guide > summary:hover {
+  color: var(--gold);
+}
+
+.theah .roller-guide[open] > summary {
+  border-bottom: 1px dotted var(--line);
+}
+
+.theah .roller-guide .rg-steps {
+  margin: 10px 0 4px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.theah .roller-guide .rg-steps li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.theah .roller-guide .rg-steps b {
+  color: var(--gold-deep);
+  font-weight: 600;
+}
+
+/* A defined game-term inside a guide: hover for a book-cited definition. */
+.theah .gterm {
+  cursor: help;
+  border-bottom: 1px dotted currentColor;
+  text-decoration: none;
+}
+
+.theah .roller-guide .rg-steps em.gterm {
+  font-style: italic;
+  color: var(--gold-deep);
+}
+
+.theah .roller-guide .rg-live {
+  margin: 6px 0 14px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--gold-deep);
+  background: color-mix(in srgb, var(--gold-leaf) 8%, transparent);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.theah .roller-guide .rg-live-lbl {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-right: 4px;
+}
+
+.theah .raises {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--thd-display);
+}
+
+.theah .raises .big {
+  font-size: 34px;
+  color: var(--oxblood);
+  font-variant-numeric: tabular-nums;
+}
+
+:root[data-theah-theme=sea] .theah .raises .big {
+  color: var(--gold-leaf);
+}
+
+.theah .raises .lab {
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: help;
+}
+
+.theah .raises .lab i {
+  font-size: 9px;
+  opacity: 0.55;
+  margin-left: 3px;
+}
+
+.theah .raises .lab:hover i {
+  opacity: 1;
+  color: var(--gold-deep);
+}
+
+.theah .raises .combos {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* Extended tabs (prowess / inventory / sorcery / stories) share the ledger idiom */
+.theah .items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.theah .item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--line-strong);
+  padding: 6px 2px;
+  margin-bottom: 6px;
+}
+
+.theah .item-header h3 {
+  font-family: var(--thd-display);
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  font-size: 16px;
+  margin: 0;
+  border: 0;
+}
+
+.theah .items-list .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 4px;
+  border-bottom: 1px dotted var(--line);
+}
+
+.theah .items-list .item .item-image img {
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 3px;
+}
+
+.theah .items-list .item .item-name {
+  flex: 1;
+  font-size: 14.5px;
+  color: var(--ink);
+  border: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.theah .items-list .item .item-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.theah .items-list .item-control {
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.theah .items-list .item-control:hover {
+  color: var(--gold-deep);
+}
+
+.theah .equipment,
+.theah .redemption-text {
+  width: 100%;
+  min-height: 160px;
+  background: color-mix(in srgb, var(--panel) 92%, #fff 8%);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  font-family: var(--thd-body);
+  font-size: 14px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.theah .editor {
+  min-height: 200px;
+}
+
+/* Foundry tab visibility (only active tab shown) */
+.theah .sheet-body .tab {
+  display: none;
+}
+
+.theah .sheet-body .tab.active {
+  display: block;
+}
+
+/* ------------------------- Chat: pool roll ------------------------- */
+#chat .theah-pool {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-pool .pool-head {
+  padding: 8px 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--navy) 90%, #000 10%), var(--navy-deep));
+  color: #efe4c7;
+  font-family: var(--thd-display);
+}
+
+#chat .theah-pool .pool-head b {
+  color: var(--gold-leaf);
+}
+
+#chat .theah-pool .pool-body {
+  padding: 12px;
+}
+
+#chat .theah-pool .dice {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+#chat .theah-pool .die {
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink);
+}
+
+#chat .theah-pool .die.used {
+  background: linear-gradient(180deg, var(--teal), #173f3f);
+  color: #fff;
+  border-color: var(--teal);
+}
+
+#chat .theah-pool .die.ten {
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold-deep));
+  color: #2a1c10;
+  border-color: var(--gold-deep);
+}
+
+#chat .theah-pool .raises {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--thd-display);
+}
+
+#chat .theah-pool .raises .big {
+  font-size: 30px;
+  color: var(--oxblood);
+}
+
+#chat .theah-pool .raises .lab {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: help;
+}
+
+#chat .theah-pool .raises .lab i, #chat .theah-roll .raise-label i {
+  font-size: 9px;
+  opacity: 0.55;
+  margin-left: 3px;
+}
+
+#chat .theah-pool .raises .lab:hover i, #chat .theah-roll .raise-label:hover i {
+  opacity: 1;
+  color: var(--gold-deep);
+}
+
+#chat .theah-pool .combos {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+#chat .theah-pool .pool-mods {
+  margin-top: 9px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#chat .theah-pool .pool-mods::before {
+  content: "";
+}
+
+#chat .theah-pool .pool-mods {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+#chat .theah-pool .pool-head b {
+  color: var(--gold-leaf);
+}
+
+#chat .theah-pool .pool-reroll {
+  margin: 0 12px 11px;
+  padding-top: 9px;
+  border-top: 1px dotted var(--line);
+  font-size: 12px;
+  font-style: italic;
+  color: var(--gold-deep);
+}
+
+#chat .theah-pool .pool-reroll i {
+  margin-right: 5px;
+}
+
+/* Skill/trait roll card (from the roll dialog) */
+#chat .theah-roll {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-roll .roll-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--navy) 90%, #000 10%), var(--navy-deep));
+  color: #efe4c7;
+  font-family: var(--thd-display);
+  font-size: 15px;
+}
+
+#chat .theah-roll .roll-head img {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--gold-deep);
+  border-radius: 3px;
+  object-fit: cover;
+  flex: none;
+}
+
+#chat .theah-roll .roll-body {
+  padding: 12px;
+}
+
+#chat .theah-roll .raise-count {
+  font-family: var(--thd-display);
+  font-size: 30px;
+  color: var(--oxblood);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+:root[data-theah-theme=sea] #chat .theah-roll .raise-count {
+  color: var(--gold-leaf);
+}
+
+#chat .theah-roll .raise-label {
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: help;
+}
+
+#chat .theah-roll .dice {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+#chat .theah-roll .die {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink);
+}
+
+#chat .theah-roll .die.ten {
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold-deep));
+  color: #2a1c10;
+  border-color: var(--gold-deep);
+}
+
+#chat .theah-roll .combos {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+#chat .theah-roll .initiative-tracker-add {
+  margin-top: 10px;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border: 1px solid var(--gold-deep);
+  border-radius: 3px;
+  padding: 6px 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+#chat .theah-roll .initiative-tracker-add:hover {
+  filter: brightness(1.05);
+}
+
+/* Wound / Dramatic Wound card */
+#chat .theah-wound {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-left: 4px solid var(--gold-deep);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-wound.severe {
+  border-left-color: var(--oxblood);
+}
+
+#chat .theah-wound .wound-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+#chat .theah-wound.severe .wound-head {
+  color: var(--oxblood);
+}
+
+#chat .theah-wound .wound-head i {
+  font-size: 14px;
+}
+
+#chat .theah-wound .wound-body {
+  padding: 0 12px 11px;
+}
+
+#chat .theah-wound .wound-stats {
+  display: flex;
+  gap: 14px;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+#chat .theah-wound .wound-stats b {
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+#chat .theah-wound .wound-stats .dw b {
+  color: var(--oxblood);
+}
+
+#chat .theah-wound .wound-effect {
+  margin-top: 7px;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* Corruption chat card (gain/shed) + the GM Evil Act / Fall-from-Grace card. */
+#chat .theah-corruption {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-left: 4px solid var(--gold-deep);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-corruption.severe, #chat .theah-corruption.evil-act {
+  border-left-color: var(--oxblood);
+}
+
+#chat .theah-corruption .corr-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+#chat .theah-corruption.severe .corr-head, #chat .theah-corruption.evil-act .corr-head {
+  color: var(--oxblood);
+}
+
+#chat .theah-corruption .corr-head i {
+  font-size: 14px;
+}
+
+#chat .theah-corruption .corr-body {
+  padding: 0 12px 11px;
+}
+
+#chat .theah-corruption .corr-stats {
+  display: flex;
+  gap: 14px;
+  margin-top: 4px;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+#chat .theah-corruption .corr-stats b {
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--oxblood);
+}
+
+#chat .theah-corruption .corr-roll {
+  margin-top: 8px;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+#chat .theah-corruption .corr-roll b {
+  font-size: 18px;
+}
+
+#chat .theah-corruption .corr-roll b.bad {
+  color: var(--oxblood);
+}
+
+#chat .theah-corruption .corr-roll b.good {
+  color: var(--teal);
+}
+
+#chat .theah-corruption .corr-note {
+  margin-top: 7px;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+#chat .theah-corruption .corr-verdict {
+  margin-top: 8px;
+  font-family: var(--thd-display);
+  font-size: 14px;
+  color: var(--teal);
+}
+
+#chat .theah-corruption .corr-verdict.fell {
+  color: var(--oxblood);
+  font-size: 16px;
+}
+
+/* Wealth earn / spend card. */
+#chat .theah-wealth {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-left: 4px solid var(--gold-deep);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-wealth.spend {
+  border-left-color: var(--teal);
+}
+
+#chat .theah-wealth.severe {
+  border-left-color: var(--oxblood);
+}
+
+#chat .theah-wealth.severe .wealth-head, #chat .theah-wealth.severe .wealth-head i {
+  color: var(--oxblood);
+}
+
+#chat .theah-wealth .wealth-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+#chat .theah-wealth .wealth-head i {
+  color: var(--gold-deep);
+  font-size: 14px;
+}
+
+#chat .theah-wealth.spend .wealth-head i {
+  color: var(--teal);
+}
+
+#chat .theah-wealth .wealth-body {
+  padding: 0 12px 11px;
+}
+
+#chat .theah-wealth .wealth-stats {
+  display: flex;
+  gap: 14px;
+  margin-top: 4px;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+#chat .theah-wealth .wealth-stats b {
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--gold-deep);
+}
+
+#chat .theah-wealth .wealth-note {
+  margin-top: 7px;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* Universal "item posted to chat" card (advantages, dueling styles, societies…). */
+#chat .theah-item {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-left: 4px solid var(--gold-deep);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-item .ti-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--navy) 92%, #000 8%), var(--navy-deep));
+}
+
+#chat .theah-item .ti-head img {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  object-fit: cover;
+  border: 1px solid var(--gold-deep);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#chat .theah-item .ti-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+#chat .theah-item .ti-name {
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: #f4ead0;
+}
+
+#chat .theah-item .ti-name i {
+  color: var(--gold-leaf);
+  margin-right: 4px;
+}
+
+#chat .theah-item .ti-sub {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--gold-leaf) 78%, #fff);
+}
+
+#chat .theah-item .ti-body-wrap {
+  padding: 10px 12px;
+}
+
+#chat .theah-item .ti-sec {
+  margin-bottom: 9px;
+}
+
+#chat .theah-item .ti-sec:last-child {
+  margin-bottom: 0;
+}
+
+#chat .theah-item .ti-lbl {
+  display: block;
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 3px;
+}
+
+#chat .theah-item .ti-body {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+#chat .theah-item .ti-body p {
+  margin: 0 0 6px;
+}
+
+#chat .theah-item .ti-body p:last-child {
+  margin-bottom: 0;
+}
+
+#chat .theah-item .ti-body ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+#chat .theah-item .ti-body li {
+  margin-bottom: 4px;
+}
+
+/* Favor change card — teal when earned, oxblood when spent. */
+#chat .theah-favor.up {
+  border-left-color: var(--teal);
+}
+
+#chat .theah-favor.down {
+  border-left-color: var(--oxblood);
+}
+
+#chat .theah-favor .ti-name i {
+  color: var(--gold-leaf);
+}
+
+#chat .theah-favor .ti-body b {
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* ============================ Risk card (GM) ============================ */
+#chat .theah-risk {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-left: 4px solid var(--oxblood);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-risk .risk-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--oxblood) 30%, var(--navy-deep)), var(--navy-deep));
+  color: #f2e3c6;
+  font-family: var(--thd-display);
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+
+#chat .theah-risk .risk-head i {
+  color: var(--gold-leaf);
+}
+
+#chat .theah-risk .risk-body {
+  padding: 11px 12px;
+}
+
+#chat .theah-risk .risk-situation {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+#chat .theah-risk .risk-approach {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+
+#chat .theah-risk .risk-approach .ra-lbl {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  cursor: help;
+}
+
+#chat .theah-risk .risk-group {
+  margin-top: 10px;
+}
+
+#chat .theah-risk .rg-title {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  cursor: help;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#chat .theah-risk .consequences .rg-title {
+  color: var(--oxblood);
+}
+
+#chat .theah-risk .opportunities .rg-title {
+  color: var(--teal);
+}
+
+#chat .theah-risk .risk-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#chat .theah-risk .risk-group li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+#chat .theah-risk .rg-cost {
+  flex: none;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 10px;
+  font-family: var(--thd-display);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold-deep));
+  cursor: help;
+}
+
+#chat .theah-risk .rg-desc {
+  flex: 1;
+}
+
+#chat .theah-risk .rg-time {
+  flex: none;
+  font-family: var(--thd-label);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+  border: 1px solid color-mix(in srgb, var(--oxblood) 45%, transparent);
+  border-radius: 8px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+#chat .theah-risk .risk-example {
+  margin-top: 12px;
+  padding-top: 9px;
+  border-top: 1px dotted var(--line);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+#chat .theah-risk .risk-example .rx-lbl {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+/* ========================= Risk Builder (GM app) ========================= */
+.theah.risk-builder-app .window-content {
+  padding: 0;
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--thd-body);
+}
+
+.risk-builder-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+.risk-builder-form .rb-intro {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.risk-builder-form .rb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.risk-builder-form .rb-field > label {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: flex;
+  align-items: center;
+}
+
+.risk-builder-form .info-dot {
+  font-size: 10px;
+  color: var(--ink-soft);
+  opacity: 0.5;
+  margin-left: 5px;
+  cursor: help;
+}
+
+.risk-builder-form .info-dot:hover {
+  opacity: 1;
+  color: var(--gold-deep);
+}
+
+.risk-builder-form textarea, .risk-builder-form input[type=text], .risk-builder-form input[type=number] {
+  font-family: var(--thd-body);
+  font-size: 13px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--paper) 60%, #fff 6%);
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  min-height: 32px;
+}
+
+.risk-builder-form textarea {
+  resize: vertical;
+}
+
+.risk-builder-form .rb-section {
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  padding: 10px 11px;
+  background: color-mix(in srgb, var(--gold-leaf) 4%, transparent);
+}
+
+.risk-builder-form .rb-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.risk-builder-form .rb-head-ctl {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+
+.risk-builder-form .rb-example-pick {
+  max-width: 190px;
+  min-height: 28px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--paper) 60%, #fff 6%);
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  padding: 3px 6px;
+}
+
+.risk-builder-form .rb-head h3 {
+  margin: 0;
+  border: 0;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.risk-builder-form .consequences .rb-head h3 > .fa-skull-crossbones, .risk-builder-form .rb-head h3 > .fa-skull-crossbones {
+  color: var(--oxblood);
+}
+
+.risk-builder-form .rb-add {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.risk-builder-form .rb-add:hover {
+  color: var(--gold);
+}
+
+.risk-builder-form .rb-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.risk-builder-form .rb-row .rb-desc {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.risk-builder-form .rb-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--thd-label);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: help;
+  flex: none;
+}
+
+.risk-builder-form .rb-mini input {
+  width: 46px;
+  text-align: center;
+}
+
+.risk-builder-form .rb-remove {
+  flex: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.risk-builder-form .rb-remove:hover {
+  color: var(--oxblood);
+}
+
+.risk-builder-form .rb-empty {
+  margin: 2px 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.risk-builder-form .rb-example {
+  padding: 10px 12px;
+  border-left: 2px solid var(--gold-deep);
+  background: color-mix(in srgb, var(--gold-leaf) 8%, transparent);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.risk-builder-form .rb-example .rx-lbl {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.risk-builder-form .rb-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.risk-builder-form .rb-actions .rb-new {
+  margin-right: auto;
+}
+
+.risk-builder-form .rb-post, .risk-builder-form .rb-save, .risk-builder-form .rb-new {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 9px 16px;
+  cursor: pointer;
+}
+
+.risk-builder-form .rb-post {
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border: 1px solid var(--gold-deep);
+}
+
+.risk-builder-form .rb-post:hover {
+  filter: brightness(1.06);
+}
+
+.risk-builder-form .rb-save, .risk-builder-form .rb-new {
+  color: var(--gold-deep);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+}
+
+.risk-builder-form .rb-save:hover, .risk-builder-form .rb-new:hover {
+  border-color: var(--gold-deep);
+  color: var(--gold);
+}
+
+/* Saved-Risk library */
+.risk-builder-form .rb-library {
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  padding: 8px 11px;
+  background: color-mix(in srgb, var(--navy) 6%, transparent);
+}
+
+.risk-builder-form .rb-lib-head {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 6px;
+}
+
+.risk-builder-form .rb-lib-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.risk-builder-form .rb-lib-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 3px;
+}
+
+.risk-builder-form .rb-lib-item:hover {
+  background: color-mix(in srgb, var(--gold-leaf) 10%, transparent);
+}
+
+.risk-builder-form .rb-lib-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.risk-builder-form .rb-lib-ctl {
+  flex: none;
+  display: inline-flex;
+  gap: 10px;
+}
+
+.risk-builder-form .rb-lib-ctl a {
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.risk-builder-form .rb-lib-ctl .rb-post-saved:hover {
+  color: var(--gold-deep);
+}
+
+.risk-builder-form .rb-lib-ctl .rb-load:hover {
+  color: var(--teal);
+}
+
+.risk-builder-form .rb-lib-ctl .rb-delete:hover {
+  color: var(--oxblood);
+}
+
+/* The Risk card's optional name line */
+#chat .theah-risk .risk-name {
+  padding: 7px 12px 0;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+}
+
+/* Scene participants (Risk Builder) */
+.risk-builder-form .rb-scene-note {
+  margin: 0 0 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.risk-builder-form .rb-participant {
+  align-items: center;
+}
+
+.risk-builder-form .rb-participant select {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 30px;
+  box-sizing: border-box;
+  font-size: 12.5px;
+}
+
+.risk-builder-form .rb-participant .rb-p-actor {
+  flex: 1.4 1 0;
+}
+
+.risk-builder-form .rb-p-pool {
+  flex: none;
+  min-width: 42px;
+  text-align: center;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold-deep);
+}
+
+.risk-builder-form .rb-remove-participant {
+  flex: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.risk-builder-form .rb-remove-participant:hover {
+  color: var(--oxblood);
+}
+
+/* Scene block on the posted Risk card */
+#chat .theah-risk .risk-group.scene .rg-title i {
+  color: var(--teal);
+}
+
+#chat .theah-risk .risk-scene {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#chat .theah-risk .risk-scene li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+#chat .theah-risk .risk-scene .rs-hero {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+#chat .theah-risk .risk-scene .rs-appr {
+  flex: 1 1 auto;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+#chat .theah-risk .risk-scene .rs-pool {
+  flex: none;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold-deep);
+}
+
+/* ========================= Hero Creator wizard ========================= */
+.theah.hero-creator .window-content {
+  padding: 0;
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--thd-body);
+}
+
+.hero-creator-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.hero-creator-form * {
+  box-sizing: border-box;
+}
+
+.hero-creator-form .wiz-steps {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin: 0;
+  padding: 14px 20px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--navy) 92%, #000 8%), var(--navy-deep));
+  border-bottom: 2px solid var(--gold-deep);
+}
+
+.hero-creator-form .wiz-steps li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9fb0b3;
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+
+.hero-creator-form .wiz-steps li .wiz-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--thd-display);
+  font-size: 12px;
+  border: 1px solid rgba(217, 178, 98, 0.4);
+  color: #cdbb8c;
+}
+
+.hero-creator-form .wiz-steps li.done .wiz-dot {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--teal);
+}
+
+.hero-creator-form .wiz-steps li.active {
+  color: #f4ead0;
+}
+
+.hero-creator-form .wiz-steps li.active .wiz-dot {
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold-deep));
+  color: #2a1c10;
+  border-color: var(--gold-deep);
+}
+
+.hero-creator-form .wiz-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+.hero-creator-form .wiz-intro {
+  font-size: 14px;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+
+.hero-creator-form .wiz-budget {
+  font-family: var(--thd-label);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+
+.hero-creator-form .wiz-budget b {
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: var(--oxblood);
+}
+
+.hero-creator-form .wiz-empty {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* Concept fields */
+.hero-creator-form .wiz-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
+
+.hero-creator-form .wiz-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-creator-form .wiz-field-wide {
+  grid-column: 1/-1;
+}
+
+.hero-creator-form .wiz-field > span {
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.hero-creator-form .wiz-field input,
+.hero-creator-form .wiz-field select,
+.hero-creator-form .wiz-field textarea {
+  background: color-mix(in srgb, var(--panel) 92%, #fff 8%);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  font-family: var(--thd-body);
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 6px 8px;
+}
+
+/* Foundry's core shrinks bare <select>; force a legible height and match text
+   inputs so every field in a row is the same height (consistency). */
+.hero-creator-form .wiz-field input,
+.hero-creator-form .wiz-field select {
+  min-height: 34px;
+  box-sizing: border-box;
+}
+
+.hero-creator-form .wiz-field select {
+  height: auto;
+}
+
+.hero-creator-form .wiz-field select option {
+  color: #1a1a1a;
+}
+
+.hero-creator-form .wiz-field input:focus,
+.hero-creator-form .wiz-field select:focus,
+.hero-creator-form .wiz-field textarea:focus {
+  border-color: var(--gold);
+  outline: none;
+}
+
+/* Nation picker — cards (consistent with Backgrounds / Arcana), not a dropdown */
+.hero-creator-form .wiz-nation-block {
+  margin-top: 18px;
+}
+
+.hero-creator-form .wiz-nation-label {
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 9px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hero-creator-form .wiz-nation-hint {
+  font-family: var(--thd-body);
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.hero-creator-form .wiz-nation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.hero-creator-form .wiz-nation {
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
+  transition: border-color 0.12s;
+}
+
+.hero-creator-form .wiz-nation:hover {
+  border-color: var(--gold);
+}
+
+.hero-creator-form .wiz-nation.selected {
+  border-color: var(--gold-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
+}
+
+.hero-creator-form .wiz-nation .nn {
+  font-family: var(--thd-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-creator-form .wiz-nation .nn .fa-check {
+  color: var(--teal);
+  font-size: 12px;
+}
+
+.hero-creator-form .wiz-nation .nb {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 3px;
+}
+
+.hero-creator-form .wiz-nation .nsorc {
+  color: var(--gold-deep);
+}
+
+/* Hoverable terms (trait / sorcery / skill) carry a data-tooltip — hint it with
+   a help cursor + faint dotted underline so players know to hover for the blurb. */
+.hero-creator-form .wiz-nation .nb-trait,
+.hero-creator-form .wiz-nation .nsorc {
+  cursor: help;
+  text-decoration: underline dotted color-mix(in srgb, currentColor 45%, transparent);
+  text-underline-offset: 2px;
+}
+
+.hero-creator-form .wiz-trait .tname[data-tooltip],
+.hero-creator-form .wiz-skill .sname[data-tooltip] {
+  cursor: help;
+}
+
+/* Traits */
+.hero-creator-form .wiz-traits {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.hero-creator-form .wiz-trait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
+}
+
+.hero-creator-form .wiz-trait.has-bonus {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 30%, transparent);
+}
+
+.hero-creator-form .wiz-trait .tname {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.hero-creator-form .wiz-trait .tval {
+  font-family: var(--thd-display);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-creator-form .wiz-trait .tctl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-creator-form .wiz-trait .talloc {
+  font-family: var(--thd-display);
+  font-size: 12px;
+  color: var(--ink-soft);
+  min-width: 20px;
+  text-align: center;
+}
+
+.hero-creator-form button[data-trait-inc],
+.hero-creator-form button[data-trait-dec],
+.hero-creator-form button[data-skill-inc],
+.hero-creator-form button[data-skill-dec] {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  line-height: 1;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.hero-creator-form button[data-trait-inc]:hover,
+.hero-creator-form button[data-skill-inc]:hover {
+  border-color: var(--gold);
+  color: var(--gold-deep);
+}
+
+.hero-creator-form .bonus-btn {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink-soft);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.hero-creator-form .bonus-btn.on {
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  color: #2a1c10;
+  border-color: var(--gold-deep);
+}
+
+/* Pick lists (backgrounds / advantages) */
+.hero-creator-form .wiz-pick-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.hero-creator-form .wiz-pick {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
+  transition: border-color 0.12s;
+}
+
+.hero-creator-form .wiz-pick:hover {
+  border-color: var(--gold);
+}
+
+.hero-creator-form .wiz-pick.selected {
+  border-color: var(--gold-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
+}
+
+/* Secret Society picks use a teal rail so they read distinctly from Dueling Styles. */
+.hero-creator-form .wiz-pick.society.selected {
+  border-color: var(--teal);
+  box-shadow: inset 3px 0 0 var(--teal);
+}
+
+.hero-creator-form .pick-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.hero-creator-form .pick-name {
+  font-family: var(--thd-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.hero-creator-form .wiz-pick .fa-check {
+  color: var(--teal);
+}
+
+.hero-creator-form .pick-meta {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.hero-creator-form .pick-quirk {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* Advantage cards reuse .wiz-pick — cost in the head, rules text as .pick-desc. */
+.hero-creator-form .pick-cost {
+  font-family: var(--thd-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gold-deep);
+  white-space: nowrap;
+  margin-left: 8px;
+  flex: none;
+}
+
+.hero-creator-form .pick-cost .fa-check {
+  color: var(--teal);
+}
+
+.hero-creator-form .pick-desc {
+  line-height: 1.45;
+}
+
+.hero-creator-form .pick-desc p {
+  margin: 0 0 4px;
+}
+
+.hero-creator-form .pick-desc :last-child {
+  margin-bottom: 0;
+}
+
+/* Skills */
+.hero-creator-form .wiz-skills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 24px;
+}
+
+.hero-creator-form .wiz-skill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 4px;
+  border-bottom: 1px dotted var(--line);
+}
+
+.hero-creator-form .wiz-skill .sname {
+  flex: 1;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.hero-creator-form .wiz-skill .sbg {
+  font-family: var(--thd-display);
+  font-size: 11px;
+  color: var(--ink-soft);
+  width: 16px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.hero-creator-form .wiz-skill .sfinal {
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: var(--ink);
+  min-width: 16px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Advantages */
+.hero-creator-form .wiz-free {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+
+.hero-creator-form .wiz-free .tag {
+  display: inline-block;
+  margin: 2px;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* (Advantage cards now reuse the .wiz-pick component above — no custom classes.) */
+/* Duplicate-Background Advantage replacement (Core p.137) */
+.hero-creator-form .wiz-replacement {
+  margin: 4px 0 14px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--gold-deep) 40%, var(--line));
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--gold-leaf) 8%, transparent);
+}
+
+.hero-creator-form .wr-lbl {
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-creator-form .wr-hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 5px 0 9px;
+}
+
+.hero-creator-form .wr-slot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.hero-creator-form .wr-slot .wr-dup {
+  flex: 0 0 auto;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.hero-creator-form .wr-slot .wr-dup em {
+  color: var(--ink-soft);
+  font-size: 11px;
+}
+
+.hero-creator-form .wr-slot select {
+  flex: 1 1 auto;
+  min-height: 32px;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+/* Languages picker (Review step) — Wits allowance (Core p.163) */
+.hero-creator-form .wiz-languages {
+  margin: 16px 0 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
+}
+
+.hero-creator-form .wl-lbl {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.hero-creator-form .wl-count {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.hero-creator-form .wl-count.under {
+  color: var(--oxblood);
+}
+
+.hero-creator-form .wl-base {
+  margin: 8px 0;
+}
+
+.hero-creator-form .wl-base .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px;
+  padding: 2px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.hero-creator-form .wl-hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 4px 0 8px;
+}
+
+.hero-creator-form .wl-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hero-creator-form .wl-pick {
+  cursor: pointer;
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--ink);
+  transition: all 0.12s;
+}
+
+.hero-creator-form .wl-pick:hover {
+  border-color: var(--gold);
+}
+
+.hero-creator-form .wl-pick.on {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 12%, transparent);
+}
+
+/* Arcana — two columns of description-bearing pick cards (single-select each) */
+.hero-creator-form .wiz-arcana {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.hero-creator-form .arc-col-title {
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin: 0 0 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-creator-form .arc-pick-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero-creator-form .arc-pick {
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
+  transition: border-color 0.12s;
+}
+
+.hero-creator-form .arc-pick:hover {
+  border-color: var(--gold);
+}
+
+.hero-creator-form .arc-pick-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hero-creator-form .arc-pick-name {
+  font-family: var(--thd-display);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.hero-creator-form .arc-pick .fa-check {
+  color: var(--teal);
+}
+
+.hero-creator-form .arc-pick-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin-top: 5px;
+}
+
+.hero-creator-form .arc-pick-desc p {
+  margin: 0 0 4px;
+}
+
+.hero-creator-form .arc-pick-desc :last-child {
+  margin-bottom: 0;
+}
+
+.hero-creator-form .arc-pick.virtue.selected {
+  border-color: var(--teal);
+  box-shadow: inset 3px 0 0 var(--teal);
+}
+
+.hero-creator-form .arc-pick.hubris.selected {
+  border-color: var(--oxblood);
+  box-shadow: inset 3px 0 0 var(--oxblood);
+}
+
+/* Review */
+.hero-creator-form .rev-title {
+  font-family: var(--thd-display);
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  font-size: 22px;
+  margin: 0 0 12px;
+  color: var(--ink);
+  border: 0;
+}
+
+.hero-creator-form .rev-title .rev-nation {
+  font-size: 14px;
+  font-variant: normal;
+  color: var(--gold-deep);
+  margin-left: 8px;
+}
+
+.hero-creator-form .rev-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.hero-creator-form .rev-card {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
+}
+
+.hero-creator-form .rev-card > b {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.hero-creator-form .rev-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-creator-form .rev-card li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--ink);
+  padding: 1px 0;
+}
+
+.hero-creator-form .rev-card li span {
+  font-family: var(--thd-display);
+  color: var(--ink-soft);
+}
+
+.hero-creator-form .rev-card li em {
+  color: var(--teal);
+  font-size: 11px;
+}
+
+.hero-creator-form .rev-foot {
+  margin-top: 14px;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* Nav footer */
+.hero-creator-form .wiz-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--panel) 96%, #000 4%);
+}
+
+.hero-creator-form .wiz-nav button {
+  font-family: var(--thd-label);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 3px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-creator-form .wiz-nav button:hover:not(:disabled) {
+  border-color: var(--gold);
+  color: var(--gold-deep);
+}
+
+.hero-creator-form .wiz-nav button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.hero-creator-form .wiz-nav button.finish {
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border-color: var(--gold-deep);
+}
+
+.hero-creator-form .wiz-count {
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* "Create Hero" launcher on the sheet */
+.theah .create-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border: 1px solid var(--gold-deep);
+  border-radius: 3px;
+  padding: 5px 12px;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.theah .create-hero-btn:hover {
+  filter: brightness(1.05);
+}
+
+.theah .identity-rail .create-hero-btn {
+  display: flex;
+  width: fit-content;
+  margin: 2px auto 10px;
+}
+
+/* ============================================================= *
+ *  Advancement Creator (reuses .hero-creator-form scaffolding)  *
+ * ============================================================= */
+.theah.advancement-creator .window-content {
+  padding: 0;
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--thd-body);
+}
+
+/* Reward cards (step 0) */
+.advancement-creator-form .reward-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.advancement-creator-form .reward-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
+  cursor: pointer;
+  transition: border-color 0.12s;
+}
+
+.advancement-creator-form .reward-card:hover:not(.disabled) {
+  border-color: var(--gold);
+}
+
+.advancement-creator-form .reward-card.selected {
+  border-color: var(--gold-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
+}
+
+.advancement-creator-form .reward-card.disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+.advancement-creator-form .reward-card .arc-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: linear-gradient(180deg, var(--navy), var(--navy-deep));
+  color: var(--gold-leaf);
+  font-size: 16px;
+}
+
+.advancement-creator-form .reward-card .arc-text {
+  flex: 1;
+}
+
+.advancement-creator-form .reward-card .arc-name {
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.advancement-creator-form .reward-card .arc-hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.advancement-creator-form .reward-card .arc-cost {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border: 1px solid var(--gold-deep);
+  border-radius: 999px;
+  padding: 3px 8px;
+  flex: none;
+}
+
+.advancement-creator-form .reward-card .arc-check {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  color: var(--teal);
+}
+
+/* Configure step */
+.advancement-creator-form .step-cost {
+  float: right;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.advancement-creator-form .step-cost b {
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: var(--oxblood);
+}
+
+.advancement-creator-form .choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.advancement-creator-form .choice-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.advancement-creator-form .choice-item {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--panel) 94%, #fff 6%);
+}
+
+.advancement-creator-form .choice-item:hover:not(.disabled) {
+  border-color: var(--gold);
+}
+
+.advancement-creator-form .choice-item.selected {
+  border-color: var(--gold-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
+}
+
+.advancement-creator-form .choice-item.disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.advancement-creator-form .choice-item .ac-name {
+  flex: 1;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.advancement-creator-form .choice-item .ac-delta {
+  font-family: var(--thd-display);
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.advancement-creator-form .choice-item .ac-delta b {
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.advancement-creator-form .choice-item .ac-delta em {
+  font-style: normal;
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.advancement-creator-form .choice-item .ac-note {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--oxblood);
+}
+
+.advancement-creator-form .choice-item .ac-cost {
+  font-family: var(--thd-display);
+  font-size: 12px;
+  color: #fff;
+  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.advancement-creator-form .choice-item .ac-quirk {
+  flex-basis: 100%;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.advancement-creator-form .choice-item .fa-check {
+  color: var(--teal);
+}
+
+/* Block variant (Advantage / Arcana rewards) — name+cost header with the description below */
+.advancement-creator-form .choice-block {
+  display: block;
+}
+
+.advancement-creator-form .choice-block .ac-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.advancement-creator-form .choice-block .ac-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin-top: 5px;
+}
+
+.advancement-creator-form .choice-block .ac-desc p {
+  margin: 0 0 4px;
+}
+
+.advancement-creator-form .choice-block .ac-desc :last-child {
+  margin-bottom: 0;
+}
+
+.advancement-creator-form .trait-shift {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.advancement-creator-form .trait-shift-col h4 {
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.advancement-creator-form .slot-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.advancement-creator-form .slot-toggle button {
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink-soft);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.advancement-creator-form .slot-toggle button.on {
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  color: #2a1c10;
+  border-color: var(--gold-deep);
+}
+
+.advancement-creator-form .corruption-note {
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.advancement-creator-form .rev-reward {
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+  margin: 0;
+}
+
+.advancement-creator-form .rev-steps {
+  font-family: var(--thd-display);
+  font-size: 24px;
+  color: var(--oxblood);
+  margin: 0;
+}
+
+.advancement-creator-form .rev-card-wide {
+  grid-column: 1/-1;
+}
+
+.advancement-creator-form .rev-card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+/* Story advancement tracker on the character sheet */
+.theah .story-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.theah .story-card {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--panel) 96%, #fff 4%);
+  padding: 8px 10px;
+}
+
+.theah .story-card.is-complete {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 25%, transparent);
+}
+
+.theah .story-card.is-claimed {
+  opacity: 0.82;
+}
+
+.theah .story-card.empty {
+  color: var(--ink-soft);
+  font-style: italic;
+  padding: 10px;
+}
+
+.theah .story-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theah .story-main .item-name {
+  flex: 1;
+  margin: 0;
+}
+
+.theah .story-reward {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dotted var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.theah .story-reward {
+  font-family: var(--thd-display);
+  font-size: 14px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theah .story-reward i {
+  color: var(--gold-deep);
+}
+
+.theah .story-goal {
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.theah .story-track {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.theah .story-step {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--panel) 88%, #000 12%);
+  cursor: pointer;
+  display: inline-block;
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.theah .story-step:hover {
+  border-color: var(--gold);
+}
+
+.theah .story-step.filled {
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold-deep));
+  border-color: var(--gold-deep);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.theah .story-count {
+  font-family: var(--thd-display);
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-left: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.theah .story-claim {
+  align-self: flex-start;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border: 1px solid var(--gold-deep);
+  border-radius: 3px;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.theah .story-claim:hover {
+  filter: brightness(1.05);
+}
+
+.theah .story-claimed {
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theah .new-advancement {
+  color: var(--gold-deep);
+}
+
+/* Story-complete chat card */
+#chat .theah-reward {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-left: 4px solid var(--gold-deep);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-reward .item-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--navy) 92%, #000 8%), var(--navy-deep));
+  color: #efe4c7;
+}
+
+#chat .theah-reward .item-head i {
+  color: var(--gold-leaf);
+}
+
+#chat .theah-reward .reward-body {
+  padding: 11px 12px;
+}
+
+#chat .theah-reward .reward-story {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+#chat .theah-reward .reward-line {
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#chat .theah-reward .reward-line i {
+  color: var(--gold-deep);
+}
+
+@media (max-width: 640px) {
+  .advancement-creator-form .reward-grid,
+  .advancement-creator-form .trait-shift {
+    grid-template-columns: 1fr;
+  }
+  .hero-creator-form .wiz-fields,
+  .hero-creator-form .wiz-pick-list,
+  .hero-creator-form .wiz-perk-list,
+  .hero-creator-form .wiz-arcana {
+    grid-template-columns: 1fr;
+  }
+  .hero-creator-form .rev-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hero-creator-form .wiz-traits {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+}
+/* Narrow-window fallback */
+@media (max-width: 820px) {
+  .theah .theah-layout {
+    grid-template-columns: 1fr;
+  }
+  .theah .identity-rail .edge {
+    display: none;
+  }
+  .theah .lower {
+    grid-template-columns: 1fr;
+  }
+  .theah .skills {
+    grid-template-columns: 1fr;
+  }
+}
+/* ============================================================= *
+ *  Ship's Papers sheet (reuses the identity-rail + prowess-card  *
+ *  system; adds Hull, Crew Squads, and the Hold).                *
+ * ============================================================= */
+/* Rail: Origin flag-dot, three resource cells, crew morale. */
+.theah.ship .ship-origin {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theah.ship .ship-origin .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.theah.ship .ship-origin .unset {
+  color: #b9a877;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.theah.ship .ship-res {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Rail: Home Port select (matches the dark rail chrome). */
+.theah.ship .home-port-select {
+  width: 100%;
+  max-width: 150px;
+  margin-left: auto;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(217, 178, 98, 0.3);
+  border-radius: 4px;
+  color: #efe4c7;
+  font-family: var(--thd-body);
+  font-size: 12px;
+  padding: 3px 8px;
+  height: auto;
+  min-height: 26px;
+  line-height: 1.3;
+  box-sizing: border-box;
+}
+
+.theah.ship .home-port-select:focus {
+  outline: none;
+  border-color: var(--gold-leaf);
+}
+
+.theah.ship .home-port-select option {
+  color: #1a1a1a;
+}
+
+/* Rail: Crew Morale — a status pill (the <select> IS the pill, per the artifact). */
+.theah.ship .rail-morale {
+  margin: 16px 2px 2px;
+}
+
+.theah.ship .status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.theah.ship .status-row .k {
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+
+.theah.ship .morale-pill-wrap {
+  flex: 0 0 auto;
+}
+
+.theah.ship .morale-select.status-pill {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  text-align: center;
+  text-align-last: center;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  line-height: 1.2;
+  padding: 4px 16px;
+  border-radius: 999px;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(217, 178, 98, 0.4);
+  color: #efe4c7;
+}
+
+.theah.ship .morale-select.status-pill:focus {
+  outline: none;
+  border-color: var(--gold-leaf);
+}
+
+.theah.ship .morale-select.status-pill option {
+  color: #1a1a1a;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+}
+
+.theah.ship .morale-select.happy {
+  color: #bfe0c4;
+  border-color: rgba(95, 176, 166, 0.5);
+  background: rgba(43, 107, 107, 0.28);
+}
+
+.theah.ship .morale-select.dissatisfied {
+  color: #e6c887;
+  border-color: rgba(201, 162, 75, 0.5);
+  background: rgba(176, 135, 63, 0.22);
+}
+
+.theah.ship .morale-select.mutinous {
+  color: #e7a79b;
+  border-color: rgba(181, 69, 58, 0.55);
+  background: rgba(124, 43, 34, 0.3);
+}
+
+/* Rail: Hull — Hits track (10-col) + Critical-Hit seals + status. */
+.theah.ship .rail-hull {
+  margin: 16px 2px 0;
+}
+
+.theah.ship .rail-hull .lbl,
+.theah.ship .rail-hull .crit-lbl {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+
+.theah.ship .rail-hull .crit-lbl {
+  margin-top: 14px;
+}
+
+.theah.ship .rail-hull .lbl .info-dot {
+  color: #b9a877;
+  opacity: 0.55;
+  margin-left: 4px;
+  font-size: 10px;
+  cursor: help;
+}
+
+.theah.ship .rail-hull .lbl .info-dot:hover {
+  opacity: 1;
+  color: var(--gold-leaf);
+}
+
+.theah.ship .rail-hull .hull-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.theah.ship .rail-hull .hull-track {
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.theah.ship .rail-hull .hull-track i.band5 {
+  box-shadow: 3px 0 0 -1px rgba(217, 178, 98, 0.55);
+}
+
+.theah.ship .rail-hull .hull-status {
+  margin-top: 12px;
+  padding: 8px 10px;
+  border: 1px solid rgba(217, 178, 98, 0.22);
+  border-left-width: 3px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.theah.ship .rail-hull .hull-status.seaworthy {
+  border-left-color: var(--teal);
+}
+
+.theah.ship .rail-hull .hull-status.battered {
+  border-left-color: var(--gold-leaf);
+}
+
+.theah.ship .rail-hull .hull-status.crippled {
+  border-left-color: var(--oxblood);
+  background: color-mix(in srgb, var(--oxblood) 22%, rgba(0, 0, 0, 0.14));
+}
+
+.theah.ship .rail-hull .hs-label {
+  display: block;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: #f4ead0;
+}
+
+.theah.ship .rail-hull .hull-status.crippled .hs-label {
+  color: #f2c4bd;
+}
+
+.theah.ship .rail-hull .hs-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: #c9bb95;
+}
+
+/* Ledger: shared bits. */
+.theah.ship .section-note {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+
+.theah.ship .stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theah.ship .stepper button {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--gold-deep);
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  transition: background 0.12s, color 0.12s;
+}
+
+.theah.ship .stepper button:hover {
+  background: var(--gold-deep);
+  color: #fff;
+}
+
+.theah.ship .stepper b {
+  font-family: var(--thd-display);
+  font-size: 22px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  min-width: 26px;
+  text-align: center;
+}
+
+/* Crew tab — full complement + manual Squad division + Squad pip cards. */
+.theah.ship .crew-strength {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--panel-edge);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--navy) 5%, transparent);
+  margin-bottom: 8px;
+}
+
+.theah.ship .crew-strength .cs-k {
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  cursor: help;
+}
+
+.theah.ship .crew-strength .cs-v {
+  font-family: var(--thd-display);
+  font-size: 30px;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.theah.ship .crew-strength .cs-hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-left: auto;
+}
+
+/* Derived-bonus notes — why a stat is what it is (Origin / Adventure). */
+.theah.ship .ship-bonuses {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.theah.ship .ship-bonuses.inline {
+  margin: 0 2px 16px;
+}
+
+.theah.ship .ship-bonuses li {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--gold-deep);
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.theah.ship .ship-bonuses li i {
+  font-size: 8px;
+  opacity: 0.8;
+  flex: none;
+}
+
+.theah.ship .rail-hull .ship-bonuses {
+  margin: 10px 0 0;
+}
+
+.theah.ship .rail-hull .ship-bonuses li {
+  color: var(--gold-leaf);
+}
+
+/* Manual Squad division (no presets): a clean "Add a Squad" action + how-to note. */
+.theah.ship .squad-add {
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  background: transparent;
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.theah.ship .squad-add:hover {
+  border-color: var(--gold);
+  background: color-mix(in srgb, var(--gold-leaf) 14%, transparent);
+  color: var(--gold);
+}
+
+.theah.ship .squad-howto {
+  margin: 0 0 14px;
+  padding: 9px 12px;
+  border-left: 3px solid var(--gold-deep);
+  border-radius: 0 3px 3px 0;
+  background: color-mix(in srgb, var(--gold-leaf) 7%, transparent);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.theah.ship .squad-howto b {
+  color: var(--gold-deep);
+}
+
+.theah.ship .squads-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.theah.ship .squads-head .sq-title {
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: help;
+}
+
+.theah.ship .squads-head .sq-alloc {
+  margin-left: auto;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.theah.ship .squads-head .sq-alloc.over {
+  color: var(--oxblood);
+}
+
+.theah.ship .squad-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.theah.ship .squad {
+  flex: 1 1 200px;
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--navy) 5%, transparent);
+}
+
+.theah.ship .squad .sq-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theah.ship .squad .sq-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  color: var(--ink);
+  font-family: var(--thd-display);
+  font-size: 16px;
+  padding: 1px 0;
+}
+
+.theah.ship .squad .sq-name:focus {
+  outline: none;
+  border-bottom-color: var(--gold);
+}
+
+.theah.ship .squad .squad-remove {
+  flex: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 2px;
+}
+
+.theah.ship .squad .squad-remove:hover {
+  color: var(--oxblood);
+}
+
+.theah.ship .squad .sq-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.theah.ship .squad .sq-step .sq-v {
+  font-family: var(--thd-display);
+  font-size: 24px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  min-width: 34px;
+  text-align: center;
+}
+
+.theah.ship .squad .sq-step .sq-v small {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-left: 2px;
+}
+
+.theah.ship .squad .sq-pool {
+  flex: none;
+  margin-left: auto;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold-deep);
+}
+
+.theah.ship .squad .pips {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.theah.ship .squad .pips i {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--teal), color-mix(in srgb, var(--teal) 60%, #000));
+}
+
+.theah.ship .squad .squad-roll {
+  flex: none;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border: 1px solid var(--gold-deep);
+  border-radius: 4px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: filter 0.12s;
+}
+
+.theah.ship .squad .squad-roll:hover {
+  filter: brightness(1.06);
+}
+
+.theah.ship .squad .squad-roll i {
+  font-size: 12px;
+}
+
+/* Linked Brute-Squad squads: portrait + read-only Strength + open-sheet link. */
+.theah.ship .squad.linked {
+  border-left: 3px solid var(--teal);
+}
+
+.theah.ship .squad.linked.missing {
+  border-left-color: var(--oxblood);
+  opacity: 0.8;
+}
+
+/* ============================================================
+   Brute Squad sheet (Core p.191-192). Strength = health + threat,
+   rendered as a "muster" rank of thug figures. Ported from
+   design/brute-squad-preview.html, re-pointed onto the Foundry DOM.
+   ============================================================ */
+.theah.brute .brute-portrait {
+  width: 190px;
+  height: auto;
+  aspect-ratio: 1/1;
+}
+
+.theah.brute .brute-portrait .profile-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 0;
+}
+
+/* Squad-type pill (a select styled as the status pill). */
+.theah .type-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 14px 2px 2px;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+
+.theah .type-pill {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: var(--thd-label);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  height: auto;
+  line-height: 1.3;
+  color: #e7a79b;
+  border: 1px solid rgba(181, 69, 58, 0.55);
+  background: rgba(124, 43, 34, 0.3);
+}
+
+.theah .type-pill:focus {
+  outline: none;
+  border-color: var(--oxblood);
+}
+
+.theah .type-pill option {
+  color: #1a1a1a;
+}
+
+.theah .type-pill.none, .theah .type-pill[value=""] {
+  color: #c9bb95;
+  border-color: rgba(217, 178, 98, 0.4);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* The Muster: current Strength as a rank of figures. */
+.theah .muster {
+  margin: 18px 2px 0;
+}
+
+.theah .muster .lbl {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+
+.theah .muster .lbl .info {
+  cursor: help;
+  opacity: 0.8;
+}
+
+.theah .muster .lbl .info i {
+  font-size: 10px;
+}
+
+.theah .muster .count {
+  text-align: center;
+  font-family: var(--thd-display);
+  font-variant-numeric: tabular-nums;
+  color: #f4ead0;
+  line-height: 1;
+  margin: 8px 0 2px;
+}
+
+.theah .muster .count .now {
+  font-size: 50px;
+}
+
+.theah .muster .count .of {
+  font-size: 20px;
+  color: #b9a877;
+}
+
+.theah .muster .rank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 5px;
+  justify-content: center;
+  margin: 12px 0 2px;
+}
+
+.theah .muster .fig {
+  width: 23px;
+  height: 28px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.theah .muster .fig svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--oxblood);
+  stroke: var(--oxblood-deep);
+  stroke-width: 0.6;
+  filter: drop-shadow(0 2px 3px var(--seal-shadow));
+  transition: transform 0.15s, fill 0.2s, opacity 0.2s;
+}
+
+.theah .muster .fig.down svg {
+  fill: rgba(15, 8, 6, 0.32);
+  stroke: rgba(217, 178, 98, 0.32);
+  filter: none;
+  opacity: 0.55;
+  transform: translateY(2px) scaleY(0.92);
+}
+
+.theah .muster .fig:hover svg {
+  transform: scale(1.14);
+}
+
+.theah .muster .fig.down:hover svg {
+  transform: translateY(2px) scaleY(0.92) scale(1.12);
+  opacity: 0.8;
+}
+
+.theah .muster-ctl {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.theah .muster-ctl button {
+  flex: 1;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #f2e6c9;
+  border-radius: 3px;
+  padding: 8px 6px;
+  cursor: pointer;
+  transition: filter 0.15s;
+  line-height: 1;
+}
+
+.theah .muster-ctl .raise {
+  background: linear-gradient(180deg, rgba(124, 43, 34, 0.55), rgba(90, 30, 22, 0.78));
+  border: 1px solid rgba(181, 69, 58, 0.6);
+}
+
+.theah .muster-ctl .recruit {
+  flex: 0 0 auto;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(217, 178, 98, 0.3);
+  color: #d9c9a0;
+}
+
+.theah .muster-ctl .muster-btn {
+  flex: 0 0 auto;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(217, 178, 98, 0.3);
+  color: var(--gold-leaf);
+}
+
+.theah .muster-ctl button:hover {
+  filter: brightness(1.14);
+}
+
+.theah .brute-size {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 6px 10px;
+  border: 1px solid rgba(217, 178, 98, 0.22);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.theah .brute-size label {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b9a877;
+}
+
+.theah .brute-size input {
+  width: 54px;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  color: #f4ead0;
+  font-family: var(--thd-display);
+  font-size: 18px;
+  height: auto;
+}
+
+.theah .brute-size input:focus {
+  outline: none;
+}
+
+/* Threat: deals Wounds = current Strength. */
+.theah .threat {
+  margin: 14px 2px 0;
+  text-align: center;
+  padding: 12px 10px 11px;
+  border: 1px solid rgba(181, 69, 58, 0.45);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--oxblood) 22%, rgba(0, 0, 0, 0.15));
+}
+
+.theah .threat .k {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e0b3aa;
+}
+
+.theah .threat .k .info {
+  opacity: 0.7;
+  cursor: help;
+}
+
+.theah .threat .v {
+  font-family: var(--thd-display);
+  font-size: 25px;
+  color: #f4d9d2;
+  margin-top: 3px;
+  line-height: 1.1;
+}
+
+.theah .threat .v b {
+  color: #ef9184;
+  font-variant-numeric: tabular-nums;
+}
+
+.theah .threat .n {
+  font-size: 11px;
+  color: #c9a89f;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.theah .threat.defeated {
+  border-color: rgba(217, 178, 98, 0.4);
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.theah .threat.defeated .v {
+  color: #c9bb95;
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+}
+
+/* Special Ability card (oxblood accent) + activation. */
+.theah.brute .ability-card {
+  border: 1px solid var(--panel-edge);
+  border-left: 3px solid var(--oxblood);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--oxblood) 6%, transparent);
+  padding: 13px 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.theah.brute .ability-card .rose {
+  position: absolute;
+  right: -26px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 150px;
+  height: 150px;
+  opacity: 0.09;
+  color: var(--oxblood);
+  pointer-events: none;
+}
+
+.theah.brute .ability-card .ah {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.theah.brute .ability-card .ai {
+  color: var(--oxblood);
+  flex: none;
+  font-size: 20px;
+}
+
+.theah.brute .ability-card .al {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+
+.theah.brute .ability-card .an {
+  font-family: var(--thd-display);
+  font-size: 19px;
+  color: var(--ink);
+  line-height: 1.1;
+  margin: 0;
+  border: 0;
+}
+
+.theah.brute .ability-card .custom-ability-name {
+  width: 100%;
+  background: color-mix(in srgb, var(--panel) 92%, #fff 8%);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  font-family: var(--thd-display);
+  font-size: 16px;
+  padding: 4px 8px;
+}
+
+.theah.brute .ability-card .cost {
+  margin-left: auto;
+  flex: none;
+  font-family: var(--thd-label);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(180deg, var(--oxblood), var(--oxblood-deep));
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.theah.brute .ability-card .abil-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-top: 9px;
+  position: relative;
+  z-index: 1;
+}
+
+.theah.brute .ability-card .abil-desc p {
+  margin: 0 0 6px;
+}
+
+.theah.brute .ability-card .custom-ability-desc {
+  width: 100%;
+  margin-top: 9px;
+  background: color-mix(in srgb, var(--panel) 92%, #fff 8%);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  font-family: var(--thd-body);
+  font-size: 13px;
+  padding: 7px 10px;
+  resize: vertical;
+}
+
+.theah.brute .ability-card .activate-ability {
+  margin-top: 11px;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f2e6c9;
+  background: linear-gradient(180deg, rgba(124, 43, 34, 0.7), rgba(90, 30, 22, 0.9));
+  border: 1px solid rgba(181, 69, 58, 0.6);
+  border-radius: 3px;
+  padding: 8px 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theah.brute .ability-card .activate-ability:hover {
+  filter: brightness(1.13);
+}
+
+.theah.brute .ability-empty {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  padding: 11px 14px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 3px;
+}
+
+/* Reorganize note (reuses the roller-guide for engagement). */
+.theah.brute .reorg {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold-deep);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--gold-leaf) 6%, transparent);
+}
+
+.theah.brute .reorg b {
+  color: var(--gold-deep);
+}
+
+.theah.brute .brute-guide {
+  border: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--panel) 95%, #fff 5%);
+  padding: 0 15px;
+}
+
+.theah.brute .brute-guide .ref {
+  color: var(--gold-deep);
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  margin-left: 6px;
+}
+
+.theah.brute .brute-guide .rg-steps b {
+  color: var(--oxblood);
+}
+
+.theah.brute .brute-guide .rg-live {
+  border-left-color: var(--oxblood);
+  background: color-mix(in srgb, var(--oxblood) 7%, transparent);
+}
+
+.theah.brute .brute-guide .rg-live-lbl {
+  color: var(--oxblood);
+}
+
+/* Brute Squad chat card (Strength change + Ability activation). */
+#chat .theah-brute {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-brute .brute-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-family: var(--thd-display);
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  font-size: 15px;
+  color: #f4ead0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--navy) 90%, #000 10%), var(--navy-deep));
+  border-bottom: 2px solid var(--gold-deep);
+}
+
+#chat .theah-brute .brute-head i {
+  color: var(--gold-leaf);
+  font-size: 13px;
+}
+
+#chat .theah-brute.severe .brute-head {
+  background: linear-gradient(180deg, var(--oxblood), var(--oxblood-deep));
+  border-bottom-color: #3f130e;
+}
+
+#chat .theah-brute.severe .brute-head i {
+  color: #f0c9c2;
+}
+
+#chat .theah-brute .brute-body {
+  padding: 11px 13px;
+}
+
+#chat .theah-brute .brute-stat {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--thd-display);
+  font-size: 21px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+#chat .theah-brute .brute-stat .to {
+  color: var(--oxblood);
+}
+
+#chat .theah-brute .brute-stat i {
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+#chat .theah-brute .brute-stat .lab {
+  font-family: var(--thd-label);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+#chat .theah-brute .brute-note {
+  margin-top: 6px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+#chat .theah-brute .brute-note b {
+  color: var(--oxblood);
+}
+
+#chat .theah-brute .brute-ability-name {
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+#chat .theah-brute .brute-ability-desc {
+  margin-top: 4px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+#chat .theah-brute .brute-cost {
+  margin-top: 7px;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+
+#chat .theah-brute .brute-cost i {
+  margin-right: 4px;
+}
+
+.theah.ship .squad .sq-portrait {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 3px;
+  object-fit: cover;
+  border: 1px solid var(--panel-edge);
+}
+
+.theah.ship .squad .linked-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--thd-display);
+  font-size: 16px;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: help;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.theah.ship .squad .linked-name i {
+  color: var(--teal);
+  font-size: 12px;
+  flex: none;
+}
+
+.theah.ship .squad .sq-missing {
+  font-style: italic;
+  color: var(--oxblood);
+  font-size: 11px;
+}
+
+.theah.ship .squad .squad-open {
+  flex: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 2px;
+}
+
+.theah.ship .squad .squad-open:hover {
+  color: var(--teal);
+}
+
+.theah.ship .squad .sq-str-static .sq-v {
+  font-family: var(--thd-display);
+  font-size: 24px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.theah.ship .squad .sq-str-static .sq-v small {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-left: 2px;
+}
+
+.theah.ship .squad-drop-hint {
+  margin: 0 0 16px;
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theah.ship .squad-drop-hint i {
+  color: var(--gold-deep);
+  opacity: 0.7;
+}
+
+/* Squad Risk-pool chat card — reuses .theah-pool with a teal (crew) accent. */
+#chat .theah-pool.theah-squad {
+  border-left-color: var(--teal);
+}
+
+#chat .theah-pool.theah-squad .pool-head i {
+  color: var(--teal);
+}
+
+#chat .theah-pool.theah-squad .squad-note i {
+  color: var(--teal);
+}
+
+/* Officer roster (drag PC/NPC actors onto a role). */
+.theah.ship .crew-roster {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.theah.ship .crew-roster .item-header {
+  padding: 6px 12px;
+  background: color-mix(in srgb, var(--navy) 8%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+
+.theah.ship .crew-roster .role-name {
+  margin: 0;
+  border: 0;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  cursor: help;
+}
+
+.theah.ship .crew-roster .role-name .role-info {
+  font-size: 9px;
+  opacity: 0.45;
+  margin-left: 5px;
+}
+
+.theah.ship .crew-roster .role-name:hover .role-info {
+  opacity: 1;
+  color: var(--gold-leaf);
+}
+
+.theah.ship .crew-roster .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.theah.ship .crew-roster .item:last-child {
+  border-bottom: 0;
+}
+
+.theah.ship .crew-roster .item-image img {
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
+  object-fit: cover;
+  border: 0;
+}
+
+.theah.ship .crew-roster .crew-member-name {
+  flex: 1;
+  margin: 0;
+  font-family: var(--thd-display);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.theah.ship .crew-roster .item-controls a {
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.theah.ship .crew-roster .item-controls a:hover {
+  color: var(--oxblood);
+}
+
+/* Origin card gets a gold anchor accent already via .prowess-card; Adventures
+   reuse the teal (.society) rail. */
+.theah.ship .prowess-card.origin {
+  border-left-color: var(--gold-deep);
+  background: color-mix(in srgb, var(--gold-leaf) 8%, transparent);
+}
+
+/* Hold tab. */
+.theah.ship .hold-ctls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.theah.ship .hold-ctl {
+  flex: 1 1 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--panel-edge);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--gold-leaf) 5%, transparent);
+}
+
+.theah.ship .hold-ctl .hc-k {
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theah.ship .hold-ctl .hc-k i {
+  font-size: 13px;
+}
+
+/* Adventures — Story-style earned trackers (binary earned/not, not step-pips). */
+.theah.ship .prowess-card.adventure .pc-icon {
+  color: var(--teal);
+}
+
+.theah.ship .prowess-card.adventure.is-earned {
+  border-color: var(--gold);
+  border-left-color: var(--gold-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 25%, transparent);
+  background: color-mix(in srgb, var(--gold-leaf) 9%, transparent);
+}
+
+.theah.ship .prowess-card.adventure.is-earned .pc-icon {
+  color: var(--gold-deep);
+}
+
+.theah.ship .prowess-card.adventure .earned-badge {
+  flex: none;
+  font-family: var(--thd-label);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.theah.ship .adventure-earn {
+  margin-top: 10px;
+  font-family: var(--thd-label);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 3px;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.theah.ship .adventure-earn:hover {
+  border-color: var(--gold);
+  color: var(--gold-deep);
+}
+
+.theah.ship .adventure-earn.on {
+  color: #2a1c10;
+  background: linear-gradient(180deg, var(--gold-leaf), var(--gold));
+  border-color: var(--gold-deep);
+}
+
+.theah.ship .adventure-earn.on:hover {
+  filter: brightness(1.05);
+}
+
+/* Cargo Hold — capacity line, crate grid, treasury line (matches the design artifact). */
+.theah.ship .cargo-capline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.theah.ship .cargo-capline .section-note {
+  flex: 1 1 200px;
+  margin: 0;
+}
+
+.theah.ship .cargo-capline .hc-k {
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.theah.ship .hc-v {
+  font-family: var(--thd-display);
+  font-size: 22px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  min-width: 26px;
+  text-align: center;
+}
+
+.theah.ship .hold-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.theah.ship .crate {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--paper) 22%, transparent);
+}
+
+.theah.ship .crate.filled {
+  border-style: solid;
+  border-color: var(--panel-edge);
+  background: color-mix(in srgb, var(--gold-leaf) 7%, transparent);
+}
+
+.theah.ship .crate .crate-icon {
+  flex: none;
+  font-size: 22px;
+  color: var(--gold-deep);
+  opacity: 0.85;
+}
+
+.theah.ship .crate.empty .crate-icon {
+  color: var(--ink-soft);
+  opacity: 0.5;
+}
+
+.theah.ship .crate .crate-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.theah.ship .crate .cargo-n {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+  padding: 1px 0;
+}
+
+.theah.ship .crate .cargo-s {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  font-size: 12px;
+  color: var(--ink-soft);
+  padding: 1px 0;
+  margin-top: 2px;
+}
+
+.theah.ship .crate input.cargo-n:focus, .theah.ship .crate input.cargo-s:focus {
+  outline: none;
+  border-bottom-color: var(--gold);
+}
+
+.theah.ship .crate.empty .cargo-n {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.theah.ship .crate .cargo-remove {
+  flex: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 4px;
+  align-self: flex-start;
+}
+
+.theah.ship .crate .cargo-remove:hover {
+  color: var(--oxblood);
+}
+
+.theah.ship .hold-sep {
+  margin: 18px 0;
+}
+
+.theah.ship .treasury-line {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--panel-edge);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--gold-leaf) 6%, transparent);
+}
+
+.theah.ship .treasury-line .tl-coin {
+  flex: none;
+  font-size: 24px;
+  color: var(--gold-deep);
+}
+
+.theah.ship .treasury-line .tl-body {
+  flex: 1 1 auto;
+}
+
+.theah.ship .treasury-line .tl-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.theah.ship .treasury-line .tl-k {
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.theah.ship .treasury-line .tl-note {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* Ship Hull chat card (Hits / Critical Hits / Crippled). */
+#chat .theah-hull {
+  font-family: var(--thd-body);
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-left: 4px solid var(--gold-deep);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#chat .theah-hull.severe {
+  border-left-color: var(--oxblood);
+}
+
+#chat .theah-hull .hull-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+#chat .theah-hull.severe .hull-head {
+  color: var(--oxblood);
+}
+
+#chat .theah-hull .hull-head i {
+  font-size: 14px;
+}
+
+#chat .theah-hull .hull-body {
+  padding: 0 12px 11px;
+}
+
+#chat .theah-hull .hull-stats {
+  display: flex;
+  gap: 14px;
+  font-family: var(--thd-label);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+#chat .theah-hull .hull-stats b {
+  font-family: var(--thd-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+#chat .theah-hull .hull-stats .crit b {
+  color: var(--oxblood);
+}
+
+#chat .theah-hull .hull-effect {
+  margin-top: 7px;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+/*# sourceMappingURL=theah.css.map */
+</style>
+<style>
+  body { margin: 0; background: #2b2b2b; padding: 22px; }
+  .harness-note { max-width: 760px; margin: 0 auto 14px; color: #cbb488; font: 13px system-ui; line-height: 1.5; display: flex; align-items: flex-start; gap: 16px; justify-content: space-between; }
+  .harness-note p { margin: 0; }
+  .harness-toggle { flex: none; font: 600 11px/1 system-ui; letter-spacing: .1em; text-transform: uppercase; color: #e7d8b6; background: #16323f; border: 1px solid #33525e; border-radius: 3px; padding: 8px 12px; cursor: pointer; }
+  .harness-toggle:hover { border-color: #d9b262; }
+  .app { width: 760px; max-width: 100%; margin: 0 auto; border-radius: 6px; overflow: hidden; box-shadow: 0 28px 70px -22px #000; border: 1px solid #0b1b22; }
+  .window-header { background: linear-gradient(180deg,#16323f,#0e232c); color: #efe4c7; padding: 8px 12px; font: 600 14px/1.2 "Iowan Old Style",Palatino,serif; letter-spacing: .04em; display: flex; align-items: center; gap: 8px; }
+  .window-header .htype { margin-left: auto; font: 500 10px/1 system-ui; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
+</style>
+
+<div class="harness-note">
+  <p>Render of the <b>real compiled <code>dist/theah.css</code></b> over the exact Foundry DOM the <code>brute.hbs</code> template produces (sample: <i>Rösti's Dockhands</i>, a Strength-8 Guard Squad currently at 5). Same window chrome as the character-sheet harness for direct comparison. A few FontAwesome glyphs are blank here (Foundry injects them at runtime).</p>
+  <button type="button" class="harness-toggle" id="themeToggle">Night at Sea</button>
+</div>
+
+<div class="app window-app theah sheet actor brute">
+  <header class="window-header">Rösti's Dockhands <span class="htype">Brute Squad</span></header>
+  <div class="window-content">
+    <form class="editable flexcol" autocomplete="off">
+      <div class="theah-layout brute-layout">
+
+        <aside class="identity-rail">
+          <span class="edge"></span>
+
+          <div class="portrait brute-portrait">
+            <img class="profile-img" alt="Rösti's Dockhands" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cdefs%3E%3CradialGradient id='pbg' cx='50%25' cy='24%25' r='80%25'%3E%3Cstop offset='0%25' stop-color='%233a2320'/%3E%3Cstop offset='68%25' stop-color='%23241413'/%3E%3Cstop offset='100%25' stop-color='%23160b0a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='300' height='300' fill='url(%23pbg)'/%3E%3Cg fill='%23d9b262' opacity='0.9'%3E%3Cg transform='translate(60 78) scale(3.1)'%3E%3Cpath d='M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z'/%3E%3C/g%3E%3Cg transform='translate(12 96) scale(2.4)' opacity='.7'%3E%3Cpath d='M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z'/%3E%3C/g%3E%3Cg transform='translate(200 96) scale(2.4)' opacity='.7'%3E%3Cpath d='M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" />
+            <svg class="corner tl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+            <svg class="corner tr" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+            <svg class="corner bl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+            <svg class="corner br" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+          </div>
+
+          <div class="nameplate">
+            <input class="name" type="text" value="Rösti's Dockhands" />
+          </div>
+
+          <div class="filet" aria-hidden="true">
+            <svg viewBox="0 0 34 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M2 13 C 11 11, 24 8, 31 3 M31 3 l-3 .3 M31 3 l-.3 3 M6 13 l3 0 M4 11 l0 3"/><path d="M32 13 C 23 11, 10 8, 3 3 M3 3 l3 .3 M3 3 l.3 3"/></svg>
+          </div>
+
+          <div class="type-row">
+            <span title="Some Brute Squads have a type…">Squad Type</span>
+            <select class="squad-type-select type-pill guards">
+              <option>Plain Squad</option><option selected>Guards</option><option>Assassins</option><option>Duelists</option><option>Pirates</option><option>Thieves</option><option>Custom</option>
+            </select>
+          </div>
+
+          <section class="muster">
+            <div class="lbl">
+              <span>Strength</span>
+              <span class="info" title="A Brute Squad's one statistic — the number of thugs in it. Each Raise a Hero spends reduces it by 1 (Core p.191).">the Squad's only stat <i class="fas fa-circle-info"></i></span>
+            </div>
+            <div class="count"><span class="now">5</span><span class="of"> / 8</span></div>
+            <div class="rank"><div class="fig" data-level="1"><svg viewBox="0 0 24 30"><path d="M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z"/></svg></div>
+<div class="fig" data-level="2"><svg viewBox="0 0 24 30"><path d="M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z"/></svg></div>
+<div class="fig" data-level="3"><svg viewBox="0 0 24 30"><path d="M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z"/></svg></div>
+<div class="fig" data-level="4"><svg viewBox="0 0 24 30"><path d="M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z"/></svg></div>
+<div class="fig" data-level="5"><svg viewBox="0 0 24 30"><path d="M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z"/></svg></div>
+<div class="fig down" data-level="6"><svg viewBox="0 0 24 30"><path d="M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z"/></svg></div>
+<div class="fig down" data-level="7"><svg viewBox="0 0 24 30"><path d="M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z"/></svg></div>
+<div class="fig down" data-level="8"><svg viewBox="0 0 24 30"><path d="M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z"/></svg></div></div>
+            <div class="muster-ctl">
+              <button type="button" class="str-step raise" data-delta="-1">&minus;1 Raises</button>
+              <button type="button" class="str-step recruit" data-delta="1">&plus;1</button>
+              <button type="button" class="muster-btn">Muster</button>
+            </div>
+            <div class="brute-size">
+              <label>Muster size</label>
+              <input type="number" min="0" value="8" />
+            </div>
+          </section>
+
+          <section class="threat">
+            <div class="k">On its turn, the Squad deals <span class="info" title="Wounds equal to its CURRENT Strength, all to a single Hero (Core p.192)."><i class="fas fa-circle-info"></i></span></div>
+            <div class="v"><b>5</b> Wounds</div>
+            <div class="n">All to a single Hero. Reduce its Strength first, or it hits harder.</div>
+          </section>
+        </aside>
+
+        <main class="sheet-main brute-ledger">
+
+          <div class="sec-title"><h3>Special Ability</h3><span></span></div>
+          <div class="ability-card">
+            <svg class="rose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg>
+            <div class="ah">
+              <span class="ai"><i class="fas fa-shield-halved"></i></span>
+              <div>
+                <div class="al">Guards &middot; Special Brute Squad</div>
+                <h4 class="an">Shield the Master</h4>
+              </div>
+              <span class="cost">Spend 1 Danger Point</span>
+            </div>
+            <div class="abil-desc">Force an attack just made against a Villain to target the Guards instead, and reduce the Wounds dealt by 1.</div>
+            <button type="button" class="activate-ability"><i class="fas fa-bolt-lightning"></i> Activate (spend a Danger Point)</button>
+          </div>
+
+          <div class="sec-title"><h3>Engaging the Squad</h3><span></span></div>
+          <details class="roller-guide brute-guide" open>
+            <summary>How a Brute Squad fights <span class="ref">Core p.191&ndash;192</span></summary>
+            <ol class="rg-steps">
+              <li><b>Step 1 &middot; Approach</b> — The Heroes announce their response — attack, run, hide, whatever they like.</li>
+              <li><b>Step 2 &middot; Gather Dice</b> — You name each Hero's <b>Trait + Skill</b> for their Approach. The Consequence is always: <b>take Wounds equal to the Squad's Strength.</b></li>
+              <li><b>Step 3 &middot; Roll &amp; Raises</b> — Players spend Raises against the Squad — <b>each Raise reduces its Strength by 1.</b></li>
+              <li><b>Step 4 &middot; Brutes' Turn</b> — If it isn't at zero, the Squad deals <b>Wounds equal to its current Strength</b>, all to one Hero.</li>
+              <li><b>Step 5 &middot; Continue?</b> — If Strength remains it presses on (or surrenders). Loop to Step 1 until the Heroes fall or the Squad is defeated.</li>
+            </ol>
+            <div class="rg-live"><span class="rg-live-lbl">Example</span> A <b>Strength 8</b> Guard Squad. Miranda spends 3 Raises attacking — the Squad drops to <b>Strength 5</b>. On its turn it deals <b>5 Wounds</b> to her. Next Round she cuts it to 2; now it only deals 2.</div>
+          </details>
+
+          <div class="sec-title"><h3>Reorganize</h3><span></span></div>
+          <p class="reorg"><b>Squads come in packs.</b> Between Rounds, Brute Squads may merge or split: a Strength&nbsp;5 and a Strength&nbsp;3 Squad can combine into one Strength&nbsp;8, or a Strength&nbsp;10 Squad can break into two Strength&nbsp;5 Squads. Adjust the Muster and let a second sheet carry the other half (Core p.192).</p>
+
+        </main>
+      </div>
+    </form>
+  </div>
+
+  <!-- Chat card showcase: the themed cards this sheet posts. -->
+  <div id="chat" style="max-width:360px;margin:26px auto 0;display:flex;flex-direction:column;gap:12px;">
+    <div class="theah theah-brute severe">
+      <div class="brute-head"><i class="fas fa-gavel"></i> Rösti's Dockhands is cut down</div>
+      <div class="brute-body">
+        <div class="brute-stat"><span class="from">8</span><i class="fas fa-arrow-right-long"></i><span class="to">5</span> <span class="lab">Strength / 8</span></div>
+        <div class="brute-note">On its turn the Squad now deals <b>5 Wounds</b> to a single Hero.</div>
+      </div>
+    </div>
+    <div class="theah theah-brute ability">
+      <div class="brute-head"><i class="fas fa-bolt-lightning"></i> Rösti's Dockhands use their Special Ability</div>
+      <div class="brute-body">
+        <div class="brute-ability-name">Shield the Master</div>
+        <div class="brute-ability-desc">Force an attack just made against a Villain to target the Guards instead, and reduce the Wounds dealt by 1.</div>
+        <div class="brute-cost"><i class="fas fa-triangle-exclamation"></i> Spend 1 Danger Point</div>
+      </div>
+    </div>
+    <div class="theah theah-brute">
+      <div class="brute-head"><i class="fas fa-flag"></i> Rösti's Dockhands is defeated!</div>
+      <div class="brute-body">
+        <div class="brute-stat"><span class="from">2</span><i class="fas fa-arrow-right-long"></i><span class="to">0</span> <span class="lab">Strength / 8</span></div>
+        <div class="brute-note">The last of the Squad breaks and scatters. It deals no more Wounds.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    root.setAttribute("data-theah-theme", "paper");
+    var btn = document.getElementById("themeToggle");
+    btn.addEventListener("click", function () {
+      var sea = root.getAttribute("data-theah-theme") === "sea";
+      root.setAttribute("data-theah-theme", sea ? "paper" : "sea");
+      btn.textContent = sea ? "Night at Sea" : "Chart Room";
+    });
+  })();
+</script>

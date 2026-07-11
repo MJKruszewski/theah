@@ -1,0 +1,153 @@
+<title>Théah — Brute Squad sheet render (real compiled CSS)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>/*__CSS__*/</style>
+<style>
+  body { margin: 0; background: #2b2b2b; padding: 22px; }
+  .harness-note { max-width: 760px; margin: 0 auto 14px; color: #cbb488; font: 13px system-ui; line-height: 1.5; display: flex; align-items: flex-start; gap: 16px; justify-content: space-between; }
+  .harness-note p { margin: 0; }
+  .harness-toggle { flex: none; font: 600 11px/1 system-ui; letter-spacing: .1em; text-transform: uppercase; color: #e7d8b6; background: #16323f; border: 1px solid #33525e; border-radius: 3px; padding: 8px 12px; cursor: pointer; }
+  .harness-toggle:hover { border-color: #d9b262; }
+  .app { width: 760px; max-width: 100%; margin: 0 auto; border-radius: 6px; overflow: hidden; box-shadow: 0 28px 70px -22px #000; border: 1px solid #0b1b22; }
+  .window-header { background: linear-gradient(180deg,#16323f,#0e232c); color: #efe4c7; padding: 8px 12px; font: 600 14px/1.2 "Iowan Old Style",Palatino,serif; letter-spacing: .04em; display: flex; align-items: center; gap: 8px; }
+  .window-header .htype { margin-left: auto; font: 500 10px/1 system-ui; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
+</style>
+
+<div class="harness-note">
+  <p>Render of the <b>real compiled <code>dist/theah.css</code></b> over the exact Foundry DOM the <code>brute.hbs</code> template produces (sample: <i>Rösti's Dockhands</i>, a Strength-8 Guard Squad currently at 5). Same window chrome as the character-sheet harness for direct comparison. A few FontAwesome glyphs are blank here (Foundry injects them at runtime).</p>
+  <button type="button" class="harness-toggle" id="themeToggle">Night at Sea</button>
+</div>
+
+<div class="app window-app theah sheet actor brute">
+  <header class="window-header">Rösti's Dockhands <span class="htype">Brute Squad</span></header>
+  <div class="window-content">
+    <form class="editable flexcol" autocomplete="off">
+      <div class="theah-layout brute-layout">
+
+        <aside class="identity-rail">
+          <span class="edge"></span>
+
+          <div class="portrait brute-portrait">
+            <img class="profile-img" alt="Rösti's Dockhands" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cdefs%3E%3CradialGradient id='pbg' cx='50%25' cy='24%25' r='80%25'%3E%3Cstop offset='0%25' stop-color='%233a2320'/%3E%3Cstop offset='68%25' stop-color='%23241413'/%3E%3Cstop offset='100%25' stop-color='%23160b0a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='300' height='300' fill='url(%23pbg)'/%3E%3Cg fill='%23d9b262' opacity='0.9'%3E%3Cg transform='translate(60 78) scale(3.1)'%3E%3Cpath d='M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z'/%3E%3C/g%3E%3Cg transform='translate(12 96) scale(2.4)' opacity='.7'%3E%3Cpath d='M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z'/%3E%3C/g%3E%3Cg transform='translate(200 96) scale(2.4)' opacity='.7'%3E%3Cpath d='M12 2.4c-2.5 0-4 1.7-4 4 0 1.5.7 2.8 1.7 3.5-2.6.9-4.7 2.7-5.4 5.5-.3 1.2-.4 2.6-.4 4.2v7.6c0 .6.4 1 1 1h14.2c.6 0 1-.4 1-1v-7.6c0-1.6-.1-3-.4-4.2-.7-2.8-2.8-4.6-5.4-5.5 1-.7 1.7-2 1.7-3.5 0-2.3-1.5-4-4-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" />
+            <svg class="corner tl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+            <svg class="corner tr" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+            <svg class="corner bl" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+            <svg class="corner br" viewBox="0 0 26 26"><path d="M2 24 V6 Q2 2 6 2 H24"/></svg>
+          </div>
+
+          <div class="nameplate">
+            <input class="name" type="text" value="Rösti's Dockhands" />
+          </div>
+
+          <div class="filet" aria-hidden="true">
+            <svg viewBox="0 0 34 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M2 13 C 11 11, 24 8, 31 3 M31 3 l-3 .3 M31 3 l-.3 3 M6 13 l3 0 M4 11 l0 3"/><path d="M32 13 C 23 11, 10 8, 3 3 M3 3 l3 .3 M3 3 l.3 3"/></svg>
+          </div>
+
+          <div class="type-row">
+            <span title="Some Brute Squads have a type…">Squad Type</span>
+            <select class="squad-type-select type-pill guards">
+              <option>Plain Squad</option><option selected>Guards</option><option>Assassins</option><option>Duelists</option><option>Pirates</option><option>Thieves</option><option>Custom</option>
+            </select>
+          </div>
+
+          <section class="muster">
+            <div class="lbl">
+              <span>Strength</span>
+              <span class="info" title="A Brute Squad's one statistic — the number of thugs in it. Each Raise a Hero spends reduces it by 1 (Core p.191).">the Squad's only stat <i class="fas fa-circle-info"></i></span>
+            </div>
+            <div class="count"><span class="now">5</span><span class="of"> / 8</span></div>
+            <div class="rank"><!--MUSTER--></div>
+            <div class="muster-ctl">
+              <button type="button" class="str-step raise" data-delta="-1">&minus;1 Raises</button>
+              <button type="button" class="str-step recruit" data-delta="1">&plus;1</button>
+              <button type="button" class="muster-btn">Muster</button>
+            </div>
+            <div class="brute-size">
+              <label>Muster size</label>
+              <input type="number" min="0" value="8" />
+            </div>
+          </section>
+
+          <section class="threat">
+            <div class="k">On its turn, the Squad deals <span class="info" title="Wounds equal to its CURRENT Strength, all to a single Hero (Core p.192)."><i class="fas fa-circle-info"></i></span></div>
+            <div class="v"><b>5</b> Wounds</div>
+            <div class="n">All to a single Hero. Reduce its Strength first, or it hits harder.</div>
+          </section>
+        </aside>
+
+        <main class="sheet-main brute-ledger">
+
+          <div class="sec-title"><h3>Special Ability</h3><span></span></div>
+          <div class="ability-card">
+            <svg class="rose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg>
+            <div class="ah">
+              <span class="ai"><i class="fas fa-shield-halved"></i></span>
+              <div>
+                <div class="al">Guards &middot; Special Brute Squad</div>
+                <h4 class="an">Shield the Master</h4>
+              </div>
+              <span class="cost">Spend 1 Danger Point</span>
+            </div>
+            <div class="abil-desc">Force an attack just made against a Villain to target the Guards instead, and reduce the Wounds dealt by 1.</div>
+            <button type="button" class="activate-ability"><i class="fas fa-bolt-lightning"></i> Activate (spend a Danger Point)</button>
+          </div>
+
+          <div class="sec-title"><h3>Engaging the Squad</h3><span></span></div>
+          <details class="roller-guide brute-guide" open>
+            <summary>How a Brute Squad fights <span class="ref">Core p.191&ndash;192</span></summary>
+            <ol class="rg-steps">
+              <li><b>Step 1 &middot; Approach</b> — The Heroes announce their response — attack, run, hide, whatever they like.</li>
+              <li><b>Step 2 &middot; Gather Dice</b> — You name each Hero's <b>Trait + Skill</b> for their Approach. The Consequence is always: <b>take Wounds equal to the Squad's Strength.</b></li>
+              <li><b>Step 3 &middot; Roll &amp; Raises</b> — Players spend Raises against the Squad — <b>each Raise reduces its Strength by 1.</b></li>
+              <li><b>Step 4 &middot; Brutes' Turn</b> — If it isn't at zero, the Squad deals <b>Wounds equal to its current Strength</b>, all to one Hero.</li>
+              <li><b>Step 5 &middot; Continue?</b> — If Strength remains it presses on (or surrenders). Loop to Step 1 until the Heroes fall or the Squad is defeated.</li>
+            </ol>
+            <div class="rg-live"><span class="rg-live-lbl">Example</span> A <b>Strength 8</b> Guard Squad. Miranda spends 3 Raises attacking — the Squad drops to <b>Strength 5</b>. On its turn it deals <b>5 Wounds</b> to her. Next Round she cuts it to 2; now it only deals 2.</div>
+          </details>
+
+          <div class="sec-title"><h3>Reorganize</h3><span></span></div>
+          <p class="reorg"><b>Squads come in packs.</b> Between Rounds, Brute Squads may merge or split: a Strength&nbsp;5 and a Strength&nbsp;3 Squad can combine into one Strength&nbsp;8, or a Strength&nbsp;10 Squad can break into two Strength&nbsp;5 Squads. Adjust the Muster and let a second sheet carry the other half (Core p.192).</p>
+
+        </main>
+      </div>
+    </form>
+  </div>
+
+  <!-- Chat card showcase: the themed cards this sheet posts. -->
+  <div id="chat" style="max-width:360px;margin:26px auto 0;display:flex;flex-direction:column;gap:12px;">
+    <div class="theah theah-brute severe">
+      <div class="brute-head"><i class="fas fa-gavel"></i> Rösti's Dockhands is cut down</div>
+      <div class="brute-body">
+        <div class="brute-stat"><span class="from">8</span><i class="fas fa-arrow-right-long"></i><span class="to">5</span> <span class="lab">Strength / 8</span></div>
+        <div class="brute-note">On its turn the Squad now deals <b>5 Wounds</b> to a single Hero.</div>
+      </div>
+    </div>
+    <div class="theah theah-brute ability">
+      <div class="brute-head"><i class="fas fa-bolt-lightning"></i> Rösti's Dockhands use their Special Ability</div>
+      <div class="brute-body">
+        <div class="brute-ability-name">Shield the Master</div>
+        <div class="brute-ability-desc">Force an attack just made against a Villain to target the Guards instead, and reduce the Wounds dealt by 1.</div>
+        <div class="brute-cost"><i class="fas fa-triangle-exclamation"></i> Spend 1 Danger Point</div>
+      </div>
+    </div>
+    <div class="theah theah-brute">
+      <div class="brute-head"><i class="fas fa-flag"></i> Rösti's Dockhands is defeated!</div>
+      <div class="brute-body">
+        <div class="brute-stat"><span class="from">2</span><i class="fas fa-arrow-right-long"></i><span class="to">0</span> <span class="lab">Strength / 8</span></div>
+        <div class="brute-note">The last of the Squad breaks and scatters. It deals no more Wounds.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    root.setAttribute("data-theah-theme", "paper");
+    var btn = document.getElementById("themeToggle");
+    btn.addEventListener("click", function () {
+      var sea = root.getAttribute("data-theah-theme") === "sea";
+      root.setAttribute("data-theah-theme", sea ? "paper" : "sea");
+      btn.textContent = sea ? "Night at Sea" : "Chart Room";
+    });
+  })();
+</script>
