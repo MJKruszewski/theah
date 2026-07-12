@@ -937,7 +937,9 @@ export class HeroCreator extends FormApplication {
  * @param {Actor} actor
  */
 export async function openHeroCreator(actor) {
-  if (actor?.type !== ActorType.PLAYER) {
+  // The Hero NPC (`hero`) shares the full Hero sheet + model with the player
+  // character (Core p.192), so it can be built with the same wizard.
+  if (actor?.type !== ActorType.PLAYER && actor?.type !== ActorType.HERO) {
     return ui.notifications.warn(game.i18n.localize('SVNSEA2E.WizPlayerOnly'));
   }
   if (!game.packs.get('theah.backgrounds')) {
