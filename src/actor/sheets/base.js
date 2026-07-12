@@ -49,6 +49,10 @@ export default class ActorSheetSS2e extends ActorSheet {
       isMonster: actor.type === ActorType.MONSTER,
       isNotBrute: actor.type !== ActorType.BRUTE,
       isBrute: actor.type === ActorType.BRUTE,
+      // The full Hero sheet is shared by the player character AND the Hero NPC
+      // (Core p.192) — template features gated on this render for both.
+      isHeroSheet:
+        actor.type === ActorType.PLAYER || actor.type === ActorType.HERO,
       hasSkills: typeof actorData.skills !== 'undefined',
       hasLanguages: typeof actorData.languages !== 'undefined',
       config: CONFIG.SVNSEA2E,
@@ -99,7 +103,8 @@ export default class ActorSheetSS2e extends ActorSheet {
 
     // Dramatic-Wound roll effects (Core p.165): 1+ DW grants +1 Bonus Die on
     // every Risk (baked into the pool); 3+ DW makes 10s explode (auto-checked).
-    if (actor.type === ActorType.PLAYER) {
+    // Fires for the Hero NPC too — it shares the full Hero sheet + roller.
+    if (sheetData.isHeroSheet) {
       const dwv = actorData.dwounds?.value ?? 0;
       sheetData.dwBonus = dwv >= 1 ? 1 : 0;
       sheetData.autoExplode = dwv >= 3;
@@ -128,7 +133,7 @@ export default class ActorSheetSS2e extends ActorSheet {
 
     // Gold talers: a 0–10 Wealth track where each taler's tooltip describes what
     // that many Wealth Points can buy, per the Core spending guidelines (p.164-165).
-    if (actor.type === ActorType.PLAYER) {
+    if (sheetData.isHeroSheet) {
       const wealth = actorData.wealth ?? 0;
       sheetData.wealthTalers = Array.from({ length: 10 }, (_, i) => {
         const level = i + 1;
@@ -465,13 +470,14 @@ export default class ActorSheetSS2e extends ActorSheet {
       .find('.item h4.item-name')
       .on('click', (event) => this._onItemSummary(event));
 
-    // Rollable abilities. For the player character, clicking a Skill drives the
-    // on-sheet Raises roller (populate + scroll + flash) so the two rolling
-    // surfaces are one. The hero NPC type has no roller, so it keeps the dialog.
-    if (this.actor.type === ActorType.PLAYER) {
+    // Rollable abilities. The player character AND the Hero NPC share the full
+    // Hero sheet with the on-sheet Raises roller, so clicking a Skill drives the
+    // roller (populate + scroll + flash) — the two rolling surfaces are one.
+    if (
+      this.actor.type === ActorType.PLAYER ||
+      this.actor.type === ActorType.HERO
+    ) {
       html.find('.rollable').on('click', this._onSkillToRoller.bind(this));
-    } else if (this.actor.type === ActorType.HERO) {
-      html.find('.rollable').on('click', this._onHeroRoll.bind(this));
     } else if (this.actor.type === ActorType.VILLAIN || this.actor.type === ActorType.MONSTER) {
       html.find('.rollable').on('click', this._onVillainRoll.bind(this));
     }
@@ -809,10 +815,6 @@ export default class ActorSheetSS2e extends ActorSheet {
     // Languages only apply to PCs, heroes, or villains.
     if (![ActorType.PLAYER, ActorType.HERO, ActorType.VILLAIN].includes(actor.type))
       return undefined;
-
-    console.log(actor)
-    console.log(actor.system)
-    console.log(actor.system.languages)
 
     return actor.system.languages.reduce(
       (languages, language) => ({

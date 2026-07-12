@@ -285,7 +285,10 @@ export class SvnSea2EActor extends Actor {
         // get the Treasury card (the Hero affordances are meaningless for a Ship).
         if (this.type === ActorType.SHIP) {
           this._reactToTreasuryChange(options.theahPriorWealth);
-        } else if (this.type === ActorType.PLAYER) {
+        } else if (
+          this.type === ActorType.PLAYER ||
+          this.type === ActorType.HERO
+        ) {
           this._reactToWealthChange(options.theahPriorWealth);
         }
       }

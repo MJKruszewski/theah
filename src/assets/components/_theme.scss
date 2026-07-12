@@ -88,7 +88,7 @@
 .theah .sheet-header .wounds { margin-top: 8px; }
 .theah .sheet-header + .sheet-tabs { margin: 16px 18px 18px; }
 .theah .sheet-body { padding: 0 18px 20px; }
-.theah.pc .sheet-body { padding: 0; }
+.theah.pc .sheet-body, .theah.hero .sheet-body { padding: 0; }
 
 /* ------------------------- Identity rail ------------------------- */
 .theah .identity-rail {

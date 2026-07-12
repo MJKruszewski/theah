@@ -22,15 +22,27 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg>
       </div>
 
-      <button type="button" class="create-hero-btn" title="{{localize 'SVNSEA2E.HeroCreator'}}"><i class="fas fa-hat-wizard"></i> {{localize "SVNSEA2E.CreateHero"}}</button>
+      {{#if isPlayerCharacter}}
+        <button type="button" class="create-hero-btn" title="{{localize 'SVNSEA2E.HeroCreator'}}"><i class="fas fa-hat-wizard"></i> {{localize "SVNSEA2E.CreateHero"}}</button>
+      {{/if}}
 
       <dl class="meta">
         <dt>{{localize "SVNSEA2E.Nation"}}</dt>
-        <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if nation}}{{localize (lookup config.nations nation)}}{{else}}&mdash;{{/if}}</dd>
-        <dt>{{localize "SVNSEA2E.Religion"}}</dt>
-        <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if religion}}{{religion}}{{else}}&mdash;{{/if}}</dd>
-        <dt>{{localize "SVNSEA2E.Age"}}</dt>
-        <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if age}}{{age}}{{else}}&mdash;{{/if}}</dd>
+        {{#if isPlayerCharacter}}
+          {{!-- PC: nation/religion/age are set by the Hero Creator, read-only here. --}}
+          <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if nation}}{{localize (lookup config.nations nation)}}{{else}}&mdash;{{/if}}</dd>
+          <dt>{{localize "SVNSEA2E.Religion"}}</dt>
+          <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if religion}}{{religion}}{{else}}&mdash;{{/if}}</dd>
+          <dt>{{localize "SVNSEA2E.Age"}}</dt>
+          <dd class="ro-field" title="{{localize 'SVNSEA2E.SetAtCreation'}}">{{#if age}}{{age}}{{else}}&mdash;{{/if}}</dd>
+        {{else}}
+          {{!-- Hero NPC: hand-built by the GM, so identity is editable. --}}
+          <dd><select name="system.nation">{{selectOptions config.nations selected=nation localize=true}}</select></dd>
+          <dt>{{localize "SVNSEA2E.Religion"}}</dt>
+          <dd><input type="text" name="system.religion" value="{{religion}}" placeholder="&mdash;" /></dd>
+          <dt>{{localize "SVNSEA2E.Age"}}</dt>
+          <dd><input type="text" name="system.age" value="{{age}}" placeholder="&mdash;" /></dd>
+        {{/if}}
         <dt>{{localize "SVNSEA2E.Languages"}}</dt>
         <dd class="rail-langs">
           <ul class="tag-list">

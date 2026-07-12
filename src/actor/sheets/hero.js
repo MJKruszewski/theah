@@ -9,7 +9,9 @@ export class ActorSheetSS2eHero extends ActorSheetSS2e {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['theah', 'sheet', 'actor', 'hero'],
-      template: 'systems/theah/templates/actors/hero.hbs',
+      // The Hero NPC uses the SAME full sheet as the player character (1:1),
+      // sharing playercharacter.hbs + all its partials (Core p.192).
+      template: 'systems/theah/templates/actors/playercharacter.hbs',
       tabs: [
         {
           navSelector: '.sheet-tabs',

@@ -656,7 +656,9 @@ export class AdvancementCreator extends FormApplication {
  * @param {Actor} actor
  */
 export async function openAdvancementCreator(actor) {
-  if (actor?.type !== ActorType.PLAYER) {
+  // A Hero NPC (`hero`) shares the full Hero sheet + model with the player
+  // character (Core p.192), so it advances by the same rules.
+  if (actor?.type !== ActorType.PLAYER && actor?.type !== ActorType.HERO) {
     return ui.notifications.warn(game.i18n.localize('SVNSEA2E.WizPlayerOnly'));
   }
   if (!game.packs.get('theah.advantages')) {
