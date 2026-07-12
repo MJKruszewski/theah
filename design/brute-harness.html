@@ -1,5 +1,12 @@
 <title>Théah — Brute Squad sheet render (real compiled CSS)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  /* Faithfully simulate Foundry V13 core forcing width:100% on app buttons (it
+     lives in a @layer, so our unlayered dist/theah.css wins — exactly as in real
+     Foundry). This makes the harness reveal button-overflow bugs the raw preview
+     would hide (e.g. a flex:none button that forgot width:auto). */
+  @layer fvtt-core { .window-content button { width: 100%; box-sizing: border-box; } }
+</style>
 <style>@charset "UTF-8";
 /* ==========================================================================
    Théah palette — aged sea-chart (parchment · ink · antique gold · oxblood)
@@ -5969,6 +5976,7 @@
 
 /* Manual Squad division (no presets): a clean "Add a Squad" action + how-to note. */
 .theah.ship .squad-add {
+  width: auto;
   font-family: var(--thd-label);
   font-size: 10px;
   letter-spacing: 0.06em;
@@ -6129,8 +6137,12 @@
   background: linear-gradient(180deg, var(--teal), color-mix(in srgb, var(--teal) 60%, #000));
 }
 
+/* width:auto + nowrap so it sizes to its label — Foundry core forces width:100%
+   on buttons, which (with flex:none) would otherwise stretch it out of the card. */
 .theah.ship .squad .squad-roll {
   flex: none;
+  width: auto;
+  white-space: nowrap;
   margin-left: auto;
   display: inline-flex;
   align-items: center;
@@ -6328,8 +6340,13 @@
   margin-top: 12px;
 }
 
+/* width:auto so Foundry core's button{width:100%} can't blow the flex:0 0 auto
+   buttons (recruit/muster-btn) out past the rail. .raise (flex:1, basis 0%) still
+   grows to fill the row. */
 .theah .muster-ctl button {
   flex: 1;
+  width: auto;
+  min-width: 0;
   font-family: var(--thd-label);
   font-size: 10px;
   letter-spacing: 0.1em;
@@ -6561,6 +6578,7 @@
 
 .theah.brute .ability-card .activate-ability {
   margin-top: 11px;
+  width: auto;
   font-family: var(--thd-label);
   font-size: 10px;
   letter-spacing: 0.12em;
@@ -6976,6 +6994,7 @@
 
 .theah.ship .adventure-earn {
   margin-top: 10px;
+  width: auto;
   font-family: var(--thd-label);
   font-size: 10px;
   letter-spacing: 0.08em;

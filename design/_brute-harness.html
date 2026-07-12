@@ -1,5 +1,12 @@
 <title>Théah — Brute Squad sheet render (real compiled CSS)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  /* Faithfully simulate Foundry V13 core forcing width:100% on app buttons (it
+     lives in a @layer, so our unlayered dist/theah.css wins — exactly as in real
+     Foundry). This makes the harness reveal button-overflow bugs the raw preview
+     would hide (e.g. a flex:none button that forgot width:auto). */
+  @layer fvtt-core { .window-content button { width: 100%; box-sizing: border-box; } }
+</style>
 <style>/*__CSS__*/</style>
 <style>
   body { margin: 0; background: #2b2b2b; padding: 22px; }

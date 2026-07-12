@@ -1070,7 +1070,7 @@
 .theah.ship .rail-hull .ship-bonuses li { color: var(--gold-leaf); }
 
 /* Manual Squad division (no presets): a clean "Add a Squad" action + how-to note. */
-.theah.ship .squad-add { font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-deep); background: transparent; border: 1px solid var(--panel-edge); border-radius: 4px; padding: 4px 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: background .12s, border-color .12s; }
+.theah.ship .squad-add { width: auto; font-family: var(--thd-label); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-deep); background: transparent; border: 1px solid var(--panel-edge); border-radius: 4px; padding: 4px 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: background .12s, border-color .12s; }
 .theah.ship .squad-add:hover { border-color: var(--gold); background: color-mix(in srgb, var(--gold-leaf) 14%, transparent); color: var(--gold); }
 .theah.ship .squad-howto { margin: 0 0 14px; padding: 9px 12px; border-left: 3px solid var(--gold-deep); border-radius: 0 3px 3px 0; background: color-mix(in srgb, var(--gold-leaf) 7%, transparent); font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
 .theah.ship .squad-howto b { color: var(--gold-deep); }
@@ -1093,7 +1093,9 @@
 .theah.ship .squad .sq-pool { flex: none; margin-left: auto; font-family: var(--thd-label); font-size: 11px; font-weight: 600; color: var(--gold-deep); }
 .theah.ship .squad .pips { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 8px; }
 .theah.ship .squad .pips i { width: 12px; height: 12px; border-radius: 2px; background: linear-gradient(180deg, var(--teal), color-mix(in srgb, var(--teal) 60%, #000)); }
-.theah.ship .squad .squad-roll { flex: none; margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-family: var(--thd-label); font-size: 11px; font-weight: 600; letter-spacing: .04em; color: #2a1c10; background: linear-gradient(180deg, var(--gold-leaf), var(--gold)); border: 1px solid var(--gold-deep); border-radius: 4px; padding: 4px 12px; cursor: pointer; transition: filter .12s; }
+/* width:auto + nowrap so it sizes to its label — Foundry core forces width:100%
+   on buttons, which (with flex:none) would otherwise stretch it out of the card. */
+.theah.ship .squad .squad-roll { flex: none; width: auto; white-space: nowrap; margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-family: var(--thd-label); font-size: 11px; font-weight: 600; letter-spacing: .04em; color: #2a1c10; background: linear-gradient(180deg, var(--gold-leaf), var(--gold)); border: 1px solid var(--gold-deep); border-radius: 4px; padding: 4px 12px; cursor: pointer; transition: filter .12s; }
 .theah.ship .squad .squad-roll:hover { filter: brightness(1.06); }
 .theah.ship .squad .squad-roll i { font-size: 12px; }
 
@@ -1132,7 +1134,10 @@
 .theah .muster .fig:hover svg { transform: scale(1.14); }
 .theah .muster .fig.down:hover svg { transform: translateY(2px) scaleY(.92) scale(1.12); opacity: .8; }
 .theah .muster-ctl { display: flex; gap: 8px; margin-top: 12px; }
-.theah .muster-ctl button { flex: 1; font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #f2e6c9; border-radius: 3px; padding: 8px 6px; cursor: pointer; transition: filter .15s; line-height: 1; }
+/* width:auto so Foundry core's button{width:100%} can't blow the flex:0 0 auto
+   buttons (recruit/muster-btn) out past the rail. .raise (flex:1, basis 0%) still
+   grows to fill the row. */
+.theah .muster-ctl button { flex: 1; width: auto; min-width: 0; font-family: var(--thd-label); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #f2e6c9; border-radius: 3px; padding: 8px 6px; cursor: pointer; transition: filter .15s; line-height: 1; }
 .theah .muster-ctl .raise { background: linear-gradient(180deg, rgba(124,43,34,.55), rgba(90,30,22,.78)); border: 1px solid rgba(181,69,58,.6); }
 .theah .muster-ctl .recruit { flex: 0 0 auto; background: rgba(0,0,0,.2); border: 1px solid rgba(217,178,98,.3); color: #d9c9a0; }
 .theah .muster-ctl .muster-btn { flex: 0 0 auto; background: rgba(0,0,0,.2); border: 1px solid rgba(217,178,98,.3); color: var(--gold-leaf); }
@@ -1164,7 +1169,7 @@
 .theah.brute .ability-card .abil-desc { font-size: 13px; line-height: 1.55; color: var(--ink-soft); margin-top: 9px; position: relative; z-index: 1; }
 .theah.brute .ability-card .abil-desc p { margin: 0 0 6px; }
 .theah.brute .ability-card .custom-ability-desc { width: 100%; margin-top: 9px; background: color-mix(in srgb, var(--panel) 92%, #fff 8%); border: 1px solid var(--line); border-radius: 3px; color: var(--ink); font-family: var(--thd-body); font-size: 13px; padding: 7px 10px; resize: vertical; }
-.theah.brute .ability-card .activate-ability { margin-top: 11px; font-family: var(--thd-label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #f2e6c9; background: linear-gradient(180deg, rgba(124,43,34,.7), rgba(90,30,22,.9)); border: 1px solid rgba(181,69,58,.6); border-radius: 3px; padding: 8px 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.theah.brute .ability-card .activate-ability { margin-top: 11px; width: auto; font-family: var(--thd-label); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #f2e6c9; background: linear-gradient(180deg, rgba(124,43,34,.7), rgba(90,30,22,.9)); border: 1px solid rgba(181,69,58,.6); border-radius: 3px; padding: 8px 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
 .theah.brute .ability-card .activate-ability:hover { filter: brightness(1.13); }
 .theah.brute .ability-empty { font-size: 13px; color: var(--ink-soft); line-height: 1.55; padding: 11px 14px; border: 1px dashed var(--line-strong); border-radius: 3px; }
 
@@ -1238,7 +1243,7 @@
 .theah.ship .prowess-card.adventure.is-earned { border-color: var(--gold); border-left-color: var(--gold-deep); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 25%, transparent); background: color-mix(in srgb, var(--gold-leaf) 9%, transparent); }
 .theah.ship .prowess-card.adventure.is-earned .pc-icon { color: var(--gold-deep); }
 .theah.ship .prowess-card.adventure .earned-badge { flex: none; font-family: var(--thd-label); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-deep); display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
-.theah.ship .adventure-earn { margin-top: 10px; font-family: var(--thd-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); background: transparent; border: 1px solid var(--line-strong); border-radius: 3px; padding: 5px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: background .12s, color .12s, border-color .12s; }
+.theah.ship .adventure-earn { margin-top: 10px; width: auto; font-family: var(--thd-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); background: transparent; border: 1px solid var(--line-strong); border-radius: 3px; padding: 5px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: background .12s, color .12s, border-color .12s; }
 .theah.ship .adventure-earn:hover { border-color: var(--gold); color: var(--gold-deep); }
 .theah.ship .adventure-earn.on { color: #2a1c10; background: linear-gradient(180deg, var(--gold-leaf), var(--gold)); border-color: var(--gold-deep); }
 .theah.ship .adventure-earn.on:hover { filter: brightness(1.05); }
